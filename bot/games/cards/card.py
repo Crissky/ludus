@@ -10,7 +10,7 @@ class Card:
 
     @property
     def text(self):
-        return f'{self.suit.value}{self.name}'
+        return f'{self.suit.value}{self.name.value}'
 
     @property
     def value(self):
