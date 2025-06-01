@@ -9,8 +9,8 @@ class Stack(LinearDataStructure):
         for i in range((len(self.items) - 1), -1, -1):
             yield self.items[i]
 
-    def push(self, card: Card):
-        self.items.append(card)
+    def push(self, *cards: Card):
+        self.items.extend(cards)
 
     def pop(self, quantity: int = 1) -> Union[Card, List[Card]]:
         if quantity == 1:

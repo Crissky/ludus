@@ -4,8 +4,8 @@ from bot.games.structure.linear_data import LinearDataStructure
 
 
 class Queue(LinearDataStructure):
-    def push(self, card: Card):
-        self.items.append(card)
+    def push(self, *cards: Card):
+        self.items.extend(cards)
 
     def pop(self, quantity: int = 1) -> Union[Card, List[Card]]:
         if quantity == 1:

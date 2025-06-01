@@ -23,7 +23,7 @@ class LinearDataStructure:
         shuffle(self.items)
 
     @abstractmethod
-    def push(self, card: Card):
+    def push(self, *cards: Card):
         pass
 
     @abstractmethod
