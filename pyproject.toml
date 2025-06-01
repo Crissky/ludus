@@ -5,6 +5,7 @@ description = "Bot para o telegram com diversos jogos de cartas e tabuleiro."
 authors = ["Edson Cristovam <pg2006pe@hotmail.com>"]
 license = "GNU V3"
 readme = "README.md"
+package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.10.1 <3.11.0"
