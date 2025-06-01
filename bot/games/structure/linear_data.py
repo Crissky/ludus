@@ -1,6 +1,6 @@
 from abc import abstractmethod
 from random import shuffle
-from typing import Generator
+from typing import Generator, List, Union
 
 from bot.games.cards.card import Card
 
@@ -27,11 +27,11 @@ class LinearDataStructure:
         pass
 
     @abstractmethod
-    def pop(self) -> Card:
+    def pop(self, quantity: int = 1) -> Union[Card, List[Card]]:
         pass
 
     @abstractmethod
-    def peek(self) -> Card:
+    def peek(self, quantity: int = 1) -> Union[Card, List[Card]]:
         pass
 
     @property

@@ -1,3 +1,4 @@
+from typing import List, Union
 from bot.games.cards.card import Card
 from bot.games.structure.linear_data import LinearDataStructure
 
@@ -6,13 +7,19 @@ class Queue(LinearDataStructure):
     def push(self, card: Card):
         self.items.append(card)
 
-    def pop(self) -> Card:
-        if not self.is_empty():
-            return self.items.pop(0)
+    def pop(self, quantity: int = 1) -> Union[Card, List[Card]]:
+        if quantity == 1:
+            if not self.is_empty():
+                return self.items.pop(0)
+        elif quantity > 1:
+            popped_items = self.items[:quantity]
+            self.items = self.items[quantity:]
+            return popped_items
         else:
             return None
 
-    def peek(self) -> Card:
+    def peek(self, quantity: int = 1) -> Union[Card, List[Card]]:
         if not self.is_empty():
-            return self.items[0]
-
+            return self.items[0] if quantity == 1 else self.items[:quantity]
+        else:
+            return None
