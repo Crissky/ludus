@@ -62,3 +62,16 @@ class SpanishNames(Enum):
     KNAVE = "10"
     KNIGHT = "11"
     KING = "12"
+
+
+class StrippedSpanishNames(Enum):
+    ONE = "1"
+    TWO = "2"
+    THREE = "3"
+    FOUR = "4"
+    FIVE = "5"
+    SIX = "6"
+    SEVEN = "7"
+    KNAVE = "10"
+    KNIGHT = "11"
+    KING = "12"
