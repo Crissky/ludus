@@ -13,6 +13,9 @@ class LinearDataStructure:
         for i in range(len(self.items)):
             yield self.items[i]
 
+    def __getitem__(self, index: int) -> Card:
+        return self.items[index]
+
     def __len__(self) -> int:
         return len(self.items)
 
