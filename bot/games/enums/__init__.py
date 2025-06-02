@@ -1,7 +1,7 @@
-from bot.games.enums.card import RoyalSuits
-from bot.games.enums.card import SpanishSuits
-from bot.games.enums.card import ColorSuits
-from bot.games.enums.card import ElementalSuits
-from bot.games.enums.card import RoyalNames
-from bot.games.enums.card import SpanishNames
-from bot.games.enums.card import StrippedSpanishNames
+from bot.games.enums.card import RoyalSuits  # noqa
+from bot.games.enums.card import SpanishSuits  # noqa
+from bot.games.enums.card import ColorSuits  # noqa
+from bot.games.enums.card import ElementalSuits  # noqa
+from bot.games.enums.card import RoyalNames  # noqa
+from bot.games.enums.card import SpanishNames  # noqa
+from bot.games.enums.card import StrippedSpanishNames  # noqa
