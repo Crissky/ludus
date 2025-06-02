@@ -8,6 +8,12 @@ class Card:
         self.name = name
         self.suit = suit
 
+    def __str__(self):
+        return self.text
+
+    def __repr__(self):
+        return f'{self.__name__}({self.text})'
+
     @property
     def text(self):
         return f'{self.suit.value}{self.name.value}'
