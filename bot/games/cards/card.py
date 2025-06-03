@@ -24,7 +24,7 @@ class Card:
         return self.text
 
     def __repr__(self):
-        return f'{self.__name__}({self.text})'
+        return f'{self.__class__.__name__}({self.text})'
 
     def equals_name(self, other) -> bool:
         if not isinstance(other, Card):
