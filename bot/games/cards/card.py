@@ -37,9 +37,14 @@ class Card:
             raise TypeError('Não deveria entrar aqui.')
 
     def equals_suit(self, other) -> bool:
-        if not isinstance(other, Card):
+        if not isinstance(other, (Card, Suits)):
             return False
-        return self.suit == other.suit
+        elif isinstance(other, Suits):
+            return self.suit == other
+        elif isinstance(other, Card):
+            return self.suit == other.suit
+        else:
+            raise TypeError('Não deveria entrar aqui.')
 
     @property
     def text(self):
