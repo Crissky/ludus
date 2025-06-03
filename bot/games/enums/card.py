@@ -1,22 +1,31 @@
 from enum import Enum
 
 
+class Suits(Enum):
+    ...
+
+
+class Names(Enum):
+    ...
+
 # Suits
-class RoyalSuits(Enum):
+
+
+class RoyalSuits(Suits):
     CLUBS = "♣️"
     DIAMONDS = "♦️"
     HEARTS = "♥️"
     SPADES = "♠️"
 
 
-class SpanishSuits(Enum):
+class SpanishSuits(Suits):
     CLUBS = "🦯"
     COINS = "🪙"
     CUPS = "🍷"
     SWORDS = "⚔️"
 
 
-class ColorSuits(Enum):
+class ColorSuits(Suits):
     RED = "🔴"
     BLUE = "🔵"
     GREEN = "🟢"
@@ -24,7 +33,7 @@ class ColorSuits(Enum):
     BLACK = "⬛"
 
 
-class ElementalSuits(Enum):
+class ElementalSuits(Suits):
     FIRE = "🔥"
     WATER = "🌊"
     EARTH = "🌳"
@@ -33,7 +42,7 @@ class ElementalSuits(Enum):
 
 
 # Names
-class RoyalNames(Enum):
+class RoyalNames(Names):
     ACE = "A"
     TWO = "2"
     THREE = "3"
@@ -49,7 +58,7 @@ class RoyalNames(Enum):
     KING = "K"
 
 
-class ColorNames(Enum):
+class ColorNames(Names):
     ZERO = "0"
     ONE = "1"
     TWO = "2"
@@ -67,7 +76,7 @@ class ColorNames(Enum):
     PLUS_FOUR = "+4"
 
 
-class SpanishNames(Enum):
+class SpanishNames(Names):
     ONE = "1"
     TWO = "2"
     THREE = "3"
@@ -82,7 +91,7 @@ class SpanishNames(Enum):
     KING = "12"
 
 
-class StrippedSpanishNames(Enum):
+class StrippedSpanishNames(Names):
     ONE = "1"
     TWO = "2"
     THREE = "3"
