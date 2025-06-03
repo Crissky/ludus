@@ -19,9 +19,6 @@ class LinearDataStructure:
     def __len__(self) -> int:
         return len(self.items)
 
-    def is_empty(self) -> bool:
-        return len(self.items) == 0
-
     def shuffle(self):
         shuffle(self.items)
 
@@ -36,6 +33,10 @@ class LinearDataStructure:
     @abstractmethod
     def peek(self, quantity: int = 1) -> Union[Card, List[Card]]:
         pass
+
+    @property
+    def is_empty(self) -> bool:
+        return len(self.items) == 0
 
     @property
     def text_horizontal(self) -> str:
