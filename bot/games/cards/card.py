@@ -9,8 +9,10 @@ class Card:
         if not isinstance(suit, Suits):
             raise TypeError('suit precisa ser um Enum do tipo Suits.')
 
-        self.name = name
-        self.suit = suit
+        self.real_name = name
+        self.real_suit = suit
+        self.wild_name = None
+        self.wild_suit = None
 
     def __eq__(self, other) -> bool:
         if not isinstance(other, Card):
@@ -46,6 +48,24 @@ class Card:
         else:
             raise TypeError('Não deveria entrar aqui.')
 
+    def set_wild(self, name: Names, suit: Suits):
+        self.set_wild_name(name)
+        self.set_wild_suit(suit)
+
+    def set_wild_name(self, name: Names):
+        if not isinstance(name, self.name.__class__):
+            raise TypeError(
+                f'name precisa ser um Enum do tipo {self.name.__class__}.'
+            )
+        self.wild_name = name
+
+    def set_wild_suit(self, suit: Suits):
+        if not isinstance(suit, self.suit.__class__):
+            raise TypeError(
+                f'suit precisa ser um Enum do tipo {self.suit.__class__}.'
+            )
+        self.wild_suit = suit
+
     @property
     def text(self):
         return f'{self.suit.value}{self.name.value}'
@@ -53,3 +73,11 @@ class Card:
     @property
     def value(self):
         return get_enum_index(self.name)
+
+    @property
+    def name(self):
+        return self.wild_name if self.wild_name is not None else self.real_name
+
+    @property
+    def suit(self):
+        return self.wild_suit if self.wild_suit is not None else self.real_suit
