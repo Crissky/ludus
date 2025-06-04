@@ -1,7 +1,9 @@
 from bot.games.enums.card import RoyalSuits  # noqa
+from bot.games.enums.card import FullRoyalNames  # noqa
 from bot.games.enums.card import SpanishSuits  # noqa
 from bot.games.enums.card import ColorSuits  # noqa
 from bot.games.enums.card import ElementalSuits  # noqa
 from bot.games.enums.card import RoyalNames  # noqa
+from bot.games.enums.card import FullRoyalNames  # noqa
 from bot.games.enums.card import SpanishNames  # noqa
 from bot.games.enums.card import StrippedSpanishNames  # noqa
