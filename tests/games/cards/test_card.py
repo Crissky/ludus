@@ -1,6 +1,11 @@
 from bot.functions.enumeration import get_enum_index
 from bot.games.cards.card import Card
-from bot.games.enums.card import RoyalNames, RoyalSuits
+from bot.games.enums.card import (
+    FullRoyalNames,
+    FullRoyalSuits,
+    RoyalNames,
+    RoyalSuits
+)
 import pytest
 import unittest
 
@@ -86,9 +91,24 @@ class TestCard(unittest.TestCase):
         non_card_object = card.text
         self.assertNotEqual(card, non_card_object)
 
+    def test_eq_wilded_cards(self):
+        """
+        Teste a desigualdade de duas cartas diferentes que depois serão
+        iguais após o valor do curinga ser escolhido.
+
+        Este teste verifica se o método _eq_ identifica corretamente duas
+        cartas como diferentes quando têm nomes ou naipes diferentes.
+        """
+
+        card1 = Card(FullRoyalNames.JOKER, FullRoyalSuits.JOKER)
+        card2 = Card(FullRoyalNames.KING, FullRoyalSuits.HEARTS)
+        self.assertNotEqual(card1, card2)
+        card1.set_wild(FullRoyalNames.KING, FullRoyalSuits.HEARTS)
+        self.assertEqual(card1, card2)
+
     def test_hash(self):
         """
-        Teste se o método _hash_ retorna o valor de hash 
+        Teste se o método _hash_ retorna o valor de hash
         esperado para uma instância de Card.
         """
 
@@ -174,6 +194,25 @@ class TestCard(unittest.TestCase):
         result = card.equals_name(other)
         msg = "equals_name deve retornar False para objetos que não Card/Names"
         self.assertFalse(result, msg)
+
+    def test_equals_name_wilded(self):
+        """
+        Teste se equals_name retorna True ao comparar com um objeto Card
+        e Names depois de setar o valor do curinga.
+        """
+
+        card = Card(FullRoyalNames.JOKER, FullRoyalSuits.JOKER)
+        card.set_wild(FullRoyalNames.SEVEN, FullRoyalSuits.SPADES)
+        other_card = Card(FullRoyalNames.SEVEN, FullRoyalSuits.SPADES)
+        other_name = FullRoyalNames.SEVEN
+        result_card = card.equals_name(other_card)
+        result_name = card.equals_name(other_name)
+        msg = (
+            "equals_name deve retornar True para objetos que não "
+            "Card/Names idênticos"
+        )
+        self.assertTrue(result_card, msg)
+        self.assertTrue(result_name, msg)
 
     def test_equals_suit_card_type(self):
         """
