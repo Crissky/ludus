@@ -273,6 +273,74 @@ class TestCard(unittest.TestCase):
         msg = "equals_suit deve retornar False para objetos que não Card/Suits"
         self.assertFalse(result, msg)
 
+    def test_equals_suit_wilded(self):
+        """
+        Teste se equals_suit retorna True ao comparar com um objeto Card
+        e Suits depois de setar o valor do curinga.
+        """
+
+        card = Card(FullRoyalNames.JOKER, FullRoyalSuits.JOKER)
+        card.set_wild(FullRoyalNames.SEVEN, FullRoyalSuits.SPADES)
+        other_card = Card(FullRoyalNames.SEVEN, FullRoyalSuits.SPADES)
+        other_name = FullRoyalSuits.SPADES
+        result_card = card.equals_suit(other_card)
+        result_name = card.equals_suit(other_name)
+        msg = (
+            "equals_suit deve retornar True para objetos que não "
+            "Card/Suits idênticos"
+        )
+        self.assertTrue(result_card, msg)
+        self.assertTrue(result_name, msg)
+
+    def test_set_wild(self):
+        """
+        Teste se o método set_wild altera corretamente o valor do curinga.
+
+        Esse teste também serve para testar as propriedades name e suit
+        """
+
+        card = Card(FullRoyalNames.JOKER, FullRoyalSuits.JOKER)
+        self.assertEqual(card.name, FullRoyalNames.JOKER)
+        self.assertEqual(card.suit, FullRoyalSuits.JOKER)
+        self.assertIsNone(card.wild_name)
+        self.assertIsNone(card.wild_suit)
+
+        card.set_wild(FullRoyalNames.ACE, FullRoyalSuits.SPADES)
+        self.assertEqual(card.name, FullRoyalNames.ACE)
+        self.assertEqual(card.suit, FullRoyalSuits.SPADES)
+        self.assertEqual(card.wild_name, FullRoyalNames.ACE)
+        self.assertEqual(card.wild_suit, FullRoyalSuits.SPADES)
+
+    def test_set_wild_name(self):
+        """
+        Teste se o método set_wild_name altera corretamente o name do curinga.
+
+        Esse teste também serve para testar as propriedades name
+        """
+
+        card = Card(FullRoyalNames.JOKER, FullRoyalSuits.JOKER)
+        self.assertEqual(card.name, FullRoyalNames.JOKER)
+        self.assertIsNone(card.wild_name)
+
+        card.set_wild_name(FullRoyalNames.ACE)
+        self.assertEqual(card.name, FullRoyalNames.ACE)
+        self.assertEqual(card.wild_name, FullRoyalNames.ACE)
+
+    def test_set_wild_suit(self):
+        """
+        Teste se o método set_wild_suit altera corretamente o suit do curinga.
+
+        Esse teste também serve para testar as propriedades suit
+        """
+
+        card = Card(FullRoyalNames.JOKER, FullRoyalSuits.JOKER)
+        self.assertEqual(card.suit, FullRoyalSuits.JOKER)
+        self.assertIsNone(card.wild_suit)
+
+        card.set_wild_suit(FullRoyalSuits.SPADES)
+        self.assertEqual(card.suit, FullRoyalSuits.SPADES)
+        self.assertEqual(card.wild_suit, FullRoyalSuits.SPADES)
+
     def test_text_returns_correct_string_representation(self):
         """
         Teste se a propriedade text retorna a representação correta
