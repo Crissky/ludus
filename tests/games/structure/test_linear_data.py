@@ -185,6 +185,37 @@ class TestLinearData(unittest.TestCase):
         empty_structure = LinearDataStructure()
         self.assertEqual(empty_structure.text_horizontal, "")
 
+    def test_text_vertical(self):
+        """
+        Teste se a propriedade text_vertical une corretamente os
+        textos dos cartões com quebras de linha.
+        """
+
+        cards = [
+            Card(RoyalNames.ACE, RoyalSuits.HEARTS),
+            Card(RoyalNames.KING, RoyalSuits.SPADES),
+            Card(RoyalNames.QUEEN, RoyalSuits.DIAMONDS)
+        ]
+        expected_output = (
+            f"{RoyalSuits.HEARTS.value}{RoyalNames.ACE.value}\n"
+            f"{RoyalSuits.SPADES.value}{RoyalNames.KING.value}\n"
+            f"{RoyalSuits.DIAMONDS.value}{RoyalNames.QUEEN.value}"
+        )
+        linear_data = LinearDataStructure(*cards)
+        self.assertEqual(linear_data.text_vertical, expected_output)
+
+    def test_text_vertical_empty_structure(self):
+        """
+        Teste a propriedade text_vertical quando a LinearDataStructure
+        estiver vazia.
+
+        Isso testa o caso extremo de uma estrutura vazia, que é tratado
+        implicitamente pela operação join na implementação do método.
+        """
+
+        linear_data = LinearDataStructure()
+        self.assertEqual(linear_data.text_vertical, "")
+
     def test_text_lazy(self):
         """
         Teste se a propriedade text_lazy retorna um gerador de valores de
@@ -223,34 +254,3 @@ class TestLinearData(unittest.TestCase):
         lazy_text = empty_structure.text_lazy
         self.assertIsInstance(lazy_text, Generator)
         self.assertEqual(list(lazy_text), [])
-
-    def test_text_vertical(self):
-        """
-        Teste se a propriedade text_vertical une corretamente os
-        textos dos cartões com quebras de linha.
-        """
-
-        cards = [
-            Card(RoyalNames.ACE, RoyalSuits.HEARTS),
-            Card(RoyalNames.KING, RoyalSuits.SPADES),
-            Card(RoyalNames.QUEEN, RoyalSuits.DIAMONDS)
-        ]
-        expected_output = (
-            f"{RoyalSuits.HEARTS.value}{RoyalNames.ACE.value}\n"
-            f"{RoyalSuits.SPADES.value}{RoyalNames.KING.value}\n"
-            f"{RoyalSuits.DIAMONDS.value}{RoyalNames.QUEEN.value}"
-        )
-        linear_data = LinearDataStructure(*cards)
-        self.assertEqual(linear_data.text_vertical, expected_output)
-
-    def test_text_vertical_empty_structure(self):
-        """
-        Teste a propriedade text_vertical quando a LinearDataStructure
-        estiver vazia.
-
-        Isso testa o caso extremo de uma estrutura vazia, que é tratado
-        implicitamente pela operação join na implementação do método.
-        """
-
-        linear_data = LinearDataStructure()
-        self.assertEqual(linear_data.text_vertical, "")
