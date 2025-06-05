@@ -36,16 +36,16 @@ class LinearDataStructure:
 
     @property
     def is_empty(self) -> bool:
-        return len(self.items) == 0
+        return len(self) == 0
 
     @property
     def text_horizontal(self) -> str:
-        return ' '.join([card.text for card in self.items])
+        return ' '.join([card.text for card in self])
 
     @property
     def text_vertical(self) -> str:
-        return '\n'.join([card.text for card in self.items])
+        return '\n'.join([card.text for card in self])
 
     @property
     def text_lazy(self) -> Generator:
-        return (card.text for card in self.items)
+        return (card.text for card in self)
