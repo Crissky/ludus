@@ -14,7 +14,7 @@ class Stack(LinearDataStructure):
 
     def pop(self, quantity: int = 1) -> Union[Card, List[Card]]:
         if quantity == 1:
-            if not self.is_empty():
+            if not self.is_empty:
                 return self.items.pop()
         elif quantity > 1:
             popped_items = self.items[-quantity:]
@@ -24,7 +24,7 @@ class Stack(LinearDataStructure):
             return None
 
     def peek(self, quantity: int = 1) -> Union[Card, List[Card]]:
-        if not self.is_empty():
+        if not self.is_empty:
             return self.items[-1] if quantity == 1 else self.items[-quantity:]
         else:
             return None
