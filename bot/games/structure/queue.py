@@ -9,7 +9,7 @@ class Queue(LinearDataStructure):
 
     def pop(self, quantity: int = 1) -> Union[Card, List[Card]]:
         if quantity == 1:
-            if not self.is_empty():
+            if not self.is_empty:
                 return self.items.pop(0)
         elif quantity > 1:
             popped_items = self.items[:quantity]
@@ -19,7 +19,7 @@ class Queue(LinearDataStructure):
             return None
 
     def peek(self, quantity: int = 1) -> Union[Card, List[Card]]:
-        if not self.is_empty():
+        if not self.is_empty:
             return self.items[0] if quantity == 1 else self.items[:quantity]
         else:
             return None
