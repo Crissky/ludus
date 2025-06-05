@@ -8,9 +8,8 @@ class Suits(Enum):
 class Names(Enum):
     ...
 
+
 # Suits
-
-
 class RoyalSuits(Suits):
     CLUBS = "♣️"
     DIAMONDS = "♦️"
