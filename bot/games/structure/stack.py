@@ -18,18 +18,20 @@ class Stack(LinearDataStructure):
         self.items.extend(cards)
 
     def pop(self, quantity: int = 1) -> Union[Card, List[Card]]:
-        if quantity == 1:
-            if not self.is_empty:
-                return self.items.pop()
-        elif quantity > 1:
-            popped_items = self.items[-quantity:]
+        if quantity == 1 and not self.is_empty:
+            return self.items.pop()
+        elif quantity > 1 and not self.is_empty:
+            popped_items = reversed(self.items[-quantity:])
             self.items = self.items[:-quantity]
-            return popped_items
+            return list(popped_items)
         else:
             return None
 
     def peek(self, quantity: int = 1) -> Union[Card, List[Card]]:
-        if not self.is_empty:
-            return self.items[-1] if quantity == 1 else self.items[-quantity:]
+        if quantity == 1 and not self.is_empty:
+            return self.items[-1]
+        elif quantity > 1 and not self.is_empty:
+            peeked_items = reversed(self.items[-quantity:])
+            return list(peeked_items)
         else:
             return None
