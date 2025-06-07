@@ -18,7 +18,9 @@ class Queue(LinearDataStructure):
             return None
 
     def peek(self, quantity: int = 1) -> Union[Card, List[Card]]:
-        if not self.is_empty:
-            return self.items[0] if quantity == 1 else self.items[:quantity]
+        if quantity == 1 and not self.is_empty:
+            return self.items[0]
+        elif quantity > 1 and not self.is_empty:
+            return self.items[:quantity]
         else:
             return None
