@@ -6,8 +6,13 @@ from bot.games.structure.linear_data import LinearDataStructure
 
 class Stack(LinearDataStructure):
     def __iter__(self) -> Generator:
-        for i in range((len(self.items) - 1), -1, -1):
-            yield self.items[i]
+        yield from reversed(self.items)
+
+    def __getitem__(self, index: int) -> Card:
+        reversed_items = reversed(self.items)
+        reversed_items = list(reversed_items)
+
+        return reversed_items[index]
 
     def push(self, *cards: Card):
         self.items.extend(cards)
