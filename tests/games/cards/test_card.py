@@ -326,6 +326,19 @@ class TestCard(unittest.TestCase):
         self.assertEqual(card.name, FullRoyalNames.ACE)
         self.assertEqual(card.wild_name, FullRoyalNames.ACE)
 
+    def test_set_wild_name_card_is_not_wild(self):
+        """
+        Teste se o método set_wild_name retorna um erro ao tentar alterar
+        um Card não WILD.
+        """
+
+        card = Card(FullRoyalNames.KING, FullRoyalSuits.CLUBS)
+        self.assertEqual(card.name, FullRoyalNames.KING)
+        self.assertIsNone(card.wild_name)
+
+        with pytest.raises(ValueError, match=''):
+            card.set_wild_name(FullRoyalNames.ACE)
+
     def test_set_wild_suit(self):
         """
         Teste se o método set_wild_suit altera corretamente o suit do curinga.
@@ -340,6 +353,19 @@ class TestCard(unittest.TestCase):
         card.set_wild_suit(FullRoyalSuits.SPADES)
         self.assertEqual(card.suit, FullRoyalSuits.SPADES)
         self.assertEqual(card.wild_suit, FullRoyalSuits.SPADES)
+
+    def test_set_wild_suit_card_is_not_wild(self):
+        """
+        Teste se o método set_wild_suit retorna um erro ao tentar alterar
+        um Card não WILD.
+        """
+
+        card = Card(FullRoyalNames.ACE, FullRoyalSuits.CLUBS)
+        self.assertEqual(card.suit, FullRoyalSuits.CLUBS)
+        self.assertIsNone(card.wild_suit)
+
+        with pytest.raises(ValueError, match=''):
+            card.set_wild_suit(FullRoyalSuits.SPADES)
 
     def test_text_returns_correct_string_representation(self):
         """
