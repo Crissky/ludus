@@ -8,10 +8,9 @@ class Queue(LinearDataStructure):
         self.items.extend(cards)
 
     def pop(self, quantity: int = 1) -> Union[Card, List[Card]]:
-        if quantity == 1:
-            if not self.is_empty:
-                return self.items.pop(0)
-        elif quantity > 1:
+        if quantity == 1 and not self.is_empty:
+            return self.items.pop(0)
+        elif quantity > 1 and not self.is_empty:
             popped_items = self.items[:quantity]
             self.items = self.items[quantity:]
             return popped_items
