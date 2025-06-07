@@ -1,5 +1,6 @@
+import re
 from bot.functions.enumeration import get_enum_index
-from bot.games.enums.card import Names, Suits
+from bot.games.enums.card import WILD_SUITS, Names, Suits
 
 
 class Card:
@@ -53,6 +54,8 @@ class Card:
         self.set_wild_suit(suit)
 
     def set_wild_name(self, name: Names):
+        if not re.search(self.wild_terms, self.suit.name, re.I):
+            raise ValueError(f'{self.suit.name} não é um valor WILD válido.')
         if not isinstance(name, self.name.__class__):
             raise TypeError(
                 f'name precisa ser um Enum do tipo {self.name.__class__}.'
@@ -60,6 +63,8 @@ class Card:
         self.wild_name = name
 
     def set_wild_suit(self, suit: Suits):
+        if not re.search(self.wild_terms, self.suit.name, re.I):
+            raise ValueError(f'{self.suit.name} não é um valor WILD válido.')
         if not isinstance(suit, self.suit.__class__):
             raise TypeError(
                 f'suit precisa ser um Enum do tipo {self.suit.__class__}.'
@@ -81,3 +86,7 @@ class Card:
     @property
     def suit(self):
         return self.wild_suit if self.wild_suit is not None else self.real_suit
+
+    @property
+    def wild_terms(self) -> str:
+        return '|'.join((suit.name for suit in WILD_SUITS))
