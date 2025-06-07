@@ -126,3 +126,6 @@ class StrippedSpanishNames(Names):
     KNAVE = "10"
     KNIGHT = "11"
     KING = "12"
+
+
+WILD_SUITS = [FullRoyalSuits.JOKER, ColorSuits.BLACK, ElementalSuits.VOID]
