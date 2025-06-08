@@ -1,5 +1,6 @@
 from collections.abc import Generator
 from enum import Enum
+from itertools import product
 from typing import List, Union
 
 from bot.games.cards.card import Card
@@ -11,26 +12,48 @@ class BaseDeck:
         self,
         names: Enum,
         suits: Enum,
-        quantity: dict = None,
+        quantities: dict = None,
         shuffle: bool = True
     ):
-        self.card_list = Stack()
-        if quantity is None:
-            quantity = {suit: 1 for suit in suits}
+        """As cartas são geradas de acordo com o dicionário quantity
+        Caso seja igual a None, Será gerado uma carta para o produto de
+        Suits x Names.
 
-        for name in names:
-            for suit in suits:
-                name_suit_qty = quantity.get((name, suit))
-                name_qty = quantity.get(name)
-                suit_qty = quantity.get(suit)
-                if isinstance(name_suit_qty, int):
-                    card_qty = name_suit_qty
-                elif isinstance(name_qty, int):
-                    card_qty = name_qty
-                else:
-                    card_qty = suit_qty
-                for _ in range(card_qty):
-                    self.card_list.push(Card(name, suit))
+        Caso o dicionário seja definido, as quantidade serão definidas
+        obedecendo as seguintes prioridades de acordo com o tipo de chave:
+            1. (Name, Suit): Define a quantidade de carta para determinado
+                Name e Suit.
+            2. Name: Define a quantidade de cartas de determinado Name,
+                exceto as que foram definidas no (Name, Suit).
+            3. Suit: Define a quantidade de cartas de determinado Suit,
+                exceto as que foram definidas no (Name, Suit) e Name.
+
+        Exemplo: quantity = {
+            (ColorNames.ZERO, ColorSuits.BLACK): 0,
+            ColorNames.ZERO: 1,
+            ColorSuits.BLACK: 2,
+        }
+        - Não havera cartas BLACK e ZERO.
+        - Haverá 1 carta ZERO de todas as cores (Suits), exceto BLACK.
+        - Haverá 2 cartas BLACK de todos os valores (Names), exceto ZERO.
+        """
+
+        self.card_list = Stack()
+        if quantities is None:
+            quantities = {suit: 1 for suit in suits}
+
+        for name, suit in product(names, suits):
+            name_suit_qty = quantities.get((name, suit))
+            name_qty = quantities.get(name)
+            suit_qty = quantities.get(suit, 1)
+            if isinstance(name_suit_qty, int):
+                card_qty = name_suit_qty
+            elif isinstance(name_qty, int):
+                card_qty = name_qty
+            else:
+                card_qty = suit_qty
+            for _ in range(card_qty):
+                self.card_list.push(Card(name, suit))
 
         if shuffle is True:
             self.shuffle()

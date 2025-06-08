@@ -4,7 +4,7 @@ from bot.games.enums.card import ColorNames, ColorSuits
 
 class ColorDeck(BaseDeck):
     def __init__(self, shuffle=True):
-        quantity = {
+        quantities = {
             (ColorNames.ZERO, ColorSuits.BLACK): 0,
             (ColorNames.PLUS_ZERO, ColorSuits.BLACK): 4,
             (ColorNames.PLUS_FOUR, ColorSuits.BLACK): 4,
@@ -21,7 +21,7 @@ class ColorDeck(BaseDeck):
             names=ColorNames,
             suits=ColorSuits,
             shuffle=shuffle,
-            quantity=quantity,
+            quantities=quantities,
         )
 
 
