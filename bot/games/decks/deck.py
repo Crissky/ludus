@@ -47,6 +47,9 @@ class BaseDeck:
     def __str__(self) -> str:
         return self.card_list.text_horizontal
 
+    def __repr__(self) -> str:
+        return f'{self.__class__.__name__}({self.card_list.text_horizontal})'
+
     def draw(self, quantity: int) -> Union[Card, List[Card]]:
         return self.card_list.pop(quantity=quantity)
 
