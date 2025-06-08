@@ -1,3 +1,4 @@
+from collections.abc import Generator
 from enum import Enum
 from typing import List, Union
 
@@ -34,16 +35,16 @@ class BaseDeck:
         if shuffle is True:
             self.shuffle()
 
-    def __iter__(self):
+    def __iter__(self) -> Generator[Card]:
         return iter(self.card_list)
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self.card_list)
 
-    def __getitem__(self, index):
+    def __getitem__(self, index) -> Union[Card, List[Card]]:
         return self.card_list[index]
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.card_list.text_horizontal
 
     def draw(self, quantity: int) -> Union[Card, List[Card]]:
