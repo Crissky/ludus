@@ -1,3 +1,4 @@
+import random
 import unittest
 from bot.games.cards.card import Card
 from bot.games.enums.card import RoyalNames, RoyalSuits
@@ -15,7 +16,9 @@ class TestStack(unittest.TestCase):
         self.card1 = Card(RoyalNames.ACE, RoyalSuits.HEARTS)
         self.card2 = Card(RoyalNames.KING, RoyalSuits.SPADES)
         self.card3 = Card(RoyalNames.QUEEN, RoyalSuits.DIAMONDS)
+        self.card_list = [self.card1, self.card2, self.card3]
 
+    # Tests to Super Class
     def test_init(self):
         """Teste inicialização da pilha.
         """
@@ -23,14 +26,77 @@ class TestStack(unittest.TestCase):
         self.assertIsInstance(self.stack, Stack)
         self.assertEqual(len(self.stack), 0)
 
-    def test_push_single_card(self):
-        """Teste push um único Card para a pilha.
+    def test_init_with_multiple_cards(self):
+        """
+        Teste o método _init_ de Stack com vários objetos Card.
+
+        Verifica se o atributo items foi inicializado corretamente com
+        os cards fornecidos.
         """
 
-        self.stack.push(self.card1)
-        self.assertEqual(len(self.stack), 1)
-        self.assertEqual(self.stack[0], self.card1)
+        stack = Stack(self.card1, self.card2, self.card3)
 
+        self.assertEqual(len(stack), 3)
+        self.assertEqual(stack[0], self.card3)
+        self.assertEqual(stack[1], self.card2)
+        self.assertEqual(stack[2], self.card1)
+
+    def test_iter_yields_cards_in_order(self):
+        """Teste se o método _iter_ produz cartas na ordem correta.
+        """
+
+        stack = Stack(*self.card_list)
+        reversed_card_list = list(reversed(self.card_list))
+
+        for i, card in enumerate(stack):
+            self.assertEqual(card, reversed_card_list[i])
+
+    def test_get_item(self):
+        """
+        Teste o acesso a um item específico usando o operador de indexação.
+        """
+
+        stack = Stack(*self.card_list)
+
+        self.assertEqual(stack[0], self.card_list[2])
+        self.assertEqual(stack[1], self.card_list[1])
+        self.assertEqual(stack[2], self.card_list[0])
+
+    def test_len(self):
+        """ Teste se o método _len_ retorna o número correto de itens na Stack.
+        """
+
+        stack = Stack(*self.card_list)
+
+        self.assertEqual(len(self.stack), 0)
+        self.assertEqual(len(stack), 3)
+
+    def test_shuffle_randomizes_order(self):
+        """
+        Teste se o método shuffle randomiza a ordem dos itens na Stack.
+
+        Observe que há uma pequena chance de este teste falhar mesmo que
+        o método shuffle esteja funcionando corretamente, devido à natureza da
+        aleatoriedade.
+        """
+
+        stack = Stack(*self.card_list)
+        original_order = stack.items.copy()
+        random.seed(42)
+        stack.shuffle()
+
+        self.assertNotEqual(
+            original_order,
+            stack.items,
+            "The shuffle method did not change the order of items"
+        )
+        self.assertEqual(
+            set(original_order),
+            set(stack.items),
+            "The shuffle method changed the content of items"
+        )
+
+    # Tests Abstract Methods
     def test_push_multiple_cards(self):
         """Teste push múltiplos Cards para a pilha.
         """
@@ -47,6 +113,35 @@ class TestStack(unittest.TestCase):
 
         initial_length = len(self.stack)
         self.stack.push()
+        self.assertEqual(len(self.stack), initial_length)
+
+    def test_push_bottom_single_card(self):
+        """Teste push um único Card para a fila.
+        """
+
+        self.stack.push(self.card1)
+        self.stack.push_botton(self.card2)
+        self.assertEqual(len(self.stack), 2)
+        self.assertEqual(self.stack[1], self.card2)
+        self.assertEqual(self.stack[0], self.card1)
+
+    def test_push_bottom_multiple_cards(self):
+        """Teste push múltiplos Cards para a fila.
+        """
+
+        self.stack.push_botton(self.card1)
+        self.stack.push_botton(self.card2, self.card3)
+        self.assertEqual(len(self.stack), 3)
+        self.assertEqual(self.stack[2], self.card2)
+        self.assertEqual(self.stack[1], self.card3)
+        self.assertEqual(self.stack[0], self.card1)
+
+    def test_push_bottom_no_cards(self):
+        """Teste push nenhum Card para a fila.
+        """
+
+        initial_length = len(self.stack)
+        self.stack.push_botton()
         self.assertEqual(len(self.stack), initial_length)
 
     def test_pop_single_item(self):
@@ -145,45 +240,84 @@ class TestStack(unittest.TestCase):
         self.assertEqual(cards_in_reverse[1], self.card2)
         self.assertEqual(cards_in_reverse[2], self.card1)
 
-    def test_text_horizontal(self):
-        """Teste se a propriedade text_horizontal retorna uma sequência de
-        textos de cartas unidos por espaços.
+    # Tests Properties
+    def test_is_empty(self):
+        """Teste se o property is_empty retorna True quando a Stack está vazia.
+        """
+
+        self.assertTrue(self.stack.is_empty)
+        self.stack.push(self.card1)
+        self.assertFalse(self.stack.is_empty)
+
+    def test_text_horizintal(self):
+        """Teste se o property text_horizontal retorna uma string com os
+        cards na horizontal.
         """
 
         self.stack.push(self.card1, self.card2, self.card3)
-        result = self.stack.text_horizontal
-        expected_output = (
-            f"{self.card3.suit.value}{self.card3.name.value} "
-            f"{self.card2.suit.value}{self.card2.name.value} "
-            f"{self.card1.suit.value}{self.card1.name.value}"
-        )
-        self.assertEqual(result, expected_output)
-
-    def test_text_vertical(self):
-        """Teste se a propriedade text_vertical une corretamente os
-        textos dos cartões com quebras de linha.
-        """
-
-        self.stack.push(self.card1, self.card2, self.card3)
-        expected_output = (
-            f"{self.card3.suit.value}{self.card3.name.value}\n"
-            f"{self.card2.suit.value}{self.card2.name.value}\n"
-            f"{self.card1.suit.value}{self.card1.name.value}"
-        )
-        self.assertEqual(self.stack.text_vertical, expected_output)
-
-    def test_text_lazy(self):
-        """Teste se a propriedade text_lazy retorna um gerador de valores de
-        texto de cartas.
-        """
-
-        self.stack.push(self.card1, self.card2, self.card3)
-        expected = [
+        expected = ' '.join((
             self.card3.text,
             self.card2.text,
             self.card1.text,
-        ]
+        ))
+        self.assertEqual(self.stack.text_horizontal, expected)
+
+    def test_text_horizintal_empty(self):
+        """Teste se o property text_horizontal retorna uma string vazia
+        quando a Stack está vazia.
+        """
+
+        expected = ""
+        self.assertTrue(self.stack.is_empty)
+        self.assertEqual(self.stack.text_horizontal, expected)
+
+    def test_text_vertical(self):
+        """Teste se o property text_horizontal retorna uma string com os
+        cards na vertical.
+        """
+
+        self.stack.push(self.card1, self.card2, self.card3)
+        expected = '\n'.join((
+            self.card3.text,
+            self.card2.text,
+            self.card1.text,
+        ))
+        self.assertEqual(self.stack.text_vertical, expected)
+
+    def test_text_vertical_empty(self):
+        """Teste se o property text_horizontal retorna uma string com os
+        cards na vertical.
+        """
+
+        expected = ""
+        self.assertTrue(self.stack.is_empty)
+        self.assertEqual(self.stack.text_vertical, expected)
+
+    def test_text_lazy(self):
+        """
+        Teste se a propriedade text_lazy retorna um gerador de valores de
+        texto de cartas.
+
+        Verifica se o gerador produz o texto correto para cada carta
+        na estrutura.
+        """
+
+        expected = [card.text for card in reversed(self.card_list)]
+        self.stack.push(*self.card_list)
         text_lazy_gen = self.stack.text_lazy
         self.assertIsInstance(text_lazy_gen, Generator)
         text_list = list(text_lazy_gen)
         self.assertEqual(text_list, expected)
+
+    def test_text_lazy_empty_structure(self):
+        """
+        Teste a propriedade text_lazy quando a Stack
+        estiver vazia.
+
+        Isso testa o caso extremo de uma estrutura vazia, que é tratado
+        implicitamente pela expressão geradora na implementação do método.
+        """
+
+        lazy_text = self.stack.text_lazy
+        self.assertIsInstance(lazy_text, Generator)
+        self.assertEqual(list(lazy_text), [])
