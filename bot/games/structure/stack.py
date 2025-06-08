@@ -9,7 +9,7 @@ class Stack(LinearDataStructure):
     def __iter__(self) -> Generator[Card]:
         yield from reversed(self.items)
 
-    def __getitem__(self, index: int) -> Card:
+    def __getitem__(self, index: int) -> Union[Card, List[Card]]:
         reversed_items = reversed(self.items)
         reversed_items = list(reversed_items)
 
