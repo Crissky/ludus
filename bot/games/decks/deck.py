@@ -48,10 +48,10 @@ class BaseDeck:
         return self.card_list.text_horizontal
 
     def draw(self, quantity: int) -> Union[Card, List[Card]]:
-        return self.card_list.pop(quantity)
+        return self.card_list.pop(quantity=quantity)
 
     def peek(self, quantity: int) -> Union[Card, List[Card]]:
-        return self.card_list.peek(quantity)
+        return self.card_list.peek(quantity=quantity)
 
     def shuffle(self):
         self.card_list.shuffle()
