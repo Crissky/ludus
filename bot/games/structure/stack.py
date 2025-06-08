@@ -1,11 +1,12 @@
-from typing import Generator, List, Union
+from collections.abc import Generator
+from typing import List, Union
 
 from bot.games.cards.card import Card
 from bot.games.structure.linear_data import LinearDataStructure
 
 
 class Stack(LinearDataStructure):
-    def __iter__(self) -> Generator:
+    def __iter__(self) -> Generator[Card]:
         yield from reversed(self.items)
 
     def __getitem__(self, index: int) -> Card:

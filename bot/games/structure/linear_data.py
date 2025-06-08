@@ -1,6 +1,7 @@
 from abc import abstractmethod
+from collections.abc import Generator
 from random import shuffle
-from typing import Generator, List, Union
+from typing import List, Union
 
 from bot.games.cards.card import Card
 
@@ -9,7 +10,7 @@ class LinearDataStructure:
     def __init__(self, *args: Card):
         self.items = list(args)
 
-    def __iter__(self) -> Generator:
+    def __iter__(self) -> Generator[Card]:
         for i in range(len(self.items)):
             yield self.items[i]
 
@@ -47,5 +48,5 @@ class LinearDataStructure:
         return '\n'.join([card.text for card in self])
 
     @property
-    def text_lazy(self) -> Generator:
+    def text_lazy(self) -> Generator[str]:
         return (card.text for card in self)
