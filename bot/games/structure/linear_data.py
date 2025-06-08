@@ -1,4 +1,4 @@
-from abc import abstractmethod
+from abc import ABC, abstractmethod
 from collections.abc import Generator
 from random import shuffle
 from typing import List, Union
@@ -6,7 +6,7 @@ from typing import List, Union
 from bot.games.cards.card import Card
 
 
-class LinearDataStructure:
+class LinearDataStructure(ABC):
     def __init__(self, *args: Card):
         self.items = list(args)
 
@@ -25,15 +25,19 @@ class LinearDataStructure:
 
     @abstractmethod
     def push(self, *cards: Card):
-        pass
+        raise NotImplementedError('Subclasse deve implementar push.')
+
+    @abstractmethod
+    def push_botton(self, *cards: Card):
+        raise NotImplementedError('Subclasse deve implementar push_bottom')
 
     @abstractmethod
     def pop(self, quantity: int = 1) -> Union[Card, List[Card]]:
-        pass
+        raise NotImplementedError('Subclasse deve implementar pop')
 
     @abstractmethod
     def peek(self, quantity: int = 1) -> Union[Card, List[Card]]:
-        pass
+        raise NotImplementedError('Subclasse deve implementar peek')
 
     @property
     def is_empty(self) -> bool:
