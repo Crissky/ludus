@@ -30,24 +30,20 @@ class Card:
         return f'{self.__class__.__name__}({self.text})'
 
     def equals_name(self, other) -> bool:
-        if not isinstance(other, (Card, Names)):
-            return False
-        elif isinstance(other, Names):
+        if isinstance(other, Names):
             return self.name == other
         elif isinstance(other, Card):
             return self.name == other.name
         else:
-            raise TypeError('Não deveria entrar aqui.')
+            return False
 
     def equals_suit(self, other) -> bool:
-        if not isinstance(other, (Card, Suits)):
-            return False
-        elif isinstance(other, Suits):
+        if isinstance(other, Suits):
             return self.suit == other
         elif isinstance(other, Card):
             return self.suit == other.suit
         else:
-            raise TypeError('Não deveria entrar aqui.')
+            return False
 
     def set_wild(self, name: Names, suit: Suits):
         self.set_wild_name(name)
