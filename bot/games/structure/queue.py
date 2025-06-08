@@ -7,6 +7,9 @@ class Queue(LinearDataStructure):
     def push(self, *cards: Card):
         self.items.extend(cards)
 
+    def push_botton(self, *cards: Card):
+        self.items = list(cards) + self.items
+
     def pop(self, quantity: int = 1) -> Union[Card, List[Card]]:
         if quantity == 1 and not self.is_empty:
             return self.items.pop(0)
