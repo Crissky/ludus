@@ -19,6 +19,7 @@ class TestDeck(unittest.TestCase):
         """
 
         self.deck = BaseDeck(names=RoyalNames, suits=RoyalSuits, shuffle=False)
+        self.empty_deck = BaseDeck()
         self.card_last = Card(RoyalNames.ACE, RoyalSuits.CLUBS)
         self.card0 = Card(RoyalNames.KING, RoyalSuits.SPADES)
         self.card1 = Card(RoyalNames.KING, RoyalSuits.HEARTS)
@@ -136,9 +137,7 @@ class TestDeck(unittest.TestCase):
         ele trate esse caso extremo corretamente.
         """
 
-        empty_deck = BaseDeck()
-
-        items = list(empty_deck)
+        items = list(self.empty_deck)
         msg = "Expected an empty iteration for an empty deck"
         self.assertEqual(len(items), 0, msg)
 
@@ -170,8 +169,7 @@ class TestDeck(unittest.TestCase):
         Isso testa o caso extremo em que o deck não tem cartas.
         """
 
-        empty_deck = BaseDeck()
-        self.assertEqual(len(empty_deck), 0)
+        self.assertEqual(len(self.empty_deck), 0)
 
     def test_getitem(self):
         """
