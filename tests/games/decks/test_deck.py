@@ -78,6 +78,33 @@ class TestDeck(unittest.TestCase):
             self.assertEqual(card.suit, suit)
             self.assertEqual(card.name, RoyalNames.ACE)
 
+    def test_init_quantities_3(self):
+        """
+        Teste a inicialização do BaseDeck com quantidades personalizadas.
+
+        Um único Name e Suit.
+        """
+
+        quantities = {
+            (RoyalNames.ACE, RoyalSuits.SPADES): 1,
+            RoyalSuits.CLUBS: 0,
+            RoyalSuits.DIAMONDS: 0,
+            RoyalSuits.HEARTS: 0,
+            RoyalSuits.SPADES: 0,
+        }
+
+        deck = BaseDeck(
+            RoyalNames,
+            RoyalSuits,
+            quantities=quantities,
+            shuffle=False
+        )
+
+        self.assertEqual(len(deck), 1)
+        for card in deck:
+            self.assertEqual(card.suit, RoyalSuits.SPADES)
+            self.assertEqual(card.name, RoyalNames.ACE)
+
     def test_init_no_quantities(self):
         """
         Teste a inicialização do BaseDeck quando quantity for None.
