@@ -40,7 +40,7 @@ class BaseDeck:
         - Haverá 2 cartas BLACK de todos os valores (Names), exceto ZERO.
         """
 
-        self.card_list = Stack()
+        self.card_stack = Stack()
         if (
             quantities is None and
             suits is not None and
@@ -68,31 +68,31 @@ class BaseDeck:
             else:
                 card_qty = suit_qty
             for _ in range(card_qty):
-                self.card_list.push(Card(name, suit))
+                self.card_stack.push(Card(name, suit))
 
         if shuffle is True:
             self.shuffle()
 
     def __iter__(self) -> Generator[Card]:
-        return iter(self.card_list)
+        return iter(self.card_stack)
 
     def __len__(self) -> int:
-        return len(self.card_list)
+        return len(self.card_stack)
 
     def __getitem__(self, index) -> Union[Card, List[Card]]:
-        return self.card_list[index]
+        return self.card_stack[index]
 
     def __str__(self) -> str:
-        return self.card_list.text_horizontal
+        return self.card_stack.text_horizontal
 
     def __repr__(self) -> str:
-        return f'{self.__class__.__name__}({self.card_list.text_horizontal})'
+        return f'{self.__class__.__name__}({self.card_stack.text_horizontal})'
 
     def draw(self, quantity: int) -> Union[Card, List[Card]]:
-        return self.card_list.pop(quantity=quantity)
+        return self.card_stack.pop(quantity=quantity)
 
     def peek(self, quantity: int) -> Union[Card, List[Card]]:
-        return self.card_list.peek(quantity=quantity)
+        return self.card_stack.peek(quantity=quantity)
 
     def shuffle(self):
-        self.card_list.shuffle()
+        self.card_stack.shuffle()

@@ -33,10 +33,10 @@ class TestDeck(unittest.TestCase):
         """
 
         quantities = {
-            RoyalSuits.SPADES: 1,
-            RoyalSuits.HEARTS: 0,
-            RoyalSuits.DIAMONDS: 0,
             RoyalSuits.CLUBS: 0,
+            RoyalSuits.DIAMONDS: 0,
+            RoyalSuits.HEARTS: 0,
+            RoyalSuits.SPADES: 1,
         }
 
         deck = BaseDeck(
@@ -59,10 +59,10 @@ class TestDeck(unittest.TestCase):
         """
 
         quantities = {
-            RoyalSuits.SPADES: 0,
-            RoyalSuits.HEARTS: 0,
-            RoyalSuits.DIAMONDS: 0,
             RoyalSuits.CLUBS: 0,
+            RoyalSuits.DIAMONDS: 0,
+            RoyalSuits.HEARTS: 0,
+            RoyalSuits.SPADES: 0,
             RoyalNames.ACE: 1,
         }
 
@@ -99,9 +99,9 @@ class TestDeck(unittest.TestCase):
         self.assertEqual(len(deck1), 0)
         self.assertEqual(len(deck2), 0)
         self.assertEqual(len(deck3), 0)
-        self.assertIsInstance(deck1.card_list, Stack)
-        self.assertIsInstance(deck2.card_list, Stack)
-        self.assertIsInstance(deck3.card_list, Stack)
+        self.assertIsInstance(deck1.card_stack, Stack)
+        self.assertIsInstance(deck2.card_stack, Stack)
+        self.assertIsInstance(deck3.card_stack, Stack)
 
     def test_iter_empty_deck(self):
         """
@@ -176,6 +176,6 @@ class TestDeck(unittest.TestCase):
 
         expected_repr = (
             f"{self.deck.__class__.__name__}"
-            f"({self.deck.card_list.text_horizontal})"
+            f"({self.deck.card_stack.text_horizontal})"
         )
         self.assertEqual(repr(self.deck), expected_repr)
