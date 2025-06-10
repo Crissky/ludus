@@ -88,10 +88,10 @@ class BaseDeck:
     def __repr__(self) -> str:
         return f'{self.__class__.__name__}({self.card_stack.text_horizontal})'
 
-    def draw(self, quantity: int) -> Union[Card, List[Card]]:
+    def draw(self, quantity: int = 1) -> Union[Card, List[Card]]:
         return self.card_stack.pop(quantity=quantity)
 
-    def peek(self, quantity: int) -> Union[Card, List[Card]]:
+    def peek(self, quantity: int = 1) -> Union[Card, List[Card]]:
         return self.card_stack.peek(quantity=quantity)
 
     def shuffle(self):
