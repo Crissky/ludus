@@ -1,21 +1,23 @@
 from collections.abc import Generator
-from enum import Enum
 from itertools import product
 from typing import List, Union
 
 from bot.games.cards.card import Card
+from bot.games.enums.card import Names, Suits
 from bot.games.structure.stack import Stack
 
 
 class BaseDeck:
     def __init__(
         self,
-        names: Enum,
-        suits: Enum,
+        names: Names = None,
+        suits: Suits = None,
         quantities: dict = None,
         shuffle: bool = True
     ):
-        """As cartas são geradas de acordo com o dicionário quantity
+        """Se names ou suits for None, o deck será vazio.
+
+        As cartas são geradas de acordo com o dicionário quantity
         Caso seja igual a None, Será gerado uma carta para o produto de
         Suits x Names.
 
@@ -39,10 +41,23 @@ class BaseDeck:
         """
 
         self.card_list = Stack()
-        if quantities is None:
+        if (
+            quantities is None and
+            suits is not None and
+            issubclass(suits, Suits)
+        ):
             quantities = {suit: 1 for suit in suits}
 
-        for name, suit in product(names, suits):
+        if names is None or suits is None:
+            names_suits = []
+        elif issubclass(names, Names) and issubclass(suits, Suits):
+            names_suits = product(names, suits)
+        else:
+            raise TypeError(
+                f'Combinação inválida de '
+                f'names ({type(names)}) e suits ({type(suits)}).'
+            )
+        for name, suit in names_suits:
             name_suit_qty = quantities.get((name, suit))
             name_qty = quantities.get(name)
             suit_qty = quantities.get(suit, 1)
