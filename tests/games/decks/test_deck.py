@@ -204,3 +204,104 @@ class TestDeck(unittest.TestCase):
             f"({self.deck.card_stack.text_horizontal})"
         )
         self.assertEqual(repr(self.deck), expected_repr)
+
+    def test_draw_single_card(self):
+        """
+        Teste a compra de uma única carta do baralho.
+
+        Este teste verifica se:
+        1. O método draw retorna um único objeto Card quando a quantidade é 1.
+        2. A carta comprada é removida do baralho.
+        3. O tamanho do baralho diminui em 1 após a retirada.
+        """
+
+        initial_size = len(self.deck)
+        drawn_card = self.deck.draw(1)
+
+        self.assertIsInstance(drawn_card, Card)
+        self.assertEqual(len(self.deck), initial_size - 1)
+        self.assertNotIn(drawn_card, self.deck)
+
+    def test_draw_empty_deck(self):
+        """
+        Teste a compra de um baralho vazio.
+
+        Este teste verifica se a tentativa de compra de um baralho vazio
+        não gera um IndexError e retorna None.
+        """
+
+        self.assertIsNone(self.empty_deck.draw(quantity=1))
+
+    def test_draw_more_cards_than_available(self):
+        """
+        Teste comprando mais cartas do que as disponíveis no baralho.
+
+        Este teste verifica se tentar comprar mais cartas do que
+        as presentes no baralho retorna uma lista com as cartas disponíveis no
+        deck.
+        """
+
+        initial_size = len(self.deck)
+        drawed_cards = self.deck.draw(initial_size + 1)
+        self.assertIsInstance(drawed_cards, list)
+        self.assertEqual(len(self.deck), 0)
+        self.assertGreater(initial_size, len(self.deck))
+        for card in drawed_cards:
+            self.assertIsInstance(card, Card)
+            self.assertNotIn(card, self.deck)
+
+    def test_draw_negative_quantity(self):
+        """Teste comprando uma quantidade de cartas menor que 1.
+        """
+
+        initial_size = len(self.deck)
+        drawed_cards1 = self.deck.draw(0)
+        drawed_cards2 = self.deck.draw(-1)
+        self.assertIsNone(drawed_cards1)
+        self.assertIsNone(drawed_cards2)
+        self.assertEqual(len(self.deck), initial_size)
+
+    def test_peek_top_card(self):
+        """Teste se peek(1) retorna a carta do topo do baralho sem removê-la.
+        """
+
+        initial_size = len(self.deck)
+        peeked_card = self.deck.peek(1)
+        self.assertIsInstance(peeked_card, Card)
+        self.assertEqual( peeked_card, self.deck[0])
+        self.assertEqual(len(self.deck), initial_size)
+
+    def test_peek_quantity_exceeds_deck_size(self):
+        """
+        Teste se o método peek retorna todas as cartas do baralho
+        quando a quantidade excede o tamanho do baralho.
+        """
+
+        initial_size = len(self.deck)
+        result = self.deck.peek(initial_size + 1)
+        self.assertIsInstance(result, list)
+        self.assertEqual(len(result), initial_size)
+        for card in result:
+            self.assertIsInstance(card, Card)
+            self.assertIn(card, self.deck)
+
+    def test_peek_zero_quantity(self):
+        """
+        Teste se o método peek retorna None quando recebe uma
+        quantidade igual a zero.
+        """
+
+        result = self.deck.peek(0)
+        self.assertIsNone(result)
+
+    def test_peek_negative_quantity(self):
+        """
+        Teste se o método peek retorna None quando recebe uma
+        quantidade negativa.
+        """
+
+        peeked_cards1 = self.deck.peek(0)
+        peeked_cards2 = self.deck.peek(-1)
+        self.assertIsNone(peeked_cards1)
+        self.assertIsNone(peeked_cards2)
+
