@@ -3,11 +3,6 @@ from bot.games.decks.deck import BaseDeck
 from bot.games.enums.card import RoyalNames, RoyalSuits
 from bot.games.structure.stack import Stack
 from collections.abc import Generator
-from enum import Enum
-from itertools import product
-from typing import List, Union
-from typing import Union, List
-import pytest
 import unittest
 
 
