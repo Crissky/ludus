@@ -192,6 +192,15 @@ class TestDeck(unittest.TestCase):
         with self.assertRaises(IndexError):
             _ = self.deck[len(self.deck)]
 
+    def test_str_returns_card_stack_text_horizontal(self):
+        """
+        Teste se o método __str__ retorna a representação
+        text_horizontal da lista de cartas.
+        """
+
+        expected_str = self.deck.card_stack.text_horizontal
+        assert str(self.deck) == expected_str
+
     def test_repr_1(self):
         """
         Teste se o método __repr__ do BaseDeck retorna uma representação
@@ -268,7 +277,7 @@ class TestDeck(unittest.TestCase):
         initial_size = len(self.deck)
         peeked_card = self.deck.peek(1)
         self.assertIsInstance(peeked_card, Card)
-        self.assertEqual( peeked_card, self.deck[0])
+        self.assertEqual(peeked_card, self.deck[0])
         self.assertEqual(len(self.deck), initial_size)
 
     def test_peek_quantity_exceeds_deck_size(self):
