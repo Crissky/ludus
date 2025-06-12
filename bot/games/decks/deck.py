@@ -13,7 +13,8 @@ class BaseDeck:
         names: Names = None,
         suits: Suits = None,
         quantities: dict = None,
-        shuffle: bool = True
+        shuffle: bool = True,
+        total_decks: int = 1,
     ):
         """Se names ou suits for None, o deck será vazio.
 
@@ -57,6 +58,16 @@ class BaseDeck:
                 f'Combinação inválida de '
                 f'names ({type(names)}) e suits ({type(suits)}).'
             )
+
+        if not isinstance(total_decks, int):
+            raise TypeError(
+                f'total_decks precisa ser um inteiro, não {type(total_decks)}.'
+            )
+        elif total_decks < 1:
+            raise ValueError(
+                f'total_decks precisa ser maior que 0, não {total_decks}.'
+            )
+
         for name, suit in names_suits:
             name_suit_qty = quantities.get((name, suit))
             name_qty = quantities.get(name)
@@ -67,7 +78,7 @@ class BaseDeck:
                 card_qty = name_qty
             else:
                 card_qty = suit_qty
-            for _ in range(card_qty):
+            for _ in range(card_qty * total_decks):
                 self.card_stack.push(Card(name, suit))
 
         if shuffle is True:

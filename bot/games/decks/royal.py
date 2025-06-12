@@ -3,11 +3,16 @@ from bot.games.enums.card import RoyalNames, RoyalSuits
 
 
 class RoyalDeck(BaseDeck):
-    def __init__(self, shuffle=True):
-        super().__init__(names=RoyalNames, suits=RoyalSuits, shuffle=shuffle)
+    def __init__(self, shuffle: bool = True, total_decks: int = 1):
+        super().__init__(
+            names=RoyalNames,
+            suits=RoyalSuits,
+            shuffle=shuffle,
+            total_decks=total_decks,
+        )
 
 
 if __name__ == '__main__':
-    deck = RoyalDeck(shuffle=False)
+    deck = RoyalDeck(shuffle=False, total_decks=2)
     print(len(deck))
     print(deck)

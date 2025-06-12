@@ -3,7 +3,7 @@ from bot.games.enums.card import ColorNames, ColorSuits
 
 
 class ColorDeck(BaseDeck):
-    def __init__(self, shuffle=True):
+    def __init__(self, shuffle: bool = True, total_decks: int = 1):
         quantities = {
             (ColorNames.ZERO, ColorSuits.BLACK): 0,
             (ColorNames.PLUS_ZERO, ColorSuits.BLACK): 4,
@@ -20,12 +20,13 @@ class ColorDeck(BaseDeck):
         super().__init__(
             names=ColorNames,
             suits=ColorSuits,
-            shuffle=shuffle,
             quantities=quantities,
+            shuffle=shuffle,
+            total_decks=total_decks,
         )
 
 
 if __name__ == '__main__':
-    deck = ColorDeck(shuffle=False)
+    deck = ColorDeck(shuffle=False, total_decks=3)
     print(len(deck))
     print(deck)
