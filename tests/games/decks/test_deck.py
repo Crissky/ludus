@@ -309,3 +309,27 @@ class TestDeck(unittest.TestCase):
         self.assertIsNone(peeked_cards1)
         self.assertIsNone(peeked_cards2)
 
+    def test_shuffle_randomizes_card_order(self):
+        """
+        Teste se o método de embaralhamento randomiza
+        a ordem das cartas no baralho.
+
+        Este teste cria um baralho, registra sua ordem inicial, embaralha-o
+        e então verifica se a ordem mudou. Embora haja uma pequena
+        chance de o embaralhamento resultar na mesma ordem,
+        é altamente improvável.
+        """
+
+        initial_order = [card for card in self.deck]
+
+        self.deck.shuffle()
+        shuffled_order = [card for card in self.deck]
+        self.assertNotEqual(initial_order, shuffled_order)
+
+    def test_shuffle_empty_deck(self):
+        """
+        Teste embaralhar um baralho vazio para garantir que isso
+        não gere uma exceção.
+        """
+
+        self.empty_deck.shuffle()
