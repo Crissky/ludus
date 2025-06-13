@@ -126,6 +126,19 @@ class TestDeck(unittest.TestCase):
         self.assertIsInstance(deck2.card_stack, Stack)
         self.assertIsInstance(deck3.card_stack, Stack)
 
+    def test_init_total_decks(self):
+        """Teste a inicialização do BaseDeck com total_decks maior que 1.
+        """
+
+        total_decks1 = 2
+        total_decks2 = 10
+        size_deck = len(RoyalNames) * len(RoyalSuits)
+        deck1 = BaseDeck(RoyalNames, RoyalSuits, total_decks=total_decks1)
+        deck2 = BaseDeck(RoyalNames, RoyalSuits, total_decks=total_decks2)
+
+        self.assertEqual(len(deck1), size_deck * total_decks1)
+        self.assertEqual(len(deck2), size_deck * total_decks2)
+
     def test_iter_empty_deck(self):
         """
         Teste o método __iter__ com um deck vazio para garantir que
