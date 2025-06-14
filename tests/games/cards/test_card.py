@@ -403,3 +403,42 @@ class TestCard(unittest.TestCase):
 
         card = Card(RoyalNames.ACE, RoyalSuits.SPADES)
         self.assertEqual(card.value, 0)
+
+    def test_unset_wild(self):
+        """
+        Teste o método unset_wild para garantir que ele redefina
+        corretamente os atributos wild_name e wild_suit para None.
+        Este teste cria um curinga, define seus valores curinga,
+        depois os desfaz e verifica o resultado.
+        """
+
+        card = Card(FullRoyalNames.JOKER, FullRoyalSuits.JOKER)
+        card.set_wild(FullRoyalNames.ACE, FullRoyalSuits.SPADES)
+        self.assertEqual(card.wild_name, FullRoyalNames.ACE)
+        self.assertEqual(card.name, FullRoyalNames.ACE)
+        self.assertEqual(card.wild_suit, FullRoyalSuits.SPADES)
+        self.assertEqual(card.suit, FullRoyalSuits.SPADES)
+
+        card.unset_wild()
+        self.assertIsNone(card.wild_name)
+        self.assertIsNone(card.wild_suit)
+        self.assertEqual(card.name, FullRoyalNames.JOKER)
+        self.assertEqual(card.suit, FullRoyalSuits.JOKER)
+
+    def test_unset_wild_on_non_wild_card(self):
+        """
+        Teste unset_wild() em uma carta não curinga.
+        Este teste verifica se a chamada de unset_wild() em uma carta comum
+        (não curinga) não altera suas propriedades.
+        """
+
+        card = Card(RoyalNames.ACE, RoyalSuits.SPADES)
+        original_name = card.name
+        original_suit = card.suit
+
+        card.unset_wild()
+
+        self.assertEqual(card.name, original_name)
+        self.assertEqual(card.suit, original_suit)
+        self.assertIsNone(card.wild_name)
+        self.assertIsNone(card.wild_suit)

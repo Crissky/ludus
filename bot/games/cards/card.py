@@ -67,6 +67,10 @@ class Card:
             )
         self.wild_suit = suit
 
+    def unset_wild(self):
+        self.wild_name = None
+        self.wild_suit = None
+
     @property
     def text(self):
         return f'{self.suit.value}{self.name.value}'
