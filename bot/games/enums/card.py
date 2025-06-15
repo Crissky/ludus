@@ -154,4 +154,10 @@ class StrippedSpanishNames(Names):
     KING = "12"
 
 
-WILD_SUITS = [FullRoyalSuits.JOKER, ColorSuits.BLACK, ElementalSuits.VOID]
+WILD_SUITS = [
+    FullRoyalSuits.JOKER,
+    ColorSuits.BLACK,
+    ElementalSuits.VOID,
+    ColorNames.PLUS_ZERO,
+    FlipColorNames.PLUS_ZERO,
+]
