@@ -1,4 +1,5 @@
 import re
+from typing import Union
 from bot.functions.enumeration import get_enum_index
 from bot.games.enums.card import WILD_SUITS, Names, Suits
 
@@ -20,7 +21,7 @@ class Card:
             return False
         return self.name == other.name and self.suit == other.suit
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash((self.name, self.suit))
 
     def __str__(self):
@@ -29,7 +30,7 @@ class Card:
     def __repr__(self):
         return f'{self.__class__.__name__}({self.text})'
 
-    def equals_name(self, other) -> bool:
+    def equals_name(self, other: Union['Card', Names]) -> bool:
         if isinstance(other, Names):
             return self.name == other
         elif isinstance(other, Card):
@@ -37,7 +38,7 @@ class Card:
         else:
             return False
 
-    def equals_suit(self, other) -> bool:
+    def equals_suit(self, other: Union['Card', Suits]) -> bool:
         if isinstance(other, Suits):
             return self.suit == other
         elif isinstance(other, Card):
