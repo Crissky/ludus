@@ -40,6 +40,14 @@ class ColorSuits(Suits):
     BLACK = "⬛"
 
 
+class FlipColorSuits(Suits):
+    ORAGE = "🟠"
+    PURPLE = "🟣"
+    BROWN = "🟤"
+    WHITE = "⚪"
+    BLACK = "🔳"
+
+
 class ElementalSuits(Suits):
     FIRE = "🔥"
     WATER = "🌊"
@@ -98,6 +106,24 @@ class ColorNames(Names):
     PLUS_ZERO = ""
     PLUS_TWO = "+2"
     PLUS_FOUR = "+4"
+
+
+class FlipColorNames(Names):
+    ZERO = "0"
+    ONE = "1"
+    TWO = "2"
+    THREE = "3"
+    FOUR = "4"
+    FIVE = "5"
+    SIX = "6"
+    SEVEN = "7"
+    EIGHT = "8"
+    NINE = "9"
+    BLOCK_ALL = "⟳"
+    REVERSE = "🗘"  # "🌀"
+    PLUS_ZERO = ""
+    PLUS_FIVE = "+5"
+    PLUS_COLOR = "⏫"
 
 
 class SpanishNames(Names):
