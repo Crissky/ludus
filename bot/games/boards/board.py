@@ -62,6 +62,25 @@ class BaseBoard(ABC):
     def next_turn_phase(self):
         self.next_turn()
 
+    def add_report(self, report: Report):
+        self.log.add(report)
+
+    def show_board(self) -> str:
+        text = self.game_header
+        text += f'Turn: {self.turn}, Currrent Player: {self.player_turn}\n\n'
+        for i, player in enumerate(self.player_list, start=1):
+            text += f'{i}: {player}\n'
+        text += f'\n{self.log}\n'
+
+        return text
+
+    def show_player_board(self, player: Player) -> str:
+        text = self.game_header
+        text += f'Player: {player.name}\n\n'
+        text += f'{self.log}\n'
+
+        return text
+
     @property
     def report(self):
         return Report(self.name, self.player_list)
@@ -69,6 +88,10 @@ class BaseBoard(ABC):
     @property
     def total_players(self) -> int:
         return len(self.player_list)
+
+    @property
+    def game_header(self) -> str:
+        return NORMAL_SECTION_HEAD_1.format(f'Game: {self.name}\n\n')
 
 
 if __name__ == '__main__':
