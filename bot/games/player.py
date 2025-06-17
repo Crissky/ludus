@@ -1,7 +1,11 @@
+from bot.games.hands.hand import BaseHand
+
+
 class Player:
-    def __init__(self, id: str, name: str):
+    def __init__(self, id: str, name: str, hand: BaseHand = None):
         self.id = str(id)
         self.name = name
+        self.hand = hand
 
     def __eq__(self, other):
         if isinstance(other, Player):
@@ -11,14 +15,25 @@ class Player:
     def __hash__(self):
         return hash(self.id)
 
+    def __len__(self):
+        if self.hand is None:
+            return 0
+        return len(self.hand)
+
     def __str__(self):
         return self.name
 
     def __repr__(self):
         return f'Player(id={self.id}, name={self.name})'
 
+    def set_hand(self, hand: BaseHand):
+        self.hand = hand
+
     @property
     def user_id(self):
         return self.id
-
     player_id = user_id
+
+    @property
+    def user_name(self):
+        return self.name
