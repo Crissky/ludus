@@ -10,6 +10,8 @@ class Log:
         log_text = ''
         for i, report in enumerate(self.logs, start=1):
             log_text += f'{i}: {report}\n'
+        
+        return log_text
 
     def add(self, report: Report):
         self.logs.append(report)
