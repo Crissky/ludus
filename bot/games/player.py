@@ -27,7 +27,10 @@ class Player:
         return f'Player(id={self.id}, name={self.name})'
 
     def set_hand(self, hand: BaseHand):
-        self.hand = hand
+        if isinstance(hand, BaseHand):
+            self.hand = hand
+        else:
+            raise TypeError('hand precisa ser do tipo BaseHand.')
 
     @property
     def user_id(self):
