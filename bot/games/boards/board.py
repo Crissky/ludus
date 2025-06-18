@@ -91,7 +91,7 @@ class BaseBoard(ABC):
 
     @property
     def game_header(self) -> str:
-        return NORMAL_SECTION_HEAD_1.format(f'Game: {self.name}\n\n')
+        return NORMAL_SECTION_HEAD_1.format(f'Game: {self.name}') + '\n\n'
 
 
 if __name__ == '__main__':
