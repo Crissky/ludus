@@ -16,7 +16,7 @@ class BaseHand:
         cards: Union[List[Card], Card],
         discard_index: int = -1
     ):
-        if len(self) >= self.max_size:
+        if len(self) >= self.max_size and self.max_size > 0:
             cards_len = len(cards) if isinstance(cards, list) else 1
             quantity = len(self) + cards_len - self.max_size
             self.discard(discard_index, quantity)
