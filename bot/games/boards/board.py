@@ -9,13 +9,14 @@ from bot.games.report import Report
 
 class BaseBoard(ABC):
     def __init__(self, name: str, player_list: List[Player]):
+        self.id = id(self)
         self.name = name
         self.player_list = player_list
 
         self.turn = 1
         self.is_clockwise = True
         self.player_turn = self.player_list[0]
-        self.log = Log(self)
+        self.log = Log()
 
     def __str__(self):
         text = NORMAL_SECTION_HEAD_1.format(f'Game: {self.name}\n\n')
@@ -62,7 +63,23 @@ class BaseBoard(ABC):
     def next_turn_phase(self):
         self.next_turn()
 
-    def add_report(self, report: Report):
+    def add_log(
+        self,
+        report: Report = None,
+        player: Player = None,
+        action: str = None,
+    ):
+        if player is None and action is not None:
+            player = self.player_turn
+
+        if player is not None and action is not None:
+            report = Report(
+                game_id=self.id,
+                player=player,
+                action=action,
+                turn=self.turn
+            )
+
         self.log.add(report)
 
     def show_board(self) -> str:
