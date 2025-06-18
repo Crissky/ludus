@@ -409,7 +409,7 @@ class TestDeck(unittest.TestCase):
         self.assertEqual(len(deck), initial_size + 1)
         self.assertEqual(deck[-1], new_card)
         self.assertIn(new_card, deck)
-    
+
     def test_add_bottom_multiple_cards(self):
         """
         Teste adicionando uma múltiplas cards ao deck na parte inferior.

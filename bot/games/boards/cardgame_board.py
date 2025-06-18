@@ -114,7 +114,6 @@ class CardGameBoard(BaseBoard):
 
 if __name__ == '__main__':
     from bot.games.decks.royal import RoyalDeck
-    from random import choice
 
     p1 = Player('0001', 'Player 1')
     p2 = Player('0002', 'Player 2')

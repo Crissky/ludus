@@ -1,7 +1,6 @@
 '''Arquivo principal que executa o telegram-bot.
 '''
 
-from datetime import datetime, time, timedelta
 from decouple import config
 
 from telegram.ext import Application

@@ -1,4 +1,3 @@
-from typing import List
 from bot.games.player import Player
 
 

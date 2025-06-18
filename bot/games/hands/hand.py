@@ -1,5 +1,5 @@
 from random import randint
-from typing import Generator, List, Union
+from typing import List, Union
 from bot.games.cards.card import Card
 
 
