@@ -39,6 +39,10 @@ class LinearDataStructure(ABC):
     def peek(self, quantity: int = 1) -> Union[Card, List[Card]]:
         raise NotImplementedError('Subclasse deve implementar peek')
 
+    @abstractmethod
+    def peek_bottom(self, quantity: int = 1) -> Union[Card, List[Card]]:
+        raise NotImplementedError('Subclasse deve implementar peek_bottom')
+
     @property
     def is_empty(self) -> bool:
         return len(self) == 0

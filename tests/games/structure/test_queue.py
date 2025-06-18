@@ -92,7 +92,7 @@ class TestQueue(unittest.TestCase):
 
     # Tests Abstract Methods
     def test_push_single_card(self):
-        """Teste push um único Card para a fila.
+        """Teste push um único Card para a queue.
         """
 
         self.queue.push(self.card1)
@@ -100,7 +100,7 @@ class TestQueue(unittest.TestCase):
         self.assertEqual(self.queue[0], self.card1)
 
     def test_push_multiple_cards(self):
-        """Teste push múltiplos Cards para a fila.
+        """Teste push múltiplos Cards para a queue.
         """
 
         self.queue.push(self.card1)
@@ -111,7 +111,7 @@ class TestQueue(unittest.TestCase):
         self.assertEqual(self.queue[2], self.card3)
 
     def test_push_no_cards(self):
-        """Teste push nenhum Card para a fila.
+        """Teste push nenhum Card para a queue.
         """
 
         initial_length = len(self.queue)
@@ -119,7 +119,7 @@ class TestQueue(unittest.TestCase):
         self.assertEqual(len(self.queue), initial_length)
 
     def test_push_bottom_single_card(self):
-        """Teste push um único Card para a fila.
+        """Teste push um único Card para a queue.
         """
 
         self.queue.push(self.card1)
@@ -129,7 +129,7 @@ class TestQueue(unittest.TestCase):
         self.assertEqual(self.queue[1], self.card1)
 
     def test_push_bottom_multiple_cards(self):
-        """Teste push múltiplos Cards para a fila.
+        """Teste push múltiplos Cards para a queue.
         """
 
         self.queue.push_botton(self.card1)
@@ -140,7 +140,7 @@ class TestQueue(unittest.TestCase):
         self.assertEqual(self.queue[2], self.card1)
 
     def test_push_bottom_no_cards(self):
-        """Teste push nenhum Card para a fila.
+        """Teste push nenhum Card para a queue.
         """
 
         initial_length = len(self.queue)
@@ -313,3 +313,60 @@ class TestQueue(unittest.TestCase):
         lazy_text = self.queue.text_lazy
         self.assertIsInstance(lazy_text, Generator)
         self.assertEqual(list(lazy_text), [])
+
+    def test_peek_bottom_single_item(self):
+        """
+        Teste o método peek_bottom quando a quantidade for 1 e a queue
+        não estiver vazia.
+
+        Este teste verifica se peek_bottom retorna o último item da queue
+        sem removê-lo quando a quantidade for 1 e a queue não estiver vazia.
+        """
+        self.queue.push(self.card1, self.card2, self.card3)
+        peeked = self.queue.peek_bottom()
+        self.assertEqual(peeked, self.card3)
+        self.assertEqual(len(self.queue), 3)
+        self.assertEqual(self.queue[-1], self.card3)
+
+    def test_peek_bottom_empty_queue(self):
+        """
+        Teste peek_bottom em uma queue vazia com quantidade=1 e quantidade>1.
+
+        Este teste abrange o caso em que a queue está vazia,
+        o que deve retornar None, independentemente do parâmetro quantidade.
+        """
+
+        peeked1 = self.queue.peek_bottom()
+        peeked2 = self.queue.peek_bottom(2)
+        self.assertIsNone(peeked1)
+        self.assertIsNone(peeked2)
+
+    def test_peek_bottom_multiple_items(self):
+        """
+        Teste o método peek_bottom com vários itens na queue.
+
+        Este teste verifica se peek_bottom retorna o número correto de itens
+        do final da queue sem modificar o conteúdo da queue.
+        """
+
+        self.queue.push(self.card1, self.card2, self.card3)
+        peeked = self.queue.peek_bottom(2)
+
+        self.assertIsInstance(peeked, list)
+        self.assertEqual(len(peeked), 2)
+        self.assertEqual(peeked[0], self.card2)
+        self.assertEqual(peeked[1], self.card3)
+        self.assertEqual(len(self.queue), 3)
+        self.assertEqual(self.queue[0], self.card1)
+        self.assertEqual(self.queue[1], self.card2)
+        self.assertEqual(self.queue[2], self.card3)
+
+    def test_peek_bottom_quantity_zero(self):
+        """
+        Teste peek_bottom com quantity=0 para garantir que retorne None.
+        Isso testa o caso extremo em que uma quantidade inválida é fornecida.
+        """
+
+        self.queue.push(self.card1)
+        result = self.queue.peek_bottom(0)
+        self.assertIsNone(result)

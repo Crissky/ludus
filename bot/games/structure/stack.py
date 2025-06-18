@@ -39,3 +39,11 @@ class Stack(LinearDataStructure):
             return list(peeked_items)
         else:
             return None
+
+    def peek_bottom(self, quantity: int = 1) -> Union[Card, List[Card]]:
+        if quantity == 1 and not self.is_empty:
+            return self.items[0]
+        elif quantity > 1 and not self.is_empty:
+            return self.items[:quantity]
+        else:
+            return None

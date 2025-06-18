@@ -20,7 +20,7 @@ class TestStack(unittest.TestCase):
 
     # Tests to Super Class
     def test_init(self):
-        """Teste inicialização da pilha.
+        """Teste inicialização da stack.
         """
 
         self.assertIsInstance(self.stack, Stack)
@@ -42,7 +42,7 @@ class TestStack(unittest.TestCase):
         self.assertEqual(stack[2], self.card1)
 
     def test_iter_yields_cards_in_order(self):
-        """Teste se o método _iter_ produz cartas na ordem correta.
+        """Teste se o método _iter_ produz cards na ordem correta.
         """
 
         stack = Stack(*self.card_list)
@@ -98,7 +98,7 @@ class TestStack(unittest.TestCase):
 
     # Tests Abstract Methods
     def test_push_multiple_cards(self):
-        """Teste push múltiplos Cards para a pilha.
+        """Teste push múltiplos Cards para a stack.
         """
 
         self.stack.push(self.card1, self.card2, self.card3)
@@ -108,7 +108,7 @@ class TestStack(unittest.TestCase):
         self.assertEqual(self.stack[2], self.card1)
 
     def test_push_no_cards(self):
-        """Teste push nenhum Card para a pilha.
+        """Teste push nenhum Card para a stack.
         """
 
         initial_length = len(self.stack)
@@ -145,7 +145,7 @@ class TestStack(unittest.TestCase):
         self.assertEqual(len(self.stack), initial_length)
 
     def test_pop_single_item(self):
-        """Teste de pop de um único item da pilha.
+        """Teste de pop de um único item da stack.
         """
 
         self.stack.push(self.card1, self.card2)
@@ -155,7 +155,7 @@ class TestStack(unittest.TestCase):
         self.assertEqual(self.stack[0], self.card1)
 
     def test_pop_multiple_items(self):
-        """Teste de pop de múltiplos itens da pilha.
+        """Teste de pop de múltiplos itens da stack.
         """
 
         self.stack.push(self.card1, self.card2, self.card3)
@@ -168,7 +168,7 @@ class TestStack(unittest.TestCase):
         self.assertEqual(self.stack[0], self.card1)
 
     def test_pop_empty_stack(self):
-        """Teste de pop de uma pilha vazia.
+        """Teste de pop de uma stack vazia.
         """
 
         result = self.stack.pop()
@@ -184,14 +184,14 @@ class TestStack(unittest.TestCase):
         self.assertEqual(len(self.stack.items), 1)
 
     def test_peek_empty_stack(self):
-        """Teste peek uma pilha vazia.
+        """Teste peek uma stack vazia.
         """
 
         result = self.stack.peek()
         self.assertIsNone(result)
 
     def test_peek_single_item(self):
-        """Teste peek um único item da pilha.
+        """Teste peek um único item da stack.
         """
 
         self.stack.push(self.card1, self.card2)
@@ -202,7 +202,7 @@ class TestStack(unittest.TestCase):
         self.assertEqual(len(self.stack.items), 2)
 
     def test_peek_multiple_items(self):
-        """Teste peek múltiplos itens da pilha.
+        """Teste peek múltiplos itens da stack.
         """
 
         self.stack.push(self.card1, self.card2, self.card3)
@@ -217,7 +217,7 @@ class TestStack(unittest.TestCase):
         self.assertEqual(len(self.stack.items), 3)
 
     def test_peek_more_than_available(self):
-        """Test peek mais itens que os disponíveis na pilha.
+        """Test peek mais itens que os disponíveis na stack.
         """
 
         self.stack.push(self.card1, self.card2)
@@ -230,7 +230,7 @@ class TestStack(unittest.TestCase):
         self.assertEqual(self.stack[1], self.card1)
 
     def test_iter_yields_cards_in_reverse_order(self):
-        """Teste se o método __iter__ produz cartas na ordem inversa.
+        """Teste se o método __iter__ produz cards na ordem inversa.
         """
 
         self.stack.push(self.card1, self.card2, self.card3)
@@ -296,9 +296,9 @@ class TestStack(unittest.TestCase):
     def test_text_lazy(self):
         """
         Teste se a propriedade text_lazy retorna um gerador de valores de
-        texto de cartas.
+        texto de cards.
 
-        Verifica se o gerador produz o texto correto para cada carta
+        Verifica se o gerador produz o texto correto para cada card
         na estrutura.
         """
 
@@ -321,3 +321,74 @@ class TestStack(unittest.TestCase):
         lazy_text = self.stack.text_lazy
         self.assertIsInstance(lazy_text, Generator)
         self.assertEqual(list(lazy_text), [])
+
+    def test_peek_bottom_single_card(self):
+        """
+        Teste o método peek_bottom quando a stack tiver apenas uma card.
+
+        Este teste verifica se peek_bottom retorna a card correta quando
+        a stack não estiver vazia e a quantidade for 1 (padrão).
+        """
+        self.stack.push(self.card1)
+        result = self.stack.peek_bottom()
+        self.assertEqual(result, self.card1)
+        self.assertEqual(len(self.stack), 1)
+
+    def test_peek_bottom_empty_stack(self):
+        """
+        Teste o método peek_bottom quando a stack estiver vazia.
+
+        Este teste abrange o caso em que a stack está vazia e a quantidade
+        é maior que 1, o que deve retornar None.
+        """
+
+        peeked1 = self.stack.peek_bottom()
+        peeked2 = self.stack.peek_bottom(2)
+        self.assertIsNone(peeked1)
+        self.assertIsNone(peeked2)
+
+    def test_peek_bottom_multiple_cards(self):
+        """
+        Teste o método peek_bottom ao solicitar várias cards de uma
+        stack não vazia.
+
+        Este teste verifica se:
+        1. O método retorna uma lista de cards quando a quantidade é > 1
+        2. A lista retornada contém o número correto de cards
+        3. As cards estão na ordem correta (de baixo para cima)
+        4. A stack original permanece inalterada após a operação
+        """
+        self.stack.push(*self.card_list)
+        peeked = self.stack.peek_bottom(2)
+
+        self.assertIsInstance(peeked, list)
+        self.assertEqual(len(peeked), 2)
+        self.assertEqual(peeked[0], self.card1)
+        self.assertEqual(peeked[1], self.card2)
+        self.assertEqual(len(self.stack), 3)
+        self.assertEqual(self.stack[0], self.card3)
+        self.assertEqual(self.stack[1], self.card2)
+        self.assertEqual(self.stack[2], self.card1)
+
+    def test_peek_bottom_quantity_exceeds_stack_size(self):
+        """
+        Teste o método peek_bottom quando a quantidade exceder o
+        número de itens na stack.
+
+        Isso testa o caso extremo em que a quantidade solicitada
+        é maior que o tamanho da stack.
+        """
+
+        self.stack.push(self.card1, self.card2)
+        result = self.stack.peek_bottom(quantity=3)
+        self.assertEqual(result, [self.card1, self.card2])
+
+    def test_peek_bottom_quantity_zero(self):
+        """
+        Teste o método peek_bottom com quantidade=0.
+        Isso testa o caso extremo em que o parâmetro quantidade é zero.
+        """
+
+        self.stack.push(self.card1)
+        peeked = self.stack.peek_bottom(quantity=0)
+        self.assertIsNone(peeked)

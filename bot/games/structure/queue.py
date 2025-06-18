@@ -27,3 +27,11 @@ class Queue(LinearDataStructure):
             return self.items[:quantity]
         else:
             return None
+
+    def peek_bottom(self, quantity=1):
+        if quantity == 1 and not self.is_empty:
+            return self.items[-1]
+        elif quantity > 1 and not self.is_empty:
+            return self.items[-quantity:]
+        else:
+            return None
