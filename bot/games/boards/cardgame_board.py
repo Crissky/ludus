@@ -1,5 +1,6 @@
 from typing import List
 from bot.games.boards.board import BaseBoard
+from bot.games.cards.card import Card
 from bot.games.decks.deck import BaseDeck
 from bot.games.hands.hand import BaseHand
 from bot.games.player import Player
@@ -16,28 +17,125 @@ class CardGameBoard(BaseBoard):
         hand_kwargs: dict = None
     ):
         super().__init__(name, player_list)
-        if hand_kwargs is None:
-            hand_kwargs = {}
-        self.create_draw_pile(draw_pile)
-        self.create_discard_pile(total_discard_pile)
-        self.create_hands(player_list, hand_kwargs)
+        self.total_discard_pile = total_discard_pile
+        self.initial_hand_size = initial_hand_size
+        self.hand_kwargs = hand_kwargs
+        self.draw_pile = None
+        self.discard_piles = None
 
-        self.distribute_cards(player_list, initial_hand_size)
+        if self.hand_kwargs is None:
+            self.hand_kwargs = {}
+
+        self.create_draw_pile(draw_pile)
 
     def create_draw_pile(self, draw_pile: BaseDeck):
         self.draw_pile = draw_pile
-        self.draw_pile.shuffle()
+        # self.draw_pile.shuffle()
+
+    def create_hands(self, player_list: List[Player], hand_kwargs: dict):
+        for player in player_list:
+            player_hand = BaseHand(**hand_kwargs)
+            player.set_hand(player_hand)
+
+    def distribute_cards(
+        self,
+        player_list: List[Player],
+        initial_hand_size: int
+    ):
+        for _ in range(initial_hand_size):
+            for player in player_list:
+                card = self.draw()
+                player.hand.add_card(card)
 
     def create_discard_pile(self, total_discard_pile: int):
         self.discard_piles = [BaseDeck() for _ in range(total_discard_pile)]
 
-    def create_hands(self, player_list: List[Player], hand_kwargs: dict):
-        self.player_hands = {
-            player: BaseHand(**hand_kwargs)
-            for player in player_list
-        }
+        for discard_pile in self.discard_piles:
+            cards = self.draw()
+            discard_pile.add(*cards)
 
-    def distribute_cards(self, player_list, initial_hand_size):
-        for i in range(initial_hand_size):
-            for player in player_list:
-                self.player_hands[player].add_card(self.draw_pile.draw())
+    def draw(self, quantity: int = 1) -> List[Card]:
+        cards = self.draw_pile.draw(quantity=quantity)
+        if isinstance(cards, Card):
+            cards = [cards]
+        elif cards is None:
+            cards = self.draw_when_empty(quantity=quantity)
+
+        return cards
+
+    def draw_when_empty(self, quantity: int = 1) -> List[Card]:
+        raise ValueError('Sem cartas para comprar, pois o baralho está vazio.')
+
+    def show_board(self) -> str:
+        peek_discard_piles = ''
+        if self.discard_piles is not None:
+            peek_discard_piles = ', '.join((
+                str(discard_pile.peek())
+                for discard_pile in self.discard_piles
+            ))
+
+        text = self.game_header
+        text += f'Turn: {self.turn}, Currrent Player: {self.player_turn}\n\n'
+        text += f'Draw Pile: {len(self.draw_pile)}\n'
+        text += f'Discard Pile: {peek_discard_piles}\n'
+
+        for i, player in enumerate(self.player_list, start=1):
+            quantity_hand = len(player)
+            text += f'{i}: {player}, Hand: {quantity_hand}\n'
+        text += f'\n{self.log}\n'
+
+        return text
+
+    def show_player_board(self, player: Player) -> str:
+        text = self.game_header
+        text += f'Player: {player.name}\n\n'
+        text += f'{self.log}\n'
+
+        return text
+
+    # Abstract Methods
+    def player_options(self, player: Player = None):
+        ...
+
+    def start_game(self):
+        self.create_hands(self.player_list, self.hand_kwargs)
+        self.distribute_cards(self.player_list, self.initial_hand_size)
+        self.create_discard_pile(self.total_discard_pile)
+
+    def start_phase(self):
+        ...
+
+    def play_phase(self):
+        ...
+
+    def end_phase(self):
+        ...
+
+
+if __name__ == '__main__':
+    from bot.games.decks.royal import RoyalDeck
+    from random import choice
+
+    p1 = Player('0001', 'Player 1')
+    p2 = Player('0002', 'Player 2')
+    p3 = Player('0003', 'Player 3')
+    p4 = Player('0004', 'Player 4')
+
+    deck = RoyalDeck(shuffle=False)
+
+    board = CardGameBoard(
+        name='Card Game Test',
+        player_list=[p1, p2, p3, p4],
+        draw_pile=deck,
+    )
+
+    print(board.show_board())
+    print('START GAME', '-'*68)
+
+    board.start_game()
+    print(board.show_board())
+    print('DRAW', '-'*74)
+
+    board.draw()
+    print(board.show_board())
+    print('-'*79)
