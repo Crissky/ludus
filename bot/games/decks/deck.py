@@ -105,5 +105,14 @@ class BaseDeck:
     def peek(self, quantity: int = 1) -> Union[Card, List[Card]]:
         return self.card_stack.peek(quantity=quantity)
 
+    def peek_bottom(self, quantity: int = 1) -> Union[Card, List[Card]]:
+        return self.card_stack.peek_bottom(quantity=quantity)
+
+    def add(self, *cards: Card):
+        self.card_stack.push(*cards)
+
+    def add_bottom(self, *cards: Card):
+        self.card_stack.push_botton(*cards)
+
     def shuffle(self):
         self.card_stack.shuffle()

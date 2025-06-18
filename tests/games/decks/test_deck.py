@@ -104,7 +104,7 @@ class TestDeck(unittest.TestCase):
     def test_init_no_quantities(self):
         """
         Teste a inicialização do BaseDeck quando quantity for None.
-        Deve criar uma carta para cada combinação de Name x Suit
+        Deve criar uma card para cada combinação de Name x Suit
         """
 
         deck = BaseDeck(names=RoyalNames, suits=RoyalSuits, shuffle=False)
@@ -181,7 +181,7 @@ class TestDeck(unittest.TestCase):
 
     def test_getitem(self):
         """
-        Teste se o método __getitem__ do BaseDeck retorna a carta
+        Teste se o método __getitem__ do BaseDeck retorna a card
         correta no índice fornecido.
         """
 
@@ -224,12 +224,12 @@ class TestDeck(unittest.TestCase):
 
     def test_draw_single_card(self):
         """
-        Teste a compra de uma única carta do baralho.
+        Teste a compra de uma única card do deck.
 
         Este teste verifica se:
         1. O método draw retorna um único objeto Card quando a quantidade é 1.
-        2. A carta comprada é removida do baralho.
-        3. O tamanho do baralho diminui em 1 após a retirada.
+        2. A card comprada é removida do deck.
+        3. O tamanho do deck diminui em 1 após a retirada.
         """
 
         initial_size = len(self.deck)
@@ -241,9 +241,9 @@ class TestDeck(unittest.TestCase):
 
     def test_draw_empty_deck(self):
         """
-        Teste a compra de um baralho vazio.
+        Teste a compra de um deck vazio.
 
-        Este teste verifica se a tentativa de compra de um baralho vazio
+        Este teste verifica se a tentativa de compra de um deck vazio
         não gera um IndexError e retorna None.
         """
 
@@ -251,10 +251,10 @@ class TestDeck(unittest.TestCase):
 
     def test_draw_more_cards_than_available(self):
         """
-        Teste comprando mais cartas do que as disponíveis no baralho.
+        Teste comprando mais cartas do que as disponíveis no deck.
 
         Este teste verifica se tentar comprar mais cartas do que
-        as presentes no baralho retorna uma lista com as cartas disponíveis no
+        as presentes no deck retorna uma lista com as cartas disponíveis no
         deck.
         """
 
@@ -279,7 +279,7 @@ class TestDeck(unittest.TestCase):
         self.assertEqual(len(self.deck), initial_size)
 
     def test_peek_top_card(self):
-        """Teste se peek(1) retorna a carta do topo do baralho sem removê-la.
+        """Teste se peek(1) retorna a card do topo do deck sem removê-la.
         """
 
         initial_size = len(self.deck)
@@ -290,8 +290,8 @@ class TestDeck(unittest.TestCase):
 
     def test_peek_quantity_exceeds_deck_size(self):
         """
-        Teste se o método peek retorna todas as cartas do baralho
-        quando a quantidade excede o tamanho do baralho.
+        Teste se o método peek retorna todas as cartas do deck
+        quando a quantidade excede o tamanho do deck.
         """
 
         initial_size = len(self.deck)
@@ -325,9 +325,9 @@ class TestDeck(unittest.TestCase):
     def test_shuffle_randomizes_card_order(self):
         """
         Teste se o método de embaralhamento randomiza
-        a ordem das cartas no baralho.
+        a ordem das cartas no deck.
 
-        Este teste cria um baralho, registra sua ordem inicial, embaralha-o
+        Este teste cria um deck, registra sua ordem inicial, embaralha-o
         e então verifica se a ordem mudou. Embora haja uma pequena
         chance de o embaralhamento resultar na mesma ordem,
         é altamente improvável.
@@ -341,8 +341,94 @@ class TestDeck(unittest.TestCase):
 
     def test_shuffle_empty_deck(self):
         """
-        Teste embaralhar um baralho vazio para garantir que isso
+        Teste embaralhar um deck vazio para garantir que isso
         não gere uma exceção.
         """
 
         self.empty_deck.shuffle()
+
+    def test_add_single_card(self):
+        """
+        Teste adicionando uma única card ao deck.
+
+        Este teste verifica se:
+        1. Uma única card pode ser adicionada ao deck.
+        2. O tamanho do deck aumenta em 1 após a adição da card.
+        3. A card adicionada está presente no deck.
+        """
+
+        deck = self.deck
+        initial_size = len(deck)
+        new_card = self.card0
+
+        deck.add(new_card)
+
+        self.assertEqual(len(deck), initial_size + 1)
+        self.assertEqual(deck[0], new_card)
+        self.assertIn(new_card, deck)
+
+    def test_add_multiple_cards(self):
+        """
+        Teste adicionando uma múltiplas cards ao deck.
+
+        Este teste verifica se:
+        1. Uma única card pode ser adicionada ao deck.
+        2. O tamanho do deck aumenta em 1 após a adição da card.
+        3. A card adicionada está presente no deck.
+        """
+
+        deck = self.empty_deck
+        initial_size = len(deck)
+        new_cards = [self.card0, self.card1, self.card2]
+
+        deck.add(self.card3)
+        deck.add(*new_cards)
+
+        self.assertEqual(len(deck), initial_size + 4)
+        self.assertEqual(deck.draw(), new_cards[2])
+        self.assertEqual(deck.draw(), new_cards[1])
+        self.assertEqual(deck.draw(), new_cards[0])
+        self.assertEqual(deck.draw(), self.card3)
+
+    def test_add_bottom_single_card(self):
+        """
+        Teste adicionando uma única card ao deck na parte inferior.
+
+        Este teste verifica se:
+        1. Uma única card pode ser adicionada ao deck na parte inferior.
+        2. O tamanho do deck aumenta em 1 após a adição da card.
+        3. A card adicionada está presente no deck.
+        """
+
+        deck = self.deck
+        initial_size = len(deck)
+        new_card = self.card0
+
+        deck.add_bottom(new_card)
+
+        self.assertEqual(len(deck), initial_size + 1)
+        self.assertEqual(deck[-1], new_card)
+        self.assertIn(new_card, deck)
+    
+    def test_add_bottom_multiple_cards(self):
+        """
+        Teste adicionando uma múltiplas cards ao deck na parte inferior.
+
+        Este teste verifica se:
+        1. Uma única card pode ser adicionada ao deck na parte inferior.
+        2. O tamanho do deck aumenta em 1 após a adição da card.
+        3. A card adicionada está presente no deck.
+        """
+
+        deck = self.empty_deck
+        initial_size = len(deck)
+        new_cards = [self.card0, self.card1, self.card2]
+
+        deck.add(self.card3)
+        deck.add_bottom(*new_cards)
+
+        self.assertEqual(len(deck), initial_size + 4)
+        self.assertEqual(deck.draw(), self.card3)
+        self.assertEqual(deck.draw(), new_cards[2])
+        self.assertEqual(deck.draw(), new_cards[1])
+        self.assertEqual(deck.draw(), new_cards[0])
