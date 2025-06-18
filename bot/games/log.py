@@ -3,14 +3,14 @@ from bot.games.report import Report
 
 class Log:
     def __init__(self, size: int = 10):
-        self.size = size
         self.logs = []
+        self.size = size
 
     def __str__(self):
         log_text = ''
         for i, report in enumerate(self.logs, start=1):
             log_text += f'{i}: {report}\n'
-        
+
         return log_text
 
     def add(self, report: Report):
