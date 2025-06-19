@@ -1,3 +1,5 @@
+from typing import Generator
+from bot.games.cards.card import Card
 from bot.games.hands.hand import BaseHand
 
 
@@ -16,6 +18,15 @@ class Player:
 
     def __hash__(self):
         return hash(self.id)
+
+    def __init__(self) -> Generator[Card]:
+        yield from self.hand
+
+    def __getitem__(self, index):
+        return self.hand[index]
+
+    def __setitem__(self, index, value):
+        self.hand[index] = value
 
     def __len__(self):
         if self.hand is None:
