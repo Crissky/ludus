@@ -16,3 +16,6 @@ class PlayKeyBoard:
             keyboard.append([button.make_button() for button in row])
 
         return keyboard
+
+    def add_button(self, button: BasePlayButton):
+        self.play_buttons.append(button)
