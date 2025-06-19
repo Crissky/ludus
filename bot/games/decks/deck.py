@@ -112,7 +112,7 @@ class BaseDeck:
         self.card_stack.push(*cards)
 
     def add_bottom(self, *cards: Card):
-        self.card_stack.push_botton(*cards)
+        self.card_stack.push_bottom(*cards)
 
     def shuffle(self):
         self.card_stack.shuffle()

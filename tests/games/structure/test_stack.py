@@ -115,12 +115,23 @@ class TestStack(unittest.TestCase):
         self.stack.push()
         self.assertEqual(len(self.stack), initial_length)
 
+    def test_push_not_card_type(self):
+        """Teste push um objeto que não é um Card para a queue.
+        """
+
+        not_card = "not a card"
+        msg_error = f"Espera um Card, obteve {type(not_card)}({not_card})"
+        with self.assertRaises(TypeError) as context:
+            self.stack.push(not_card)
+
+        self.assertEqual(str(context.exception), msg_error)
+
     def test_push_bottom_single_card(self):
         """Teste push um único Card para a fila.
         """
 
         self.stack.push(self.card1)
-        self.stack.push_botton(self.card2)
+        self.stack.push_bottom(self.card2)
         self.assertEqual(len(self.stack), 2)
         self.assertEqual(self.stack[1], self.card2)
         self.assertEqual(self.stack[0], self.card1)
@@ -129,8 +140,8 @@ class TestStack(unittest.TestCase):
         """Teste push múltiplos Cards para a fila.
         """
 
-        self.stack.push_botton(self.card1)
-        self.stack.push_botton(self.card2, self.card3)
+        self.stack.push_bottom(self.card1)
+        self.stack.push_bottom(self.card2, self.card3)
         self.assertEqual(len(self.stack), 3)
         self.assertEqual(self.stack[2], self.card2)
         self.assertEqual(self.stack[1], self.card3)
@@ -141,8 +152,19 @@ class TestStack(unittest.TestCase):
         """
 
         initial_length = len(self.stack)
-        self.stack.push_botton()
+        self.stack.push_bottom()
         self.assertEqual(len(self.stack), initial_length)
+
+    def test_push_bottom_not_card_type(self):
+        """Teste push_bottom um objeto que não é um Card para a queue.
+        """
+
+        not_card = "not a card"
+        msg_error = f"Espera um Card, obteve {type(not_card)}({not_card})"
+        with self.assertRaises(TypeError) as context:
+            self.stack.push_bottom(not_card)
+
+        self.assertEqual(str(context.exception), msg_error)
 
     def test_pop_single_item(self):
         """Teste de pop de um único item da stack.

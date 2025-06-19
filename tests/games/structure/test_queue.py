@@ -118,12 +118,23 @@ class TestQueue(unittest.TestCase):
         self.queue.push()
         self.assertEqual(len(self.queue), initial_length)
 
+    def test_push_not_card_type(self):
+        """Teste push um objeto que não é um Card para a queue.
+        """
+
+        not_card = "not a card"
+        msg_error = f"Espera um Card, obteve {type(not_card)}({not_card})"
+        with self.assertRaises(TypeError) as context:
+            self.queue.push(not_card)
+
+        self.assertEqual(str(context.exception), msg_error)
+
     def test_push_bottom_single_card(self):
         """Teste push um único Card para a queue.
         """
 
         self.queue.push(self.card1)
-        self.queue.push_botton(self.card2)
+        self.queue.push_bottom(self.card2)
         self.assertEqual(len(self.queue), 2)
         self.assertEqual(self.queue[0], self.card2)
         self.assertEqual(self.queue[1], self.card1)
@@ -132,8 +143,8 @@ class TestQueue(unittest.TestCase):
         """Teste push múltiplos Cards para a queue.
         """
 
-        self.queue.push_botton(self.card1)
-        self.queue.push_botton(self.card2, self.card3)
+        self.queue.push_bottom(self.card1)
+        self.queue.push_bottom(self.card2, self.card3)
         self.assertEqual(len(self.queue), 3)
         self.assertEqual(self.queue[0], self.card2)
         self.assertEqual(self.queue[1], self.card3)
@@ -144,8 +155,19 @@ class TestQueue(unittest.TestCase):
         """
 
         initial_length = len(self.queue)
-        self.queue.push_botton()
+        self.queue.push_bottom()
         self.assertEqual(len(self.queue), initial_length)
+
+    def test_push_bottom_not_card_type(self):
+        """Teste push_bottom um objeto que não é um Card para a queue.
+        """
+
+        not_card = "not a card"
+        msg_error = f"Espera um Card, obteve {type(not_card)}({not_card})"
+        with self.assertRaises(TypeError) as context:
+            self.queue.push_bottom(not_card)
+
+        self.assertEqual(str(context.exception), msg_error)
 
     def test_pop_single_item(self):
         """Teste de pop de um único item da queue.

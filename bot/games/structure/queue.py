@@ -5,10 +5,16 @@ from bot.games.structure.linear_data import LinearDataStructure
 
 class Queue(LinearDataStructure):
     def push(self, *cards: Card):
-        self.items.extend(cards)
+        for card in cards:
+            if not isinstance(card, Card):
+                raise TypeError(f"Espera um Card, obteve {type(card)}({card})")
+            self.items.append(card)
 
-    def push_botton(self, *cards: Card):
-        self.items = list(cards) + self.items
+    def push_bottom(self, *cards: Card):
+        for card in reversed(cards):
+            if not isinstance(card, Card):
+                raise TypeError(f"Espera um Card, obteve {type(card)}({card})")
+            self.items.insert(0, card)
 
     def pop(self, quantity: int = 1) -> Union[Card, List[Card]]:
         if quantity == 1 and not self.is_empty:

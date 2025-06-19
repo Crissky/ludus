@@ -31,7 +31,7 @@ class LinearDataStructure(ABC):
         raise NotImplementedError('Subclasse deve implementar push.')
 
     @abstractmethod
-    def push_botton(self, *cards: Card):
+    def push_bottom(self, *cards: Card):
         raise NotImplementedError('Subclasse deve implementar push_bottom')
 
     @abstractmethod
