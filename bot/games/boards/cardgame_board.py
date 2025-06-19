@@ -13,13 +13,13 @@ class CardGameBoard(BaseBoard):
     def __init__(
         self,
         name: str,
-        player_list: List[Player],
         draw_pile: BaseDeck,
+        *players: Player,
         total_discard_pile: int = 1,
         initial_hand_size: int = 7,
         hand_kwargs: dict = None
     ):
-        super().__init__(name, player_list)
+        super().__init__(name, *players)
         self.total_discard_pile = total_discard_pile
         self.initial_hand_size = initial_hand_size
         self.hand_kwargs = hand_kwargs
@@ -130,17 +130,17 @@ class CardGameBoard(BaseBoard):
 if __name__ == '__main__':
     from bot.games.decks.royal import RoyalDeck
 
-    p1 = Player('0001', 'Player 1')
-    p2 = Player('0002', 'Player 2')
-    p3 = Player('0003', 'Player 3')
-    p4 = Player('0004', 'Player 4')
+    p1 = Player(player_id='0001', name='Player 1')
+    p2 = Player(player_id='0002', name='Player 2')
+    p3 = Player(player_id='0003', name='Player 3')
+    p4 = Player(player_id='0004', name='Player 4')
 
     deck = RoyalDeck(shuffle=False)
 
     board = CardGameBoard(
-        name='Card Game Test',
-        player_list=[p1, p2, p3, p4],
-        draw_pile=deck,
+        'Card Game Test',
+        deck,
+        p1, p2, p3, p4
     )
 
     print(board.show_board())

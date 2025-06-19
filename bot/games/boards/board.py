@@ -8,10 +8,13 @@ from bot.games.report import Report
 
 
 class BaseBoard(ABC):
-    def __init__(self, name: str, player_list: List[Player]):
+    def __init__(self, name: str, *players: Player):
         self.id = id(self)
         self.name = name
-        self.player_list = player_list
+        self.player_list = []
+
+        for player in players:
+            self.add_player(player)
 
         self.turn = 1
         self.is_clockwise = True
@@ -24,6 +27,25 @@ class BaseBoard(ABC):
             text += f'{i}: {player}\n'
         text += TEXT_SEPARATOR_1
         return text
+
+    def __repr__(self):
+        return f'Board({self.name})'
+
+    def add_player(self, player: Player):
+        if player in self.player_list:
+            raise ValueError(f'Player {player} já está no board.')
+        if not isinstance(player, Player):
+            raise TypeError(f'Player {player} não é um Player.')
+
+        self.player_list.append(player)
+
+    def remove_player(self, player: Player):
+        if player not in self.player_list:
+            raise ValueError(f'Player {player} não está no board.')
+        if self.player_turn == player:
+            self.set_next_player()
+
+        self.player_list.remove(player)
 
     def next_turn(self):
         self.turn += 1
