@@ -5,9 +5,16 @@ from bot.games.buttons.play_button import BasePlayButton
 
 
 class PlayKeyBoard:
-    def __init__(self, buttons_per_row: int = 1, *play_buttons: BasePlayButton):
+    def __init__(
+        self,
+        buttons_per_row: int = 1,
+        *play_buttons: BasePlayButton
+    ):
         self.buttons_per_row = buttons_per_row
-        self.play_buttons = list(play_buttons)
+        self.play_buttons = []
+
+        for play_button in play_buttons:
+            self.add_button(play_button)
 
     def get_keyboard(self) -> List[List[InlineKeyboardButton]]:
         keyboard = []
@@ -18,4 +25,10 @@ class PlayKeyBoard:
         return keyboard
 
     def add_button(self, button: BasePlayButton):
+        if button in self.play_buttons:
+            raise ValueError('Já existe um botão com esse nome.')
+        if not isinstance(button, BasePlayButton):
+            raise ValueError(
+                'O botão deve ser uma instância de BasePlayButton.'
+            )
         self.play_buttons.append(button)
