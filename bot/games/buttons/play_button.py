@@ -14,6 +14,11 @@ class BasePlayButton:
         self.text = text
         self.callback_data = callback_data
 
+    def __eq__(self, value):
+        if isinstance(value, BasePlayButton):
+            return self.data_to_str() == value.data_to_str()
+        return False
+
     def data_to_str(self) -> str:
         data = {
             'game_id': self.game.id,
