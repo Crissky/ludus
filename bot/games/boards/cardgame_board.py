@@ -1,9 +1,11 @@
 from abc import abstractmethod
 from typing import List
 from bot.games.boards.board import BaseBoard
+from bot.games.buttons.play_button import BasePlayButton
 from bot.games.cards.card import Card
 from bot.games.decks.deck import BaseDeck
 from bot.games.hands.hand import BaseHand
+from bot.games.play_keyboard import PlayKeyBoard
 from bot.games.player import Player
 
 
@@ -100,10 +102,22 @@ class CardGameBoard(BaseBoard):
         self.distribute_cards(self.player_list, self.initial_hand_size)
         self.create_discard_pile(self.total_discard_pile)
 
-    def player_options(self, player: Player = None):
-        for card in player.hand:
-            if self.is_playable(card):
-                ...
+    def player_options(self, player: Player = None) -> PlayKeyBoard:
+        if player is None:
+            player = self.player_turn
+
+        keyboard = PlayKeyBoard(buttons_per_row=self.initial_hand_size)
+        for index, card in enumerate(player):
+            if self.is_playable(card=card):
+                text = card.text
+                button = BasePlayButton(
+                    game=self,
+                    text=text,
+                    hand_position=index
+                )
+                keyboard.add_button(button)
+
+        return keyboard
 
     def play(self):
         ...
