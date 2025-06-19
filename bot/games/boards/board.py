@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-from typing import List
 
 from bot.games.constants.text import NORMAL_SECTION_HEAD_1, TEXT_SEPARATOR_1
 from bot.games.log import Log
