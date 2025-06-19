@@ -7,8 +7,11 @@ from bot.games.cards.card import Card
 
 
 class LinearDataStructure(ABC):
-    def __init__(self, *args: Card):
-        self.items = list(args)
+    def __init__(self, *cards: Card):
+        self.items = []
+
+        for card in cards:
+            self.push(card)
 
     def __iter__(self) -> Generator[Card]:
         for i in range(len(self.items)):
