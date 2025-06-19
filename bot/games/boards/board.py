@@ -40,26 +40,6 @@ class BaseBoard(ABC):
     def inverter_turn(self):
         self.is_clockwise = not self.is_clockwise
 
-    @abstractmethod
-    def player_options(self, player: Player = None):
-        ...
-
-    @abstractmethod
-    def start_game(self):
-        ...
-
-    @abstractmethod
-    def start_phase(self):
-        ...
-
-    @abstractmethod
-    def play_phase(self):
-        ...
-
-    @abstractmethod
-    def end_phase(self):
-        ...
-
     def next_turn_phase(self):
         self.next_turn()
 
@@ -97,6 +77,18 @@ class BaseBoard(ABC):
         text += f'{self.log}\n'
 
         return text
+
+    @abstractmethod
+    def start_game(self):
+        ...
+
+    @abstractmethod
+    def player_options(self, player: Player = None):
+        ...
+
+    @abstractmethod
+    def play(self):
+        ...
 
     @property
     def report(self):

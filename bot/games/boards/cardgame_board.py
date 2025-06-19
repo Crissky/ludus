@@ -1,3 +1,4 @@
+from abc import abstractmethod
 from typing import List
 from bot.games.boards.board import BaseBoard
 from bot.games.cards.card import Card
@@ -94,21 +95,21 @@ class CardGameBoard(BaseBoard):
         return text
 
     # Abstract Methods
-    def player_options(self, player: Player = None):
-        ...
-
     def start_game(self):
         self.create_hands(self.player_list, self.hand_kwargs)
         self.distribute_cards(self.player_list, self.initial_hand_size)
         self.create_discard_pile(self.total_discard_pile)
 
-    def start_phase(self):
+    def player_options(self, player: Player = None):
+        for card in player.hand:
+            if self.is_playable(card):
+                ...
+
+    def play(self):
         ...
 
-    def play_phase(self):
-        ...
-
-    def end_phase(self):
+    @abstractmethod
+    def is_playable(self, card: Card) -> bool:
         ...
 
 
