@@ -45,7 +45,7 @@ class BaseHand:
 
         for card in cards:
             if not isinstance(card, Card):
-                raise ValueError(f'Card inválido: {card}')
+                raise TypeError(f"Espera um Card, obteve {type(card)}({card})")
 
             self.card_list.append(card)
 
