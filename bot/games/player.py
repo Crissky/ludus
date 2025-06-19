@@ -5,6 +5,8 @@ class Player:
     def __init__(self, id: str, name: str, hand: BaseHand = None):
         self.id = str(id)
         self.name = name
+        if hand is None:
+            hand = BaseHand()
         self.hand = hand
 
     def __eq__(self, other):
