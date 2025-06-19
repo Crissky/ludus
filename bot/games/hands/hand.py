@@ -7,7 +7,10 @@ from bot.games.cards.card import Card
 class BaseHand:
     def __init__(self, max_size: int = 0, *cards: Card):
         self.max_size = max_size
-        self.card_list = list(cards)
+        self.card_list = []
+
+        for card in cards:
+            self.add_card(card)
 
     def __getitem__(self, index: int) -> Card:
         return self.card_list[index]
@@ -40,7 +43,11 @@ class BaseHand:
         if isinstance(cards, Card):
             cards = [cards]
 
-        self.card_list.extend(cards)
+        for card in cards:
+            if not isinstance(card, Card):
+                raise ValueError(f'Card inválido: {card}')
+
+            self.card_list.append(card)
 
     def discard(self, index: int = -1, quantity: int = 1) -> List[Card]:
         card_list = []
