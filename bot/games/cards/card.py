@@ -1,7 +1,18 @@
+from enum import Enum
 import re
-from typing import Union
+from typing import List, Union
 from bot.functions.enumeration import get_enum_index
-from bot.games.enums.card import WILD_SUITS, Names, Suits
+from bot.games.enums.card import (
+    WILD_SUITS,
+    ColorNames,
+    FlipColorNames,
+    FullRoyalNames,
+    Names,
+    RoyalNames,
+    SpanishNames,
+    StrippedSpanishNames,
+    Suits
+)
 
 
 class Card:
@@ -108,5 +119,140 @@ class Card:
         return '|'.join((suit.name for suit in WILD_SUITS))
 
     @property
-    def is_wild(self):
+    def is_wild(self) -> bool:
         return re.search(self.wild_terms, self.suit.name, re.I)
+
+    @property
+    def numbers_cards(self) -> List[Enum]:
+        if isinstance(self.name, RoyalNames):
+            return [
+                RoyalNames.TWO, RoyalNames.THREE, RoyalNames.FOUR,
+                RoyalNames.FIVE, RoyalNames.SIX, RoyalNames.SEVEN,
+                RoyalNames.EIGHT, RoyalNames.NINE, RoyalNames.TEN
+            ]
+        elif isinstance(self.name, FullRoyalNames):
+            return [
+                FullRoyalNames.TWO, FullRoyalNames.THREE, FullRoyalNames.FOUR,
+                FullRoyalNames.FIVE, FullRoyalNames.SIX, FullRoyalNames.SEVEN,
+                FullRoyalNames.EIGHT, FullRoyalNames.NINE, FullRoyalNames.TEN
+            ]
+        elif isinstance(self.name, SpanishNames):
+            return [
+                SpanishNames.ONE, SpanishNames.TWO, SpanishNames.THREE,
+                SpanishNames.FOUR, SpanishNames.FIVE, SpanishNames.SIX,
+                SpanishNames.SEVEN, SpanishNames.EIGHT, SpanishNames.NINE,
+                SpanishNames.KNAVE, SpanishNames.KNIGHT, SpanishNames.KING
+            ]
+        elif isinstance(self.name, StrippedSpanishNames):
+            return [
+                StrippedSpanishNames.ONE, StrippedSpanishNames.TWO,
+                StrippedSpanishNames.THREE, StrippedSpanishNames.FOUR,
+                StrippedSpanishNames.FIVE, StrippedSpanishNames.SIX,
+                StrippedSpanishNames.SEVEN, StrippedSpanishNames.KNAVE,
+                StrippedSpanishNames.KNIGHT, StrippedSpanishNames.KING
+            ]
+        elif isinstance(self.name, ColorNames):
+            return [
+                ColorNames.ZERO, ColorNames.ONE, ColorNames.TWO,
+                ColorNames.THREE, ColorNames.FOUR, ColorNames.FIVE,
+                ColorNames.SIX, ColorNames.SEVEN, ColorNames.EIGHT,
+                ColorNames.NINE,
+            ]
+        elif isinstance(self.name, FlipColorNames):
+            return [
+                FlipColorNames.ZERO, FlipColorNames.ONE, FlipColorNames.TWO,
+                FlipColorNames.THREE, FlipColorNames.FOUR, FlipColorNames.FIVE,
+                FlipColorNames.SIX, FlipColorNames.SEVEN, FlipColorNames.EIGHT,
+                FlipColorNames.NINE,
+            ]
+        else:
+            raise ValueError(
+                f'Não foi possível encontrar os números de {self.name}.'
+            )
+
+    @property
+    def figures_cards(self) -> List[Enum]:
+        if isinstance(self.name, RoyalNames):
+            return [RoyalNames.JACK, RoyalNames.QUEEN, RoyalNames.KING]
+        elif isinstance(self.name, FullRoyalNames):
+            return [
+                FullRoyalNames.JACK, FullRoyalNames.QUEEN, FullRoyalNames.KING
+            ]
+        elif isinstance(self.name, SpanishNames):
+            return [SpanishNames.KNAVE, SpanishNames.KNIGHT, SpanishNames.KING]
+        elif isinstance(self.name, StrippedSpanishNames):
+            return [
+                StrippedSpanishNames.KNAVE, StrippedSpanishNames.KNIGHT,
+                StrippedSpanishNames.KING
+            ]
+        elif isinstance(self.name, ColorNames):
+            return []
+        elif isinstance(self.name, FlipColorNames):
+            return []
+        else:
+            raise ValueError(
+                f'Não foi possível encontrar os números de {self.name}.'
+            )
+
+    @property
+    def special_cards(self) -> List[Enum]:
+        if isinstance(self.name, RoyalNames):
+            return [RoyalNames.ACE]
+        elif isinstance(self.name, FullRoyalNames):
+            return [FullRoyalNames.ACE]
+        elif isinstance(self.name, SpanishNames):
+            return []
+        elif isinstance(self.name, StrippedSpanishNames):
+            return []
+        elif isinstance(self.name, ColorNames):
+            return []
+        elif isinstance(self.name, FlipColorNames):
+            return []
+        else:
+            raise ValueError(
+                f'Não foi possível encontrar os números de {self.name}.'
+            )
+
+    @property
+    def extra_cards(self) -> List[Enum]:
+        if isinstance(self.name, RoyalNames):
+            return []
+        elif isinstance(self.name, FullRoyalNames):
+            return [FullRoyalNames.JOKER]
+        elif isinstance(self.name, SpanishNames):
+            return []
+        elif isinstance(self.name, StrippedSpanishNames):
+            return []
+        elif isinstance(self.name, ColorNames):
+            return []
+        elif isinstance(self.name, FlipColorNames):
+            return []
+        else:
+            raise ValueError(
+                f'Não foi possível encontrar os números de {self.name}.'
+            )
+
+    @property
+    def action_cards(self) -> List[Enum]:
+        if isinstance(self.name, RoyalNames):
+            return []
+        elif isinstance(self.name, FullRoyalNames):
+            return []
+        elif isinstance(self.name, SpanishNames):
+            return []
+        elif isinstance(self.name, StrippedSpanishNames):
+            return []
+        elif isinstance(self.name, ColorNames):
+            return [
+                ColorNames.BLOCK, ColorNames.REVERSE,
+                ColorNames.PLUS_TWO, ColorNames.PLUS_FOUR
+            ]
+        elif isinstance(self.name, FlipColorNames):
+            return [
+                FlipColorNames.BLOCK_ALL, FlipColorNames.REVERSE,
+                FlipColorNames.PLUS_FIVE, FlipColorNames.PLUS_COLOR
+            ]
+        else:
+            raise ValueError(
+                f'Não foi possível encontrar os números de {self.name}.'
+            )

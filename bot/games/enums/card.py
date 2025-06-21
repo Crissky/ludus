@@ -154,6 +154,7 @@ class StrippedSpanishNames(Names):
     KING = "12"
 
 
+# Constants
 WILD_SUITS = [
     FullRoyalSuits.JOKER,
     ColorSuits.BLACK,
