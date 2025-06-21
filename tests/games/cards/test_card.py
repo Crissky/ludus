@@ -84,7 +84,7 @@ class TestCard(unittest.TestCase):
         não seja Card.
 
         Este teste verifica se o método _eq_ retorna False quando o
-        objeto 'outro' não é uma instância da classe Card.
+        objeto 'other' não é uma instância da classe Card.
         """
 
         card = Card(RoyalNames.ACE, RoyalSuits.HEARTS)
@@ -105,6 +105,42 @@ class TestCard(unittest.TestCase):
         self.assertNotEqual(card1, card2)
         card1.set_wild(FullRoyalNames.KING, FullRoyalSuits.HEARTS)
         self.assertEqual(card1, card2)
+
+    def test_gt_same_card(self):
+        """
+        Teste se um card é maior que o outro.
+
+        Este teste verifica se o método _gt_ identifica corretamente duas
+        cartas como iguais quando têm o mesmo nome e naipe.
+        """
+
+        card1 = Card(RoyalNames.TWO, RoyalSuits.SPADES)
+        card2 = Card(RoyalNames.TWO, RoyalSuits.SPADES)
+        card3 = Card(RoyalNames.ACE, RoyalSuits.SPADES)
+        self.assertFalse(card1 > card2)
+        self.assertGreater(card1, card3)
+        self.assertLess(card3, card1)
+
+    def test_gt_non_card_object(self):
+        """
+        Teste o método _gt_ da classe Card ao comparar com um objeto que
+        não seja Card.
+
+        Este teste verifica se o método _gt_ retorna uma exceção quando o
+        objeto 'other' não é uma instância da classe Card.
+        """
+
+        card = Card(RoyalNames.ACE, RoyalSuits.HEARTS)
+        non_card_object = 'ACE HEARTS'
+
+        msg_error = (
+            f'Espera um Card, obteve '
+            f'{type(non_card_object)}({non_card_object})'
+        )
+        with self.assertRaises(TypeError) as context:
+            card > non_card_object
+
+        self.assertEqual(msg_error, str(context.exception))
 
     def test_hash(self):
         """
@@ -403,6 +439,21 @@ class TestCard(unittest.TestCase):
 
         card = Card(RoyalNames.ACE, RoyalSuits.SPADES)
         self.assertEqual(card.value, 0)
+
+    def test_suit_value(self):
+        """
+        Teste se a propriedade suit_value retorna o índice de enumeração
+        correto para o naipe da carta.
+
+        Este teste verifica se a propriedade suit_value chama
+        corretamente get_enum_index com o naipe da carta e retorna o
+        resultado esperado.
+        """
+
+        card = Card(RoyalNames.ACE, RoyalSuits.HEARTS)
+        expected_value = get_enum_index(RoyalSuits.HEARTS)
+        self.assertEqual(card.suit_value, expected_value)
+        self.assertEqual(card.suit_value, 2)
 
     def test_unset_wild(self):
         """

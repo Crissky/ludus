@@ -21,6 +21,17 @@ class Card:
             return False
         return self.name == other.name and self.suit == other.suit
 
+    def __gt__(self, other) -> bool:
+        if not isinstance(other, self.__class__):
+            raise TypeError(
+                f'Espera um {self.__class__.__name__}, '
+                f'obteve {type(other)}({other})'
+            )
+        if self.value == other.value:
+            return self.suit_value > other.suit_value
+        else:
+            return self.value > other.value
+
     def __hash__(self) -> int:
         return hash((self.name, self.suit))
 
@@ -79,6 +90,10 @@ class Card:
     @property
     def value(self):
         return get_enum_index(self.name)
+
+    @property
+    def suit_value(self):
+        return get_enum_index(self.suit)
 
     @property
     def name(self):
