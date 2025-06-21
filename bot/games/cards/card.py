@@ -62,7 +62,7 @@ class Card:
         self.set_wild_suit(suit)
 
     def set_wild_name(self, name: Names):
-        if not re.search(self.wild_terms, self.suit.name, re.I):
+        if not self.is_wild:
             raise ValueError(f'{self.suit.name} não é um valor WILD válido.')
         if not isinstance(name, self.name.__class__):
             raise TypeError(
@@ -71,7 +71,7 @@ class Card:
         self.wild_name = name
 
     def set_wild_suit(self, suit: Suits):
-        if not re.search(self.wild_terms, self.suit.name, re.I):
+        if not self.is_wild:
             raise ValueError(f'{self.suit.name} não é um valor WILD válido.')
         if not isinstance(suit, self.suit.__class__):
             raise TypeError(
@@ -106,3 +106,7 @@ class Card:
     @property
     def wild_terms(self) -> str:
         return '|'.join((suit.name for suit in WILD_SUITS))
+
+    @property
+    def is_wild(self):
+        return re.search(self.wild_terms, self.suit.name, re.I)
