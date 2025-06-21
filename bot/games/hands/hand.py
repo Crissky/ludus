@@ -78,6 +78,9 @@ class BaseHand:
             cards.append(peeked_card)
         return cards
 
+    def sort(self):
+        self.card_list.sort()
+
     @property
     def is_empty(self) -> bool:
         return len(self) == 0
