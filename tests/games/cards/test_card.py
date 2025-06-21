@@ -493,3 +493,13 @@ class TestCard(unittest.TestCase):
         self.assertEqual(card.suit, original_suit)
         self.assertIsNone(card.wild_name)
         self.assertIsNone(card.wild_suit)
+
+    def test_is_wild(self):
+        """
+        Teste se o método is_wild retorna True para um Card curinga.
+        """
+
+        card1 = Card(FullRoyalNames.JOKER, FullRoyalSuits.JOKER)
+        card2 = Card(RoyalNames.ACE, RoyalSuits.SPADES)
+        self.assertTrue(card1.is_wild)
+        self.assertFalse(card2.is_wild)
