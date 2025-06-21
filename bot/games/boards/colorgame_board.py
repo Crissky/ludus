@@ -1,9 +1,9 @@
-from bot.games.boards.cardgame_board import CardGameBoard
+from bot.games.boards.cardgame_board import BaseCardGameBoard
 from bot.games.decks.color import ColorDeck
 from bot.games.player import Player
 
 
-class ColorGameBoard(CardGameBoard):
+class ColorGameBoard(BaseCardGameBoard):
     def __init__(self, *players: Player):
         draw_pile = ColorDeck()
         super().__init__(

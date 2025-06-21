@@ -9,7 +9,7 @@ from bot.games.play_keyboard import PlayKeyBoard
 from bot.games.player import Player
 
 
-class CardGameBoard(BaseBoard):
+class BaseCardGameBoard(BaseBoard):
     def __init__(
         self,
         name: str,
@@ -137,7 +137,7 @@ if __name__ == '__main__':
 
     deck = RoyalDeck(shuffle=False)
 
-    board = CardGameBoard(
+    board = BaseCardGameBoard(
         'Card Game Test',
         deck,
         p1, p2, p3, p4
