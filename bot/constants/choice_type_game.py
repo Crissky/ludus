@@ -1,0 +1,61 @@
+GREETINGS_TEXT = [
+    'Olá, {user_name}! Pronto para embaralhar a diversão? Vamos jogar!',
+    'Bem-vindo, {user_name}! Hora de testar sua sorte (ou sua estratégia)!',
+    'Salve, {user_name}! Quem sabe hoje é o seu dia de vitória!',
+    'E aí, {user_name}! As cartas estão na mesa… ou quase! Bora jogar?',
+    '{user_name}, seu lugar na mesa está reservado! Vamos nessa?',
+    'Opa! {user_name} entrou no lobby! Que comece a partida!',
+    'Bem-vindo ao templo dos jogos, {user_name}. Que os dados estejam a '
+    'seu favor!',
+    '{user_name}, a diversão te espera! Qual será o desafio de hoje?',
+    'Hora de jogar, {user_name}! E que vença o melhor (ou o mais sortudo)!',
+    'Olá, {user_name}! Você trouxe as cartas? Não? Sem problema… eu tenho '
+    'várias aqui!',
+    'Seja muito bem-vindo, {user_name}! Bora embaralhar emoções!',
+    '{user_name}, os adversários estão tremendo com a sua chegada!',
+    'Bem-vindo, {user_name}! Aqui, a única regra é se divertir.',
+    'Preparado para a batalha, {user_name}? Escolha seu desafio!',
+    '{user_name}, os deuses dos jogos te observam… Vamos jogar?',
+    'E aí, {user_name}! Quer jogar sozinho ou chamar reforços?',
+    '{user_name}, que comece a diversão… ou o caos!',
+    'O mestre do baralho te saúda, {user_name}! Preparado para o jogo?',
+    'Bem-vindo ao clube dos estrategistas, {user_name}!',
+    '{user_name}, hoje é dia de jogar bonito… ou de blefar feio!',
+    'O grande {user_name} apareceu! Bora decidir o próximo desafio?',
+    'Salve, {user_name}! O jogo só começa quando você chega!',
+    'Seja bem-vindo, {user_name}! Pegue sua cadeira, embaralhe as cartas e '
+    'vamos nessa.',
+    'Atenção! Jogador {user_name} entrou na sala! Hora de jogar.',
+    'Olá, {user_name}! Preparado para rir, perder e ganhar? '
+    'Não necessariamente nessa ordem.',
+    '{user_name}, o baralho te espera… e os adversários também!',
+    'Bem-vindo, {user_name}! Hoje é dia de virar a mesa… só metaforicamente, '
+    'por favor.',
+    'Hora de diversão, {user_name}! Vamos ver no que dá!',
+    'E aí, {user_name}! Vai jogar sozinho, desafiar alguém ou chamar a '
+    'galera toda?',
+    '{user_name}, os dados estão lançados... Quer jogar?',
+    'Bem-vindo, {user_name}! Hoje é dia de cartas, risadas e talvez alguma '
+    'revanche.',
+    '{user_name}, sua estratégia está afiada? Ou vai contar com a sorte?',
+    'Oi, {user_name}! Seja bem-vindo ao nosso cantinho de jogos!',
+    '{user_name}, pronto para embaralhar problemas e distribuir soluções?',
+    'Bem-vindo, {user_name}! Aqui a diversão é garantida '
+    '(vitórias nem tanto).',
+    'Salve, {user_name}! Quem sabe hoje você vira lenda?',
+    '{user_name}, a arena te chama… Que tipo de desafio você quer?',
+    'Seja bem-vindo, {user_name}! Aqui só tem uma regra: jogar até o fim!',
+    'Opa, {user_name}! Vamos de jogo solo, duelo ou aquele caótico '
+    'modo em grupo?',
+    '{user_name}, respira fundo… a disputa vai começar!',
+    'Bem-vindo, {user_name}! Escolha seu destino (e seu modo de jogo)!',
+    'Chegou quem faltava: {user_name}! Vamos ver quem manda nas cartas!',
+    'Olá, {user_name}! O baralho está embaralhado, os dados prontos… bora?',
+    'Seja bem-vindo, {user_name}! Sua sorte já começou só por estar aqui.',
+    '{user_name}, bem-vindo ao reino das cartas e dos dados!',
+    'Chegou o(a) grande {user_name}! Vai jogar sozinho ou trazer companhia?',
+    'E aí, {user_name}! Preparado para rir, vencer, perder e rir de novo?',
+    '{user_name}, os jogos começaram… só falta você escolher como!',
+    'Bem-vindo, {user_name}! Vamos começar com uma pergunta clássica…',
+    '{user_name}, entre, sente-se… e escolha seu tipo de desafio!',
+]
