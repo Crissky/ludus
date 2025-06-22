@@ -238,3 +238,14 @@ class FaceEmojiEnum(Enum):
     WEARY_CAT_FACE = "🙀"
     CRYING_CAT_FACE = "😿"
     POUTING_CAT_FACE = "😾"
+
+
+class GameEmojiEnum(Enum):
+    DICE = "🎲"
+    TARGET = "🎯"
+    CHESS_PAWN = "♟️"
+    SPADES = "♠️"
+    CLUBS = "♣️"
+    HEARTS = "♥️"
+    DIAMONDS = "♦️"
+    JOKER = "🃏"

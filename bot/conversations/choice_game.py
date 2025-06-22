@@ -22,6 +22,8 @@ from bot.constants.handler_filters import (
 from bot.functions.chat import send_alert, send_private_message
 import logging
 
+from bot.functions.text import create_text_in_box
+
 
 # Conversation Functions
 async def choice_type_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -31,6 +33,13 @@ async def choice_type_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = choice(GREETINGS_TEXT)
     text = text.format(user_name=user_name)
     text += f'\n\n👉 Qual tipo de jogo você quer jogar hoje, {user_name}?'
+    text = create_text_in_box(
+        text=text,
+        footer_text='Escolha o tipo de jogo',
+        footer_emoji1='👇',
+        footer_emoji2='👇',
+        clean_func=None,
+    )
     keyboard_markup = get_choice_type_game_keyboard()
 
     await send_private_message(
