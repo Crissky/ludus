@@ -123,7 +123,7 @@ class Card:
         return re.search(self.wild_terms, self.suit.name, re.I)
 
     @property
-    def numbers_cards(self) -> List[Enum]:
+    def number_card_names(self) -> List[Enum]:
         if isinstance(self.name, RoyalNames):
             return [
                 RoyalNames.TWO, RoyalNames.THREE, RoyalNames.FOUR,
@@ -171,7 +171,7 @@ class Card:
             )
 
     @property
-    def figures_cards(self) -> List[Enum]:
+    def figure_card_names(self) -> List[Enum]:
         if isinstance(self.name, RoyalNames):
             return [RoyalNames.JACK, RoyalNames.QUEEN, RoyalNames.KING]
         elif isinstance(self.name, FullRoyalNames):
@@ -195,7 +195,7 @@ class Card:
             )
 
     @property
-    def special_cards(self) -> List[Enum]:
+    def special_card_names(self) -> List[Enum]:
         if isinstance(self.name, RoyalNames):
             return [RoyalNames.ACE]
         elif isinstance(self.name, FullRoyalNames):
@@ -214,7 +214,7 @@ class Card:
             )
 
     @property
-    def extra_cards(self) -> List[Enum]:
+    def extra_card_names(self) -> List[Enum]:
         if isinstance(self.name, RoyalNames):
             return []
         elif isinstance(self.name, FullRoyalNames):
@@ -233,7 +233,7 @@ class Card:
             )
 
     @property
-    def action_cards(self) -> List[Enum]:
+    def action_card_names(self) -> List[Enum]:
         if isinstance(self.name, RoyalNames):
             return []
         elif isinstance(self.name, FullRoyalNames):
