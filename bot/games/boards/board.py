@@ -1,3 +1,5 @@
+import logging
+
 from abc import ABC, abstractmethod
 
 from bot.games.constants.text import NORMAL_SECTION_HEAD_1, TEXT_SEPARATOR_1
@@ -133,14 +135,14 @@ if __name__ == '__main__':
     board = BaseBoard('test', [p1, p2, p3, p4])
 
     for i in range(10):
-        print(f'Turno: {board.turn}, Vez: {board.player_turn}')
+        logging.debug(f'Turno: {board.turn}, Vez: {board.player_turn}')
         board.next_turn()
 
-    print('-'*79)
+    logging.debug('-'*79)
 
     board = BaseBoard('test', [p1, p2, p3, p4])
     board.is_clockwise = False
 
     for i in range(10):
-        print(f'Turno: {board.turn}, Vez: {board.player_turn}')
+        logging.debug(f'Turno: {board.turn}, Vez: {board.player_turn}')
         board.next_turn()

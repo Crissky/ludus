@@ -1,3 +1,5 @@
+import logging
+
 from bot.games.decks.deck import BaseDeck
 from bot.games.enums.card import RoyalNames, RoyalSuits
 
@@ -14,5 +16,5 @@ class RoyalDeck(BaseDeck):
 
 if __name__ == '__main__':
     deck = RoyalDeck(shuffle=False, total_decks=2)
-    print(len(deck))
-    print(deck)
+    logging.debug(len(deck))
+    logging.debug(deck)

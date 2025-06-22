@@ -1,3 +1,5 @@
+import logging
+
 from enum import Enum
 
 
@@ -38,6 +40,6 @@ if __name__ == '__main__':
         C = 3
         D = 4
 
-    print(get_enum_index(TestEnum.C))
-    print(get_enum_by_index(TestEnum, 1))
-    print(get_enum_by_index(TestEnum, get_enum_index(TestEnum.C)))
+    logging.debug(get_enum_index(TestEnum.C))
+    logging.debug(get_enum_by_index(TestEnum, 1))
+    logging.debug(get_enum_by_index(TestEnum, get_enum_index(TestEnum.C)))

@@ -1,4 +1,6 @@
+import logging
 import re
+
 from bot.games.cards.card import Card
 from bot.games.enums.card import Names, Suits
 
@@ -119,14 +121,14 @@ if __name__ == '__main__':
         flip_name=FlipColorNames.PLUS_FIVE,
         flip_suit=FlipColorSuits.ORAGE
     )
-    print(card.full_text)
-    print(card.name)
-    print(card.suit)
-    print(card.value)
-    print(card.text)
+    logging.debug(card.full_text)
+    logging.debug(card.name)
+    logging.debug(card.suit)
+    logging.debug(card.value)
+    logging.debug(card.text)
     card.flip()
-    print(card.full_text)
-    print(card.name)
-    print(card.suit)
-    print(card.value)
-    print(card.text)
+    logging.debug(card.full_text)
+    logging.debug(card.name)
+    logging.debug(card.suit)
+    logging.debug(card.value)
+    logging.debug(card.text)

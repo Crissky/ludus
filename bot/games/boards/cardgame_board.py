@@ -1,5 +1,8 @@
+import logging
+
 from abc import abstractmethod
 from typing import List
+
 from bot.games.boards.board import BaseBoard
 from bot.games.buttons.play_button import BasePlayButton
 from bot.games.cards.card import Card
@@ -143,13 +146,13 @@ if __name__ == '__main__':
         p1, p2, p3, p4
     )
 
-    print(board.show_board())
-    print('START GAME', '-'*68)
+    logging.debug(board.show_board())
+    logging.debug('START GAME', '-'*68)
 
     board.start_game()
-    print(board.show_board())
-    print('DRAW', '-'*74)
+    logging.debug(board.show_board())
+    logging.debug('DRAW', '-'*74)
 
     board.draw()
-    print(board.show_board())
-    print('-'*79)
+    logging.debug(board.show_board())
+    logging.debug('-'*79)

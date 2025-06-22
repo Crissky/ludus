@@ -1,3 +1,5 @@
+import logging
+
 from bot.games.decks.deck import BaseDeck
 from bot.games.enums.card import ColorNames, ColorSuits
 
@@ -28,5 +30,5 @@ class ColorDeck(BaseDeck):
 
 if __name__ == '__main__':
     deck = ColorDeck(shuffle=False, total_decks=3)
-    print(len(deck))
-    print(deck)
+    logging.debug(len(deck))
+    logging.debug(deck)

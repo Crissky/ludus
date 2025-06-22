@@ -1,4 +1,7 @@
+import logging
+
 from typing import Union
+
 from bot.games.cards.card import Card
 from bot.games.enums.card import Names, Suits
 
@@ -52,12 +55,12 @@ class FlexCard(Card):
 if __name__ == '__main__':
     from bot.games.enums.card import ColorNames, ColorSuits
     card = FlexCard(ColorNames.SEVEN, ColorSuits.RED, ColorSuits.BLUE)
-    print('Text:', card.text)
-    print('Name:', card.name)
-    print('Suit:', card.suit)
-    print('Flex:', card.flex)
+    logging.debug('Text:', card.text)
+    logging.debug('Name:', card.name)
+    logging.debug('Suit:', card.suit)
+    logging.debug('Flex:', card.flex)
     card = FlexCard(ColorNames.REVERSE, ColorSuits.RED, ColorNames.BLOCK)
-    print('Text:', card.text)
-    print('Name:', card.name)
-    print('Suit:', card.suit)
-    print('Flex:', card.flex)
+    logging.debug('Text:', card.text)
+    logging.debug('Name:', card.name)
+    logging.debug('Suit:', card.suit)
+    logging.debug('Flex:', card.flex)
