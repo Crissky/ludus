@@ -1,6 +1,8 @@
 from bot.functions.enumeration import get_enum_index
 from bot.games.cards.card import Card
 from bot.games.enums.card import (
+    ColorNames,
+    ColorSuits,
     FullRoyalNames,
     FullRoyalSuits,
     RoyalNames,
@@ -11,6 +13,31 @@ import unittest
 
 
 class TestCard(unittest.TestCase):
+
+    def setUp(self):
+        # Cards 1
+        self.ace_card1 = Card(RoyalNames.ACE, RoyalSuits.CLUBS)
+        self.king_card1 = Card(RoyalNames.KING, RoyalSuits.CLUBS)
+        self.number_card1 = Card(RoyalNames.TWO, RoyalSuits.CLUBS)
+
+        self.full_king_card1 = Card(FullRoyalNames.KING, FullRoyalSuits.CLUBS)
+        self.full_number_card1 = Card(FullRoyalNames.SIX, FullRoyalSuits.CLUBS)
+
+        self.joker_card = Card(FullRoyalNames.JOKER, FullRoyalSuits.JOKER)
+
+        self.block_card1 = Card(ColorNames.BLOCK, ColorSuits.RED)
+        self.color_number_card1 = Card(ColorNames.ZERO, ColorSuits.RED)
+        self.color_wild_card = Card(ColorNames.PLUS_ZERO, ColorSuits.BLACK)
+
+        # Cards 2
+        self.ace_card2 = Card(RoyalNames.ACE, RoyalSuits.DIAMONDS)
+        self.king_card2 = Card(RoyalNames.KING, RoyalSuits.DIAMONDS)
+        self.number_card2 = Card(RoyalNames.TWO, RoyalSuits.DIAMONDS)
+
+        self.full_king_card2 = Card(
+            FullRoyalNames.KING, FullRoyalSuits.DIAMONDS)
+        self.full_number_card2 = Card(
+            FullRoyalNames.SIX, FullRoyalSuits.DIAMONDS)
 
     def test_init_invalid_name(self):
         """
@@ -62,8 +89,8 @@ class TestCard(unittest.TestCase):
         cartas como iguais quando têm o mesmo nome e naipe.
         """
 
-        card1 = Card(RoyalNames.ACE, RoyalSuits.SPADES)
-        card2 = Card(RoyalNames.ACE, RoyalSuits.SPADES)
+        card1 = self.ace_card1
+        card2 = self.ace_card1
         self.assertEqual(card1, card2)
 
     def test_eq_different_cards(self):
@@ -74,8 +101,8 @@ class TestCard(unittest.TestCase):
         cartas como diferentes quando têm nomes ou naipes diferentes.
         """
 
-        card1 = Card(RoyalNames.ACE, RoyalSuits.SPADES)
-        card2 = Card(RoyalNames.KING, RoyalSuits.HEARTS)
+        card1 = self.ace_card1
+        card2 = self.king_card1
         self.assertNotEqual(card1, card2)
 
     def test_eq_non_card_object(self):
@@ -87,7 +114,7 @@ class TestCard(unittest.TestCase):
         objeto 'other' não é uma instância da classe Card.
         """
 
-        card = Card(RoyalNames.ACE, RoyalSuits.HEARTS)
+        card = self.ace_card1
         non_card_object = card.text
         self.assertNotEqual(card, non_card_object)
 
@@ -100,10 +127,12 @@ class TestCard(unittest.TestCase):
         cartas como diferentes quando têm nomes ou naipes diferentes.
         """
 
-        card1 = Card(FullRoyalNames.JOKER, FullRoyalSuits.JOKER)
-        card2 = Card(FullRoyalNames.KING, FullRoyalSuits.HEARTS)
+        card1 = self.joker_card
+        card2 = self.full_king_card1
+        card2_name = card2.name
+        card2_suit = card2.suit
         self.assertNotEqual(card1, card2)
-        card1.set_wild(FullRoyalNames.KING, FullRoyalSuits.HEARTS)
+        card1.set_wild(card2_name, card2_suit)
         self.assertEqual(card1, card2)
 
     def test_gt_same_card(self):
@@ -114,9 +143,9 @@ class TestCard(unittest.TestCase):
         cartas como iguais quando têm o mesmo nome e naipe.
         """
 
-        card1 = Card(RoyalNames.TWO, RoyalSuits.SPADES)
-        card2 = Card(RoyalNames.TWO, RoyalSuits.SPADES)
-        card3 = Card(RoyalNames.ACE, RoyalSuits.SPADES)
+        card1 = self.number_card1
+        card2 = self.number_card1
+        card3 = self.ace_card1
         self.assertFalse(card1 > card2)
         self.assertGreater(card1, card3)
         self.assertLess(card3, card1)
@@ -130,8 +159,8 @@ class TestCard(unittest.TestCase):
         objeto 'other' não é uma instância da classe Card.
         """
 
-        card = Card(RoyalNames.ACE, RoyalSuits.HEARTS)
-        non_card_object = 'ACE HEARTS'
+        card = self.ace_card1
+        non_card_object = 'ACE CLUBS'
 
         msg_error = (
             f'Espera um Card, obteve '
@@ -148,8 +177,8 @@ class TestCard(unittest.TestCase):
         esperado para uma instância de Card.
         """
 
-        card = Card(RoyalNames.ACE, RoyalSuits.SPADES)
-        expected_hash = hash((RoyalNames.ACE, RoyalSuits.SPADES))
+        card = self.ace_card1
+        expected_hash = hash((card.name, card.suit))
         self.assertEqual(hash(card), expected_hash)
 
     def test_repr(self):
@@ -157,9 +186,9 @@ class TestCard(unittest.TestCase):
         Teste o método _repr_ retorna o valor correto.
         """
 
-        card = Card(RoyalNames.ACE, RoyalSuits.SPADES)
+        card = self.ace_card1
         expected_repr = (
-            f"Card({RoyalSuits.SPADES.value}{RoyalNames.ACE.value})"
+            f"Card({card.suit.value}{card.name.value})"
         )
         self.assertEqual(repr(card), expected_repr)
 
@@ -168,8 +197,8 @@ class TestCard(unittest.TestCase):
         Teste se o método _str_ retorna a representação de texto do Card.
         """
 
-        card = Card(RoyalNames.ACE, RoyalSuits.SPADES)
-        expected_text = f"{RoyalSuits.SPADES.value}{RoyalNames.ACE.value}"
+        card = self.ace_card1
+        expected_text = f"{card.suit.value}{card.name.value}"
         self.assertEqual(str(card), expected_text)
 
     def test_equals_name_card_type(self):
@@ -177,8 +206,8 @@ class TestCard(unittest.TestCase):
         Teste se equals_name retorna True ao comparar com um objeto Card.
         """
 
-        card = Card(RoyalNames.ACE, RoyalSuits.SPADES)
-        other_card = Card(RoyalNames.ACE, RoyalSuits.SPADES)
+        card = self.ace_card1
+        other_card = self.ace_card1
         result = card.equals_name(other_card)
         msg = "equals_name deve retornar True para objetos Card com name igual"
         self.assertTrue(result, msg)
@@ -188,8 +217,8 @@ class TestCard(unittest.TestCase):
         Teste se equals_name retorna True ao comparar com um objeto Names.
         """
 
-        card = Card(RoyalNames.ACE, RoyalSuits.SPADES)
-        other_name = RoyalNames.ACE
+        card = self.ace_card1
+        other_name = card.name
         result = card.equals_name(other_name)
         msg = "equals_name deve retornar True para objetos Names igual"
         self.assertTrue(result, msg)
@@ -199,8 +228,8 @@ class TestCard(unittest.TestCase):
         Teste se equals_name retorna False ao comparar com um objeto Card.
         """
 
-        card = Card(RoyalNames.ACE, RoyalSuits.SPADES)
-        other_card = Card(RoyalNames.KING, RoyalSuits.SPADES)
+        card = self.ace_card1
+        other_card = self.king_card1
         result = card.equals_name(other_card)
         msg = (
             "equals_name deve retornar False para objetos Card com name "
@@ -213,8 +242,8 @@ class TestCard(unittest.TestCase):
         Teste se equals_name retorna False ao comparar com um objeto Names.
         """
 
-        card = Card(RoyalNames.ACE, RoyalSuits.SPADES)
-        other_name = RoyalNames.KING
+        card = self.ace_card1
+        other_name = self.king_card1.name
         result = card.equals_name(other_name)
         msg = "equals_name deve retornar False para objetos Names diferente."
         self.assertFalse(result, msg)
@@ -225,7 +254,7 @@ class TestCard(unittest.TestCase):
         e não-Names.
         """
 
-        card = Card(RoyalNames.ACE, RoyalSuits.SPADES)
+        card = self.ace_card1
         other = "Not a Card object"
         result = card.equals_name(other)
         msg = "equals_name deve retornar False para objetos que não Card/Names"
@@ -237,10 +266,10 @@ class TestCard(unittest.TestCase):
         e Names depois de setar o valor do curinga.
         """
 
-        card = Card(FullRoyalNames.JOKER, FullRoyalSuits.JOKER)
-        card.set_wild(FullRoyalNames.SEVEN, FullRoyalSuits.SPADES)
-        other_card = Card(FullRoyalNames.SEVEN, FullRoyalSuits.SPADES)
-        other_name = FullRoyalNames.SEVEN
+        card = self.joker_card
+        other_card = self.full_number_card1
+        card.set_wild(other_card.name, other_card.suit)
+        other_name = other_card.name
         result_card = card.equals_name(other_card)
         result_name = card.equals_name(other_name)
         msg = (
@@ -255,8 +284,8 @@ class TestCard(unittest.TestCase):
         Teste se equals_suit retorna True ao comparar com um objeto Card.
         """
 
-        card = Card(RoyalNames.ACE, RoyalSuits.SPADES)
-        other_card = Card(RoyalNames.ACE, RoyalSuits.SPADES)
+        card = self.ace_card1
+        other_card = self.ace_card1
         result = card.equals_suit(other_card)
         msg = "equals_suit deve retornar True para objetos Card com suit igual"
         self.assertTrue(result, msg)
@@ -266,8 +295,8 @@ class TestCard(unittest.TestCase):
         Teste se equals_suit retorna True ao comparar com um objeto Suits.
         """
 
-        card = Card(RoyalNames.ACE, RoyalSuits.SPADES)
-        other_suit = RoyalSuits.SPADES
+        card = self.ace_card1
+        other_suit = card.suit
         result = card.equals_suit(other_suit)
         msg = "equals_suit deve retornar True para objetos Suits igual"
         self.assertTrue(result, msg)
@@ -277,8 +306,8 @@ class TestCard(unittest.TestCase):
         Teste se equals_suit retorna False ao comparar com um objeto Card.
         """
 
-        card = Card(RoyalNames.ACE, RoyalSuits.SPADES)
-        other_card = Card(RoyalNames.ACE, RoyalSuits.CLUBS)
+        card = self.ace_card1
+        other_card = self.ace_card2
         result = card.equals_suit(other_card)
         msg = (
             "equals_suit deve retornar False para objetos Card com suit "
@@ -291,8 +320,8 @@ class TestCard(unittest.TestCase):
         Teste se equals_suit retorna False ao comparar com um objeto Suits.
         """
 
-        card = Card(RoyalNames.ACE, RoyalSuits.SPADES)
-        other_suit = RoyalSuits.CLUBS
+        card = self.ace_card1
+        other_suit = self.ace_card2.suit
         result = card.equals_suit(other_suit)
         msg = "equals_suit deve retornar False para objetos Suits diferente."
         self.assertFalse(result, msg)
@@ -303,7 +332,7 @@ class TestCard(unittest.TestCase):
         e não-Suits.
         """
 
-        card = Card(RoyalNames.ACE, RoyalSuits.SPADES)
+        card = self.ace_card1
         other = "Not a Card object"
         result = card.equals_suit(other)
         msg = "equals_suit deve retornar False para objetos que não Card/Suits"
@@ -315,10 +344,10 @@ class TestCard(unittest.TestCase):
         e Suits depois de setar o valor do curinga.
         """
 
-        card = Card(FullRoyalNames.JOKER, FullRoyalSuits.JOKER)
-        card.set_wild(FullRoyalNames.SEVEN, FullRoyalSuits.SPADES)
-        other_card = Card(FullRoyalNames.SEVEN, FullRoyalSuits.SPADES)
-        other_name = FullRoyalSuits.SPADES
+        card = self.joker_card
+        other_card = self.full_number_card1
+        card.set_wild(other_card.name, other_card.suit)
+        other_name = other_card.suit
         result_card = card.equals_suit(other_card)
         result_name = card.equals_suit(other_name)
         msg = (
@@ -335,17 +364,21 @@ class TestCard(unittest.TestCase):
         Esse teste também serve para testar as propriedades name e suit
         """
 
-        card = Card(FullRoyalNames.JOKER, FullRoyalSuits.JOKER)
+        card = self.joker_card
+        new_name = self.full_number_card1.name
+        new_suit = self.full_number_card1.suit
         self.assertEqual(card.name, FullRoyalNames.JOKER)
         self.assertEqual(card.suit, FullRoyalSuits.JOKER)
         self.assertIsNone(card.wild_name)
         self.assertIsNone(card.wild_suit)
 
-        card.set_wild(FullRoyalNames.ACE, FullRoyalSuits.SPADES)
-        self.assertEqual(card.name, FullRoyalNames.ACE)
-        self.assertEqual(card.suit, FullRoyalSuits.SPADES)
-        self.assertEqual(card.wild_name, FullRoyalNames.ACE)
-        self.assertEqual(card.wild_suit, FullRoyalSuits.SPADES)
+        card.set_wild(new_name, new_suit)
+        self.assertEqual(card.name, new_name)
+        self.assertEqual(card.suit, new_suit)
+        self.assertEqual(card.real_name, FullRoyalNames.JOKER)
+        self.assertEqual(card.real_suit, FullRoyalSuits.JOKER)
+        self.assertEqual(card.wild_name, new_name)
+        self.assertEqual(card.wild_suit, new_suit)
 
     def test_set_wild_name(self):
         """
@@ -354,13 +387,15 @@ class TestCard(unittest.TestCase):
         Esse teste também serve para testar as propriedades name
         """
 
-        card = Card(FullRoyalNames.JOKER, FullRoyalSuits.JOKER)
+        card = self.joker_card
+        new_name = self.full_number_card1.name
         self.assertEqual(card.name, FullRoyalNames.JOKER)
         self.assertIsNone(card.wild_name)
 
-        card.set_wild_name(FullRoyalNames.ACE)
-        self.assertEqual(card.name, FullRoyalNames.ACE)
-        self.assertEqual(card.wild_name, FullRoyalNames.ACE)
+        card.set_wild_name(new_name)
+        self.assertEqual(card.name, new_name)
+        self.assertEqual(card.real_name, FullRoyalNames.JOKER)
+        self.assertEqual(card.wild_name, new_name)
 
     def test_set_wild_name_card_is_not_wild(self):
         """
@@ -368,7 +403,7 @@ class TestCard(unittest.TestCase):
         um Card não WILD.
         """
 
-        card = Card(FullRoyalNames.KING, FullRoyalSuits.CLUBS)
+        card = self.full_king_card1
         self.assertEqual(card.name, FullRoyalNames.KING)
         self.assertIsNone(card.wild_name)
 
@@ -382,13 +417,15 @@ class TestCard(unittest.TestCase):
         Esse teste também serve para testar as propriedades suit
         """
 
-        card = Card(FullRoyalNames.JOKER, FullRoyalSuits.JOKER)
+        card = self.joker_card
+        new_suit = self.full_king_card1.suit
         self.assertEqual(card.suit, FullRoyalSuits.JOKER)
         self.assertIsNone(card.wild_suit)
 
-        card.set_wild_suit(FullRoyalSuits.SPADES)
-        self.assertEqual(card.suit, FullRoyalSuits.SPADES)
-        self.assertEqual(card.wild_suit, FullRoyalSuits.SPADES)
+        card.set_wild_suit(new_suit)
+        self.assertEqual(card.suit, new_suit)
+        self.assertEqual(card.real_suit, FullRoyalSuits.JOKER)
+        self.assertEqual(card.wild_suit, new_suit)
 
     def test_set_wild_suit_card_is_not_wild(self):
         """
@@ -396,7 +433,7 @@ class TestCard(unittest.TestCase):
         um Card não WILD.
         """
 
-        card = Card(FullRoyalNames.ACE, FullRoyalSuits.CLUBS)
+        card = self.full_king_card1
         self.assertEqual(card.suit, FullRoyalSuits.CLUBS)
         self.assertIsNone(card.wild_suit)
 
@@ -413,8 +450,8 @@ class TestCard(unittest.TestCase):
         para produzir a representação de string esperada.
         """
 
-        card = Card(RoyalNames.ACE, RoyalSuits.HEARTS)
-        expected_text = f'{RoyalSuits.HEARTS.value}{RoyalNames.ACE.value}'
+        card = self.ace_card1
+        expected_text = f'{card.suit.value}{card.name.value}'
         self.assertEqual(card.text, expected_text)
 
     def test_value_returns_correct_index(self):
@@ -427,8 +464,8 @@ class TestCard(unittest.TestCase):
         da carta e retorna o resultado.
         """
 
-        card = Card(RoyalNames.ACE, RoyalSuits.HEARTS)
-        expected_value = get_enum_index(RoyalNames.ACE)
+        card = self.ace_card1
+        expected_value = get_enum_index(card.name)
         self.assertEqual(card.value, expected_value)
 
     def test_value_valid_input(self):
@@ -437,7 +474,7 @@ class TestCard(unittest.TestCase):
         para um nome de Card válido.
         """
 
-        card = Card(RoyalNames.ACE, RoyalSuits.SPADES)
+        card = self.ace_card1
         self.assertEqual(card.value, 0)
 
     def test_suit_value(self):
@@ -450,10 +487,10 @@ class TestCard(unittest.TestCase):
         resultado esperado.
         """
 
-        card = Card(RoyalNames.ACE, RoyalSuits.HEARTS)
-        expected_value = get_enum_index(RoyalSuits.HEARTS)
+        card = self.ace_card2
+        expected_value = get_enum_index(card.suit)
         self.assertEqual(card.suit_value, expected_value)
-        self.assertEqual(card.suit_value, 2)
+        self.assertEqual(card.suit_value, 1)
 
     def test_unset_wild(self):
         """
@@ -463,12 +500,14 @@ class TestCard(unittest.TestCase):
         depois os desfaz e verifica o resultado.
         """
 
-        card = Card(FullRoyalNames.JOKER, FullRoyalSuits.JOKER)
-        card.set_wild(FullRoyalNames.ACE, FullRoyalSuits.SPADES)
-        self.assertEqual(card.wild_name, FullRoyalNames.ACE)
-        self.assertEqual(card.name, FullRoyalNames.ACE)
-        self.assertEqual(card.wild_suit, FullRoyalSuits.SPADES)
-        self.assertEqual(card.suit, FullRoyalSuits.SPADES)
+        card = self.joker_card
+        new_name = self.full_number_card1.name
+        new_suit = self.full_number_card1.suit
+        card.set_wild(new_name, new_suit)
+        self.assertEqual(card.wild_name, new_name)
+        self.assertEqual(card.name, new_name)
+        self.assertEqual(card.wild_suit, new_suit)
+        self.assertEqual(card.suit, new_suit)
 
         card.unset_wild()
         self.assertIsNone(card.wild_name)
@@ -483,7 +522,7 @@ class TestCard(unittest.TestCase):
         (não curinga) não altera suas propriedades.
         """
 
-        card = Card(RoyalNames.ACE, RoyalSuits.SPADES)
+        card = self.ace_card1
         original_name = card.name
         original_suit = card.suit
 
@@ -499,7 +538,7 @@ class TestCard(unittest.TestCase):
         Teste se o método is_wild retorna True para um Card curinga.
         """
 
-        card1 = Card(FullRoyalNames.JOKER, FullRoyalSuits.JOKER)
-        card2 = Card(RoyalNames.ACE, RoyalSuits.SPADES)
+        card1 = self.joker_card
+        card2 = self.ace_card1
         self.assertTrue(card1.is_wild)
         self.assertFalse(card2.is_wild)
