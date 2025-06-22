@@ -249,3 +249,6 @@ class GameEmojiEnum(Enum):
     HEARTS = "♥️"
     DIAMONDS = "♦️"
     JOKER = "🃏"
+    MAHJONG_RED_DRAGON = "🀄"
+    MAHJONG_BACK = "🀫"
+    HANAFUDA = "🎴"
