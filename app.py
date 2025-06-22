@@ -6,7 +6,10 @@ from decouple import config
 
 from telegram.ext import Application
 
-from bot.conversations import CHOICE_TYPE_GAME_HANDLERS
+from bot.conversations import (
+    CHOICE_TYPE_GAME_HANDLERS,
+    CHOICE_GAME_HANDLERS,
+)
 
 
 TELEGRAM_TOKEN = config("TELEGRAM_TOKEN")
@@ -45,6 +48,7 @@ def main() -> None:
 
     # Add Multiple Handlers
     application.add_handlers(CHOICE_TYPE_GAME_HANDLERS)
+    application.add_handlers(CHOICE_GAME_HANDLERS)
 
     # Add Jobs
     application.job_queue.run_repeating()
