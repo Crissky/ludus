@@ -3,10 +3,15 @@ from bot.games.cards.card import Card
 from bot.games.enums.card import (
     ColorNames,
     ColorSuits,
+    FlipColorNames,
+    FlipColorSuits,
     FullRoyalNames,
     FullRoyalSuits,
     RoyalNames,
-    RoyalSuits
+    RoyalSuits,
+    SpanishNames,
+    SpanishSuits,
+    StrippedSpanishNames
 )
 import pytest
 import unittest
@@ -38,6 +43,17 @@ class TestCard(unittest.TestCase):
             FullRoyalNames.KING, FullRoyalSuits.DIAMONDS)
         self.full_number_card2 = Card(
             FullRoyalNames.SIX, FullRoyalSuits.DIAMONDS)
+
+        # General Cards
+        self.royal_number_card = Card(RoyalNames.TWO, RoyalSuits.CLUBS)
+        self.full_royal_number_card = Card(
+            FullRoyalNames.TWO, FullRoyalSuits.CLUBS)
+        self.color_number_card = Card(ColorNames.ZERO, ColorSuits.RED)
+        self.flip_color_number_card = Card(
+            FlipColorNames.ZERO, FlipColorSuits.ORAGE)
+        self.spanish_number_card = Card(SpanishNames.ONE, SpanishSuits.CLUBS)
+        self.stripped_spanish_number_card = Card(
+            StrippedSpanishNames.ONE, SpanishSuits.CLUBS)
 
     def test_init_invalid_name(self):
         """
@@ -542,3 +558,104 @@ class TestCard(unittest.TestCase):
         card2 = self.ace_card1
         self.assertTrue(card1.is_wild)
         self.assertFalse(card2.is_wild)
+
+    def test_royal_numbers_cards(self):
+        """
+        Teste se o método number_card_names retorna uma lista
+        contendo todos os Cards de números de RoyalNames.
+        """
+
+        card = self.royal_number_card
+        number_card_names = card.number_card_names
+        expected_number_card_names = [
+            RoyalNames.TWO, RoyalNames.THREE, RoyalNames.FOUR,
+            RoyalNames.FIVE, RoyalNames.SIX, RoyalNames.SEVEN,
+            RoyalNames.EIGHT, RoyalNames.NINE, RoyalNames.TEN
+        ]
+        for card_name in number_card_names:
+            self.assertIn(card_name, expected_number_card_names)
+
+    def test_full_royal_numbers_cards(self):
+        """
+        Teste se o método number_card_names retorna uma lista
+        contendo todos os Cards de números de FullRoyalNames.
+        """
+
+        card = self.full_royal_number_card
+        number_card_names = card.number_card_names
+        expected_number_card_names = [
+            FullRoyalNames.TWO, FullRoyalNames.THREE, FullRoyalNames.FOUR,
+            FullRoyalNames.FIVE, FullRoyalNames.SIX, FullRoyalNames.SEVEN,
+            FullRoyalNames.EIGHT, FullRoyalNames.NINE, FullRoyalNames.TEN
+        ]
+        for card_name in number_card_names:
+            self.assertIn(card_name, expected_number_card_names)
+
+    def test_spanish_numbers_cards(self):
+        """
+        Teste se o método number_card_names retorna uma lista
+        contendo todos os Cards de números de SpanishNames.
+        """
+
+        card = self.spanish_number_card
+        number_card_names = card.number_card_names
+        expected_number_card_names = [
+            SpanishNames.ONE, SpanishNames.TWO, SpanishNames.THREE,
+            SpanishNames.FOUR, SpanishNames.FIVE, SpanishNames.SIX,
+            SpanishNames.SEVEN, SpanishNames.EIGHT, SpanishNames.NINE,
+            SpanishNames.KNAVE, SpanishNames.KNIGHT, SpanishNames.KING
+        ]
+        for card_name in number_card_names:
+            self.assertIn(card_name, expected_number_card_names)
+
+    def test_stripped_spanish_numbers_cards(self):
+        """
+        Teste se o método number_card_names retorna uma lista
+        contendo todos os Cards de números de StrippedSpanishNames.
+        """
+
+        card = self.stripped_spanish_number_card
+        number_card_names = card.number_card_names
+        expected_number_card_names = [
+            StrippedSpanishNames.ONE, StrippedSpanishNames.TWO,
+            StrippedSpanishNames.THREE, StrippedSpanishNames.FOUR,
+            StrippedSpanishNames.FIVE, StrippedSpanishNames.SIX,
+            StrippedSpanishNames.SEVEN, StrippedSpanishNames.KNAVE,
+            StrippedSpanishNames.KNIGHT, StrippedSpanishNames.KING
+        ]
+        for card_name in number_card_names:
+            self.assertIn(card_name, expected_number_card_names)
+
+    def test_color_numbers_cards(self):
+        """
+        Teste se o método number_card_names retorna uma lista
+        contendo todos os Cards de números de ColorNames.
+        """
+
+        card = self.color_number_card
+        number_card_names = card.number_card_names
+        expected_number_card_names = [
+            ColorNames.ZERO, ColorNames.ONE, ColorNames.TWO,
+            ColorNames.THREE, ColorNames.FOUR, ColorNames.FIVE,
+            ColorNames.SIX, ColorNames.SEVEN, ColorNames.EIGHT,
+            ColorNames.NINE
+        ]
+        for card_name in number_card_names:
+            self.assertIn(card_name, expected_number_card_names)
+
+    def test_flip_color_numbers_cards(self):
+        """
+        Teste se o método number_card_names retorna uma lista
+        contendo todos os Cards de números de FlipColorNames.
+        """
+
+        card = self.flip_color_number_card
+        number_card_names = card.number_card_names
+        expected_number_card_names = [
+            FlipColorNames.ZERO, FlipColorNames.ONE, FlipColorNames.TWO,
+            FlipColorNames.THREE, FlipColorNames.FOUR, FlipColorNames.FIVE,
+            FlipColorNames.SIX, FlipColorNames.SEVEN, FlipColorNames.EIGHT,
+            FlipColorNames.NINE
+        ]
+        for card_name in number_card_names:
+            self.assertIn(card_name, expected_number_card_names)
