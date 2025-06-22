@@ -660,3 +660,83 @@ class TestCard(unittest.TestCase):
 
         self.assertCountEqual(number_card_names, expected_number_card_names)
 
+    def test_royal_figure_card_names(self):
+        """
+        Teste se o método figure_card_names retorna uma lista
+        contendo todos os Cards de figuras de RoyalNames.
+        """
+
+        card = self.royal_number_card
+        figure_card_names = card.figure_card_names
+        expected_figure_card_names = [
+            RoyalNames.JACK, RoyalNames.QUEEN, RoyalNames.KING
+        ]
+
+        self.assertCountEqual(figure_card_names, expected_figure_card_names)
+
+    def test_full_royal_figure_card_names(self):
+        """
+        Teste se o método figure_card_names retorna uma lista
+        contendo todos os Cards de figuras de FullRoyalNames.
+        """
+
+        card = self.full_royal_number_card
+        figure_card_names = card.figure_card_names
+        expected_figure_card_names = [
+            FullRoyalNames.JACK, FullRoyalNames.QUEEN, FullRoyalNames.KING
+        ]
+
+        self.assertCountEqual(figure_card_names, expected_figure_card_names)
+
+    def test_spanish_figure_card_names(self):
+        """
+        Teste se o método figure_card_names retorna uma lista
+        contendo todos os Cards de figuras de SpanishNames.
+        """
+
+        card = self.spanish_number_card
+        figure_card_names = card.figure_card_names
+        expected_figure_card_names = [
+            SpanishNames.KNAVE, SpanishNames.KNIGHT, SpanishNames.KING
+        ]
+
+        self.assertCountEqual(figure_card_names, expected_figure_card_names)
+
+    def test_stripped_spanish_figure_card_names(self):
+        """
+        Teste se o método figure_card_names retorna uma lista
+        contendo todos os Cards de figuras de StrippedSpanishNames.
+        """
+
+        card = self.stripped_spanish_number_card
+        figure_card_names = card.figure_card_names
+        expected_figure_card_names = [
+            StrippedSpanishNames.KNAVE, StrippedSpanishNames.KNIGHT,
+            StrippedSpanishNames.KING,
+        ]
+
+        self.assertCountEqual(figure_card_names, expected_figure_card_names)
+
+    def test_color_figure_card_names(self):
+        """
+        Teste se o método figure_card_names retorna uma lista
+        contendo todos os Cards de figuras de ColorNames.
+        """
+
+        card = self.color_number_card
+        figure_card_names = card.figure_card_names
+        expected_figure_card_names = []
+
+        self.assertCountEqual(figure_card_names, expected_figure_card_names)
+
+    def test_flip_color_figure_card_names(self):
+        """
+        Teste se o método figure_card_names retorna uma lista
+        contendo todos os Cards de figuras de FlipColorNames.
+        """
+
+        card = self.flip_color_number_card
+        figure_card_names = card.figure_card_names
+        expected_figure_card_names = []
+
+        self.assertCountEqual(figure_card_names, expected_figure_card_names)
