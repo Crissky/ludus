@@ -9,19 +9,30 @@ from telegram.ext import Application
 from bot.conversations import CHOICE_TYPE_GAME_HANDLERS
 
 
-logging.basicConfig(
-    filename='ludus.log',
-    filemode='w',
-    format='%(asctime)s - %(levelname)s - %(message)s',
-    level=logging.DEBUG,
-)
 TELEGRAM_TOKEN = config("TELEGRAM_TOKEN")
 MY_GROUP_ID = config('MY_GROUP_ID', cast=int)
+IS_PRODUCTION = config('IS_PRODUCTION', cast=bool, default=True)
 (
     DEFAULT_GROUP,
     CHAT_XP_GROUP,
     WORDGAME_GROUP,
 ) = range(3)
+
+
+if IS_PRODUCTION:
+    logging.basicConfig(
+        filename='ludus.log',
+        filemode='w',
+        format='%(asctime)s - %(levelname)s - %(message)s',
+        level=logging.INFO,
+    )
+else:
+    logging.basicConfig(
+        filename='ludus.log',
+        filemode='w',
+        format='%(asctime)s - %(levelname)s - %(message)s',
+        level=logging.DEBUG,
+    )
 
 
 def main() -> None:
