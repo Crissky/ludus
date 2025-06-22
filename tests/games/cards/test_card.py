@@ -740,3 +740,225 @@ class TestCard(unittest.TestCase):
         expected_figure_card_names = []
 
         self.assertCountEqual(figure_card_names, expected_figure_card_names)
+
+    def test_royal_special_card_names(self):
+        """
+        Teste se o método special_card_names retorna uma lista
+        contendo todos os Cards especiais de RoyalNames.
+        """
+
+        card = self.royal_number_card
+        special_card_names = card.special_card_names
+        expected_special_card_names = [RoyalNames.ACE]
+
+        self.assertCountEqual(special_card_names, expected_special_card_names)
+
+    def test_full_royal_special_card_names(self):
+        """
+        Teste se o método special_card_names retorna uma lista
+        contendo todos os Cards especiais de FullRoyalNames.
+        """
+
+        card = self.full_royal_number_card
+        special_card_names = card.special_card_names
+        expected_special_card_names = [FullRoyalNames.ACE]
+
+        self.assertCountEqual(special_card_names, expected_special_card_names)
+
+    def test_spanish_special_card_names(self):
+        """
+        Teste se o método special_card_names retorna uma lista
+        contendo todos os Cards especiais de SpanishNames.
+        """
+
+        card = self.spanish_number_card
+        special_card_names = card.special_card_names
+        expected_special_card_names = []
+
+        self.assertCountEqual(special_card_names, expected_special_card_names)
+
+    def test_stripped_spanish_special_card_names(self):
+        """
+        Teste se o método special_card_names retorna uma lista
+        contendo todos os Cards especiais de StrippedSpanishNames.
+        """
+
+        card = self.stripped_spanish_number_card
+        special_card_names = card.special_card_names
+        expected_special_card_names = []
+
+        self.assertCountEqual(special_card_names, expected_special_card_names)
+
+    def test_color_special_card_names(self):
+        """
+        Teste se o método special_card_names retorna uma lista
+        contendo todos os Cards especiais de ColorNames.
+        """
+
+        card = self.color_number_card
+        special_card_names = card.special_card_names
+        expected_special_card_names = []
+
+        self.assertCountEqual(special_card_names, expected_special_card_names)
+
+    def test_flip_color_special_card_names(self):
+        """
+        Teste se o método special_card_names retorna uma lista
+        contendo todos os Cards especiais de FlipColorNames.
+        """
+
+        card = self.flip_color_number_card
+        special_card_names = card.special_card_names
+        expected_special_card_names = []
+
+        self.assertCountEqual(special_card_names, expected_special_card_names)
+
+    def test_royal_extra_card_names(self):
+        """
+        Teste se o método extra_card_names retorna uma lista
+        contendo todos os Cards extras de RoyalNames.
+        """
+
+        card = self.royal_number_card
+        extra_card_names = card.extra_card_names
+        expected_extra_card_names = []
+
+        self.assertCountEqual(extra_card_names, expected_extra_card_names)
+
+    def test_full_royal_extra_card_names(self):
+        """
+        Teste se o método extra_card_names retorna uma lista
+        contendo todos os Cards extras de FullRoyalNames.
+        """
+
+        card = self.full_royal_number_card
+        extra_card_names = card.extra_card_names
+        expected_extra_card_names = [FullRoyalNames.JOKER]
+
+        self.assertCountEqual(extra_card_names, expected_extra_card_names)
+
+    def test_spanish_extra_card_names(self):
+        """
+        Teste se o método extra_card_names retorna uma lista
+        contendo todos os Cards extras de SpanishNames.
+        """
+
+        card = self.spanish_number_card
+        extra_card_names = card.extra_card_names
+        expected_extra_card_names = []
+
+        self.assertCountEqual(extra_card_names, expected_extra_card_names)
+
+    def test_stripped_spanish_extra_card_names(self):
+        """
+        Teste se o método extra_card_names retorna uma lista
+        contendo todos os Cards extras de StrippedSpanishNames.
+        """
+
+        card = self.stripped_spanish_number_card
+        extra_card_names = card.extra_card_names
+        expected_extra_card_names = []
+
+        self.assertCountEqual(extra_card_names, expected_extra_card_names)
+
+    def test_color_extra_card_names(self):
+        """
+        Teste se o método extra_card_names retorna uma lista
+        contendo todos os Cards extras de ColorNames.
+        """
+
+        card = self.color_number_card
+        extra_card_names = card.extra_card_names
+        expected_extra_card_names = []
+
+        self.assertCountEqual(extra_card_names, expected_extra_card_names)
+
+    def test_flip_color_extra_card_names(self):
+        """
+        Teste se o método extra_card_names retorna uma lista
+        contendo todos os Cards extras de FlipColorNames.
+        """
+
+        card = self.flip_color_number_card
+        extra_card_names = card.extra_card_names
+        expected_extra_card_names = []
+
+        self.assertCountEqual(extra_card_names, expected_extra_card_names)
+
+    def test_royal_action_card_names(self):
+        """
+        Teste se o método action_card_names retorna uma lista
+        contendo todos os Cards de ação de RoyalNames.
+        """
+
+        card = self.royal_number_card
+        action_card_names = card.action_card_names
+        expected_action_card_names = []
+
+        self.assertCountEqual(action_card_names, expected_action_card_names)
+
+    def test_full_royal_action_card_names(self):
+        """
+        Teste se o método action_card_names retorna uma lista
+        contendo todos os Cards de ação de FullRoyalNames.
+        """
+
+        card = self.full_royal_number_card
+        action_card_names = card.action_card_names
+        expected_action_card_names = []
+
+        self.assertCountEqual(action_card_names, expected_action_card_names)
+
+    def test_spanish_action_card_names(self):
+        """
+        Teste se o método action_card_names retorna uma lista
+        contendo todos os Cards de ação de SpanishNames.
+        """
+
+        card = self.spanish_number_card
+        action_card_names = card.action_card_names
+        expected_action_card_names = []
+
+        self.assertCountEqual(action_card_names, expected_action_card_names)
+
+    def test_stripped_spanish_action_card_names(self):
+        """
+        Teste se o método action_card_names retorna uma lista
+        contendo todos os Cards de ação de StrippedSpanishNames.
+        """
+
+        card = self.stripped_spanish_number_card
+        action_card_names = card.action_card_names
+        expected_action_card_names = []
+
+        self.assertCountEqual(action_card_names, expected_action_card_names)
+
+    def test_color_action_card_names(self):
+        """
+        Teste se o método action_card_names retorna uma lista
+        contendo todos os Cards de ação de ColorNames.
+        """
+
+        card = self.color_number_card
+        action_card_names = card.action_card_names
+        expected_action_card_names = [
+            ColorNames.BLOCK, ColorNames.REVERSE,
+            ColorNames.PLUS_TWO, ColorNames.PLUS_FOUR
+        ]
+
+        self.assertCountEqual(action_card_names, expected_action_card_names)
+
+    def test_flip_color_action_card_names(self):
+        """
+        Teste se o método action_card_names retorna uma lista
+        contendo todos os Cards de ação de FlipColorNames.
+        """
+
+        card = self.flip_color_number_card
+        action_card_names = card.action_card_names
+        expected_action_card_names = [
+            FlipColorNames.BLOCK_ALL, FlipColorNames.REVERSE,
+            FlipColorNames.PLUS_FIVE, FlipColorNames.PLUS_COLOR
+        ]
+
+        self.assertCountEqual(action_card_names, expected_action_card_names)
