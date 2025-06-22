@@ -13,7 +13,7 @@ from bot.conversations import (
 
 
 TELEGRAM_TOKEN = config("TELEGRAM_TOKEN")
-MY_GROUP_ID = config('MY_GROUP_ID', cast=int)
+# MY_GROUP_ID = config('MY_GROUP_ID', cast=int)
 IS_PRODUCTION = config('IS_PRODUCTION', cast=bool, default=True)
 (
     DEFAULT_GROUP,
@@ -51,7 +51,7 @@ def main() -> None:
     application.add_handlers(CHOICE_GAME_HANDLERS)
 
     # Add Jobs
-    application.job_queue.run_repeating()
+    # application.job_queue.run_repeating()
 
     # Run the bot until the user presses Ctrl-C
     application.run_polling()

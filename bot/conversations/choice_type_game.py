@@ -67,7 +67,6 @@ CHOICE_TYPE_GAME_HANDLERS = [
         command=CHOICE_TYPE_GAME_COMMANDS,
         callback=choice_type_game,
         filters=BASIC_COMMAND_IN_PRIVATE_CHAT_FILTER,
-        has_args=False
     ),
     CommandHandler(
         command=CHOICE_TYPE_GAME_COMMANDS,
