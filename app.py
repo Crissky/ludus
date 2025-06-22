@@ -8,8 +8,8 @@ from telegram.ext import Application
 
 from bot.conversations import (
     CHOICE_TYPE_GAME_HANDLERS,
-    CHOICE_GAME_HANDLERS,
 )
+from bot.conversations.choice_game import CHOICE_GAME_HANDLERS
 
 
 TELEGRAM_TOKEN = config("TELEGRAM_TOKEN")
