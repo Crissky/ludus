@@ -572,8 +572,8 @@ class TestCard(unittest.TestCase):
             RoyalNames.FIVE, RoyalNames.SIX, RoyalNames.SEVEN,
             RoyalNames.EIGHT, RoyalNames.NINE, RoyalNames.TEN
         ]
-        for card_name in number_card_names:
-            self.assertIn(card_name, expected_number_card_names)
+
+        self.assertCountEqual(number_card_names, expected_number_card_names)
 
     def test_full_royal_number_card_names(self):
         """
@@ -588,8 +588,8 @@ class TestCard(unittest.TestCase):
             FullRoyalNames.FIVE, FullRoyalNames.SIX, FullRoyalNames.SEVEN,
             FullRoyalNames.EIGHT, FullRoyalNames.NINE, FullRoyalNames.TEN
         ]
-        for card_name in number_card_names:
-            self.assertIn(card_name, expected_number_card_names)
+
+        self.assertCountEqual(number_card_names, expected_number_card_names)
 
     def test_spanish_number_card_names(self):
         """
@@ -605,8 +605,8 @@ class TestCard(unittest.TestCase):
             SpanishNames.SEVEN, SpanishNames.EIGHT, SpanishNames.NINE,
             SpanishNames.KNAVE, SpanishNames.KNIGHT, SpanishNames.KING
         ]
-        for card_name in number_card_names:
-            self.assertIn(card_name, expected_number_card_names)
+
+        self.assertCountEqual(number_card_names, expected_number_card_names)
 
     def test_stripped_spanish_number_card_names(self):
         """
@@ -623,8 +623,8 @@ class TestCard(unittest.TestCase):
             StrippedSpanishNames.SEVEN, StrippedSpanishNames.KNAVE,
             StrippedSpanishNames.KNIGHT, StrippedSpanishNames.KING
         ]
-        for card_name in number_card_names:
-            self.assertIn(card_name, expected_number_card_names)
+
+        self.assertCountEqual(number_card_names, expected_number_card_names)
 
     def test_color_number_card_names(self):
         """
@@ -640,8 +640,8 @@ class TestCard(unittest.TestCase):
             ColorNames.SIX, ColorNames.SEVEN, ColorNames.EIGHT,
             ColorNames.NINE
         ]
-        for card_name in number_card_names:
-            self.assertIn(card_name, expected_number_card_names)
+
+        self.assertCountEqual(number_card_names, expected_number_card_names)
 
     def test_flip_color_number_card_names(self):
         """
@@ -657,5 +657,6 @@ class TestCard(unittest.TestCase):
             FlipColorNames.SIX, FlipColorNames.SEVEN, FlipColorNames.EIGHT,
             FlipColorNames.NINE
         ]
-        for card_name in number_card_names:
-            self.assertIn(card_name, expected_number_card_names)
+
+        self.assertCountEqual(number_card_names, expected_number_card_names)
+
