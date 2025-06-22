@@ -5,14 +5,15 @@ from random import randint
 from time import sleep
 from typing import Any, Callable, Union
 from bson import ObjectId
+
 from telegram import (
+    CallbackQuery,
     InlineKeyboardButton,
     InlineKeyboardMarkup,
     Message
 )
-
 from telegram.constants import ChatAction, ChatType, ParseMode
-from telegram.error import Forbidden, RetryAfter, TimedOut
+from telegram.error import BadRequest, Forbidden, RetryAfter, TimedOut
 from telegram.ext import ContextTypes, ConversationHandler
 
 from bot.functions.enums.emoji import EmojiEnum
@@ -36,6 +37,7 @@ VERBOSE_ARGS = ['verbose', 'v']
 REPLY_CHAT_ACTION_KWARGS = dict(action=ChatAction.TYPING)
 
 
+# MESSAGES FUNCTIONS
 async def call_telegram_message_function(
     function_caller: str,
     function: Callable,
@@ -169,6 +171,39 @@ async def send_private_message(
         )
 
 
+async def send_answer(
+    function_caller: str,
+    query: CallbackQuery,
+    text: str,
+):
+    '''Envia um answer usando uma query.
+    '''
+
+    logging.info(f'{function_caller}->SEND_ANSWER()')
+    try:
+        await query.answer(text=text, show_alert=False)
+    except BadRequest:
+        logging.info('ANSWER() BADREQUEST EXCEPT.')
+        logging.warning(f'  text: {text}')
+
+
+async def send_alert(
+    function_caller: str,
+    query: CallbackQuery,
+    text: str,
+):
+    '''Envia um alert usando uma query.
+    '''
+
+    logging.info(f'{function_caller}->SEND_ALERT()')
+    try:
+        await query.answer(text=text, show_alert=True)
+    except BadRequest:
+        logging.info('ANSWER() BADREQUEST EXCEPT.')
+        logging.warning(f'  text: {text}')
+
+
+# JOB FUNCTIONS
 async def job_call_telegram(context: ContextTypes.DEFAULT_TYPE):
     '''Agenda uma função call_telegram_message_function caso ocorra um erro
     do tipo RetryAfter, TimedOut e o need_response seja False

@@ -1,3 +1,5 @@
+import re
+
 from random import choice
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import (
@@ -17,7 +19,7 @@ from bot.constants.handler_filters import (
     BASIC_COMMAND_IN_PRIVATE_CHAT_FILTER,
     PREFIX_COMMANDS
 )
-from bot.functions.chat import send_private_message
+from bot.functions.chat import send_alert, send_private_message
 import logging
 
 
@@ -43,19 +45,31 @@ async def choice_type_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def list_single_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     text = 'Desculpe, mas ainda não temos jogos dessa categoria.'
-    await query.answer(text=text, show_alert=True)
+    await send_alert(
+        function_caller='LIST_SINGLE_GAME()',
+        query=query,
+        text=text,
+    )
 
 
 async def list_duel_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     text = 'Desculpe, mas ainda não temos jogos dessa categoria.'
-    await query.answer(text=text, show_alert=True)
+    await send_alert(
+        function_caller='LIST_SINGLE_GAME()',
+        query=query,
+        text=text,
+    )
 
 
 async def list_party_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     text = 'Desculpe, mas ainda não temos jogos dessa categoria.'
-    await query.answer(text=text, show_alert=True)
+    await send_alert(
+        function_caller='LIST_SINGLE_GAME()',
+        query=query,
+        text=text,
+    )
 
 
 # Buttons Functions
@@ -106,14 +120,14 @@ CHOICE_TYPE_GAME_HANDLERS = [
 CHOICE_GAME_HANDLERS = [
     CallbackQueryHandler(
         list_single_game,
-        pattern=LIST_DUEL_GAME_CALLBACK_DATA
+        pattern=re.escape(LIST_DUEL_GAME_CALLBACK_DATA)
     ),
     CallbackQueryHandler(
         list_duel_game,
-        pattern=LIST_PARTY_GAME_CALLBACK_DATA
+        pattern=re.escape(LIST_PARTY_GAME_CALLBACK_DATA)
     ),
     CallbackQueryHandler(
         list_party_game,
-        pattern=LIST_SINGLE_GAME_CALLBACK_DATA
+        pattern=re.escape(LIST_SINGLE_GAME_CALLBACK_DATA)
     ),
 ]
