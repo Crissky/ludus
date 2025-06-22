@@ -559,7 +559,7 @@ class TestCard(unittest.TestCase):
         self.assertTrue(card1.is_wild)
         self.assertFalse(card2.is_wild)
 
-    def test_royal_numbers_cards(self):
+    def test_royal_number_card_names(self):
         """
         Teste se o método number_card_names retorna uma lista
         contendo todos os Cards de números de RoyalNames.
@@ -575,7 +575,7 @@ class TestCard(unittest.TestCase):
         for card_name in number_card_names:
             self.assertIn(card_name, expected_number_card_names)
 
-    def test_full_royal_numbers_cards(self):
+    def test_full_royal_number_card_names(self):
         """
         Teste se o método number_card_names retorna uma lista
         contendo todos os Cards de números de FullRoyalNames.
@@ -591,7 +591,7 @@ class TestCard(unittest.TestCase):
         for card_name in number_card_names:
             self.assertIn(card_name, expected_number_card_names)
 
-    def test_spanish_numbers_cards(self):
+    def test_spanish_number_card_names(self):
         """
         Teste se o método number_card_names retorna uma lista
         contendo todos os Cards de números de SpanishNames.
@@ -608,7 +608,7 @@ class TestCard(unittest.TestCase):
         for card_name in number_card_names:
             self.assertIn(card_name, expected_number_card_names)
 
-    def test_stripped_spanish_numbers_cards(self):
+    def test_stripped_spanish_number_card_names(self):
         """
         Teste se o método number_card_names retorna uma lista
         contendo todos os Cards de números de StrippedSpanishNames.
@@ -626,7 +626,7 @@ class TestCard(unittest.TestCase):
         for card_name in number_card_names:
             self.assertIn(card_name, expected_number_card_names)
 
-    def test_color_numbers_cards(self):
+    def test_color_number_card_names(self):
         """
         Teste se o método number_card_names retorna uma lista
         contendo todos os Cards de números de ColorNames.
@@ -643,7 +643,7 @@ class TestCard(unittest.TestCase):
         for card_name in number_card_names:
             self.assertIn(card_name, expected_number_card_names)
 
-    def test_flip_color_numbers_cards(self):
+    def test_flip_color_number_card_names(self):
         """
         Teste se o método number_card_names retorna uma lista
         contendo todos os Cards de números de FlipColorNames.
