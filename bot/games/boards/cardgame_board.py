@@ -101,7 +101,7 @@ class BaseCardGameBoard(BaseBoard):
 
         return text
 
-    # Abstract Methods
+    # ABSTRACT METHODS
     def start_game(self):
         self.create_hands(self.player_list, self.hand_kwargs)
         self.distribute_cards(self.player_list, self.initial_hand_size)
@@ -113,7 +113,7 @@ class BaseCardGameBoard(BaseBoard):
 
         keyboard = PlayKeyBoard(buttons_per_row=self.initial_hand_size)
         for index, card in enumerate(player):
-            if self.is_playable(card=card):
+            if self.is_playable_card(card=card):
                 text = card.text
                 button = BasePlayButton(
                     game=self,
@@ -128,7 +128,7 @@ class BaseCardGameBoard(BaseBoard):
         ...
 
     @abstractmethod
-    def is_playable(self, card: Card) -> bool:
+    def is_playable_card(self, card: Card) -> bool:
         ...
 
 
