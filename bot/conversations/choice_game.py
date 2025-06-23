@@ -65,7 +65,7 @@ async def list_duel_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     text = 'Desculpe, mas ainda não temos jogos dessa categoria.'
     await send_alert(
-        function_caller='LIST_SINGLE_GAME()',
+        function_caller='LIST_DUEL_GAME()',
         query=query,
         text=text,
     )
@@ -75,7 +75,7 @@ async def list_party_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     text = 'Desculpe, mas ainda não temos jogos dessa categoria.'
     await send_alert(
-        function_caller='LIST_SINGLE_GAME()',
+        function_caller='LIST_PARTY_GAME()',
         query=query,
         text=text,
     )
@@ -129,14 +129,14 @@ CHOICE_TYPE_GAME_HANDLERS = [
 CHOICE_GAME_HANDLERS = [
     CallbackQueryHandler(
         list_single_game,
-        pattern=re.escape(LIST_DUEL_GAME_CALLBACK_DATA)
+        pattern=re.escape(LIST_SINGLE_GAME_CALLBACK_DATA)
     ),
     CallbackQueryHandler(
         list_duel_game,
-        pattern=re.escape(LIST_PARTY_GAME_CALLBACK_DATA)
+        pattern=re.escape(LIST_DUEL_GAME_CALLBACK_DATA)
     ),
     CallbackQueryHandler(
         list_party_game,
-        pattern=re.escape(LIST_SINGLE_GAME_CALLBACK_DATA)
+        pattern=re.escape(LIST_PARTY_GAME_CALLBACK_DATA)
     ),
 ]
