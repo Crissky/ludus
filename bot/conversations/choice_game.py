@@ -1,6 +1,7 @@
 import re
 
 from random import choice
+from typing import List
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import (
     CallbackQueryHandler,
@@ -23,6 +24,7 @@ from bot.functions.chat import send_alert, send_private_message
 import logging
 
 from bot.functions.text import create_text_in_box
+from bot.games.boards.board import BaseBoard
 
 
 # Conversation Functions
@@ -106,6 +108,21 @@ def get_choice_type_game_keyboard() -> InlineKeyboardMarkup:
             )
         ],
     ]
+
+    return InlineKeyboardMarkup(buttons)
+
+
+def create_board_list_keyboard(
+    board_list: List[BaseBoard]
+) -> InlineKeyboardMarkup:
+    buttons = []
+    for board in board_list:
+        buttons.append([
+            InlineKeyboardButton(
+                text=board.DISPLAY_NAME,
+                callback_data=board.__name__
+            )
+        ])
 
     return InlineKeyboardMarkup(buttons)
 
