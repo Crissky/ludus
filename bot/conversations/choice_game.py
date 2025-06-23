@@ -56,6 +56,7 @@ async def choice_type_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def list_single_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     text = 'Desculpe, mas ainda não temos jogos dessa categoria.'
+
     await send_alert(
         function_caller='LIST_SINGLE_GAME()',
         query=query,
@@ -64,8 +65,10 @@ async def list_single_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 async def list_duel_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    logging.info('LIST_DUEL_GAME()')
     query = update.callback_query
     text = 'Desculpe, mas ainda não temos jogos dessa categoria.'
+
     await send_alert(
         function_caller='LIST_DUEL_GAME()',
         query=query,
@@ -74,8 +77,10 @@ async def list_duel_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 async def list_party_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    logging.info('LIST_PARTY_GAME()')
     query = update.callback_query
     text = 'Desculpe, mas ainda não temos jogos dessa categoria.'
+
     await send_alert(
         function_caller='LIST_PARTY_GAME()',
         query=query,
