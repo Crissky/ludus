@@ -9,9 +9,11 @@ from bot.games.report import Report
 
 
 class BaseBoard(ABC):
-    def __init__(self, name: str, *players: Player):
+    DISPLAY_NAME: str = None
+    DESCRIPTION: str = None
+
+    def __init__(self, *players: Player):
         self.id = id(self)
-        self.name = name
         self.player_list = []
 
         for player in players:
@@ -23,14 +25,14 @@ class BaseBoard(ABC):
         self.log = Log()
 
     def __str__(self):
-        text = NORMAL_SECTION_HEAD_1.format(f'Game: {self.name}\n\n')
+        text = NORMAL_SECTION_HEAD_1.format(f'Game: {self.DISPLAY_NAME}\n\n')
         for i, player in enumerate(self.player_list, start=1):
             text += f'{i}: {player}\n'
         text += TEXT_SEPARATOR_1
         return text
 
     def __repr__(self):
-        return f'Board({self.name})'
+        return f'Board({self.DISPLAY_NAME})'
 
     def add_player(self, player: Player):
         if player in self.player_list:
@@ -123,7 +125,9 @@ class BaseBoard(ABC):
 
     @property
     def game_header(self) -> str:
-        return NORMAL_SECTION_HEAD_1.format(f'Game: {self.name}') + '\n\n'
+        return NORMAL_SECTION_HEAD_1.format(
+            f'Game: {self.DISPLAY_NAME}'
+        ) + '\n\n'
 
 
 if __name__ == '__main__':
@@ -132,7 +136,7 @@ if __name__ == '__main__':
     p3 = Player('0003', 'p3')
     p4 = Player('0004', 'p4')
 
-    board = BaseBoard('test', [p1, p2, p3, p4])
+    board = BaseBoard(*[p1, p2, p3, p4])
 
     for i in range(10):
         logging.debug(f'Turno: {board.turn}, Vez: {board.player_turn}')
@@ -140,7 +144,7 @@ if __name__ == '__main__':
 
     logging.debug('-'*79)
 
-    board = BaseBoard('test', [p1, p2, p3, p4])
+    board = BaseBoard(*[p1, p2, p3, p4])
     board.is_clockwise = False
 
     for i in range(10):

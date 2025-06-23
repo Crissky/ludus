@@ -13,21 +13,23 @@ from bot.games.player import Player
 
 
 class BaseCardGameBoard(BaseBoard):
+    DISPLAY_NAME: str = None
+    DESCRIPTION: str = None
+
     def __init__(
         self,
-        name: str,
         draw_pile: BaseDeck,
         *players: Player,
         total_discard_pile: int = 1,
         initial_hand_size: int = 7,
         hand_kwargs: dict = None
     ):
-        super().__init__(name, *players)
+        super().__init__(*players)
+        self.draw_pile = None
+        self.discard_piles = None
         self.total_discard_pile = total_discard_pile
         self.initial_hand_size = initial_hand_size
         self.hand_kwargs = hand_kwargs
-        self.draw_pile = None
-        self.discard_piles = None
 
         if self.hand_kwargs is None:
             self.hand_kwargs = {}
@@ -141,7 +143,6 @@ if __name__ == '__main__':
     deck = RoyalDeck(shuffle=False)
 
     board = BaseCardGameBoard(
-        'Card Game Test',
         deck,
         p1, p2, p3, p4
     )

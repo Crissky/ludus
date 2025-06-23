@@ -4,10 +4,12 @@ from bot.games.player import Player
 
 
 class ColorGameBoard(BaseCardGameBoard):
+    DISPLAY_NAME: str = 'Colors'
+    DESCRIPTION: str = None
+
     def __init__(self, *players: Player):
         draw_pile = ColorDeck()
         super().__init__(
-            name='Color',
             *players,
             draw_pile=draw_pile,
             total_discard_pile=1,
