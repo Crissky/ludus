@@ -103,7 +103,7 @@ class BaseCardGameBoard(BaseBoard):
         self.distribute_cards()
         self.create_discard_pile()
 
-    def player_options(self, player: Player = None) -> PlayKeyBoard:
+    def player_keyboard(self, player: Player = None) -> PlayKeyBoard:
         if player is None:
             player = self.current_player
 
@@ -114,6 +114,7 @@ class BaseCardGameBoard(BaseBoard):
                 button = BasePlayButton(
                     game=self,
                     text=text,
+                    command='play',
                     hand_position=index
                 )
                 keyboard.add_button(button)
