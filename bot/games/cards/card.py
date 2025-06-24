@@ -107,6 +107,14 @@ class Card:
         return get_enum_index(self.suit)
 
     @property
+    def plus_value(self) -> int:
+        value_text = self.name.value
+        plus_match = re.search(r'\+(\d+)', value_text)
+        if plus_match:
+            return int(plus_match.group(1))
+        return 0
+
+    @property
     def name(self):
         return self.wild_name if self.wild_name is not None else self.real_name
 

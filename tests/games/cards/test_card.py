@@ -30,8 +30,9 @@ class TestCard(unittest.TestCase):
 
         self.joker_card = Card(FullRoyalNames.JOKER, FullRoyalSuits.JOKER)
 
-        self.block_card1 = Card(ColorNames.BLOCK, ColorSuits.RED)
-        self.color_number_card1 = Card(ColorNames.ZERO, ColorSuits.RED)
+        self.block_card = Card(ColorNames.BLOCK, ColorSuits.RED)
+        self.color_number_card = Card(ColorNames.ZERO, ColorSuits.RED)
+        self.color_plus_card = Card(ColorNames.PLUS_FOUR, ColorSuits.RED)
         self.color_wild_card = Card(ColorNames.PLUS_ZERO, ColorSuits.BLACK)
 
         # Cards 2
@@ -507,6 +508,20 @@ class TestCard(unittest.TestCase):
         expected_value = get_enum_index(card.suit)
         self.assertEqual(card.suit_value, expected_value)
         self.assertEqual(card.suit_value, 1)
+
+    def test_plus_value(self):
+        """
+        Teste se a propriedade plus_value retorna o de cartas plus (+2, +4...)
+        correto.
+        """
+
+        card_number = self.color_number_card
+        card_plus = self.color_plus_card
+        card_number_plus_value = card_number.plus_value
+        card_plus_plus_value = card_plus.plus_value
+
+        self.assertEqual(card_number_plus_value, 0)
+        self.assertEqual(card_plus_plus_value, 4)
 
     def test_unset_wild(self):
         """
