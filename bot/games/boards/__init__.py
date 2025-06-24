@@ -1,5 +1,5 @@
 from bot.games.boards.board import BaseBoard
-from bot.games.boards.colorgame_board import ColorGameBoard
+from bot.games.boards.colorgame_board import ColorsGameBoard
 
 
 def get_solo_board_list() -> list[BaseBoard]:
@@ -16,7 +16,7 @@ def get_duel_board_list() -> list[BaseBoard]:
 
 def get_party_board_list() -> list[BaseBoard]:
     party_board_list = [
-        ColorGameBoard,
+        ColorsGameBoard,
     ]
 
     return party_board_list

@@ -3,7 +3,7 @@ from bot.games.decks.color import ColorDeck
 from bot.games.player import Player
 
 
-class ColorGameBoard(BaseCardGameBoard):
+class ColorsGameBoard(BaseCardGameBoard):
     DISPLAY_NAME: str = 'Colors'
     DESCRIPTION: str = None
 
