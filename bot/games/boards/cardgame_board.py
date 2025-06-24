@@ -36,31 +36,31 @@ class BaseCardGameBoard(BaseBoard):
 
         self.create_draw_pile(draw_pile)
 
+    # CREATE FUNCTIONS
     def create_draw_pile(self, draw_pile: BaseDeck):
         self.draw_pile = draw_pile
         # self.draw_pile.shuffle()
 
-    def create_hands(self, player_list: List[Player], hand_kwargs: dict):
-        for player in player_list:
-            player_hand = BaseHand(**hand_kwargs)
+    def create_hands(self):
+        for player in self.player_list:
+            player_hand = BaseHand(**self.hand_kwargs)
             player.set_hand(player_hand)
 
-    def distribute_cards(
-        self,
-        player_list: List[Player],
-        initial_hand_size: int
-    ):
-        for _ in range(initial_hand_size):
-            for player in player_list:
-                card = self.draw()
-                player.hand.add_card(card)
-
-    def create_discard_pile(self, total_discard_pile: int):
-        self.discard_piles = [BaseDeck() for _ in range(total_discard_pile)]
+    def create_discard_pile(self):
+        self.discard_piles = [
+            BaseDeck()
+            for _ in range(self.total_discard_pile)
+        ]
 
         for discard_pile in self.discard_piles:
             cards = self.draw()
             discard_pile.add(*cards)
+
+    def distribute_cards(self):
+        for _ in range(self.initial_hand_size):
+            for player in self.player_list:
+                card = self.draw()
+                player.hand.add_card(card)
 
     def draw(self, quantity: int = 1) -> List[Card]:
         cards = self.draw_pile.draw(quantity=quantity)
@@ -74,7 +74,7 @@ class BaseCardGameBoard(BaseBoard):
     def draw_when_empty(self, quantity: int = 1) -> List[Card]:
         raise ValueError('Sem cartas para comprar, pois o baralho está vazio.')
 
-    def show_board(self) -> str:
+    def show_board(self, player: Player = None) -> str:
         peek_discard_piles = ''
         if self.discard_piles is not None:
             peek_discard_piles = ', '.join((
@@ -82,34 +82,30 @@ class BaseCardGameBoard(BaseBoard):
                 for discard_pile in self.discard_piles
             ))
 
-        text = self.game_header
-        text += f'Turn: {self.turn}, Currrent Player: {self.player_turn}\n\n'
-        text += f'Draw Pile: {len(self.draw_pile)}\n'
-        text += f'Discard Pile: {peek_discard_piles}\n'
+        output = [self.game_header]
+        output.append(f'Turn: {self.turn}')
+        output.append(f'Pilha de Compra: {len(self.draw_pile)} carta(s)')
+        output.append(f'Pilha de Descarte: {peek_discard_piles}')
 
         for i, player in enumerate(self.player_list, start=1):
+            marker = "👉" if player == self.current_player else "  "
             quantity_hand = len(player)
-            text += f'{i}: {player}, Hand: {quantity_hand}\n'
-        text += f'\n{self.log}\n'
+            output.append(f'{i}: {marker}{player}, Hand: {quantity_hand}')
 
-        return text
+        output.append("\n📜 Últimas ações:")
+        output.append(f'{self.log}')
 
-    def show_player_board(self, player: Player) -> str:
-        text = self.game_header
-        text += f'Player: {player.name}\n\n'
-        text += f'{self.log}\n'
-
-        return text
+        return '/n'.join(output)
 
     # ABSTRACT METHODS
     def start_game(self):
-        self.create_hands(self.player_list, self.hand_kwargs)
-        self.distribute_cards(self.player_list, self.initial_hand_size)
-        self.create_discard_pile(self.total_discard_pile)
+        self.create_hands()
+        self.distribute_cards()
+        self.create_discard_pile()
 
     def player_options(self, player: Player = None) -> PlayKeyBoard:
         if player is None:
-            player = self.player_turn
+            player = self.current_player
 
         keyboard = PlayKeyBoard(buttons_per_row=self.initial_hand_size)
         for index, card in enumerate(player):
