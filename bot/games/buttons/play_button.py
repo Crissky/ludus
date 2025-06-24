@@ -16,11 +16,13 @@ class BasePlayButton:
         game: BaseBoard,
         text: str,
         command: str,
+        group: int = 0,
         **callback_data
     ):
         self.game = game
         self.text = text
         self.command = command
+        self.group = group
         self.callback_data = callback_data
 
     def __eq__(self, value):
