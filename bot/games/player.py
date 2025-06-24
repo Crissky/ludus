@@ -29,8 +29,6 @@ class Player:
         self.hand[index] = value
 
     def __len__(self):
-        if self.hand is None:
-            return 0
         return len(self.hand)
 
     def __str__(self):
