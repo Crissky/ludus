@@ -16,9 +16,10 @@ class BasePlayButton:
 
     def __eq__(self, value):
         if isinstance(value, BasePlayButton):
-            return self.data_to_str() == value.data_to_str()
+            return self.data_to_str == value.data_to_str
         return False
 
+    @property
     def data_to_str(self) -> str:
         data = {
             'game_id': self.game.id,
@@ -31,6 +32,6 @@ class BasePlayButton:
         return callback_data_to_dict(data)
 
     def make_button(self) -> InlineKeyboardButton:
-        callback_data = self.data_to_str()
+        callback_data = self.data_to_str
         text = self.text
         return InlineKeyboardButton(text=text, callback_data=callback_data)
