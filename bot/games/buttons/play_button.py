@@ -28,7 +28,8 @@ class BasePlayButton:
 
         return callback_data_to_string(data)
 
-    def str_to_data(self, data: str):
+    @classmethod
+    def str_to_data(cls, data: str) -> dict:
         return callback_data_to_dict(data)
 
     def make_button(self) -> InlineKeyboardButton:
