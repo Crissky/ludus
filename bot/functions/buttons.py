@@ -10,41 +10,6 @@ LEFT_CLOSE_BUTTON_TEXT = f'{EmojiEnum.CLOSE.value}Fechar'
 RIGHT_CLOSE_BUTTON_TEXT = f'Fechar{EmojiEnum.CLOSE.value}'
 REFRESH_BUTTON_TEXT = f'{EmojiEnum.REFRESH.value}Atualizar'
 DETAIL_BUTTON_TEXT = f'{EmojiEnum.DETAIL.value}Detalhar'
-CALLBACK_KEY_LIST = [
-    'game_id'
-]
-
-
-# CALLBACK FUNCTIONS
-def callback_data_to_string(callback_data: dict) -> str:
-    '''Transforma um dicionário em uma string compactada usada no campo data
-    de um botão.
-    '''
-
-    items = []
-    for key, value in callback_data.items():
-        key_int = CALLBACK_KEY_LIST.index(key)
-        if isinstance(value, str):
-            items.append(f'{key_int}:"{value}"')
-        else:
-            items.append(f'{key_int}:{value}')
-    text = ','.join(items)
-    text = f'{{{text}}}'
-
-    return text
-
-
-def callback_data_to_dict(callback_data_str: str) -> dict:
-    '''Transforma de volta uma string compactada usada no campo data
-    de um botão em um dicionário.
-    '''
-
-    callback_data = eval(callback_data_str)
-    callback_data = {
-        CALLBACK_KEY_LIST[key]: value
-        for key, value in callback_data.items()
-    }
-    return callback_data
 
 
 # BUTTONS FUNCTIONS
