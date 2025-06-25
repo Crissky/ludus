@@ -1,3 +1,4 @@
+import logging
 import re
 
 from random import choice
@@ -21,8 +22,11 @@ from bot.constants.handler_filters import (
     BASIC_COMMAND_IN_PRIVATE_CHAT_FILTER,
     PREFIX_COMMANDS
 )
-from bot.functions.chat import edit_message_text, send_alert, send_private_message
-import logging
+from bot.functions.chat import (
+    edit_message_text,
+    send_alert,
+    send_private_message
+)
 
 from bot.functions.keyboard import reshape_row_buttons
 from bot.functions.keyboard import get_back_button
