@@ -1,4 +1,9 @@
-from bot.games.boards.board import BaseBoard
+
+from typing import TYPE_CHECKING
+
+
+if TYPE_CHECKING:
+    from bot.games.boards.board import BaseBoard
 
 
 from telegram import InlineKeyboardButton
@@ -13,7 +18,7 @@ class BasePlayButton:
 
     def __init__(
         self,
-        game: BaseBoard,
+        game: 'BaseBoard',
         text: str,
         command: str,
         group: int = 0,
