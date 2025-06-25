@@ -42,7 +42,7 @@ async def call_telegram_message_function(
     function_caller: str,
     function: Callable,
     context: ContextTypes.DEFAULT_TYPE,
-    need_response: bool = True,
+    need_response: bool = False,
     skip_retry: bool = False,
     **kwargs
 ) -> Union[Any, Message]:
@@ -169,6 +169,48 @@ async def send_private_message(
             f'Message: {text}\n'
             f'(ERROR: {error})'
         )
+
+
+async def edit_message_text(
+    function_caller: str,
+    new_text: str,
+    context: ContextTypes.DEFAULT_TYPE,
+    message_id: int,
+    chat_id: int = None,
+    user_id: int = None,
+    need_response: bool = False,
+    markdown: bool = False,
+    reply_markup: InlineKeyboardMarkup = REPLY_MARKUP_DEFAULT,
+    close_by_owner: bool = True,
+) -> Union[Message, bool]:
+    '''Edita uma mensagem usando um Message ou um ContextTypes.
+    '''
+
+    chat_id = context._chat_id if chat_id is None else chat_id
+    user_id = context._user_id if user_id is None else user_id
+    markdown = ParseMode.MARKDOWN_V2 if markdown is True else None
+    owner_id = user_id if close_by_owner is True else None
+    reply_markup = (
+        reply_markup
+        if reply_markup != REPLY_MARKUP_DEFAULT
+        else get_close_keyboard(user_id=owner_id)
+    )
+    edit_text_kwargs = dict(
+        text=new_text,
+        chat_id=chat_id,
+        message_id=message_id,
+        parse_mode=markdown,
+        reply_markup=reply_markup,
+    )
+    response = await call_telegram_message_function(
+        function_caller=f'{function_caller} -> EDIT_MESSAGE_EDIT()',
+        function=context.bot.edit_message_text,
+        context=context,
+        need_response=need_response,
+        **edit_text_kwargs
+    )
+
+    return response
 
 
 async def send_answer(
