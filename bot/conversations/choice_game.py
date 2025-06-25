@@ -177,7 +177,7 @@ def create_board_list_keyboard(
 
 # Handlers
 CHOICE_TYPE_GAME_COMMANDS = ['start']
-CHOICE_TYPE_GAME_HANDLERS = [
+CHOICE_GAME_HANDLERS = [
     PrefixHandler(
         prefix=PREFIX_COMMANDS,
         command=CHOICE_TYPE_GAME_COMMANDS,
@@ -194,8 +194,6 @@ CHOICE_TYPE_GAME_HANDLERS = [
         choice_type_game,
         pattern=re.escape(MAIN_MENU_GAME_CALLBACK_DATA)
     ),
-]
-CHOICE_GAME_HANDLERS = [
     CallbackQueryHandler(
         list_single_game,
         pattern=re.escape(LIST_SINGLE_GAME_CALLBACK_DATA)
