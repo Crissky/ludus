@@ -11,8 +11,9 @@ class Log:
 
     def __str__(self):
         log_text = ''
-        for i, report in enumerate(self, start=1):
-            log_text += f'{i}: {report}\n'
+        for i, report in enumerate(self):
+            i = len(self.logs) - i
+            log_text += f'{i:02}: {report}\n'
 
         return log_text
 

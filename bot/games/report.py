@@ -1,21 +1,26 @@
+from datetime import datetime
 from bot.games.player import Player
 
 
 class Report:
     def __init__(
         self,
-        game_id: int,
         player: Player,
         action: str,
         turn: int,
     ):
-        self.game_id = game_id
         self.player = player
         self.action = action
         self.turn = turn
+        self.created_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
     def __str__(self):
-        return f'{self.game_id}({self.turn}) - {self.player}: {self.action}'
+        text = f'{self.created_at} - Rodada: {self.turn:02} - '
+        if self.player:
+            text += f'{self.player}: {self.action}'
+        else:
+            text += f'{self.action}'
+        return text
 
     def __repr__(self):
         return f'Report({self})'

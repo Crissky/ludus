@@ -78,30 +78,35 @@ class BaseCardGameBoard(BaseBoard):
         peek_discard_piles = ''
         if self.discard_piles is not None:
             peek_discard_piles = ', '.join((
-                str(discard_pile.peek())
+                str(discard_pile.peek()) if discard_pile else 'Pilha Vazia'
                 for discard_pile in self.discard_piles
             ))
 
         output = [self.game_header]
-        output.append(f'Turn: {self.turn}')
+        if self.is_started is not True:
+            output.append(f'Partida ainda não começou!\n')
+            
+        output.append(f'Rodada: {self.turn}')
         output.append(f'Pilha de Compra: {len(self.draw_pile)} carta(s)')
         output.append(f'Pilha de Descarte: {peek_discard_piles}')
 
+        output.append("\n🎮 Jogadores na partida:")
         for i, player in enumerate(self.player_list, start=1):
             marker = "👉" if player == self.current_player else "  "
             quantity_hand = len(player)
-            output.append(f'{i}: {marker}{player}, Hand: {quantity_hand}')
+            output.append(f'{i:02}: {marker}{player}, Mão: {quantity_hand}')
 
         output.append("\n📜 Últimas ações:")
         output.append(f'{self.log}')
 
-        return '/n'.join(output)
+        return '\n'.join(output)
 
     # ABSTRACT METHODS
     def start_game(self):
         self.create_hands()
         self.distribute_cards()
         self.create_discard_pile()
+        self.is_started = True
 
     def player_keyboard(self, player: Player = None) -> PlayKeyBoard:
         if player is None:

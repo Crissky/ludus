@@ -20,8 +20,15 @@ class BaseBoard(ABC):
         self.turn = 1
         self.turn_direction = 1
         self.current_player_index = 0
+        self.is_started = False
         self.log = Log()
 
+        initial_report = Report(
+            player=False,
+            action=f'{self.DISPLAY_NAME} foi criado.',
+            turn=self.turn
+        )
+        self.add_log(report=initial_report)
         for player in players:
             self.add_player(player)
 
@@ -42,6 +49,12 @@ class BaseBoard(ABC):
             raise TypeError(f'Player {player} não é um Player.')
 
         self.player_list.append(player)
+        report = Report(
+            player=False,
+            action=f'{player.name} entrou na partida.',
+            turn=self.turn
+        )
+        self.add_log(report=report)
 
     def remove_player(self, player: Player):
         if player not in self.player_list:
@@ -102,7 +115,7 @@ class BaseBoard(ABC):
         output.append("\n📜 Últimas ações:")
         output.append(f'{self.log}')
 
-        return '/n'.join(output)
+        return '\n'.join(output)
 
     @abstractmethod
     def start_game(self):
@@ -134,8 +147,8 @@ class BaseBoard(ABC):
     @property
     def game_header(self) -> str:
         return NORMAL_SECTION_HEAD_1.format(
-            f'Game: {self.DISPLAY_NAME}'
-        ) + '\n\n'
+            f'Game - {self.DISPLAY_NAME}: {self.id}'
+        ) + '\n'
 
 
 if __name__ == '__main__':
