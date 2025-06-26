@@ -274,7 +274,7 @@ class TestCard(unittest.TestCase):
         card = self.ace_card1
         other = "Not a Card object"
         result = card.equals_name(other)
-        msg = "equals_name deve retornar False para objetos que não Card/Names"
+        msg = "equals_name deve retornar False para objetos que não Card names"
         self.assertFalse(result, msg)
 
     def test_equals_name_wilded(self):
@@ -291,7 +291,7 @@ class TestCard(unittest.TestCase):
         result_name = card.equals_name(other_name)
         msg = (
             "equals_name deve retornar True para objetos que não "
-            "Card/Names idênticos"
+            "Card names idênticos"
         )
         self.assertTrue(result_card, msg)
         self.assertTrue(result_name, msg)
