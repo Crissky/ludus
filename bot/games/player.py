@@ -1,12 +1,28 @@
 from collections.abc import Generator
+
+from telegram import User
 from bot.games.cards.card import Card
 from bot.games.hands.hand import BaseHand
 
 
 class Player:
-    def __init__(self, player_id: str, name: str, hand: BaseHand = None):
-        self.id = str(player_id)
-        self.name = name
+    def __init__(
+        self,
+        player_id: str = None,
+        name: str = None,
+        user: User = None,
+        hand: BaseHand = None
+    ):
+        if ((player_id is None or name is None) and user is None):
+            raise ValueError('player_id e name ou user devem ser informados.')
+
+        if player_id and name:
+            self.id = str(player_id)
+            self.name = name
+        else:
+            self.id = str(user.id)
+            self.name = user.name
+
         if hand is None:
             hand = BaseHand()
         self.hand = hand
