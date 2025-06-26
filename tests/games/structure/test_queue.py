@@ -36,6 +36,17 @@ class TestQueue(unittest.TestCase):
         self.assertEqual(queue[1], self.card2)
         self.assertEqual(queue[2], self.card3)
 
+    def test_bool(self):
+        """
+        Teste o método __bool__ com a queue vazio que com um e mais Cards
+        """
+
+        self.assertFalse(self.queue)
+        self.queue.push(self.card1)
+        self.assertTrue(self.queue)
+        self.queue.push(self.card2)
+        self.assertTrue(self.queue)
+
     def test_iter_yields_cards_in_order(self):
         """Teste se o método _iter_ produz cartas na ordem correta.
         """

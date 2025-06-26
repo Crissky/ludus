@@ -41,6 +41,17 @@ class TestStack(unittest.TestCase):
         self.assertEqual(stack[1], self.card2)
         self.assertEqual(stack[2], self.card1)
 
+    def test_bool(self):
+        """
+        Teste o método __bool__ com a stack vazio que com um e mais Cards
+        """
+
+        self.assertFalse(self.stack)
+        self.stack.push(self.card1)
+        self.assertTrue(self.stack)
+        self.stack.push(self.card2)
+        self.assertTrue(self.stack)
+
     def test_iter_yields_cards_in_order(self):
         """Teste se o método _iter_ produz cards na ordem correta.
         """
@@ -116,7 +127,7 @@ class TestStack(unittest.TestCase):
         self.assertEqual(len(self.stack), initial_length)
 
     def test_push_not_card_type(self):
-        """Teste push um objeto que não é um Card para a queue.
+        """Teste push um objeto que não é um Card para a stack.
         """
 
         not_card = "not a card"
@@ -156,7 +167,7 @@ class TestStack(unittest.TestCase):
         self.assertEqual(len(self.stack), initial_length)
 
     def test_push_bottom_not_card_type(self):
-        """Teste push_bottom um objeto que não é um Card para a queue.
+        """Teste push_bottom um objeto que não é um Card para a stack.
         """
 
         not_card = "not a card"

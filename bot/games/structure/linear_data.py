@@ -13,6 +13,9 @@ class LinearDataStructure(ABC):
         for card in cards:
             self.push(card)
 
+    def __bool__(self) -> bool:
+        return not self.is_empty
+
     def __iter__(self) -> Generator[Card]:
         for i in range(len(self.items)):
             yield self.items[i]
