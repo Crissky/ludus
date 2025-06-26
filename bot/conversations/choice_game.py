@@ -15,7 +15,8 @@ from bot.constants.callback import (
     LIST_DUEL_GAME_CALLBACK_DATA,
     LIST_PARTY_GAME_CALLBACK_DATA,
     LIST_SINGLE_GAME_CALLBACK_DATA,
-    MAIN_MENU_GAME_CALLBACK_DATA
+    MAIN_MENU_GAME_CALLBACK_DATA,
+    SELECT_GAME_CALLBACK_DATA
 )
 from bot.constants.choice_type_game import GREETINGS_TEXT
 from bot.constants.handler_filters import (
@@ -31,11 +32,12 @@ from bot.functions.chat import (
 from bot.functions.keyboard import reshape_row_buttons
 from bot.functions.keyboard import get_back_button
 from bot.functions.text import create_text_in_box
-from bot.games.boards import get_party_board_list
+from bot.games.boards import board_factory, get_party_board_list
 from bot.games.boards.board import BaseBoard
+from bot.games.player import Player
 
 
-# Conversation Functions
+# CONVERSATION FUNCTIONS
 async def choice_type_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
     logging.info('CHOICE_TYPE_GAME()')
     user_id = update.effective_user.id
@@ -126,7 +128,36 @@ async def list_party_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 
-# Buttons Functions
+async def select_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user = update.effective_user
+    message_id = update.effective_message.id
+    query = update.callback_query
+    data = query.data
+
+    game_name = data.replace(SELECT_GAME_CALLBACK_DATA, '')
+    game_class = board_factory(game_name)
+    player = Player(user=user)
+    game = game_class(player)
+    text = game.show_board()
+    text = create_text_in_box(
+        text=text,
+        header_text=game.DISPLAY_NAME,
+        footer_text='Escolha o jogo',
+        footer_emoji1='👇',
+        footer_emoji2='👇',
+        clean_func=None,
+    )
+
+    await edit_message_text(
+        function_caller='SELECT_GAME()',
+        new_text=text,
+        context=context,
+        message_id=message_id,
+        # reply_markup=keyboard_markup,
+    )
+
+
+# BUTTONS FUNCTIONS
 def get_choice_type_game_keyboard() -> InlineKeyboardMarkup:
     single_text = '🎯 Solo'
     duel_text = '⚔️ Duelo'
@@ -163,7 +194,7 @@ def create_board_list_keyboard(
         buttons.append(
             InlineKeyboardButton(
                 text=board.DISPLAY_NAME,
-                callback_data=board.__name__
+                callback_data=f'{SELECT_GAME_CALLBACK_DATA}{board.__name__}'
             )
         )
 
@@ -175,7 +206,7 @@ def create_board_list_keyboard(
     return InlineKeyboardMarkup(buttons)
 
 
-# Handlers
+# HANDLERS
 CHOICE_TYPE_GAME_COMMANDS = ['start']
 CHOICE_GAME_HANDLERS = [
     PrefixHandler(
@@ -205,5 +236,9 @@ CHOICE_GAME_HANDLERS = [
     CallbackQueryHandler(
         list_party_game,
         pattern=re.escape(LIST_PARTY_GAME_CALLBACK_DATA)
+    ),
+    CallbackQueryHandler(
+        select_game,
+        pattern=re.escape(SELECT_GAME_CALLBACK_DATA)
     ),
 ]
