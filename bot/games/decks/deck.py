@@ -84,6 +84,9 @@ class BaseDeck:
         if shuffle is True:
             self.shuffle()
 
+    def __bool__(self) -> bool:
+        return bool(self.card_stack)
+
     def __iter__(self) -> Generator[Card]:
         return iter(self.card_stack)
 
@@ -116,3 +119,7 @@ class BaseDeck:
 
     def shuffle(self):
         self.card_stack.shuffle()
+
+    @property
+    def is_empty(self) -> bool:
+        return self.card_stack.is_empty

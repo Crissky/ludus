@@ -149,6 +149,15 @@ class TestDeck(unittest.TestCase):
         msg = "Expected an empty iteration for an empty deck"
         self.assertEqual(len(items), 0, msg)
 
+    def test_bool(self):
+        """
+        Teste se o método __bool__ do BaseDeck retorna True se o deck
+        tiver cartas e False se o deck estiver vazio.
+        """
+
+        self.assertTrue(bool(self.deck))
+        self.assertFalse(bool(self.empty_deck))  # Teste para um deck vazio
+
     def test_iter_returns_iterator(self):
         """
         Teste se o método __iter__ do BaseDeck retorna um iterador
@@ -432,3 +441,12 @@ class TestDeck(unittest.TestCase):
         self.assertEqual(deck.draw(), new_cards[2])
         self.assertEqual(deck.draw(), new_cards[1])
         self.assertEqual(deck.draw(), new_cards[0])
+
+    def test_is_empty(self):
+        """
+        Teste se o método is_empty do BaseDeck retorna True se o deck
+        estiver vazio e False se o deck tiver cartas.
+        """
+
+        self.assertTrue(bool(self.empty_deck.is_empty))
+        self.assertFalse(bool(self.deck.is_empty))
