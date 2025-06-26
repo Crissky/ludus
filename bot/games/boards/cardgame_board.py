@@ -84,8 +84,7 @@ class BaseCardGameBoard(BaseBoard):
 
         output = [self.game_header]
         if self.is_started is not True:
-            output.append(f'Partida ainda não começou!\n')
-            
+            output.append('Partida ainda não começou!\n')
         output.append(f'Rodada: {self.turn}')
         output.append(f'Pilha de Compra: {len(self.draw_pile)} carta(s)')
         output.append(f'Pilha de Descarte: {peek_discard_piles}')
