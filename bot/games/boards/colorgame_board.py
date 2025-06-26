@@ -10,8 +10,8 @@ class ColorsGameBoard(BaseCardGameBoard):
     def __init__(self, *players: Player):
         draw_pile = ColorDeck()
         super().__init__(
+            draw_pile,
             *players,
-            draw_pile=draw_pile,
             total_discard_pile=1,
             initial_hand_size=7,
             hand_kwargs={}
