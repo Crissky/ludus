@@ -14,7 +14,7 @@ DETAIL_BUTTON_TEXT = f'{EmojiEnum.DETAIL.value}Detalhar'
 
 # BUTTONS FUNCTIONS
 def get_close_button(
-    user_id: int,
+    user_id: int = None,
     text: str = None,
     right_icon: bool = False,
 ) -> InlineKeyboardButton:

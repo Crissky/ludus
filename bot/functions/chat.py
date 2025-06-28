@@ -8,7 +8,6 @@ from bson import ObjectId
 
 from telegram import (
     CallbackQuery,
-    InlineKeyboardButton,
     InlineKeyboardMarkup,
     Message
 )
@@ -16,6 +15,7 @@ from telegram.constants import ChatAction, ChatType, ParseMode
 from telegram.error import BadRequest, Forbidden, RetryAfter, TimedOut
 from telegram.ext import ContextTypes, ConversationHandler
 
+from bot.functions.buttons import get_close_keyboard
 from bot.functions.enums.emoji import EmojiEnum
 
 
@@ -258,39 +258,3 @@ async def job_call_telegram(context: ContextTypes.DEFAULT_TYPE):
     logging.info(call_telegram_kwargs['function_caller'])
 
     await call_telegram_message_function(**call_telegram_kwargs)
-
-
-# BUTTONS FUNCTIONS
-def get_close_button(
-    user_id: int,
-    text: str = None,
-    right_icon: bool = False,
-) -> InlineKeyboardButton:
-    '''Se user_id for None, qualquer um pode fechar a mensagem,
-    caso contrário, somente o usuário com o mesmo user_id poderar fechar
-    a mensagem.
-    '''
-
-    if text is None:
-        text = LEFT_CLOSE_BUTTON_TEXT
-        if right_icon:
-            text = RIGHT_CLOSE_BUTTON_TEXT
-
-    return InlineKeyboardButton(
-        text=text,
-        callback_data=(
-            f'{{"command":"{CALLBACK_CLOSE}",'
-            f'"user_id":{user_id}}}'
-        )
-    )
-
-
-def get_close_keyboard(user_id: int) -> InlineKeyboardMarkup:
-    '''Se user_id for None, qualquer um pode fechar a mensagem,
-    caso contrário, somente o usuário com o mesmo user_id poderar fechar
-    a mensagem.
-    '''
-
-    return InlineKeyboardMarkup([[
-        get_close_button(user_id=user_id)
-    ]])
