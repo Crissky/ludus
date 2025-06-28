@@ -2,17 +2,19 @@ from random import choice
 from typing import List
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
+from bot.constants.callback import (
+    COMMAND_CLOSE_CALLBACK_DATA,
+    COMMAND_REFRESH_CALLBACK_DATA
+)
 from bot.functions.enums.emoji import EmojiEnum, FaceEmojiEnum
 
 
-CALLBACK_CLOSE = '$close'
 LEFT_CLOSE_BUTTON_TEXT = f'{EmojiEnum.CLOSE.value}Fechar'
 RIGHT_CLOSE_BUTTON_TEXT = f'Fechar{EmojiEnum.CLOSE.value}'
 REFRESH_BUTTON_TEXT = f'{EmojiEnum.REFRESH.value}Atualizar'
 DETAIL_BUTTON_TEXT = f'{EmojiEnum.DETAIL.value}Detalhar'
 
 
-# BUTTONS FUNCTIONS
 def get_close_button(
     user_id: int = None,
     text: str = None,
@@ -28,18 +30,20 @@ def get_close_button(
         if right_icon:
             text = RIGHT_CLOSE_BUTTON_TEXT
 
+    callback_data = (
+        f'{{"command":"{COMMAND_CLOSE_CALLBACK_DATA}",'
+        f'"user_id":{user_id}}}'
+    )
+
     return InlineKeyboardButton(
         text=text,
-        callback_data=(
-            f'{{"command":"{CALLBACK_CLOSE}",'
-            f'"user_id":{user_id}}}'
-        )
+        callback_data=callback_data
     )
 
 
 def get_refresh_close_button(
     user_id: int,
-    refresh_data: str = 'refresh',
+    refresh_data: str = COMMAND_REFRESH_CALLBACK_DATA,
     to_detail: bool = False,
 ) -> List[InlineKeyboardButton]:
     '''Se user_id for None, qualquer um pode fechar a mensagem,
@@ -48,23 +52,21 @@ def get_refresh_close_button(
     '''
 
     button_list = []
+    callback_data = f'{{"{refresh_data}":1,"user_id":{user_id}}}'
     button_list.append(
         InlineKeyboardButton(
             REFRESH_BUTTON_TEXT,
-            callback_data=(
-                f'{{"{refresh_data}":1,'
-                f'"user_id":{user_id}}}'
-            )
+            callback_data=callback_data
         )
     )
     if to_detail:
+        callback_data = (
+            f'{{"{refresh_data}":1,"verbose":"v","user_id":{user_id}}}'
+        )
         button_list.append(
             InlineKeyboardButton(
                 DETAIL_BUTTON_TEXT,
-                callback_data=(
-                    f'{{"{refresh_data}":1,"verbose":"v",'
-                    f'"user_id":{user_id}}}'
-                )
+                callback_data=callback_data
             )
         )
     button_list.append(get_close_button(user_id=user_id, right_icon=True))
