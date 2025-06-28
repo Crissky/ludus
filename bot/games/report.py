@@ -1,4 +1,4 @@
-from datetime import datetime
+from bot.functions.date_time import get_brazil_time_now
 from bot.games.player import Player
 
 
@@ -12,7 +12,7 @@ class Report:
         self.player = player
         self.action = action
         self.turn = turn
-        self.created_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        self.created_at = get_brazil_time_now().strftime('%H:%M:%S')
 
     def __str__(self):
         text = f'{self.created_at} - Rodada: {self.turn:02} - '
