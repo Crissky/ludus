@@ -2,7 +2,12 @@ import logging
 
 from random import choice
 from typing import List
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
+from telegram import (
+    CopyTextButton,
+    InlineKeyboardButton,
+    InlineKeyboardMarkup,
+    Update
+)
 from telegram.ext import (
     CallbackQueryHandler,
     CommandHandler,
@@ -30,6 +35,7 @@ from bot.functions.chat import (
     send_private_message
 )
 
+from bot.functions.game import add_game, get_game
 from bot.functions.keyboard import reshape_row_buttons
 from bot.functions.keyboard import get_back_button
 from bot.functions.text import create_text_in_box
@@ -119,7 +125,7 @@ async def list_party_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
     board_list = get_party_board_list()
-    keyboard_markup = create_board_list_keyboard(board_list)
+    keyboard_markup = get_board_list_keyboard(board_list)
 
     await edit_message_text(
         function_caller='LIST_PARTY_GAME()',
@@ -131,6 +137,7 @@ async def list_party_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 async def select_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    logging.info('SELECT_GAME()')
     user = update.effective_user
     message_id = update.effective_message.id
     query = update.callback_query
@@ -140,23 +147,77 @@ async def select_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
     game_class = board_factory(game_name)
     player = Player(user=user)
     game = game_class(player)
+    game_id = game.id
     text = game.show_board()
     text = create_text_in_box(
         text=text,
         header_text=game.DISPLAY_NAME,
-        footer_text='Escolha o jogo',
+        footer_text='Enviar convite',
         footer_emoji1='👇',
         footer_emoji2='👇',
         clean_func=None,
     )
+    reply_markup = get_invite_keyboard(game_id)
+
+    add_game(game=game, context=context)
 
     await edit_message_text(
         function_caller='SELECT_GAME()',
         new_text=text,
         context=context,
         message_id=message_id,
-        # reply_markup=keyboard_markup,
+        reply_markup=reply_markup,
     )
+
+
+@logging_basic_infos
+async def invite_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    logging.info('INVITE_GAME()')
+    user = update.effective_user
+    user_id = update.effective_user.id
+    args = context.args
+    arg_text = args[0]
+
+    if arg_text.startswith('invite_'):
+        game_id = arg_text.replace('invite_', '')
+        game = get_game(game_id=game_id, context=context)
+        if game is None:
+            text = 'Partida não encontrada.'
+            return await send_private_message(
+                function_caller='INVITE_GAME(GAME_NOT_FOUND)',
+                context=context,
+                text=text,
+                user_id=user_id,
+            )
+
+        player = Player(user=user)
+        game.add_player(player=player)
+        text = game.show_board()
+        text = create_text_in_box(
+            text=text,
+            header_text=game.DISPLAY_NAME,
+            footer_text='Convite',
+            footer_emoji1='🔗',
+            footer_emoji2='🔗',
+            clean_func=None,
+        )
+        reply_markup = get_invite_keyboard(game_id=game_id)
+
+        await send_private_message(
+            function_caller='INVITE_GAME()',
+            context=context,
+            text=text,
+            user_id=user_id,
+            reply_markup=reply_markup,
+        )
+    else:
+        text = str(args)
+        await send_private_message(
+            function_caller='INVITE_GAME()',
+            context=context,
+            text=text,
+            user_id=user_id,
+        )
 
 
 # BUTTONS FUNCTIONS
@@ -191,7 +252,7 @@ def get_choice_type_game_keyboard() -> InlineKeyboardMarkup:
     return InlineKeyboardMarkup(buttons)
 
 
-def create_board_list_keyboard(
+def get_board_list_keyboard(
     board_list: List[BaseBoard]
 ) -> InlineKeyboardMarkup:
     buttons = []
@@ -212,6 +273,23 @@ def create_board_list_keyboard(
     return InlineKeyboardMarkup(buttons)
 
 
+def get_invite_keyboard(game_id: int) -> InlineKeyboardMarkup:
+    invite_link = get_invite_link(game_id)
+    copy_button = CopyTextButton(text=invite_link)
+    reply_markup = InlineKeyboardMarkup([
+        [InlineKeyboardButton("Entrar na Partida", url=invite_link)],
+        [InlineKeyboardButton("Copiar Convite", copy_text=copy_button)],
+        [get_close_button()]
+    ])
+
+    return reply_markup
+
+
+def get_invite_link(game_id: int):
+    bot_username = 'LudusCardBot'
+    return f"https://t.me/{bot_username}?start=invite_{game_id}"
+
+
 # HANDLERS
 CHOICE_TYPE_GAME_COMMANDS = ['start']
 CHOICE_GAME_HANDLERS = [
@@ -226,6 +304,12 @@ CHOICE_GAME_HANDLERS = [
         callback=choice_type_game,
         filters=BASIC_COMMAND_IN_PRIVATE_CHAT_FILTER,
         has_args=False
+    ),
+    CommandHandler(
+        command=CHOICE_TYPE_GAME_COMMANDS,
+        callback=invite_game,
+        filters=BASIC_COMMAND_IN_PRIVATE_CHAT_FILTER,
+        has_args=True
     ),
     CallbackQueryHandler(
         choice_type_game,
