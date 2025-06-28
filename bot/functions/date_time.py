@@ -15,15 +15,19 @@ def get_brazil_time_now() -> datetime:
 
 
 def utc_to_brazil_datetime(dt: datetime) -> datetime:
-    utc_minus_3 = timezone(timedelta(hours=-3))
-    dt = dt.astimezone(utc_minus_3)
+    if dt.tzinfo is None:
+        dt = replace_tzinfo(dt)
+        # delta = timedelta(hours=3)
+        # dt = dt - delta
+    else:
+        utc_minus_3 = timezone(timedelta(hours=-3))
+        dt = dt.astimezone(utc_minus_3)
 
     return dt
 
 
 def datetime_to_string(dt: datetime) -> str:
-    if isinstance(dt, datetime):
-        dt = dt.strftime("%d/%m/%Y %H:%M:%S")
+    dt = dt.strftime("%d/%m/%Y %H:%M:%S")
 
     return dt
 
@@ -38,7 +42,7 @@ def brazil_to_utc_datetime(dt: datetime) -> datetime:
 def add_random_minutes_now(dt: datetime = None) -> datetime:
     if not dt:
         dt = get_brazil_time_now()
-    dt = replace_tzinfo(dt)
+    # dt = replace_tzinfo(dt)
     minutes = randint(MIN_ADD_MINUTES, MAX_ADD_MINUTES)
     logging.info(f"Adding {minutes} minutes")
 
