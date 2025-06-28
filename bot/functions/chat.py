@@ -213,6 +213,46 @@ async def edit_message_text(
     return response
 
 
+# QUERY FUNCTIONS
+async def delete_message(
+    function_caller: str,
+    context: ContextTypes.DEFAULT_TYPE,
+    query: CallbackQuery,
+):
+    '''Deleta a mensagem usando query,
+    caso ocorra um erro BadRequest tenta deletar a mensagem usando o context.
+    '''
+
+    try:
+        logging.info('DELETE_MESSAGE() TRYING QUERY.DELETE_MESSAGE')
+        await call_telegram_message_function(
+            function_caller=function_caller + ' and DELETE_MESSAGE()',
+            function=query.delete_message,
+            context=context,
+            need_response=False,
+        )
+    except BadRequest as e:
+        logging.info('DELETE_MESSAGE() BADREQUEST EXCEPT')
+        chat_id = query.message.chat.id
+        message_id = query.message.message_id
+        if 'Query is too old' in e.message:
+            delete_message_kwargs = dict(
+                chat_id=chat_id,
+                message_id=message_id
+            )
+            await call_telegram_message_function(
+                function_caller=function_caller,
+                function=context.bot.delete_message,
+                context=context,
+                need_response=False,
+                **delete_message_kwargs
+            )
+        elif 'Message to delete not found' in e.message:
+            logging.warning(f'\tError Message: "{e.message}"')
+        else:
+            raise e
+
+
 async def send_answer(
     function_caller: str,
     query: CallbackQuery,
