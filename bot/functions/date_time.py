@@ -2,6 +2,7 @@ from datetime import datetime, timezone, timedelta
 import logging
 from random import randint
 
+
 MIN_ADD_MINUTES = 5
 MAX_ADD_MINUTES = 10
 
