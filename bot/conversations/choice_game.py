@@ -1,5 +1,4 @@
 import logging
-import re
 
 from random import choice
 from typing import List
@@ -23,6 +22,8 @@ from bot.constants.handler_filters import (
     BASIC_COMMAND_IN_PRIVATE_CHAT_FILTER,
     PREFIX_COMMANDS
 )
+from bot.decorators.logging import logging_basic_infos
+from bot.functions.buttons import get_close_button
 from bot.functions.chat import (
     edit_message_text,
     send_alert,
@@ -38,6 +39,7 @@ from bot.games.player import Player
 
 
 # CONVERSATION FUNCTIONS
+@logging_basic_infos
 async def choice_type_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
     logging.info('CHOICE_TYPE_GAME()')
     user_id = update.effective_user.id
@@ -181,6 +183,9 @@ def get_choice_type_game_keyboard() -> InlineKeyboardMarkup:
                 callback_data=LIST_PARTY_GAME_CALLBACK_DATA
             )
         ],
+        [
+            get_close_button()
+        ]
     ]
 
     return InlineKeyboardMarkup(buttons)
@@ -200,7 +205,8 @@ def create_board_list_keyboard(
 
     buttons = reshape_row_buttons(buttons=buttons, buttons_per_row=2)
     buttons.append([
-        get_back_button(callback_data=MAIN_MENU_GAME_CALLBACK_DATA)
+        get_back_button(callback_data=MAIN_MENU_GAME_CALLBACK_DATA),
+        get_close_button(right_icon=True)
     ])
 
     return InlineKeyboardMarkup(buttons)
@@ -223,22 +229,22 @@ CHOICE_GAME_HANDLERS = [
     ),
     CallbackQueryHandler(
         choice_type_game,
-        pattern=re.escape(MAIN_MENU_GAME_CALLBACK_DATA)
+        pattern=MAIN_MENU_GAME_CALLBACK_DATA
     ),
     CallbackQueryHandler(
         list_single_game,
-        pattern=re.escape(LIST_SINGLE_GAME_CALLBACK_DATA)
+        pattern=LIST_SINGLE_GAME_CALLBACK_DATA
     ),
     CallbackQueryHandler(
         list_duel_game,
-        pattern=re.escape(LIST_DUEL_GAME_CALLBACK_DATA)
+        pattern=LIST_DUEL_GAME_CALLBACK_DATA
     ),
     CallbackQueryHandler(
         list_party_game,
-        pattern=re.escape(LIST_PARTY_GAME_CALLBACK_DATA)
+        pattern=LIST_PARTY_GAME_CALLBACK_DATA
     ),
     CallbackQueryHandler(
         select_game,
-        pattern=re.escape(SELECT_GAME_CALLBACK_DATA)
+        pattern=SELECT_GAME_CALLBACK_DATA
     ),
 ]
