@@ -7,6 +7,9 @@ from decouple import config
 from telegram.ext import Application
 
 from bot.conversations import (
+    CLOSE_MSG_HANDLER,
+)
+from bot.conversations import (
     CHOICE_GAME_HANDLERS,
 )
 
@@ -41,7 +44,7 @@ def main() -> None:
     application = Application.builder().token(TELEGRAM_TOKEN).build()
 
     # Add Single Handler
-    # application.add_handler()
+    application.add_handler(CLOSE_MSG_HANDLER)
 
     # Add Multiple Handlers
     application.add_handlers(CHOICE_GAME_HANDLERS)
