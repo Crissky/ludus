@@ -15,7 +15,9 @@ class Report:
         self.created_at = get_brazil_time_now().strftime('%H:%M:%S')
 
     def __str__(self):
-        text = f'{self.created_at} - Rodada: {self.turn:02} - '
+        text = f'{self.created_at} - '
+        if isinstance(self.turn, int) and self.turn > 0:
+            f'Rodada: {self.turn:02} - '
         if self.player:
             text += f'{self.player}: {self.action}'
         else:

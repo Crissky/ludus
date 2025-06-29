@@ -17,7 +17,7 @@ class BaseBoard(ABC):
     def __init__(self, *players: Player):
         self.id = id(self)
         self.player_list: List[Player] = []
-        self.turn = 1
+        self.turn = 0
         self.turn_direction = 1
         self.current_player_index = 0
         self.is_started = False

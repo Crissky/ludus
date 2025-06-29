@@ -107,6 +107,7 @@ class BaseCardGameBoard(BaseBoard):
         self.distribute_cards()
         self.create_discard_pile()
         self.is_started = True
+        self.turn = 1
 
     def player_keyboard(self, player: Player = None) -> PlayKeyBoard:
         if player is None:
