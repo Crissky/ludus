@@ -23,15 +23,14 @@ class PlayKeyBoard:
 
     def add_button(self, button: PlayButton):
         if button in self.play_button_list:
-            raise ValueError('Já existe um botão com esse nome.')
+            raise ValueError('Esse botão já está no teclado.')
         if not isinstance(button, PlayButton):
             raise ValueError(
-                'O botão deve ser uma instância de BasePlayButton.'
+                f'O botão deve ser uma instância de {PlayButton.__name__}.'
             )
         self.play_button_list.append(button)
 
-    @property
-    def buttons(self) -> List[List[InlineKeyboardButton]]:
+    def make_buttons(self) -> List[List[InlineKeyboardButton]]:
         button_lists = []
         sorted_play_button_list = sorted(
             self.play_button_list,
@@ -52,8 +51,7 @@ class PlayKeyBoard:
 
         return button_lists
 
-    @property
-    def keyboard(self) -> InlineKeyboardMarkup:
+    def make_keyboard(self) -> InlineKeyboardMarkup:
         button_lists = self.buttons
 
         return InlineKeyboardMarkup(button_lists)
