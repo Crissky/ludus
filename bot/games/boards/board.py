@@ -89,7 +89,6 @@ class BaseBoard(ABC):
 
         if player is not None and action is not None:
             report = Report(
-                game_id=self.id,
                 player=player,
                 action=action,
                 turn=self.turn
