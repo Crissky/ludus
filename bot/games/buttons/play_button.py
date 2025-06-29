@@ -1,6 +1,9 @@
 
 from typing import TYPE_CHECKING
 
+from bot.games.enums.command import CommandEnum
+
+from telegram import InlineKeyboardButton
 
 if TYPE_CHECKING:
     from bot.games.boards.board import BaseBoard
@@ -24,6 +27,11 @@ class PlayButton:
         group: int = 0,
         **callback_data
     ):
+        if not isinstance(command, CommandEnum):
+            raise TypeError(
+                'Command precisa ser uma instância de CommandEnum.'
+            )
+
         self.game = game
         self.text = text
         self.command = command
@@ -78,7 +86,7 @@ class PlayButton:
     @property
     def data_to_str(self) -> str:
         data = {
-            'command': self.command,
+            'command': self.command.name,
             'game_id': self.game.id,
         }
         data.update(self.callback_data)

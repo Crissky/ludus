@@ -7,6 +7,7 @@ from bot.games.boards.board import BaseBoard
 from bot.games.buttons.play_button import PlayButton
 from bot.games.cards.card import Card
 from bot.games.decks.deck import BaseDeck
+from bot.games.enums.command import CommandEnum
 from bot.games.hands.hand import BaseHand
 from bot.games.play_keyboard import PlayKeyBoard
 from bot.games.player import Player
@@ -118,10 +119,17 @@ class BaseCardGameBoard(BaseBoard):
                 button = PlayButton(
                     game=self,
                     text=text,
-                    command='play',
+                    command=CommandEnum.PLAY,
                     hand_position=index
                 )
                 keyboard.add_button(button)
+        button = PlayButton(
+            game=self,
+            text='🫴Passar',
+            command=CommandEnum.PASS,
+            group=1
+        )
+        keyboard.add_button(button)
 
         return keyboard
 
