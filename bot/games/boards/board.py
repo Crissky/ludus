@@ -54,12 +54,8 @@ class BaseBoard(ABC):
             raise TypeError(f'Player {player} não é um Player.')
 
         self.player_list.append(player)
-        report = Report(
-            player=False,
-            action=f'{player.name} entrou na partida.',
-            turn=self.turn
-        )
-        self.add_log(report=report)
+        action = f'{player.name} entrou na partida.'
+        self.add_log(player=False, action=action)
 
     def remove_player(self, player: Player):
         if player not in self.player_list:
