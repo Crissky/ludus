@@ -44,7 +44,12 @@ class BaseBoard(ABC):
 
     def add_player(self, player: Player):
         if player in self.player_list:
-            raise ValueError(f'Player {player} já está no board.')
+            action = (
+                f'{player} já está na partida. '
+                'Não é possível adicionar o mesmo jogador duas vezes.'
+            )
+            self.add_log(player=False, action=action)
+            return
         if not isinstance(player, Player):
             raise TypeError(f'Player {player} não é um Player.')
 
