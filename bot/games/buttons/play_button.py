@@ -9,9 +9,6 @@ if TYPE_CHECKING:
     from bot.games.boards.board import BaseBoard
 
 
-from telegram import InlineKeyboardButton
-
-
 class PlayButton:
     CALLBACK_KEY_LIST = [
         'command',
@@ -41,11 +38,13 @@ class PlayButton:
     def __eq__(self, value):
         if isinstance(value, PlayButton):
             return self.data_to_str == value.data_to_str
+
         return False
 
     def make_button(self) -> InlineKeyboardButton:
-        callback_data = self.data_to_str
         text = self.text
+        callback_data = self.data_to_str
+
         return InlineKeyboardButton(text=text, callback_data=callback_data)
 
     # CALLBACK FUNCTIONS
@@ -73,11 +72,12 @@ class PlayButton:
         de um botão em um dicionário.
         '''
 
-        callback_data = eval(callback_data_str)
+        callback_data: dict = eval(callback_data_str)
         callback_data = {
             PlayButton.CALLBACK_KEY_LIST[key]: value
             for key, value in callback_data.items()
         }
+
         return callback_data
 
     def str_to_data(self, data: str) -> dict:
