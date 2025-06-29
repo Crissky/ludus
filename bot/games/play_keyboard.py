@@ -1,14 +1,14 @@
 from typing import List
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
-from bot.games.buttons.play_button import BasePlayButton
+from bot.games.buttons.play_button import PlayButton
 
 
 class PlayKeyBoard:
     def __init__(
         self,
         buttons_per_row: int = 1,
-        *play_buttons: BasePlayButton
+        *play_buttons: PlayButton
     ):
         if buttons_per_row < 1:
             raise ValueError(
@@ -16,15 +16,15 @@ class PlayKeyBoard:
             )
 
         self.buttons_per_row = buttons_per_row
-        self.play_button_list: List[BasePlayButton] = []
+        self.play_button_list: List[PlayButton] = []
 
         for play_button in play_buttons:
             self.add_button(play_button)
 
-    def add_button(self, button: BasePlayButton):
+    def add_button(self, button: PlayButton):
         if button in self.play_button_list:
             raise ValueError('Já existe um botão com esse nome.')
-        if not isinstance(button, BasePlayButton):
+        if not isinstance(button, PlayButton):
             raise ValueError(
                 'O botão deve ser uma instância de BasePlayButton.'
             )

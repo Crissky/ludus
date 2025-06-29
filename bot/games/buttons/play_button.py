@@ -9,7 +9,7 @@ if TYPE_CHECKING:
 from telegram import InlineKeyboardButton
 
 
-class BasePlayButton:
+class PlayButton:
     CALLBACK_KEY_LIST = [
         'command',
         'game_id',
@@ -31,7 +31,7 @@ class BasePlayButton:
         self.callback_data = callback_data
 
     def __eq__(self, value):
-        if isinstance(value, BasePlayButton):
+        if isinstance(value, PlayButton):
             return self.data_to_str == value.data_to_str
         return False
 
@@ -49,7 +49,7 @@ class BasePlayButton:
 
         items = []
         for key, value in callback_data.items():
-            key_int = BasePlayButton.CALLBACK_KEY_LIST.index(key)
+            key_int = PlayButton.CALLBACK_KEY_LIST.index(key)
             if isinstance(value, str):
                 items.append(f'{key_int}:"{value}"')
             else:
@@ -67,7 +67,7 @@ class BasePlayButton:
 
         callback_data = eval(callback_data_str)
         callback_data = {
-            BasePlayButton.CALLBACK_KEY_LIST[key]: value
+            PlayButton.CALLBACK_KEY_LIST[key]: value
             for key, value in callback_data.items()
         }
         return callback_data
@@ -83,4 +83,4 @@ class BasePlayButton:
         }
         data.update(self.callback_data)
 
-        return BasePlayButton.callback_data_to_string(data)
+        return PlayButton.callback_data_to_string(data)

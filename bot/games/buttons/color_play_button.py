@@ -1,5 +1,5 @@
-from bot.games.buttons.play_button import BasePlayButton
+from bot.games.buttons.play_button import PlayButton
 
 
-class ColorPlayButton(BasePlayButton):
+class ColorPlayButton(PlayButton):
     ...

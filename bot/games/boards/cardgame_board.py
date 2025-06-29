@@ -4,7 +4,7 @@ from abc import abstractmethod
 from typing import List
 
 from bot.games.boards.board import BaseBoard
-from bot.games.buttons.play_button import BasePlayButton
+from bot.games.buttons.play_button import PlayButton
 from bot.games.cards.card import Card
 from bot.games.decks.deck import BaseDeck
 from bot.games.hands.hand import BaseHand
@@ -115,7 +115,7 @@ class BaseCardGameBoard(BaseBoard):
         for index, card in enumerate(player):
             if self.is_playable_card(card=card):
                 text = card.text
-                button = BasePlayButton(
+                button = PlayButton(
                     game=self,
                     text=text,
                     command='play',
