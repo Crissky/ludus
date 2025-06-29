@@ -11,7 +11,8 @@ class Player:
         player_id: str = None,
         name: str = None,
         user: User = None,
-        hand: BaseHand = None
+        hand: BaseHand = None,
+        message_id: int = None,
     ):
         if ((player_id is None or name is None) and user is None):
             raise ValueError('player_id e name ou user devem ser informados.')
@@ -26,6 +27,7 @@ class Player:
         if hand is None:
             hand = BaseHand()
         self.hand = hand
+        self.message_id = message_id
 
     def __eq__(self, other):
         if isinstance(other, Player):
@@ -58,6 +60,9 @@ class Player:
             self.hand = hand
         else:
             raise TypeError('hand precisa ser do tipo BaseHand.')
+
+    def set_message_id(self, message_id: int):
+        self.message_id = message_id
 
     @property
     def user_id(self):
