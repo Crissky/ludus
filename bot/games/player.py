@@ -53,7 +53,12 @@ class Player:
         return self.name
 
     def __repr__(self):
-        return f'Player(id={self.id}, name={self.name})'
+        return (
+            f'Player(id={self.id}, '
+            f'name={self.name}, '
+            f'message_id={self.message_id}'
+            ')'
+        )
 
     def set_hand(self, hand: BaseHand):
         if isinstance(hand, BaseHand):
