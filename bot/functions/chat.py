@@ -17,6 +17,8 @@ from telegram.ext import ContextTypes, ConversationHandler
 
 from bot.functions.buttons import get_close_keyboard
 from bot.functions.enums.emoji import EmojiEnum
+from bot.functions.text import create_text_in_box
+from bot.games.boards.board import BaseBoard
 
 
 CALLBACK_CLOSE = '$close'
@@ -213,6 +215,61 @@ async def edit_message_text(
     )
 
     return response
+
+
+async def update_all_player_messages(
+    function_caller: str,
+    game: BaseBoard,
+    context: ContextTypes.DEFAULT_TYPE,
+    need_response: bool = False,
+    markdown: bool = False,
+    reply_markup: InlineKeyboardMarkup = None,
+    close_by_owner: bool = True,
+    create_text_in_box_kwargs: dict = None
+):
+    logging.info(f'{function_caller}->UPDATE_ALL_PLAYER_MESSAGES()')
+    logging.info(f'  Jogadores: {game.player_list}')
+    for player in game.player_list:
+        logging.info(f'  Atualizando mensagem de {player} em {game.id}.')
+
+        user_id = player.user_id
+        message_id = player.message_id
+        new_text = game.show_board(player=player)
+        if create_text_in_box_kwargs is not None:
+            new_text = create_text_in_box(
+                text=new_text,
+                **create_text_in_box_kwargs
+            )
+        if reply_markup is None:
+            player_keyboard = game.player_keyboard(player=player)
+            reply_markup = player_keyboard.make_keyboard()
+
+        if message_id is None:
+            response = await send_private_message(
+                function_caller=function_caller,
+                context=context,
+                text=new_text,
+                user_id=user_id,
+                markdown=markdown,
+                reply_markup=reply_markup,
+                close_by_owner=close_by_owner,
+                need_response=need_response,
+            )
+            new_message_id = response.message_id
+            player.set_message_id(message_id=new_message_id)
+        else:
+            await edit_message_text(
+                function_caller=function_caller,
+                new_text=new_text,
+                context=context,
+                message_id=message_id,
+                chat_id=user_id,
+                user_id=user_id,
+                need_response=need_response,
+                markdown=markdown,
+                reply_markup=reply_markup,
+                close_by_owner=close_by_owner,
+            )
 
 
 # QUERY FUNCTIONS
