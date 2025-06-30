@@ -129,7 +129,7 @@ async def send_private_message(
     close_by_owner: bool = True,
     need_response: bool = False,
     skip_retry: bool = False,
-):
+) -> Message:
     ''' Tenta enviar mensagem privada, caso não consiga pelo erro "Forbidden"
     envia mensagem para o grupo marcando o nome do jogador.
     '''
@@ -152,7 +152,7 @@ async def send_private_message(
             reply_markup=reply_markup,
         )
 
-        await call_telegram_message_function(
+        response = await call_telegram_message_function(
             function_caller='SEND_PRIVATE_MESSAGE()',
             function=context.bot.send_message,
             context=context,
@@ -160,6 +160,8 @@ async def send_private_message(
             skip_retry=skip_retry,
             **call_telegram_kwargs
         )
+
+        return response
     except Forbidden as error:
         logging.info(
             f'SEND_PRIVATE_MESSAGE(): Usuário {user_id} não pode '
