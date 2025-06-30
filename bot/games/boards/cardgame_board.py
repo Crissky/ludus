@@ -31,6 +31,7 @@ class BaseCardGameBoard(BaseBoard):
         self.total_discard_pile = total_discard_pile
         self.initial_hand_size = initial_hand_size
         self.hand_kwargs = hand_kwargs
+        self.is_passing = False
 
         if self.hand_kwargs is None:
             self.hand_kwargs = {}
@@ -124,17 +125,28 @@ class BaseCardGameBoard(BaseBoard):
                     hand_position=index
                 )
                 keyboard.add_button(button)
-        button = PlayButton(
-            game=self,
-            text='🫴Passar',
-            command=CommandEnum.PASS,
-            group=1
-        )
+
+        if self.is_passing is True:
+            # Se is_passing é True, significa que o jogador já comprou nessa
+            # rodada e não pode comprar novamente.
+            button = PlayButton(
+                game=self,
+                text='🫴Passar',
+                command=CommandEnum.PASS,
+                group=1
+            )
+        else:
+            button = PlayButton(
+                game=self,
+                text='🫴Comprar',
+                command=CommandEnum.DRAW,
+                group=1
+            )
         keyboard.add_button(button)
 
         return keyboard
 
-    def play(self):
+    def play(self, play_dict: dict):
         ...
 
     @abstractmethod
