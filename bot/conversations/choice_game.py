@@ -32,7 +32,8 @@ from bot.functions.buttons import get_close_button
 from bot.functions.chat import (
     edit_message_text,
     send_alert,
-    send_private_message
+    send_private_message,
+    update_all_player_messages
 )
 
 from bot.functions.game import add_game, get_game
@@ -145,12 +146,10 @@ async def select_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     game_name = data.replace(SELECT_GAME_CALLBACK_DATA, '')
     game_class = board_factory(game_name)
-    player = Player(user=user)
+    player = Player(user=user, message_id=message_id)
     game = game_class(player)
     game_id = game.id
-    text = game.show_board()
-    text = create_text_in_box(
-        text=text,
+    create_text_in_box_kwargs = dict(
         header_text=game.DISPLAY_NAME,
         footer_text='Enviar convite',
         footer_emoji1='👇',
@@ -161,12 +160,12 @@ async def select_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     add_game(game=game, context=context)
 
-    await edit_message_text(
+    await update_all_player_messages(
         function_caller='SELECT_GAME()',
-        new_text=text,
+        game=game,
         context=context,
-        message_id=message_id,
         reply_markup=reply_markup,
+        create_text_in_box_kwargs=create_text_in_box_kwargs
     )
 
 
@@ -192,9 +191,7 @@ async def invite_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         player = Player(user=user)
         game.add_player(player=player)
-        text = game.show_board()
-        text = create_text_in_box(
-            text=text,
+        create_text_in_box_kwargs = dict(
             header_text=game.DISPLAY_NAME,
             footer_text='Convite',
             footer_emoji1='🔗',
@@ -203,12 +200,12 @@ async def invite_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
         reply_markup = get_invite_keyboard(game_id=game_id)
 
-        await send_private_message(
+        await update_all_player_messages(
             function_caller='INVITE_GAME()',
+            game=game,
             context=context,
-            text=text,
-            user_id=user_id,
             reply_markup=reply_markup,
+            create_text_in_box_kwargs=create_text_in_box_kwargs
         )
     else:
         text = str(args)
