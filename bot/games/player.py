@@ -27,6 +27,9 @@ class Player:
         if hand is None:
             hand = BaseHand()
         self.hand = hand
+
+        if not isinstance(message_id, int):
+            raise TypeError('message_id precisa ser do tipo int.')
         self.message_id = message_id
 
     def __eq__(self, other):
@@ -67,6 +70,9 @@ class Player:
             raise TypeError('hand precisa ser do tipo BaseHand.')
 
     def set_message_id(self, message_id: int):
+        if not isinstance(message_id, int):
+            raise TypeError('message_id precisa ser do tipo int.')
+
         self.message_id = message_id
 
     @property
