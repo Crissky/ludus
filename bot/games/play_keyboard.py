@@ -52,6 +52,6 @@ class PlayKeyBoard:
         return button_lists
 
     def make_keyboard(self) -> InlineKeyboardMarkup:
-        button_lists = self.buttons
+        button_lists = self.make_buttons()
 
         return InlineKeyboardMarkup(button_lists)
