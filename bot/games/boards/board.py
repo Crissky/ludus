@@ -118,7 +118,7 @@ class BaseBoard(ABC):
         return '\n'.join(output)
 
     @abstractmethod
-    def start_game(self):
+    def start(self):
         ...
 
     @abstractmethod

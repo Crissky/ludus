@@ -103,7 +103,7 @@ class BaseCardGameBoard(BaseBoard):
         return '\n'.join(output)
 
     # ABSTRACT METHODS
-    def start_game(self):
+    def start(self):
         self.create_hands()
         self.distribute_cards()
         self.create_discard_pile()
@@ -172,7 +172,7 @@ if __name__ == '__main__':
     logging.debug(board.show_board())
     logging.debug('START GAME', '-'*68)
 
-    board.start_game()
+    board.start()
     logging.debug(board.show_board())
     logging.debug('DRAW', '-'*74)
 
