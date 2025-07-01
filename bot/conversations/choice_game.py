@@ -88,35 +88,34 @@ async def choice_type_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
 
 
-async def list_single_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    logging.info('LIST_SINGLE_GAME()')
-    query = update.callback_query
-    text = 'Desculpe, mas ainda não temos jogos da categoria "🎯 Solo".'
-
-    await send_alert(
-        function_caller='LIST_SINGLE_GAME()',
-        query=query,
-        text=text,
-    )
-
-
-async def list_duel_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    logging.info('LIST_DUEL_GAME()')
-    query = update.callback_query
-    text = 'Desculpe, mas ainda não temos jogos da categoria "⚔️ Duelo".'
-
-    await send_alert(
-        function_caller='LIST_DUEL_GAME()',
-        query=query,
-        text=text,
-    )
-
-
-async def list_party_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    logging.info('LIST_PARTY_GAME()')
+async def list_games(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    logging.info('LIST_GAMES()')
     message_id = update.effective_message.id
     user_name = update.effective_user.name
+    query = update.callback_query
+    data = query.data
+
     text = f'👉 Qual jogo de Grupo você quer jogar, {user_name}?'
+    board_list = None
+    keyboard_markup = None
+    if data == LIST_SINGLE_GAME_CALLBACK_DATA:
+        text = 'Desculpe, mas ainda não temos jogos da categoria "🎯 Solo".'
+    elif data == LIST_DUEL_GAME_CALLBACK_DATA:
+        text = 'Desculpe, mas ainda não temos jogos da categoria "⚔️ Duelo".'
+    elif data == LIST_PARTY_GAME_CALLBACK_DATA:
+        board_list = get_party_board_list()
+        keyboard_markup = get_board_list_keyboard(board_list)
+    else:
+        text = f'Lista de jogos "{data}" não foi encontrada!!!'
+
+    if board_list is None or keyboard_markup is None:
+        await send_alert(
+            function_caller='LIST_GAMES()',
+            query=query,
+            text=text,
+        )
+        return
+
     text = create_text_in_box(
         text=text,
         footer_text='Escolha o jogo',
@@ -124,9 +123,6 @@ async def list_party_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
         footer_emoji2='👇',
         clean_func=None,
     )
-
-    board_list = get_party_board_list()
-    keyboard_markup = get_board_list_keyboard(board_list)
 
     await edit_message_text(
         function_caller='LIST_PARTY_GAME()',
@@ -313,16 +309,12 @@ CHOICE_GAME_HANDLERS = [
         pattern=MAIN_MENU_GAME_CALLBACK_DATA
     ),
     CallbackQueryHandler(
-        list_single_game,
-        pattern=LIST_SINGLE_GAME_CALLBACK_DATA
-    ),
-    CallbackQueryHandler(
-        list_duel_game,
-        pattern=LIST_DUEL_GAME_CALLBACK_DATA
-    ),
-    CallbackQueryHandler(
-        list_party_game,
-        pattern=LIST_PARTY_GAME_CALLBACK_DATA
+        list_games,
+        pattern=(
+            f'{LIST_SINGLE_GAME_CALLBACK_DATA}'
+            f'|{LIST_DUEL_GAME_CALLBACK_DATA}'
+            f'|{LIST_PARTY_GAME_CALLBACK_DATA}'
+        )
     ),
     CallbackQueryHandler(
         select_game,
