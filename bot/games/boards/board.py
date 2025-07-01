@@ -141,6 +141,11 @@ class BaseBoard(ABC):
             return None
 
     @property
+    def host(self) -> Player:
+        return self.player_list[0] if self.player_list else None
+    host_player = host
+
+    @property
     def total_players(self) -> int:
         return len(self.player_list)
 
