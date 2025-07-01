@@ -28,7 +28,7 @@ class Player:
             hand = BaseHand()
         self.hand = hand
 
-        if not isinstance(message_id, int):
+        if not isinstance(message_id, (int, type(None))):
             raise TypeError('message_id precisa ser do tipo int.')
         self.message_id = message_id
 
