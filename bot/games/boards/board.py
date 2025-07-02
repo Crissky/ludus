@@ -43,7 +43,7 @@ class BaseBoard(ABC):
         return f'Board({self.DISPLAY_NAME})'
 
     def add_player(self, player: Player):
-        if player in self.player_list:
+        if self.player_in_game(player):
             action = (
                 f'{player} já está na partida. '
                 'Não é possível adicionar o mesmo jogador duas vezes.'
@@ -56,6 +56,9 @@ class BaseBoard(ABC):
         self.player_list.append(player)
         action = f'{player.name} entrou na partida.'
         self.add_log(player=False, action=action)
+
+    def player_in_game(self, player) -> bool:
+        return player in self.player_list
 
     def remove_player(self, player: Player):
         if player not in self.player_list:

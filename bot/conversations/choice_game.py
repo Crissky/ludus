@@ -187,6 +187,15 @@ async def invite_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
             )
 
         player = Player(user=user)
+        if game.is_started and not game.player_in_game(player):
+            text = 'Não é possível entrar nessa partida, pois já foi iniciada.'
+            return await send_private_message(
+                function_caller='INVITE_GAME(GAME_STARTED)',
+                context=context,
+                text=text,
+                user_id=user_id,
+            )
+
         game.add_player(player=player)
         reply_markup = get_invite_keyboard(game_id=game_id)
         create_text_in_box_kwargs = dict(
