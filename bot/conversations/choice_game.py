@@ -2,6 +2,7 @@ import logging
 
 from random import choice
 from typing import List
+from decouple import config
 from telegram import (
     CopyTextButton,
     InlineKeyboardButton,
@@ -44,6 +45,9 @@ from bot.functions.text import create_text_in_box
 from bot.games.boards import board_factory, get_party_board_list
 from bot.games.boards.board import BaseBoard
 from bot.games.player import Player
+
+
+BOT_USERNAME = config("BOT_USERNAME")
 
 
 # CONVERSATION FUNCTIONS
@@ -343,8 +347,7 @@ def get_invite_keyboard(game_id: int) -> InlineKeyboardMarkup:
 
 
 def get_invite_link(game_id: int):
-    bot_username = 'LudusCardBot'
-    return f"https://t.me/{bot_username}?start=invite_{game_id}"
+    return f"https://t.me/{BOT_USERNAME}?start=invite_{game_id}"
 
 
 # HANDLERS
