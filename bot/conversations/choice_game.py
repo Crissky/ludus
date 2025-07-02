@@ -150,6 +150,9 @@ async def select_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
     player = Player(user=user, message_id=message_id)
     game = game_class(player)
     game_id = game.id
+    invite_keyboard = get_invite_keyboard(game_id)
+    game.set_invite_keyboard(keyboard=invite_keyboard)
+    add_game(game=game, context=context)
     create_text_in_box_kwargs = dict(
         header_text=game.DISPLAY_NAME,
         footer_text='Enviar convite',
@@ -157,15 +160,11 @@ async def select_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
         footer_emoji2='👇',
         clean_func=None,
     )
-    reply_markup = get_invite_keyboard(game_id)
-
-    add_game(game=game, context=context)
 
     await update_all_player_messages(
         function_caller='SELECT_GAME()',
         game=game,
         context=context,
-        reply_markup=reply_markup,
         create_text_in_box_kwargs=create_text_in_box_kwargs
     )
 
@@ -191,7 +190,7 @@ async def invite_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
             )
 
         player = Player(user=user)
-        if game.is_started and not game.player_in_game(player):
+        if game.is_started and not game.player_in_game(player=player):
             text = 'Não é possível entrar nessa partida, pois já foi iniciada.'
             return await send_private_message(
                 function_caller='INVITE_GAME(GAME_STARTED)',
@@ -201,7 +200,6 @@ async def invite_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
             )
 
         game.add_player(player=player)
-        reply_markup = get_invite_keyboard(game_id=game_id)
         create_text_in_box_kwargs = dict(
             header_text=game.DISPLAY_NAME,
             footer_text='Convite',
@@ -214,7 +212,6 @@ async def invite_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
             function_caller='INVITE_GAME()',
             game=game,
             context=context,
-            reply_markup=reply_markup,
             create_text_in_box_kwargs=create_text_in_box_kwargs
         )
     else:
@@ -249,11 +246,9 @@ async def start_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if host_player is not None and host_player == user_id:
         game.start()
         is_started = game.is_started
-        reply_markup = None
         create_text_in_box_kwargs = None
 
         if is_started is False:
-            reply_markup = get_invite_keyboard(game_id=game_id)
             create_text_in_box_kwargs = dict(
                 header_text=game.DISPLAY_NAME,
                 footer_text='Convite',
@@ -266,7 +261,6 @@ async def start_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
             function_caller='START_GAME()',
             game=game,
             context=context,
-            reply_markup=reply_markup,
             create_text_in_box_kwargs=create_text_in_box_kwargs,
         )
     else:
