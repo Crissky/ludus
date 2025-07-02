@@ -67,7 +67,7 @@ class BaseCardGameBoard(BaseBoard):
 
         super().add_player(player)
 
-    # CREATE FUNCTIONS
+    # CREATE FUNCTIONS #######################################################
     def create_draw_pile(self, draw_pile: BaseDeck):
         self.draw_pile = draw_pile
         # self.draw_pile.shuffle()
@@ -105,7 +105,37 @@ class BaseCardGameBoard(BaseBoard):
     def draw_when_empty(self, quantity: int = 1) -> List[Card]:
         raise ValueError('Sem cartas para comprar, pois o baralho está vazio.')
 
+    # SHOW BOARD FUNCTIONS ###################################################
     def show_board(self, player: Player = None) -> str:
+        output = [self.game_header]
+        if self.is_started is not True:
+            output.append('Partida ainda não começou!\n')
+        output.append(self.show_board_turn())
+        output.append(self.show_board_draw_pile())
+        output.append(self.show_board_discard_piles())
+
+        output.append("\n🎮 Jogadores na partida:")
+        for i, p in enumerate(self.player_list, start=1):
+            marker = "👉" if p == self.current_player else "  "
+            quantity_hand = len(p)
+            output.append(f'{i:02}: {marker}{p}, Mão: {quantity_hand}')
+
+        if player:
+            output.append("\n🖐️ Suas cartas:")
+            output.append(str(player.hand))
+
+        output.append("\n📜 Últimas ações:")
+        output.append(f'{self.log}')
+
+        return '\n'.join(output)
+
+    def show_board_draw_pile(self):
+        return f'Pilha de Compra: {len(self.draw_pile)} carta(s)'
+
+    def show_board_turn(self):
+        return f'Rodada: {self.turn}'
+
+    def show_board_discard_piles(self):
         peek_discard_piles = ''
         if self.discard_piles is not None:
             peek_discard_piles = ', '.join((
@@ -113,25 +143,9 @@ class BaseCardGameBoard(BaseBoard):
                 for discard_pile in self.discard_piles
             ))
 
-        output = [self.game_header]
-        if self.is_started is not True:
-            output.append('Partida ainda não começou!\n')
-        output.append(f'Rodada: {self.turn}')
-        output.append(f'Pilha de Compra: {len(self.draw_pile)} carta(s)')
-        output.append(f'Pilha de Descarte: {peek_discard_piles}')
+        return f'Pilha de Descarte: {peek_discard_piles}'
 
-        output.append("\n🎮 Jogadores na partida:")
-        for i, player in enumerate(self.player_list, start=1):
-            marker = "👉" if player == self.current_player else "  "
-            quantity_hand = len(player)
-            output.append(f'{i:02}: {marker}{player}, Mão: {quantity_hand}')
-
-        output.append("\n📜 Últimas ações:")
-        output.append(f'{self.log}')
-
-        return '\n'.join(output)
-
-    # ABSTRACT METHODS
+    # ABSTRACT METHODS #######################################################
     def start(self):
         if self.total_players < self.min_total_players:
             action = (

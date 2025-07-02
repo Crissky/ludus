@@ -122,7 +122,7 @@ class BaseBoard(ABC):
         ...
 
     @abstractmethod
-    def player_keyboard(self, player: Player = None) -> PlayKeyBoard:
+    def player_keyboard(self, player: Player) -> PlayKeyBoard:
         ...
 
     @abstractmethod
