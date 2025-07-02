@@ -1,5 +1,5 @@
-'''Arquivo principal que executa o telegram-bot.
-'''
+"""Arquivo principal que executa o telegram-bot.
+"""
 
 import logging
 from decouple import config
@@ -14,8 +14,8 @@ from bot.conversations import (
 )
 
 TELEGRAM_TOKEN = config("TELEGRAM_TOKEN")
-# MY_GROUP_ID = config('MY_GROUP_ID', cast=int)
-IS_PRODUCTION = config('IS_PRODUCTION', cast=bool, default=True)
+# MY_GROUP_ID = config("MY_GROUP_ID", cast=int)
+IS_PRODUCTION = config("IS_PRODUCTION", cast=bool, default=True)
 (
     DEFAULT_GROUP,
     CHAT_XP_GROUP,
@@ -29,9 +29,9 @@ if IS_PRODUCTION:
 else:
     logger.setLevel(logging.DEBUG)
 
-file_handler = logging.FileHandler('ludus.log', mode='w')
+file_handler = logging.FileHandler("ludus.log", mode="w")
 console_handler = logging.StreamHandler()
-formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
 file_handler.setFormatter(formatter)
 console_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
