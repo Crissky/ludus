@@ -16,7 +16,25 @@ class BaseBoard(ABC):
     DISPLAY_NAME: str = None
     DESCRIPTION: str = None
 
-    def __init__(self, *players: Player):
+    def __init__(
+        self,
+        *players: Player,
+        min_total_players: int = 1,
+        max_total_players: int = 4,
+    ):
+        if min_total_players > max_total_players:
+            raise ValueError(
+                'O número mínimo de jogadores não pode ser '
+                'maior que o número máximo. '
+                f'(min_total_players: {min_total_players} e '
+                f'max_total_players: {max_total_players}).'
+
+            )
+        elif min_total_players <= 0 or max_total_players <= 0:
+            raise ValueError(
+                'O número mínimo e máximo de jogadores deve ser maior que 0.'
+            )
+
         self.id = id(self)
         self.turn = 0
         self.turn_direction = 1
@@ -32,6 +50,10 @@ class BaseBoard(ABC):
             turn=self.turn
         )
         self.add_log(report=initial_report)
+
+        # ARGS
+        self.min_total_players = min_total_players
+        self.max_total_players = max_total_players
         for player in players:
             self.add_player(player)
 
@@ -47,14 +69,24 @@ class BaseBoard(ABC):
         return f'Board({self.DISPLAY_NAME})'
 
     def add_player(self, player: Player):
+        if not isinstance(player, Player):
+            raise TypeError(f'Player {player} não é um Player.')
+
+        action = None
         if self.player_in_game(player):
             action = (
                 f'{player} já está na partida. '
                 'Não é possível adicionar o mesmo jogador duas vezes.'
             )
+        if self.total_players >= self.max_total_players:
+            action = (
+                f'{player} não pode ser adicionado, '
+                f'pois o limite de {self.max_total_players} jogadore(s) '
+                'já foi atingido.'
+            )
+
+        if action is not None:
             return self.add_log(player=False, action=action)
-        if not isinstance(player, Player):
-            raise TypeError(f'Player {player} não é um Player.')
 
         self.player_list.append(player)
         action = f'{player.name} entrou na partida.'
