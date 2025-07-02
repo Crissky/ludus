@@ -1,7 +1,9 @@
 import logging
 
 from abc import ABC, abstractmethod
-from typing import List
+from typing import List, Union
+
+from telegram import InlineKeyboardMarkup
 
 from bot.games.constants.text import NORMAL_SECTION_HEAD_1, TEXT_SEPARATOR_1
 from bot.games.log import Log
@@ -14,7 +16,7 @@ class BaseBoard(ABC):
     DISPLAY_NAME: str = None
     DESCRIPTION: str = None
 
-    def __init__(self, *players: Player, invite_keyboard=None):
+    def __init__(self, *players: Player):
         self.id = id(self)
         self.turn = 0
         self.turn_direction = 1
@@ -22,7 +24,7 @@ class BaseBoard(ABC):
         self.is_started = False
         self.log = Log()
         self.player_list: List[Player] = []
-        self.invite_keyboard = InviteKeyBoard(invite_keyboard)
+        self.invite_keyboard = InviteKeyBoard(None)
 
         initial_report = Report(
             player=False,
@@ -57,6 +59,20 @@ class BaseBoard(ABC):
         self.player_list.append(player)
         action = f'{player.name} entrou na partida.'
         self.add_log(player=False, action=action)
+
+    def set_invite_keyboard(
+        self,
+        keyboard: Union[InviteKeyBoard, InlineKeyboardMarkup]
+    ):
+        if not isinstance(keyboard, (InlineKeyboardMarkup, InviteKeyBoard)):
+            raise TypeError(
+                'Keyboard deve ser do tipo '
+                f'{InlineKeyboardMarkup.__name__} ou '
+                f'{InviteKeyBoard.__name__}.'
+            )
+        if isinstance(keyboard, InlineKeyboardMarkup):
+            keyboard = InviteKeyBoard(keyboard=keyboard)
+        self.invite_keyboard = keyboard
 
     def player_in_game(self, player) -> bool:
         return player in self.player_list
