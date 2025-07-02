@@ -9,7 +9,7 @@ class ColorsGameBoard(BaseCardGameBoard):
     DESCRIPTION: str = None
 
     def __init__(self, *players: Player):
-        draw_pile = ColorDeck()
+        draw_pile = ColorDeck(shuffle=False)
         super().__init__(
             draw_pile,
             *players,
