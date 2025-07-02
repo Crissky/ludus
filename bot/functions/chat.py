@@ -259,18 +259,36 @@ async def update_all_player_messages(
             new_message_id = response.message_id
             player.set_message_id(message_id=new_message_id)
         else:
-            await edit_message_text(
-                function_caller=function_caller,
-                new_text=new_text,
-                context=context,
-                message_id=message_id,
-                chat_id=user_id,
-                user_id=user_id,
-                need_response=need_response,
-                markdown=markdown,
-                reply_markup=player_reply_markup,
-                close_by_owner=close_by_owner,
-            )
+            try:
+                await edit_message_text(
+                    function_caller=function_caller,
+                    new_text=new_text,
+                    context=context,
+                    message_id=message_id,
+                    chat_id=user_id,
+                    user_id=user_id,
+                    need_response=need_response,
+                    markdown=markdown,
+                    reply_markup=player_reply_markup,
+                    close_by_owner=close_by_owner,
+                )
+            except BadRequest as e:
+                e_text = e.message
+                logging.info(
+                    f'UPDATE_ALL_PLAYER_MESSAGES() BADREQUEST EXCEPT: {e_text}'
+                )
+                response = await send_private_message(
+                    function_caller=function_caller,
+                    context=context,
+                    text=new_text,
+                    user_id=user_id,
+                    markdown=markdown,
+                    reply_markup=player_reply_markup,
+                    close_by_owner=close_by_owner,
+                    need_response=need_response,
+                )
+                new_message_id = response.message_id
+                player.set_message_id(message_id=new_message_id)
 
 
 # QUERY FUNCTIONS
