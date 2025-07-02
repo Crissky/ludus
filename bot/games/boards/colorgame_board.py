@@ -15,7 +15,9 @@ class ColorsGameBoard(BaseCardGameBoard):
             *players,
             total_discard_pile=1,
             initial_hand_size=7,
-            hand_kwargs={}
+            hand_kwargs={},
+            min_total_players=2,
+            max_total_players=4,
         )
         self.pending_draw = 0
 

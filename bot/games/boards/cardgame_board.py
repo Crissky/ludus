@@ -23,9 +23,27 @@ class BaseCardGameBoard(BaseBoard):
         *players: Player,
         total_discard_pile: int = 1,
         initial_hand_size: int = 7,
-        hand_kwargs: dict = None
+        hand_kwargs: dict = None,
+        min_total_players: int = 1,
+        max_total_players: int = 4,
     ):
+        if min_total_players > max_total_players:
+            raise ValueError(
+                'O número mínimo de jogadores não pode ser '
+                'maior que o número máximo. '
+                f'(min_total_players: {min_total_players} e '
+                f'max_total_players: {max_total_players}).'
+
+            )
+        elif min_total_players <= 0 or max_total_players <= 0:
+            raise ValueError(
+                'O número mínimo e máximo de jogadores deve ser maior que 0.'
+            )
+
+        self.min_total_players = min_total_players
+        self.max_total_players = max_total_players
         super().__init__(*players)
+
         self.draw_pile = None
         self.discard_piles = None
         self.total_discard_pile = total_discard_pile
@@ -37,6 +55,17 @@ class BaseCardGameBoard(BaseBoard):
             self.hand_kwargs = {}
 
         self.create_draw_pile(draw_pile)
+
+    def add_player(self, player: Player):
+        if self.total_players >= self.max_total_players:
+            action = (
+                f'{player} não pode ser adicionado, '
+                f'pois o limite de {self.max_total_players} jogadore(s) '
+                'já foi atingido.'
+            )
+            return self.add_log(player=False, action=action)
+
+        super().add_player(player)
 
     # CREATE FUNCTIONS
     def create_draw_pile(self, draw_pile: BaseDeck):
@@ -104,6 +133,13 @@ class BaseCardGameBoard(BaseBoard):
 
     # ABSTRACT METHODS
     def start(self):
+        if self.total_players < self.min_total_players:
+            action = (
+                'A partida só pode começar quando houver ao menos '
+                f'{self.min_total_players} jogadores.'
+            )
+            return self.add_log(player=False, action=action)
+
         self.create_hands()
         self.distribute_cards()
         self.create_discard_pile()
