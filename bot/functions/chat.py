@@ -240,9 +240,10 @@ async def update_all_player_messages(
                 text=new_text,
                 **create_text_in_box_kwargs
             )
+        player_reply_markup = reply_markup
         if reply_markup is None:
             player_keyboard = game.player_keyboard(player=player)
-            reply_markup = player_keyboard.make_keyboard()
+            player_reply_markup = player_keyboard.make_keyboard()
 
         if message_id is None:
             response = await send_private_message(
@@ -251,7 +252,7 @@ async def update_all_player_messages(
                 text=new_text,
                 user_id=user_id,
                 markdown=markdown,
-                reply_markup=reply_markup,
+                reply_markup=player_reply_markup,
                 close_by_owner=close_by_owner,
                 need_response=need_response,
             )
@@ -267,7 +268,7 @@ async def update_all_player_messages(
                 user_id=user_id,
                 need_response=need_response,
                 markdown=markdown,
-                reply_markup=reply_markup,
+                reply_markup=player_reply_markup,
                 close_by_owner=close_by_owner,
             )
 

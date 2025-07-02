@@ -35,6 +35,10 @@ class Player:
     def __eq__(self, other):
         if isinstance(other, Player):
             return self.id == other.id
+        elif isinstance(other, User):
+            return self.id == str(other.id)
+        elif isinstance(other, (int, str)):
+            return self.id == str(other)
         return False
 
     def __hash__(self):

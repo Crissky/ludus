@@ -20,7 +20,8 @@ from bot.constants.callback import (
     LIST_PARTY_GAME_CALLBACK_DATA,
     LIST_SINGLE_GAME_CALLBACK_DATA,
     MAIN_MENU_GAME_CALLBACK_DATA,
-    SELECT_GAME_CALLBACK_DATA
+    SELECT_GAME_CALLBACK_DATA,
+    START_GAME_CALLBACK_DATA
 )
 from bot.constants.choice_type_game import GREETINGS_TEXT
 from bot.constants.handler_filters import (
@@ -187,6 +188,7 @@ async def invite_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         player = Player(user=user)
         game.add_player(player=player)
+        reply_markup = get_invite_keyboard(game_id=game_id)
         create_text_in_box_kwargs = dict(
             header_text=game.DISPLAY_NAME,
             footer_text='Convite',
@@ -194,7 +196,6 @@ async def invite_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
             footer_emoji2='🔗',
             clean_func=None,
         )
-        reply_markup = get_invite_keyboard(game_id=game_id)
 
         await update_all_player_messages(
             function_caller='INVITE_GAME()',
@@ -210,6 +211,56 @@ async def invite_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
             context=context,
             text=text,
             user_id=user_id,
+        )
+
+
+@logging_basic_infos
+async def start_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    logging.info('START_GAME()')
+    user_id = update.effective_user.id
+    message_id = update.effective_message.id
+    query = update.callback_query
+    data = query.data
+    game_id = data.replace(START_GAME_CALLBACK_DATA, '')
+    game = get_game(game_id=game_id, context=context)
+    if game is None:
+        text = 'Partida não encontrada.'
+        return await edit_message_text(
+            function_caller='START_GAME(GAME_NOT_FOUND)',
+            new_text=text,
+            context=context,
+            message_id=message_id,
+        )
+
+    host_player = game.host
+    if host_player is not None and host_player == user_id:
+        game.start()
+        is_started = game.is_started
+        reply_markup = None
+        create_text_in_box_kwargs = None
+
+        if is_started is False:
+            reply_markup = get_invite_keyboard(game_id=game_id)
+            create_text_in_box_kwargs = dict(
+                header_text=game.DISPLAY_NAME,
+                footer_text='Convite',
+                footer_emoji1='🔗',
+                footer_emoji2='🔗',
+                clean_func=None,
+            )
+
+        await update_all_player_messages(
+            function_caller='START_GAME()',
+            game=game,
+            context=context,
+            reply_markup=reply_markup,
+            create_text_in_box_kwargs=create_text_in_box_kwargs,
+        )
+    else:
+        await send_alert(
+            function_caller='START_GAME()',
+            query=query,
+            text='Apenas o host pode iniciar a partida.',
         )
 
 
@@ -270,8 +321,12 @@ def get_invite_keyboard(game_id: int) -> InlineKeyboardMarkup:
     invite_link = get_invite_link(game_id)
     copy_button = CopyTextButton(text=invite_link)
     reply_markup = InlineKeyboardMarkup([
-        [InlineKeyboardButton("Entrar na Partida", url=invite_link)],
-        [InlineKeyboardButton("Copiar Convite", copy_text=copy_button)],
+        [InlineKeyboardButton(
+            "🚀Iniciar Partida",
+            callback_data=f'{START_GAME_CALLBACK_DATA}{game_id}'
+        )],
+        [InlineKeyboardButton("🚪Entrar na Partida", url=invite_link)],
+        [InlineKeyboardButton("📩Copiar Convite", copy_text=copy_button)],
         [get_close_button()]
     ])
 
@@ -319,5 +374,9 @@ CHOICE_GAME_HANDLERS = [
     CallbackQueryHandler(
         select_game,
         pattern=SELECT_GAME_CALLBACK_DATA
+    ),
+    CallbackQueryHandler(
+        start_game,
+        pattern=START_GAME_CALLBACK_DATA
     ),
 ]
