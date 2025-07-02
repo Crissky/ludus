@@ -160,11 +160,11 @@ class BaseCardGameBoard(BaseBoard):
         self.is_started = True
         self.turn = 1
 
-    def player_keyboard(self, player: Player = None) -> PlayKeyBoard:
-        if player is None:
-            player = self.current_player
-
+    def player_keyboard(self, player: Player) -> PlayKeyBoard:
         keyboard = PlayKeyBoard(buttons_per_row=self.initial_hand_size)
+        if player != self.current_player:
+            return keyboard
+
         for index, card in enumerate(player):
             if self.is_playable_card(card=card):
                 text = card.text
