@@ -44,8 +44,8 @@ class BaseCardGameBoard(BaseBoard):
         self.max_total_players = max_total_players
         super().__init__(*players)
 
-        self.draw_pile = None
-        self.discard_piles = None
+        self.draw_pile: BaseDeck = None
+        self.discard_piles: List[BaseDeck] = []
         self.total_discard_pile = total_discard_pile
         self.initial_hand_size = initial_hand_size
         self.hand_kwargs = hand_kwargs
@@ -136,12 +136,10 @@ class BaseCardGameBoard(BaseBoard):
         return f'Rodada: {self.turn}'
 
     def show_board_discard_piles(self):
-        peek_discard_piles = ''
-        if self.discard_piles is not None:
-            peek_discard_piles = ', '.join((
-                str(discard_pile.peek()) if discard_pile else 'Pilha Vazia'
-                for discard_pile in self.discard_piles
-            ))
+        peek_discard_piles = ', '.join((
+            str(discard_pile.peek()) if discard_pile else 'Pilha Vazia'
+            for discard_pile in self.discard_piles
+        ))
 
         return f'Pilha de Descarte: {peek_discard_piles}'
 
