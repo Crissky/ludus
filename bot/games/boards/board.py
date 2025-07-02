@@ -32,14 +32,15 @@ class BaseBoard(ABC):
         for player in players:
             self.add_player(player)
 
-    def __str__(self):
+    def __str__(self) -> str:
         text = NORMAL_SECTION_HEAD_1.format(f'Game: {self.DISPLAY_NAME}\n\n')
         for i, player in enumerate(self.player_list, start=1):
             text += f'{i}: {player}\n'
         text += TEXT_SEPARATOR_1
+
         return text
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f'Board({self.DISPLAY_NAME})'
 
     def add_player(self, player: Player):
@@ -48,8 +49,7 @@ class BaseBoard(ABC):
                 f'{player} já está na partida. '
                 'Não é possível adicionar o mesmo jogador duas vezes.'
             )
-            self.add_log(player=False, action=action)
-            return
+            return self.add_log(player=False, action=action)
         if not isinstance(player, Player):
             raise TypeError(f'Player {player} não é um Player.')
 
@@ -104,14 +104,14 @@ class BaseBoard(ABC):
 
     def show_board(self, player: Player = None) -> str:
         output = [self.game_header]
-        output.append(f'Turn: {self.turn}')
-        output.append("\n🎮 Jogadores na partida:")
+        output.append(f'Rodada: {self.turn}')
 
+        output.append("\n🎮 Jogadores na partida:")
         for i, player in enumerate(self.player_list, start=1):
             marker = "👉" if player == self.current_player else "  "
             output.append(f'{i}: {marker}{player}\n')
 
-        if player is not None:
+        if player:
             output.append("\n🖐️ Suas cartas:")
             output.append(str(player.hand))
 
