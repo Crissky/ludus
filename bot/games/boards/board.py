@@ -5,7 +5,7 @@ from typing import List
 
 from bot.games.constants.text import NORMAL_SECTION_HEAD_1, TEXT_SEPARATOR_1
 from bot.games.log import Log
-from bot.games.play_keyboard import PlayKeyBoard
+from bot.games.play_keyboard import InviteKeyBoard, PlayKeyBoard
 from bot.games.player import Player
 from bot.games.report import Report
 
@@ -14,14 +14,15 @@ class BaseBoard(ABC):
     DISPLAY_NAME: str = None
     DESCRIPTION: str = None
 
-    def __init__(self, *players: Player):
+    def __init__(self, *players: Player, invite_keyboard=None):
         self.id = id(self)
-        self.player_list: List[Player] = []
         self.turn = 0
         self.turn_direction = 1
         self.current_player_index = 0
         self.is_started = False
         self.log = Log()
+        self.player_list: List[Player] = []
+        self.invite_keyboard = InviteKeyBoard(invite_keyboard)
 
         initial_report = Report(
             player=False,

@@ -55,3 +55,11 @@ class PlayKeyBoard:
         button_lists = self.make_buttons()
 
         return InlineKeyboardMarkup(button_lists)
+
+
+class InviteKeyBoard(PlayKeyBoard):
+    def __init__(self, keyboard: InlineKeyboardMarkup):
+        self.keyboard = keyboard
+
+    def make_keyboard(self) -> InlineKeyboardMarkup:
+        return self.keyboard

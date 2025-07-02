@@ -159,6 +159,9 @@ class BaseCardGameBoard(BaseBoard):
         self.turn = 1
 
     def player_keyboard(self, player: Player) -> PlayKeyBoard:
+        if self.is_started is not True:
+            return self.invite_keyboard
+
         keyboard = PlayKeyBoard(buttons_per_row=self.initial_hand_size)
         if player != self.current_player:
             return keyboard
