@@ -1,7 +1,7 @@
 import logging
 
 from abc import ABC, abstractmethod
-from typing import Callable, List, Union
+from typing import Callable, Iterable, List, Union
 
 from telegram import InlineKeyboardMarkup
 
@@ -43,8 +43,8 @@ class BaseBoard(ABC):
         self.log = Log()
         self.player_list: List[Player] = []
         self.invite_keyboard = InviteKeyBoard(None)
-        self.invite_text_callback = None
-        self.play_text_callback = None
+        self.invite_text_formatter: Callable = None
+        self.play_text_formatter: Callable = None
 
         initial_report = Report(
             player=False,
@@ -108,17 +108,24 @@ class BaseBoard(ABC):
             keyboard = InviteKeyBoard(keyboard=keyboard)
         self.invite_keyboard = keyboard
 
-    def set_invite_text_callback(self, callback: Callable):
-        if not callable(callback):
+    def set_invite_text_formatter(self, formatter: Callable):
+        '''Define função que formata o texto de convite, quando o jogo ainda
+        não iniciou.
+        '''
+
+        if not callable(formatter):
             raise TypeError('Callback deve ser uma função.')
 
-        self.invite_text_callback = callback
+        self.invite_text_formatter = formatter
 
-    def set_play_text_callback(self, callback: Callable):
-        if not callable(callback):
+    def set_play_text_formatter(self, formatter: Callable):
+        '''Define função que formata o texto quando o jogo já iniciou.
+        '''
+
+        if not callable(formatter):
             raise TypeError('Callback deve ser uma função.')
 
-        self.play_text_callback = callback
+        self.play_text_formatter = formatter
 
     def player_in_game(self, player) -> bool:
         return player in self.player_list
@@ -180,8 +187,18 @@ class BaseBoard(ABC):
 
         output.append("\n📜 Últimas ações:")
         output.append(f'{self.log}')
+        output_text = self.format_show_board(output)
 
-        return '\n'.join(output)
+        return output_text
+
+    def format_show_board(self, output: Iterable[str]):
+        output_text = '\n'.join(output)
+        if self.is_started is False and callable(self.invite_text_formatter):
+            output_text = self.invite_text_formatter(output_text)
+        elif self.is_started is True and callable(self.play_text_formatter):
+            output_text = self.play_text_formatter(output_text)
+
+        return output_text
 
     @abstractmethod
     def start(self):

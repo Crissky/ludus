@@ -104,8 +104,9 @@ class BaseCardGameBoard(BaseBoard):
 
         output.append("\n📜 Últimas ações:")
         output.append(f'{self.log}')
+        output_text = self.format_show_board(output)
 
-        return '\n'.join(output)
+        return output_text
 
     def show_board_draw_pile(self):
         return f'Pilha de Compra: {len(self.draw_pile)} carta(s)'
