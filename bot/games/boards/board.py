@@ -43,6 +43,8 @@ class BaseBoard(ABC):
         self.log = Log()
         self.player_list: List[Player] = []
         self.invite_keyboard = InviteKeyBoard(None)
+        self.invite_text_callback = None
+        self.play_text_callback = None
 
         initial_report = Report(
             player=False,
@@ -110,13 +112,13 @@ class BaseBoard(ABC):
         if not callable(callback):
             raise TypeError('Callback deve ser uma função.')
 
-        self. invite_text_callback = callback
+        self.invite_text_callback = callback
 
     def set_play_text_callback(self, callback: Callable):
         if not callable(callback):
             raise TypeError('Callback deve ser uma função.')
 
-        self. play_text_callback = callback
+        self.play_text_callback = callback
 
     def player_in_game(self, player) -> bool:
         return player in self.player_list
