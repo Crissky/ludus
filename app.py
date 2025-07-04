@@ -11,6 +11,7 @@ from bot.conversations import (
 )
 from bot.conversations import (
     CHOICE_GAME_HANDLERS,
+    PLAY_GAME_HANDLERS,
 )
 
 TELEGRAM_TOKEN = config("TELEGRAM_TOKEN")
@@ -48,6 +49,7 @@ def main() -> None:
 
     # Add Multiple Handlers
     application.add_handlers(CHOICE_GAME_HANDLERS)
+    application.add_handlers(PLAY_GAME_HANDLERS)
 
     # Add Jobs
     # application.job_queue.run_repeating()
