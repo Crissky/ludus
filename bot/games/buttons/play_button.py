@@ -1,4 +1,6 @@
 
+import re
+
 from typing import TYPE_CHECKING, Union
 
 from bot.games.enums.command import CommandEnum
@@ -87,6 +89,20 @@ class PlayButton:
     def str_to_data(self, data: str) -> dict:
         return self.callback_data_to_dict(data)
 
+    @classmethod
+    def callback_data_to_pattern(cls, command: Union[CommandEnum, str]) -> str:
+        if isinstance(command, str):
+            command = CommandEnum[command.upper()]
+        if not isinstance(command, CommandEnum):
+            raise TypeError(
+                'Command precisa ser uma instância de CommandEnum '
+                'ou uma striing válida de CommandEnum.'
+            )
+
+        data = {'command': command.name}
+
+        return re.escape(cls.callback_data_to_string(data)[:-1])
+
     @property
     def data_to_str(self) -> str:
         data = {
@@ -96,3 +112,8 @@ class PlayButton:
         data.update(self.callback_data)
 
         return PlayButton.callback_data_to_string(data)
+
+
+if __name__ == '__main__':
+    for command in CommandEnum:
+        print(PlayButton.callback_data_to_pattern(command))
