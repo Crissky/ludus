@@ -1,7 +1,7 @@
 import logging
 
 from abc import ABC, abstractmethod
-from typing import List, Union
+from typing import Callable, List, Union
 
 from telegram import InlineKeyboardMarkup
 
@@ -105,6 +105,18 @@ class BaseBoard(ABC):
         if isinstance(keyboard, InlineKeyboardMarkup):
             keyboard = InviteKeyBoard(keyboard=keyboard)
         self.invite_keyboard = keyboard
+
+    def set_invite_text_callback(self, callback: Callable):
+        if not callable(callback):
+            raise TypeError('Callback deve ser uma função.')
+
+        self. invite_text_callback = callback
+
+    def set_play_text_callback(self, callback: Callable):
+        if not callable(callback):
+            raise TypeError('Callback deve ser uma função.')
+
+        self. play_text_callback = callback
 
     def player_in_game(self, player) -> bool:
         return player in self.player_list
