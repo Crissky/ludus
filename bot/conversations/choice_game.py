@@ -319,7 +319,10 @@ def get_invite_keyboard(game_id: int) -> InlineKeyboardMarkup:
             "🚀Iniciar Partida",
             callback_data=f'{START_GAME_CALLBACK_DATA}{game_id}'
         )],
-        [InlineKeyboardButton("🚪Entrar na Partida", url=invite_link)],
+        [InlineKeyboardButton(
+            "📨Enviar Convite",
+            switch_inline_query=invite_link
+        )],
         [InlineKeyboardButton("📩Copiar Convite", copy_text=copy_button)],
         [get_close_button()]
     ])
