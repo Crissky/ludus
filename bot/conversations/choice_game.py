@@ -1,3 +1,4 @@
+from functools import partial
 import logging
 
 from random import choice
@@ -151,21 +152,28 @@ async def select_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
     game = game_class(player)
     game_id = game.id
     invite_keyboard = get_invite_keyboard(game_id)
-    game.set_invite_keyboard(keyboard=invite_keyboard)
-    add_game(game=game, context=context)
-    create_text_in_box_kwargs = dict(
+    invite_text_formatter = partial(
+        create_text_in_box,
         header_text=game.DISPLAY_NAME,
         footer_text='Enviar convite',
         footer_emoji1='👇',
         footer_emoji2='👇',
         clean_func=None,
     )
+    play_text_formatter = partial(
+        create_text_in_box,
+        header_text=game.DISPLAY_NAME,
+        clean_func=None,
+    )
+    game.set_invite_keyboard(keyboard=invite_keyboard)
+    game.set_invite_text_formatter(formatter=invite_text_formatter)
+    game.set_play_text_formatter(formatter=play_text_formatter)
+    add_game(game=game, context=context)
 
     await update_all_player_messages(
         function_caller='SELECT_GAME()',
         game=game,
         context=context,
-        create_text_in_box_kwargs=create_text_in_box_kwargs
     )
 
 
@@ -200,19 +208,11 @@ async def invite_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
             )
 
         game.add_player(player=player)
-        create_text_in_box_kwargs = dict(
-            header_text=game.DISPLAY_NAME,
-            footer_text='Convite',
-            footer_emoji1='🔗',
-            footer_emoji2='🔗',
-            clean_func=None,
-        )
 
         await update_all_player_messages(
             function_caller='INVITE_GAME()',
             game=game,
             context=context,
-            create_text_in_box_kwargs=create_text_in_box_kwargs
         )
     else:
         text = str(args)
@@ -245,23 +245,10 @@ async def start_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
     host_player = game.host
     if host_player is not None and host_player == user_id:
         game.start()
-        is_started = game.is_started
-        create_text_in_box_kwargs = None
-
-        if is_started is False:
-            create_text_in_box_kwargs = dict(
-                header_text=game.DISPLAY_NAME,
-                footer_text='Convite',
-                footer_emoji1='🔗',
-                footer_emoji2='🔗',
-                clean_func=None,
-            )
-
         await update_all_player_messages(
             function_caller='START_GAME()',
             game=game,
             context=context,
-            create_text_in_box_kwargs=create_text_in_box_kwargs,
         )
     else:
         await send_alert(
