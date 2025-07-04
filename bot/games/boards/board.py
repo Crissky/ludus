@@ -60,10 +60,11 @@ class BaseBoard(ABC):
             self.add_player(player)
 
     def __str__(self) -> str:
-        text = NORMAL_SECTION_HEAD_1.format(f'Game: {self.DISPLAY_NAME}\n\n')
+        text = NORMAL_SECTION_HEAD_1.format(f'Game: {self.DISPLAY_NAME}')
+        text += '\nJogadores:\n'
         for i, player in enumerate(self.player_list, start=1):
             text += f'{i}: {player}\n'
-        text += TEXT_SEPARATOR_1
+        # text += TEXT_SEPARATOR_1
 
         return text
 
