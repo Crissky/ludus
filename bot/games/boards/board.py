@@ -217,7 +217,7 @@ class BaseBoard(ABC):
         ...
 
     @abstractmethod
-    def play(self):
+    def play(self, player: Player, play_dict: dict):
         ...
 
     @property

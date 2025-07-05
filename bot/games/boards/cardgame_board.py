@@ -176,7 +176,7 @@ class BaseCardGameBoard(BaseBoard):
 
         return keyboard
 
-    def play(self, play_dict: dict):
+    def play(self, player: Player, play_dict: dict):
         ...
 
     @abstractmethod
