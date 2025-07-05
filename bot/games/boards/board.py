@@ -99,6 +99,9 @@ class BaseBoard(ABC):
         action = f'{player.name} entrou na partida.'
         self.add_log(player=False, action=action)
 
+    def get_player(self, player: Union[Player, int, str]) -> Player:
+        return next((p for p in self.player_list if p == player), None)
+
     def set_invite_keyboard(
         self,
         keyboard: Union[InviteKeyBoard, InlineKeyboardMarkup]
