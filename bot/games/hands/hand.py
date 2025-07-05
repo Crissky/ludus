@@ -49,6 +49,11 @@ class BaseHand:
 
             self.card_list.append(card)
 
+    def get_card(self, index: int) -> Card:
+        if index >= len(self.card_list):
+            return None
+        return self.card_list[index]
+
     def discard(self, index: int = -1, quantity: int = 1) -> List[Card]:
         card_list = []
         for _ in range(quantity):

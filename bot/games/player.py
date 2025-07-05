@@ -73,6 +73,9 @@ class Player:
         else:
             raise TypeError('hand precisa ser do tipo BaseHand.')
 
+    def get_card(self, index: int) -> Card:
+        return self.hand.get_card(index)
+
     def set_message_id(self, message_id: int):
         if not isinstance(message_id, int):
             raise TypeError('message_id precisa ser do tipo int.')
