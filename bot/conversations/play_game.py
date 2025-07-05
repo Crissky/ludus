@@ -6,7 +6,7 @@ from telegram.ext import (
 )
 
 from bot.decorators.logging import logging_basic_infos
-from bot.functions.chat import update_all_player_messages
+from bot.functions.chat import edit_message_text, update_all_player_messages
 from bot.functions.game import get_game
 from bot.games.buttons.play_button import PlayButton
 from bot.games.enums.command import CallbackKeyEnum, CommandEnum
@@ -18,11 +18,22 @@ async def play_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
     logging.info('PLAY_GAME()')
     user = update.effective_user
     user_id = update.effective_user.id
+    message_id = update.effective_message.id
     query = update.callback_query
     data = query.data
     data_dict = PlayButton.callback_data_to_dict(data)
     game_id = data_dict[CallbackKeyEnum.GAME_ID]
     game = get_game(game_id=game_id, context=context)
+
+    if game is None:
+        text = 'Partida não encontrada.'
+        return await edit_message_text(
+            function_caller='PLAY_GAME(GAME_NOT_FOUND)',
+            new_text=text,
+            context=context,
+            message_id=message_id,
+        )
+
     player = Player(user=user)
     logging.info(f'Game: {game.DISPLAY_NAME} - game_id: {game_id}')
     logging.info(player)
