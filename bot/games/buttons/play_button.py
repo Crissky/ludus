@@ -3,7 +3,7 @@ import re
 
 from typing import TYPE_CHECKING, Union
 
-from bot.games.enums.command import CommandEnum
+from bot.games.enums.command import CallbackKeyEnum, CommandEnum
 
 from telegram import InlineKeyboardButton
 
@@ -13,11 +13,7 @@ if TYPE_CHECKING:
 
 
 class PlayButton:
-    CALLBACK_KEY_LIST = [
-        'command',
-        'game_id',
-        'hand_position',
-    ]
+    CALLBACK_KEY_LIST = [enum for enum in CallbackKeyEnum]
 
     def __init__(
         self,
@@ -99,15 +95,15 @@ class PlayButton:
                 'ou uma striing válida de CommandEnum.'
             )
 
-        data = {'command': command.name}
+        data = {CallbackKeyEnum.COMMAND: command.name}
 
         return re.escape(cls.callback_data_to_string(data)[:-1])
 
     @property
     def data_to_str(self) -> str:
         data = {
-            'command': self.command.name,
-            'game_id': self.game.id,
+            CallbackKeyEnum.COMMAND: self.command.name,
+            CallbackKeyEnum.GAME_ID: self.game.id,
         }
         data.update(self.callback_data)
 

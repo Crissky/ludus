@@ -9,7 +9,7 @@ from bot.decorators.logging import logging_basic_infos
 from bot.functions.chat import update_all_player_messages
 from bot.functions.game import get_game
 from bot.games.buttons.play_button import PlayButton
-from bot.games.enums.command import CommandEnum
+from bot.games.enums.command import CallbackKeyEnum, CommandEnum
 from bot.games.player import Player
 
 
@@ -21,7 +21,7 @@ async def play_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     data = query.data
     data_dict = PlayButton.callback_data_to_dict(data)
-    game_id = data_dict['game_id']
+    game_id = data_dict[CallbackKeyEnum.GAME_ID]
     game = get_game(game_id=game_id, context=context)
     player = Player(user=user)
     logging.info(f'Game: {game.DISPLAY_NAME} - game_id: {game_id}')
