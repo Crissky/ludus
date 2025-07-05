@@ -21,8 +21,8 @@ async def play_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
     message_id = update.effective_message.id
     query = update.callback_query
     data = query.data
-    data_dict = PlayButton.callback_data_to_dict(data)
-    game_id = data_dict[CallbackKeyEnum.GAME_ID]
+    play_dict = PlayButton.callback_data_to_dict(data)
+    game_id = play_dict[CallbackKeyEnum.GAME_ID]
     game = get_game(game_id=game_id, context=context)
 
     if game is None:
@@ -37,9 +37,10 @@ async def play_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
     player = Player(user=user)
     logging.info(f'Game: {game.DISPLAY_NAME} - game_id: {game_id}')
     logging.info(player)
-    logging.info(f'Data Dict: {data_dict}')
+    logging.info(f'Play Dict: {play_dict}')
     logging.info(f'{game}')
     game.next_turn()
+
     await update_all_player_messages(
         function_caller='PLAY_GAME()',
         game=game,
