@@ -96,6 +96,17 @@ class BaseCardGameBoard(BaseBoard):
 
         return cards
 
+    def draw_discard_piles(
+        self, index_pile: int,
+        quantity: int = 1
+    ) -> List[Card]:
+        if index_pile < 0 or index_pile >= len(self.discard_piles):
+            raise ValueError(f'Pilha de descarte {index_pile} não existe.')
+
+        pile = self.discard_piles[index_pile]
+        cards = pile.draw(quantity=quantity)
+
+        return cards
 
     # SHOW BOARD FUNCTIONS ###################################################
     def show_board(self, player: Player = None) -> str:
