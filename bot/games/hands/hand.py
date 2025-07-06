@@ -9,8 +9,7 @@ class BaseHand:
         self.max_size = max_size
         self.card_list = []
 
-        for card in cards:
-            self.add_card(card)
+        self.add_card(*cards)
 
     def __getitem__(self, index: int) -> Card:
         return self.card_list[index]
@@ -32,12 +31,11 @@ class BaseHand:
 
     def add_card(
         self,
-        cards: Union[List[Card], Card],
+        *cards: Union[List[Card], Card],
         discard_index: int = -1
     ):
         if len(self) >= self.max_size and self.max_size > 0:
-            cards_len = len(cards) if isinstance(cards, list) else 1
-            quantity = len(self) + cards_len - self.max_size
+            quantity = len(self) + len(cards) - self.max_size
             self.discard(discard_index, quantity)
 
         if isinstance(cards, Card):
@@ -64,11 +62,12 @@ class BaseHand:
         return card_list
 
     def play(self, *indexes: int) -> List[Card]:
-        indexes = sorted(indexes, reverse=True)
         cards = []
+        indexes = sorted(indexes, reverse=True)
         for index in indexes:
             popped_card = self.card_list.pop(index)
             cards.append(popped_card)
+
         return cards
 
     def peek(self, *indexes: int) -> List[Card]:
@@ -76,6 +75,7 @@ class BaseHand:
         for index in indexes:
             peeked_card = self.card_list[index]
             cards.append(peeked_card)
+
         return cards
 
     def sort(self):
