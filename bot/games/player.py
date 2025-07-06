@@ -1,4 +1,5 @@
 from collections.abc import Generator
+from typing import List
 
 from telegram import User
 from bot.games.cards.card import Card
@@ -73,8 +74,11 @@ class Player:
         else:
             raise TypeError('hand precisa ser do tipo BaseHand.')
 
-    def get_card(self, index: int) -> Card:
-        return self.hand.get_card(index)
+    def play(self, *indexes: int) -> List[Card]:
+        return self.hand.play(*indexes)
+
+    def peek(self, *indexes: int) -> List[Card]:
+        return self.hand.peek(*indexes)
 
     def set_message_id(self, message_id: int):
         if not isinstance(message_id, int):
