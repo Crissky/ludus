@@ -96,8 +96,9 @@ class BaseCardGameBoard(BaseBoard):
 
         return cards
 
-    def draw_discard_piles(
-        self, index_pile: int,
+    def draw_from_discard_piles(
+        self,
+        index_pile: int = 0,
         quantity: int = 1
     ) -> List[Card]:
         if index_pile < 0 or index_pile >= len(self.discard_piles):
