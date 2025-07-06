@@ -243,6 +243,7 @@ class TestDeck(unittest.TestCase):
 
         initial_size = len(self.deck)
         drawn_card = self.deck.draw(1)
+        drawn_card = drawn_card[0]
 
         self.assertIsInstance(drawn_card, Card)
         self.assertEqual(len(self.deck), initial_size - 1)
@@ -256,7 +257,8 @@ class TestDeck(unittest.TestCase):
         não gera um IndexError e retorna None.
         """
 
-        self.assertIsNone(self.empty_deck.draw(quantity=1))
+        result = self.empty_deck.draw(quantity=1)
+        self.assertListEqual(result, [])
 
     def test_draw_more_cards_than_available(self):
         """
@@ -283,8 +285,8 @@ class TestDeck(unittest.TestCase):
         initial_size = len(self.deck)
         drawed_cards1 = self.deck.draw(0)
         drawed_cards2 = self.deck.draw(-1)
-        self.assertIsNone(drawed_cards1)
-        self.assertIsNone(drawed_cards2)
+        self.assertListEqual(drawed_cards1, [])
+        self.assertListEqual(drawed_cards2, [])
         self.assertEqual(len(self.deck), initial_size)
 
     def test_peek_top_card(self):
@@ -293,6 +295,7 @@ class TestDeck(unittest.TestCase):
 
         initial_size = len(self.deck)
         peeked_card = self.deck.peek(1)
+        peeked_card = peeked_card[0]
         self.assertIsInstance(peeked_card, Card)
         self.assertEqual(peeked_card, self.deck[0])
         self.assertEqual(len(self.deck), initial_size)
@@ -318,7 +321,7 @@ class TestDeck(unittest.TestCase):
         """
 
         result = self.deck.peek(0)
-        self.assertIsNone(result)
+        self.assertListEqual(result, [])
 
     def test_peek_negative_quantity(self):
         """
@@ -328,8 +331,8 @@ class TestDeck(unittest.TestCase):
 
         peeked_cards1 = self.deck.peek(0)
         peeked_cards2 = self.deck.peek(-1)
-        self.assertIsNone(peeked_cards1)
-        self.assertIsNone(peeked_cards2)
+        self.assertListEqual(peeked_cards1, [])
+        self.assertListEqual(peeked_cards2, [])
 
     def test_shuffle_randomizes_card_order(self):
         """
@@ -394,10 +397,10 @@ class TestDeck(unittest.TestCase):
         deck.add(*new_cards)
 
         self.assertEqual(len(deck), initial_size + 4)
-        self.assertEqual(deck.draw(), new_cards[2])
-        self.assertEqual(deck.draw(), new_cards[1])
-        self.assertEqual(deck.draw(), new_cards[0])
-        self.assertEqual(deck.draw(), self.card3)
+        self.assertEqual(deck.draw()[0], new_cards[2])
+        self.assertEqual(deck.draw()[0], new_cards[1])
+        self.assertEqual(deck.draw()[0], new_cards[0])
+        self.assertEqual(deck.draw()[0], self.card3)
 
     def test_add_bottom_single_card(self):
         """
@@ -437,10 +440,10 @@ class TestDeck(unittest.TestCase):
         deck.add_bottom(*new_cards)
 
         self.assertEqual(len(deck), initial_size + 4)
-        self.assertEqual(deck.draw(), self.card3)
-        self.assertEqual(deck.draw(), new_cards[2])
-        self.assertEqual(deck.draw(), new_cards[1])
-        self.assertEqual(deck.draw(), new_cards[0])
+        self.assertEqual(deck.draw()[0], self.card3)
+        self.assertEqual(deck.draw()[0], new_cards[2])
+        self.assertEqual(deck.draw()[0], new_cards[1])
+        self.assertEqual(deck.draw()[0], new_cards[0])
 
     def test_is_empty(self):
         """

@@ -102,14 +102,23 @@ class BaseDeck:
     def __repr__(self) -> str:
         return f'{self.__class__.__name__}({self.card_stack.text_horizontal})'
 
-    def draw(self, quantity: int = 1) -> Union[Card, List[Card]]:
-        return self.card_stack.pop(quantity=quantity)
+    def draw(self, quantity: int = 1) -> Union[List[Card]]:
+        card_list = self.card_stack.pop(quantity=quantity)
+        card_list = self.make_card_list(card_list=card_list)
 
-    def peek(self, quantity: int = 1) -> Union[Card, List[Card]]:
-        return self.card_stack.peek(quantity=quantity)
+        return card_list
 
-    def peek_bottom(self, quantity: int = 1) -> Union[Card, List[Card]]:
-        return self.card_stack.peek_bottom(quantity=quantity)
+    def peek(self, quantity: int = 1) -> Union[List[Card]]:
+        card_list = self.card_stack.peek(quantity=quantity)
+        card_list = self.make_card_list(card_list=card_list)
+
+        return card_list
+
+    def peek_bottom(self, quantity: int = 1) -> Union[List[Card]]:
+        card_list = self.card_stack.peek_bottom(quantity=quantity)
+        card_list = self.make_card_list(card_list=card_list)
+
+        return card_list
 
     def add(self, *cards: Card):
         self.card_stack.push(*cards)
@@ -119,6 +128,14 @@ class BaseDeck:
 
     def shuffle(self):
         self.card_stack.shuffle()
+
+    def make_card_list(self, card_list: List[Card]) -> List[Card]:
+        if isinstance(card_list, Card):
+            card_list = [card_list]
+        if card_list is None:
+            card_list = []
+
+        return card_list
 
     @property
     def is_empty(self) -> bool:
