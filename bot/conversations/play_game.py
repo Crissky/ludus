@@ -17,7 +17,6 @@ from bot.games.player import Player
 async def play_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
     logging.info('PLAY_GAME()')
     user = update.effective_user
-    user_id = update.effective_user.id
     message_id = update.effective_message.id
     query = update.callback_query
     data = query.data

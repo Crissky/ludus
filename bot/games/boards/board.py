@@ -5,7 +5,7 @@ from typing import Callable, Iterable, List, Union
 
 from telegram import InlineKeyboardMarkup
 
-from bot.games.constants.text import NORMAL_SECTION_HEAD_1, TEXT_SEPARATOR_1
+from bot.games.constants.text import NORMAL_SECTION_HEAD_1, TEXT_SEPARATOR_1  # noqa
 from bot.games.log import Log
 from bot.games.play_keyboard import InviteKeyBoard, PlayKeyBoard
 from bot.games.player import Player
