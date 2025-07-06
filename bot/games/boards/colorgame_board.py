@@ -1,6 +1,7 @@
 from bot.games.boards.cardgame_board import BaseCardGameBoard
 from bot.games.cards.card import Card
 from bot.games.decks.color import ColorDeck
+from bot.games.enums.card import ColorNames
 from bot.games.enums.command import CallbackKeyEnum, CommandEnum
 from bot.games.play_keyboard import PlayKeyBoard
 from bot.games.player import Player
@@ -42,18 +43,38 @@ class ColorsGameBoard(BaseCardGameBoard):
             action = f'Não é a vez de {player}.'
             return self.add_log(player=False, action=action)
         if not self.player_in_game(player):
-            action = f'{player} não está mais no jogo.'
+            action = f'{player} não está mais na partida.'
             return self.add_log(player=False, action=action)
 
         player = self.get_player(player)
-        card = player.get_card(hand_position)
-
-        if not isinstance(card, Card):
-            action = f'Carta na posição {hand_position} não encontrada.'
-            return self.add_log(player=False, action=action)
 
         if command == CommandEnum.PLAY:
-            ...
+            card_list = player.peek(hand_position)
+            card = card_list[0]
+            if not isinstance(card, Card):
+                action = f'Carta na posição {hand_position} não encontrada.'
+                return self.add_log(player=False, action=action)
+            if not self.is_playable_card(card=card):
+                action = f'Carta {card} não pode ser jogada.'
+                return self.add_log(player=False, action=action)
+
+            card_list = player.play(hand_position)
+            card = card_list[0]
+            self.discard(card)
+            self.add_log(player=False, action=f'{player} jogou {card}.')
+
+            if card.plus_value > 0:
+                self.pending_draw += card.plus_value
+            elif card.name == ColorNames.BLOCK:
+                self.next_turn(skip=True)
+            elif card.name == ColorNames.REVERSE:
+                self.invert_direction()
+                if len(self.player_list) == 2:
+                    self.next_turn(skip=True)
+
+            if card.name not in [ColorNames.BLOCK, ColorNames.REVERSE]:
+                self.next_turn(skip=False)
+
         elif command == CommandEnum.DRAW:
             ...
         elif command == CommandEnum.PASS:
