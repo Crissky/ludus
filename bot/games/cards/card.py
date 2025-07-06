@@ -128,7 +128,7 @@ class Card:
 
     @property
     def is_wild(self) -> bool:
-        return re.search(self.wild_terms, self.suit.name, re.I)
+        return bool(re.search(self.wild_terms, self.suit.name, re.I))
 
     @property
     def number_card_names(self) -> List[Enum]:
