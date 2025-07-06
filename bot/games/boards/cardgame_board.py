@@ -73,15 +73,29 @@ class BaseCardGameBoard(BaseBoard):
 
     def draw(self, quantity: int = 1) -> List[Card]:
         cards = self.draw_pile.draw(quantity=quantity)
-        if isinstance(cards, Card):
-            cards = [cards]
-        elif cards is None:
-            cards = self.draw_when_empty(quantity=quantity)
+
+        if len(cards) < quantity:
+            new_quantity = quantity - len(cards)
+            new_cards = self.draw_when_empty(quantity=new_quantity)
+            cards.extend(new_cards)
 
         return cards
 
     def draw_when_empty(self, quantity: int = 1) -> List[Card]:
-        raise ValueError('Sem cartas para comprar, pois o baralho está vazio.')
+        for pile in self.discard_piles:
+            pile_length = len(pile)
+            if pile_length > 1:
+                top_card = pile.draw(quantity=1)
+                pile_cards = pile.draw(quantity=pile_length)
+                pile.add(*top_card)
+                self.draw_pile.add(*pile_cards)
+
+        cards = []
+        if len(self.draw_pile) > quantity:
+            cards = self.draw_pile.draw(quantity=quantity)
+
+        return cards
+
 
     # SHOW BOARD FUNCTIONS ###################################################
     def show_board(self, player: Player = None) -> str:
