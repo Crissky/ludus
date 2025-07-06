@@ -147,8 +147,8 @@ class BaseBoard(ABC):
         else:
             self.player_list.remove(player)
 
-    def next_turn(self):
-        self.set_next_player()
+    def next_turn(self, skip: bool = False):
+        self.set_next_player(skip=skip)
         self.turn += 1
 
     def set_next_player(self, skip: bool = False):
