@@ -33,7 +33,7 @@ class ColorsGameBoard(BaseCardGameBoard):
         command = CommandEnum[command_str]
         game_id = play_dict[CallbackKeyEnum.GAME_ID]
         hand_position = play_dict.get(CallbackKeyEnum.HAND_POSITION)
-        selected_color = play_dict.get(CallbackKeyEnum.SELECTED_COLOR)
+        # selected_color = play_dict.get(CallbackKeyEnum.SELECTED_COLOR)
 
         if game_id != self.id:
             action = f'Jogo inválido: {game_id}'
@@ -57,6 +57,8 @@ class ColorsGameBoard(BaseCardGameBoard):
         elif command == CommandEnum.DRAW:
             ...
         elif command == CommandEnum.PASS:
+            ...
+        elif command == CommandEnum.SELECT_COLOR:
             ...
 
     def is_playable_card(self, card: Card) -> bool:

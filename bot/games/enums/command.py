@@ -12,3 +12,4 @@ class CommandEnum(Enum):
     DRAW = 'draw'
     PASS = 'pass'
     PLAY = 'play'
+    SELECT_COLOR = 'select color'
