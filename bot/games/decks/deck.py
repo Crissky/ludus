@@ -41,6 +41,8 @@ class BaseDeck:
         - Haverá 2 cartas BLACK de todos os valores (Names), exceto ZERO.
         """
 
+        self.names = names
+        self.suits = suits
         self.card_stack = Stack()
         if (
             quantities is None and
