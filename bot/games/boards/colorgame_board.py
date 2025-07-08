@@ -92,7 +92,20 @@ class ColorsGameBoard(BaseCardGameBoard):
                 self.add_log(player=player, action=action)
 
         elif command == CommandEnum.DRAW:
-            ...
+            draw_quantity = max(1, self.pending_draw)
+            card_list = self.draw(quantity=draw_quantity)
+            discarded_card_list = player.add_card(*card_list)
+            self.discard(*discarded_card_list)
+
+            action = f'Comprou {draw_quantity} cartas.'
+            self.add_log(player=player, action=action)
+
+            self.is_passing = True
+            if self.pending_draw > 0:
+                self.pending_draw = 0
+                self.is_passing = False
+                self.next_turn(skip=True)
+
         elif command == CommandEnum.PASS:
             ...
         elif command == CommandEnum.SELECT_COLOR:
