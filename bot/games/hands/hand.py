@@ -31,12 +31,13 @@ class BaseHand:
 
     def add_card(
         self,
-        *cards: Union[List[Card], Card],
+        *cards: Card,
         discard_index: int = -1
-    ):
+    ) -> List[Card]:
+        discarded_card_list = []
         if len(self) >= self.max_size and self.max_size > 0:
             quantity = len(self) + len(cards) - self.max_size
-            self.discard(discard_index, quantity)
+            discarded_card_list = self.discard(discard_index, quantity)
 
         if isinstance(cards, Card):
             cards = [cards]
@@ -46,6 +47,8 @@ class BaseHand:
                 raise TypeError(f"Espera um Card, obteve {type(card)}({card})")
 
             self.card_list.append(card)
+
+        return discarded_card_list
 
     def discard(self, index: int = -1, quantity: int = 1) -> List[Card]:
         card_list = []
