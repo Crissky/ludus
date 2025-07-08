@@ -71,8 +71,14 @@ class ColorsGameBoard(BaseCardGameBoard):
                 self.invert_direction()
                 if len(self.player_list) == 2:
                     self.next_turn(skip=True)
+            
+            if card.is_wild:
+                self.selecting_color = True
 
-            if card.name not in [ColorNames.BLOCK, ColorNames.REVERSE]:
+            if (
+                card.name not in [ColorNames.BLOCK, ColorNames.REVERSE]
+                and not card.is_wild
+            ):
                 self.next_turn(skip=False)
 
         elif command == CommandEnum.DRAW:
