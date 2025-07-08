@@ -61,17 +61,25 @@ class ColorsGameBoard(BaseCardGameBoard):
             card_list = player.play(hand_position)
             card = card_list[0]
             self.discard(card)
-            self.add_log(player=False, action=f'{player} jogou {card}.')
+            action = f'jogou {card}.'
+            self.add_log(player=player, action=action)
 
             if card.plus_value > 0:
                 self.pending_draw += card.plus_value
             elif card.name == ColorNames.BLOCK:
                 self.next_turn(skip=True)
+                action = 'Bloqueou o próximo jogador.'
+                self.add_log(player=player, action=action)
             elif card.name == ColorNames.REVERSE:
                 self.invert_direction()
                 if len(self.player_list) == 2:
                     self.next_turn(skip=True)
-            
+                    action = 'Bloqueou o próximo jogador.'
+                    self.add_log(player=player, action=action)
+                else:
+                    action = f'Inverteu{ColorNames.REVERSE.value} o jogo.'
+                    self.add_log(player=player, action=action)
+
             if card.is_wild:
                 self.selecting_color = True
 
@@ -80,6 +88,8 @@ class ColorsGameBoard(BaseCardGameBoard):
                 and not card.is_wild
             ):
                 self.next_turn(skip=False)
+                action = 'Passou a vez.'
+                self.add_log(player=player, action=action)
 
         elif command == CommandEnum.DRAW:
             ...
