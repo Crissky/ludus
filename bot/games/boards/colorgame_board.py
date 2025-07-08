@@ -107,7 +107,10 @@ class ColorsGameBoard(BaseCardGameBoard):
                 self.next_turn(skip=True)
 
         elif command == CommandEnum.PASS:
-            ...
+            self.is_passing = False
+            self.next_turn(skip=False)
+            action = 'Passou a vez.'
+            self.add_log(player=player, action=action)
         elif command == CommandEnum.SELECT_COLOR:
             ...
 
