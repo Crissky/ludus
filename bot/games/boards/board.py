@@ -179,6 +179,12 @@ class BaseBoard(ABC):
         if isinstance(report, Report):
             logging.info(f'Adicionando log: {report}')
             self.log.add(report)
+        else:
+            logging.warning(
+                f'{self.__class__.__name__}.{self.add_log.__name__}(): '
+                'Report não foi adicionado. '
+                f'Report={report}, Player={player}, Action={action}.'
+            )
 
     def show_board(self, player: Player = None) -> str:
         output = [self.game_header]
