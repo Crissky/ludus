@@ -53,10 +53,10 @@ class ColorsGameBoard(BaseCardGameBoard):
             card = card_list[0]
             if not isinstance(card, Card):
                 action = f'Carta na posição {hand_position} não encontrada.'
-                return self.add_log(player=False, action=action)
+                return self.add_log(player=player, action=action)
             if not self.is_playable_card(card=card):
                 action = f'Carta {card} não pode ser jogada.'
-                return self.add_log(player=False, action=action)
+                return self.add_log(player=player, action=action)
 
             card_list = player.play(hand_position)
             card = card_list[0]
