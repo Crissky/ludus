@@ -1,5 +1,5 @@
 from collections.abc import Generator
-from typing import List
+from typing import List, Union
 
 from telegram import User
 from bot.games.cards.card import Card
@@ -73,6 +73,16 @@ class Player:
             self.hand = hand
         else:
             raise TypeError('hand precisa ser do tipo BaseHand.')
+
+    def add_card(
+        self,
+        *cards: Union[List[Card], Card],
+        discard_index: int = -1
+    ) -> List[Card]:
+        return self.hand.add_card(
+            *cards,
+            discard_index=discard_index
+        )
 
     def play(self, *indexes: int) -> List[Card]:
         return self.hand.play(*indexes)
