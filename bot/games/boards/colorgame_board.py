@@ -57,7 +57,7 @@ class ColorsGameBoard(BaseCardGameBoard):
         command = CommandEnum[command_str]
         game_id = play_dict[CallbackKeyEnum.GAME_ID]
         hand_position = play_dict.get(CallbackKeyEnum.HAND_POSITION)
-        # selected_color = play_dict.get(CallbackKeyEnum.SELECTED_COLOR)
+        selected_color = play_dict.get(CallbackKeyEnum.SELECTED_COLOR)
 
         if game_id != self.id:
             action = f'Jogo inválido: {game_id}'
@@ -135,7 +135,12 @@ class ColorsGameBoard(BaseCardGameBoard):
             action = 'Passou a vez.'
             self.add_log(player=player, action=action)
         elif command == CommandEnum.SELECT_COLOR:
-            ...
+            color_suit = ColorSuits[selected_color]
+            discard_pile = self.discard_piles[0]
+            peeked_card_list = discard_pile.peek()
+            top_card = peeked_card_list[0]
+            top_card.set_wild_suit(suit=color_suit)
+            self.selecting_color = False
 
     def is_playable_card(self, card: Card) -> bool:
         for discard_pile in self.discard_piles:
