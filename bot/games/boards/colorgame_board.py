@@ -1,7 +1,8 @@
 from bot.games.boards.cardgame_board import BaseCardGameBoard
+from bot.games.buttons.play_button import PlayButton
 from bot.games.cards.card import Card
 from bot.games.decks.color import ColorDeck
-from bot.games.enums.card import ColorNames
+from bot.games.enums.card import WILD_SUITS, ColorNames, ColorSuits
 from bot.games.enums.command import CallbackKeyEnum, CommandEnum
 from bot.games.play_keyboard import PlayKeyBoard
 from bot.games.player import Player
@@ -26,7 +27,29 @@ class ColorsGameBoard(BaseCardGameBoard):
         self.selecting_color = False
 
     def player_keyboard(self, player: Player) -> PlayKeyBoard:
-        if self.selecting_color is False or self.is_started is not True:
+        if all((
+            self.selecting_color is True,
+            self.is_started is True,
+            player == self.current_player
+        )):
+            keyboard = PlayKeyBoard(buttons_per_row=self.initial_hand_size)
+
+            for color_suit in ColorSuits:
+                if color_suit not in WILD_SUITS:
+                    text = color_suit.value
+                    callback_data_args = {
+                        CallbackKeyEnum.SELECTED_COLOR.name: color_suit.name,
+                    }
+                    button = PlayButton(
+                        game=self,
+                        text=text,
+                        command=CommandEnum.SELECT_COLOR,
+                        **callback_data_args
+                    )
+                    keyboard.add_button(button)
+
+            return keyboard
+        else:
             return super().player_keyboard(player)
 
     def play(self, player: Player, play_dict: dict):
