@@ -118,7 +118,12 @@ class ColorsGameBoard(BaseCardGameBoard):
         if not self.discard_piles:
             return True
 
-        top_card = self.discard_piles[0].peek()
+        peeked_card_list = self.discard_piles[0].peek()
+
+        if not peeked_card_list:
+            return True
+
+        top_card = peeked_card_list[0]
 
         # Testa o empilhamento de carta PLUS
         if self.pending_draw > 0:
