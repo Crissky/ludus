@@ -38,7 +38,7 @@ async def play_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
     logging.info(player)
     logging.info(f'Play Dict: {play_dict}')
     logging.info(f'{game}')
-    game.next_turn()
+    game.play(player=player, play_dict=play_dict)
 
     await update_all_player_messages(
         function_caller='PLAY_GAME()',
