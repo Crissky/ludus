@@ -127,7 +127,7 @@ class ColorsGameBoard(BaseCardGameBoard):
             if self.pending_draw > 0:
                 self.pending_draw = 0
                 self.is_passing = False
-                self.next_turn(skip=True)
+                self.next_turn()
 
         elif command == CommandEnum.PASS:
             self.is_passing = False
