@@ -1,6 +1,6 @@
 from collections.abc import Generator
 from random import randint
-from typing import List, Union
+from typing import List
 from bot.games.cards.card import Card
 
 
