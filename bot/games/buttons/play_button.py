@@ -17,8 +17,8 @@ class PlayButton:
 
     def __init__(
         self,
-        game: 'BaseBoard',
         text: str,
+        game: 'BaseBoard',
         command: Union[CommandEnum, str],
         group: int = 0,
         **callback_data
@@ -31,8 +31,8 @@ class PlayButton:
                 'ou uma striing válida de CommandEnum.'
             )
 
-        self.game = game
         self.text = text
+        self.game = game
         self.command = command
         self.group = group
         self.callback_data = callback_data

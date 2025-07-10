@@ -185,8 +185,8 @@ class BaseCardGameBoard(BaseBoard):
                     CallbackKeyEnum.HAND_POSITION.name: index,
                 }
                 button = PlayButton(
-                    game=self,
                     text=text,
+                    game=self,
                     command=CommandEnum.PLAY,
                     **callback_data_args
 
@@ -197,15 +197,15 @@ class BaseCardGameBoard(BaseBoard):
             # Se is_passing é True, significa que o jogador já comprou nessa
             # rodada e não pode comprar novamente.
             button = PlayButton(
-                game=self,
                 text='🫴Passar',
+                game=self,
                 command=CommandEnum.PASS,
                 group=1
             )
         else:
             button = PlayButton(
-                game=self,
                 text='🫴Comprar',
+                game=self,
                 command=CommandEnum.DRAW,
                 group=1
             )

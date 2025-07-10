@@ -41,8 +41,8 @@ class ColorsGameBoard(BaseCardGameBoard):
                         CallbackKeyEnum.SELECTED_COLOR.name: color_suit.name,
                     }
                     button = PlayButton(
-                        game=self,
                         text=text,
+                        game=self,
                         command=CommandEnum.SELECT_COLOR,
                         **callback_data_args
                     )
