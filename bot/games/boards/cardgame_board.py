@@ -149,7 +149,7 @@ class BaseCardGameBoard(BaseBoard):
 
     def show_board_discard_piles(self):
         peek_discard_piles = ', '.join((
-            str(discard_pile.peek()) if discard_pile else 'Pilha Vazia'
+            str(discard_pile.peek()[0]) if discard_pile else 'Pilha Vazia'
             for discard_pile in self.discard_piles
         ))
 
