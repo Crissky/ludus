@@ -104,19 +104,19 @@ class BaseDeck:
     def __repr__(self) -> str:
         return f'{self.__class__.__name__}({self.card_stack.text_horizontal})'
 
-    def draw(self, quantity: int = 1) -> Union[List[Card]]:
+    def draw(self, quantity: int = 1) -> List[Card]:
         card_list = self.card_stack.pop(quantity=quantity)
         card_list = self.make_card_list(card_list=card_list)
 
         return card_list
 
-    def peek(self, quantity: int = 1) -> Union[List[Card]]:
+    def peek(self, quantity: int = 1) -> List[Card]:
         card_list = self.card_stack.peek(quantity=quantity)
         card_list = self.make_card_list(card_list=card_list)
 
         return card_list
 
-    def peek_bottom(self, quantity: int = 1) -> Union[List[Card]]:
+    def peek_bottom(self, quantity: int = 1) -> List[Card]:
         card_list = self.card_stack.peek_bottom(quantity=quantity)
         card_list = self.make_card_list(card_list=card_list)
 
