@@ -68,8 +68,8 @@ class BaseCardGameBoard(BaseBoard):
     def distribute_cards(self):
         for _ in range(self.initial_hand_size):
             for player in self.player_list:
-                card = self.draw()
-                player.hand.add_card(card)
+                card_list = self.draw()
+                player.hand.add_card(*card_list)
 
     def draw(self, quantity: int = 1) -> List[Card]:
         cards = self.draw_pile.draw(quantity=quantity)
