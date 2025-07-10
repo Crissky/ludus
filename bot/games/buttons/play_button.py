@@ -105,7 +105,11 @@ class PlayButton:
             CallbackKeyEnum.COMMAND: self.command.name,
             CallbackKeyEnum.GAME_ID: self.game.id,
         }
-        data.update(self.callback_data)
+        callback_data_dict = {
+            CallbackKeyEnum[key]: value
+            for key, value in self.callback_data.items()
+        }
+        data.update(callback_data_dict)
 
         return PlayButton.callback_data_to_string(data)
 
