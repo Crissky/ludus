@@ -138,28 +138,28 @@ class ColorsGameBoard(BaseCardGameBoard):
             ...
 
     def is_playable_card(self, card: Card) -> bool:
-        if not self.discard_piles:
-            return True
-
-        peeked_card_list = self.discard_piles[0].peek()
-
-        if not peeked_card_list:
-            return True
-
-        top_card = peeked_card_list[0]
-
-        # Testa o empilhamento de carta PLUS
-        if self.pending_draw > 0:
-            if card.plus_value > 0 and card.plus_value >= top_card.plus_value:
+        for discard_pile in self.discard_piles:
+            if not discard_pile:
                 return True
-            return False
 
-        # Caso normal: tem que bater cor ou nome
-        if (
-            card.suit == top_card.suit or
-            card.name == top_card.name or
-            card.is_wild
-        ):
-            return True
+            peeked_card_list = discard_pile.peek()
+            top_card = peeked_card_list[0]
+
+            # Testa o empilhamento de carta PLUS
+            if self.pending_draw > 0:
+                if (
+                    card.plus_value > 0 and
+                    card.plus_value >= top_card.plus_value
+                ):
+                    return True
+                return False
+
+            # Caso normal: tem que bater cor ou nome
+            if (
+                card.suit == top_card.suit or
+                card.name == top_card.name or
+                card.is_wild
+            ):
+                return True
 
         return False
