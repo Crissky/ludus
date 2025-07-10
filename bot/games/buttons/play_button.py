@@ -36,12 +36,26 @@ class PlayButton:
         self.command = command
         self.group = group
         self.callback_data = callback_data
+        self.check_callback_data()
 
     def __eq__(self, value):
         if isinstance(value, PlayButton):
             return self.data_to_str == value.data_to_str
 
         return False
+
+    def check_callback_data(self):
+        error_list = [
+            key
+            for key in self.callback_data.keys()
+            if key not in CallbackKeyEnum._member_names_
+        ]
+
+        if error_list:
+            raise ValueError(
+                f'callback_data inválido(s): {error_list}.'
+                f'\nOs valores válidos são: {CallbackKeyEnum._member_names_}.'
+            )
 
     def make_button(self) -> InlineKeyboardButton:
         text = self.text
