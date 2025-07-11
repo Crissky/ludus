@@ -127,7 +127,9 @@ class ColorsGameBoard(BaseCardGameBoard):
             if self.pending_draw > 0:
                 self.pending_draw = 0
                 self.is_passing = False
-                self.next_turn()
+                self.next_turn(skip=False)
+                action = 'Passou a vez.'
+                self.add_log(player=player, action=action)
 
         elif command_enum == CommandEnum.PASS:
             self.is_passing = False
@@ -141,6 +143,9 @@ class ColorsGameBoard(BaseCardGameBoard):
             top_card = peeked_card_list[0]
             top_card.set_wild_suit(suit=color_suit_enum)
             self.selecting_color = False
+            self.next_turn(skip=False)
+            action = 'Passou a vez.'
+            self.add_log(player=player, action=action)
 
     def is_playable_card(self, card: Card) -> bool:
         for discard_pile in self.discard_piles:
