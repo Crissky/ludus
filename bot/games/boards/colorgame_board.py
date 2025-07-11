@@ -81,6 +81,7 @@ class ColorsGameBoard(BaseCardGameBoard):
                 action = f'Carta {card} não pode ser jogada.'
                 return self.add_log(player=player, action=action)
 
+            self.is_passing = False
             card_list = player.play(hand_position)
             card = card_list[0]
             self.discard(card)
