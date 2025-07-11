@@ -54,10 +54,10 @@ class ColorsGameBoard(BaseCardGameBoard):
 
     def play(self, player: Player, play_dict: dict):
         command_str = play_dict[CallbackKeyEnum.COMMAND]
-        command = CommandEnum[command_str]
+        command_enum = CommandEnum[command_str]
         game_id = play_dict[CallbackKeyEnum.GAME_ID]
         hand_position = play_dict.get(CallbackKeyEnum.HAND_POSITION)
-        selected_color = play_dict.get(CallbackKeyEnum.SELECTED_COLOR)
+        selected_color_str = play_dict.get(CallbackKeyEnum.SELECTED_COLOR)
 
         if game_id != self.id:
             action = f'Jogo inválido: {game_id}'
@@ -71,7 +71,7 @@ class ColorsGameBoard(BaseCardGameBoard):
 
         player = self.get_player(player)
 
-        if command == CommandEnum.PLAY:
+        if command_enum == CommandEnum.PLAY:
             card_list = player.peek(hand_position)
             card = card_list[0]
             if not isinstance(card, Card):
@@ -114,7 +114,7 @@ class ColorsGameBoard(BaseCardGameBoard):
                 action = 'Passou a vez.'
                 self.add_log(player=player, action=action)
 
-        elif command == CommandEnum.DRAW:
+        elif command_enum == CommandEnum.DRAW:
             draw_quantity = max(1, self.pending_draw)
             card_list = self.draw(quantity=draw_quantity)
             discarded_card_list = player.add_card(*card_list)
@@ -129,17 +129,17 @@ class ColorsGameBoard(BaseCardGameBoard):
                 self.is_passing = False
                 self.next_turn()
 
-        elif command == CommandEnum.PASS:
+        elif command_enum == CommandEnum.PASS:
             self.is_passing = False
             self.next_turn(skip=False)
             action = 'Passou a vez.'
             self.add_log(player=player, action=action)
-        elif command == CommandEnum.SELECT_COLOR:
-            color_suit = ColorSuits[selected_color]
+        elif command_enum == CommandEnum.SELECT_COLOR:
+            color_suit_enum = ColorSuits[selected_color_str]
             discard_pile = self.discard_piles[0]
             peeked_card_list = discard_pile.peek()
             top_card = peeked_card_list[0]
-            top_card.set_wild_suit(suit=color_suit)
+            top_card.set_wild_suit(suit=color_suit_enum)
             self.selecting_color = False
 
     def is_playable_card(self, card: Card) -> bool:
