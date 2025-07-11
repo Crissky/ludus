@@ -121,7 +121,7 @@ class ColorsGameBoard(BaseCardGameBoard):
             discarded_card_list = player.add_card(*card_list)
             self.discard(*discarded_card_list)
 
-            action = f'Comprou {draw_quantity} cartas.'
+            action = f'Comprou {draw_quantity} carta(s).'
             self.add_log(player=player, action=action)
 
             self.is_passing = True
