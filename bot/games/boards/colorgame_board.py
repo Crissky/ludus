@@ -1,3 +1,4 @@
+from typing import List
 from bot.games.boards.cardgame_board import BaseCardGameBoard
 from bot.games.buttons.play_button import PlayButton
 from bot.games.cards.card import Card
