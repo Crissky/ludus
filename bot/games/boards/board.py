@@ -206,7 +206,11 @@ class BaseBoard(ABC):
         return output_text
 
     def format_show_board(self, output: Iterable[str]):
-        output_text = '\n'.join(output)
+        output_text = '\n'.join((
+            text
+            for text in output
+            if text is not None and text != ''
+        ))
         if self.is_started is False and callable(self.invite_text_formatter):
             output_text = self.invite_text_formatter(output_text)
         elif self.is_started is True and callable(self.play_text_formatter):
