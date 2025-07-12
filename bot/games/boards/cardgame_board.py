@@ -122,6 +122,7 @@ class BaseCardGameBoard(BaseBoard):
         if self.is_started is not True:
             output.append('Partida ainda não começou!\n')
         output.append(self.show_board_turn())
+        output.append(self.show_board_winner())
         output.append(self.show_board_draw_pile())
         output.append(self.show_board_discard_piles())
 
@@ -141,11 +142,20 @@ class BaseCardGameBoard(BaseBoard):
 
         return output_text
 
-    def show_board_draw_pile(self):
-        return f'Pilha de Compra: {len(self.draw_pile)} carta(s)'
-
     def show_board_turn(self):
         return f'Rodada: {self.turn}'
+
+    def show_board_winner(self):
+        winners = self.winners()
+        text = None
+        if winners:
+            text = 'Vencedor(es): '
+            text += ', '.join(str(winner) for winner in winners)
+
+        return text
+
+    def show_board_draw_pile(self):
+        return f'Pilha de Compra: {len(self.draw_pile)} carta(s)'
 
     def show_board_discard_piles(self):
         peek_discard_piles = ', '.join((
@@ -176,6 +186,8 @@ class BaseCardGameBoard(BaseBoard):
 
         keyboard = PlayKeyBoard(buttons_per_row=self.initial_hand_size)
         if player != self.current_player:
+            return keyboard
+        if self.game_over:
             return keyboard
 
         for index, card in enumerate(player):
@@ -218,6 +230,10 @@ class BaseCardGameBoard(BaseBoard):
 
     @abstractmethod
     def is_playable_card(self, card: Card) -> bool:
+        ...
+
+    @abstractmethod
+    def winners(self) -> List[Player]:
         ...
 
 

@@ -30,7 +30,8 @@ class ColorsGameBoard(BaseCardGameBoard):
         if all((
             self.selecting_color is True,
             self.is_started is True,
-            player == self.current_player
+            player == self.current_player,
+            not self.game_over
         )):
             keyboard = PlayKeyBoard(buttons_per_row=self.initial_hand_size)
 
@@ -174,3 +175,10 @@ class ColorsGameBoard(BaseCardGameBoard):
                 return True
 
         return False
+
+    def winners(self) -> List[Player]:
+        return [
+            player
+            for player in self.player_list
+            if len(player.hand) == 0 and self.is_started is True
+        ]

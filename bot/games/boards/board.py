@@ -226,6 +226,14 @@ class BaseBoard(ABC):
     def play(self, player: Player, play_dict: dict):
         ...
 
+    @abstractmethod
+    def winners(self) -> List[Player]:
+        ...
+
+    @property
+    def game_over(self) -> bool:
+        return bool(self.winners())
+
     @property
     def current_player(self) -> Player:
         if self.player_list:
