@@ -225,6 +225,7 @@ class BaseCardGameBoard(BaseBoard):
 
         return keyboard
 
+    @abstractmethod
     def play(self, player: Player, play_dict: dict):
         ...
 
