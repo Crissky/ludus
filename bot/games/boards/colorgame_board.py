@@ -155,7 +155,7 @@ class ColorsGameBoard(BaseCardGameBoard):
 
     def is_playable_card(self, card: Card) -> bool:
         for discard_pile in self.discard_piles:
-            if not discard_pile:
+            if discard_pile.is_empty:
                 return True
 
             peeked_card_list = discard_pile.peek()
