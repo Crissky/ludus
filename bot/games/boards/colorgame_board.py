@@ -64,6 +64,9 @@ class ColorsGameBoard(BaseCardGameBoard):
         if game_id != self.id:
             action = f'Jogo inválido: {game_id}'
             return self.add_log(player=False, action=action)
+        if self.game_over is True:
+            action = f'O jogo de ID: "{game_id}" já terminou.'
+            return self.add_log(player=False, action=action)
         if player != self.current_player:
             action = f'Não é a vez de {player}.'
             return self.add_log(player=False, action=action)
