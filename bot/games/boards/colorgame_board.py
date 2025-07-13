@@ -142,6 +142,7 @@ class ColorsGameBoard(BaseCardGameBoard):
             self.next_turn(skip=False)
             action = 'Passou a vez.'
             self.add_log(player=player, action=action)
+
         elif command_enum == CommandEnum.SELECT_COLOR:
             color_suit_enum = ColorSuits[selected_color_str]
             discard_pile = self.discard_piles[0]
