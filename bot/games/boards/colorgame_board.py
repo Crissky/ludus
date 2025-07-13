@@ -168,7 +168,7 @@ class ColorsGameBoard(BaseCardGameBoard):
                     card.plus_value >= top_card.plus_value
                 ):
                     return True
-                return False
+                continue
 
             # Caso normal: tem que bater cor ou nome
             if (
