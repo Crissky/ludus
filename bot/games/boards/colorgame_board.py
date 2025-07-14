@@ -63,16 +63,16 @@ class ColorsGameBoard(BaseCardGameBoard):
 
         if game_id != self.id:
             action = f'Jogo inválido: {game_id}'
-            return self.add_log(player=False, action=action)
+            return self.add_log(action=action, player=False)
         if self.game_over is True:
             action = f'O jogo de ID: "{game_id}" já terminou.'
-            return self.add_log(player=False, action=action)
+            return self.add_log(action=action, player=False)
         if player != self.current_player:
             action = f'Não é a vez de {player}.'
-            return self.add_log(player=False, action=action)
+            return self.add_log(action=action, player=False)
         if not self.player_in_game(player):
             action = f'{player} não está mais na partida.'
-            return self.add_log(player=False, action=action)
+            return self.add_log(action=action, player=False)
 
         player = self.get_player(player)
 
@@ -81,33 +81,33 @@ class ColorsGameBoard(BaseCardGameBoard):
             card = card_list[0]
             if not isinstance(card, Card):
                 action = f'Carta na posição {hand_position} não encontrada.'
-                return self.add_log(player=player, action=action)
+                return self.add_log(action=action, player=player)
             if not self.is_playable_card(card=card):
                 action = f'Carta {card} não pode ser jogada.'
-                return self.add_log(player=player, action=action)
+                return self.add_log(action=action, player=player)
 
             self.is_passing = False
             card_list = player.play(hand_position)
             card = card_list[0]
             self.discard(card)
             action = f'jogou {card}.'
-            self.add_log(player=player, action=action)
+            self.add_log(action=action, player=player)
 
             if card.plus_value > 0:
                 self.pending_draw += card.plus_value
             elif card.name == ColorNames.BLOCK:
                 self.next_turn(skip=True)
                 action = 'Bloqueou o próximo jogador.'
-                self.add_log(player=player, action=action)
+                self.add_log(action=action, player=player)
             elif card.name == ColorNames.REVERSE:
                 self.invert_direction()
                 if len(self.player_list) == 2:
                     self.next_turn(skip=True)
                     action = 'Bloqueou o próximo jogador.'
-                    self.add_log(player=player, action=action)
+                    self.add_log(action=action, player=player)
                 else:
                     action = f'Inverteu{ColorNames.REVERSE.value} o jogo.'
-                    self.add_log(player=player, action=action)
+                    self.add_log(action=action, player=player)
 
             if card.is_wild:
                 self.selecting_color = True
@@ -118,7 +118,7 @@ class ColorsGameBoard(BaseCardGameBoard):
             ):
                 self.next_turn(skip=False)
                 action = 'Passou a vez.'
-                self.add_log(player=player, action=action)
+                self.add_log(action=action, player=player)
 
         elif command_enum == CommandEnum.DRAW:
             draw_quantity = max(1, self.pending_draw)
@@ -127,7 +127,7 @@ class ColorsGameBoard(BaseCardGameBoard):
             self.discard(*discarded_card_list)
 
             action = f'Comprou {draw_quantity} carta(s).'
-            self.add_log(player=player, action=action)
+            self.add_log(action=action, player=player)
 
             self.is_passing = True
             if self.pending_draw > 0:
@@ -135,13 +135,13 @@ class ColorsGameBoard(BaseCardGameBoard):
                 self.is_passing = False
                 self.next_turn(skip=False)
                 action = 'Passou a vez.'
-                self.add_log(player=player, action=action)
+                self.add_log(action=action, player=player)
 
         elif command_enum == CommandEnum.PASS:
             self.is_passing = False
             self.next_turn(skip=False)
             action = 'Passou a vez.'
-            self.add_log(player=player, action=action)
+            self.add_log(action=action, player=player)
 
         elif command_enum == CommandEnum.SELECT_COLOR:
             color_suit_enum = ColorSuits[selected_color_str]
@@ -152,7 +152,7 @@ class ColorsGameBoard(BaseCardGameBoard):
             self.selecting_color = False
             self.next_turn(skip=False)
             action = 'Passou a vez.'
-            self.add_log(player=player, action=action)
+            self.add_log(action=action, player=player)
 
     def is_playable_card(self, card: Card) -> bool:
         for discard_pile in self.discard_piles:

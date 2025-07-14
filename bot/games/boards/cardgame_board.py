@@ -172,7 +172,7 @@ class BaseCardGameBoard(BaseBoard):
                 'A partida só pode começar quando houver ao menos '
                 f'{self.min_total_players} jogadores.'
             )
-            return self.add_log(player=False, action=action)
+            return self.add_log(action=action, player=False)
 
         self.create_hands()
         self.distribute_cards()

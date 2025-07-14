@@ -47,9 +47,9 @@ class BaseBoard(ABC):
         self.play_text_formatter: Callable = None
 
         initial_report = Report(
-            player=False,
             action=f'{self.DISPLAY_NAME} foi criado.',
-            turn=self.turn
+            turn=self.turn,
+            player=None,
         )
         self.add_log(report=initial_report)
 
@@ -93,11 +93,11 @@ class BaseBoard(ABC):
             )
 
         if action is not None:
-            return self.add_log(player=False, action=action)
+            return self.add_log(action=action, player=False)
 
         self.player_list.append(player)
         action = f'{player.name} entrou na partida.'
-        self.add_log(player=False, action=action)
+        self.add_log(action=action, player=False)
 
     def get_player(self, player: Union[Player, int, str]) -> Player:
         return next((p for p in self.player_list if p == player), None)
@@ -163,17 +163,17 @@ class BaseBoard(ABC):
     def add_log(
         self,
         report: Report = None,
-        player: Player = None,
         action: str = None,
+        player: Union[Player, bool] = None,
     ):
-        if player is None and action is not None:
+        if (player is None or player is True) and action is not None:
             player = self.current_player
 
         if player is not None and action is not None:
             report = Report(
-                player=player,
                 action=action,
-                turn=self.turn
+                turn=self.turn,
+                player=player,
             )
 
         if isinstance(report, Report):
