@@ -147,7 +147,13 @@ class BaseBoard(ABC):
         else:
             self.player_list.remove(player)
 
-    def next_turn(self, skip: bool = False):
+    def next_turn(self, player: Player, skip: bool = False):
+        if skip is False:
+            action = 'Passou a vez.'
+        else:
+            action = 'Bloqueou o próximo jogador.'
+
+        self.add_log(action=action, player=player)
         self.set_next_player(skip=skip)
         self.turn += 1
 

@@ -96,15 +96,11 @@ class ColorsGameBoard(BaseCardGameBoard):
             if card.plus_value > 0:
                 self.pending_draw += card.plus_value
             elif card.name == ColorNames.BLOCK:
-                self.next_turn(skip=True)
-                action = 'Bloqueou o próximo jogador.'
-                self.add_log(action=action, player=player)
+                self.next_turn(player=player, skip=True)
             elif card.name == ColorNames.REVERSE:
                 self.invert_direction()
                 if len(self.player_list) == 2:
-                    self.next_turn(skip=True)
-                    action = 'Bloqueou o próximo jogador.'
-                    self.add_log(action=action, player=player)
+                    self.next_turn(player=player, skip=True)
                 else:
                     action = f'Inverteu{ColorNames.REVERSE.value} o jogo.'
                     self.add_log(action=action, player=player)
@@ -116,9 +112,7 @@ class ColorsGameBoard(BaseCardGameBoard):
                 card.name not in [ColorNames.BLOCK, ColorNames.REVERSE]
                 and not card.is_wild
             ):
-                self.next_turn(skip=False)
-                action = 'Passou a vez.'
-                self.add_log(action=action, player=player)
+                self.next_turn(player=player, skip=False)
 
         elif command_enum == CommandEnum.DRAW:
             draw_quantity = max(1, self.pending_draw)
@@ -133,15 +127,11 @@ class ColorsGameBoard(BaseCardGameBoard):
             if self.pending_draw > 0:
                 self.pending_draw = 0
                 self.is_passing = False
-                self.next_turn(skip=False)
-                action = 'Passou a vez.'
-                self.add_log(action=action, player=player)
+                self.next_turn(player=player, skip=False)
 
         elif command_enum == CommandEnum.PASS:
             self.is_passing = False
-            self.next_turn(skip=False)
-            action = 'Passou a vez.'
-            self.add_log(action=action, player=player)
+            self.next_turn(player=player, skip=False)
 
         elif command_enum == CommandEnum.SELECT_COLOR:
             color_suit_enum = ColorSuits[selected_color_str]
@@ -150,9 +140,9 @@ class ColorsGameBoard(BaseCardGameBoard):
             top_card = peeked_card_list[0]
             top_card.set_wild_suit(suit=color_suit_enum)
             self.selecting_color = False
-            self.next_turn(skip=False)
-            action = 'Passou a vez.'
+            action = f'Selecionou a cor {color_suit_enum.value}.'
             self.add_log(action=action, player=player)
+            self.next_turn(player=player, skip=False)
 
     def is_playable_card(self, card: Card) -> bool:
         for discard_pile in self.discard_piles:
