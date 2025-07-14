@@ -263,27 +263,3 @@ class BaseBoard(ABC):
         return NORMAL_SECTION_HEAD_1.format(
             f'Game - {self.DISPLAY_NAME}: {self.id}'
         ) + '\n'
-
-
-if __name__ == '__main__':
-    p1 = Player('0001', 'p1')
-    p2 = Player('0002', 'p2')
-    p3 = Player('0003', 'p3')
-    p4 = Player('0004', 'p4')
-
-    board = BaseBoard(*[p1, p2, p3, p4])
-
-    for i in range(10):
-        logging.debug(
-            f'Turno: {board.turn}, Vez: {board.current_player}')
-        board.next_turn()
-
-    logging.debug('-'*79)
-
-    board = BaseBoard(*[p1, p2, p3, p4])
-    board.invert_direction()
-
-    for i in range(10):
-        logging.debug(
-            f'Turno: {board.turn}, Vez: {board.current_player}')
-        board.next_turn()
