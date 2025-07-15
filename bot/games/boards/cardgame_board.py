@@ -156,15 +156,6 @@ class BaseCardGameBoard(BaseBoard):
     def show_board_turn(self):
         return f'Rodada: {self.turn}'
 
-    def show_board_winner(self):
-        winners = self.winners()
-        text = None
-        if winners:
-            text = 'Vencedor(es): '
-            text += ', '.join(str(winner) for winner in winners)
-
-        return text
-
     def show_board_draw_pile(self):
         return f'Pilha de Compra: {len(self.draw_pile)} carta(s)'
 

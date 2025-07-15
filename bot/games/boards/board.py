@@ -202,6 +202,7 @@ class BaseBoard(ABC):
 
         output = [self.game_header]
         output.append(f'Rodada: {self.turn}')
+        output.append(self.show_board_winner())
         for general_info in general_info_list:
             output.append(general_info())
 
@@ -219,6 +220,15 @@ class BaseBoard(ABC):
         output_text = self.format_show_board(output)
 
         return output_text
+
+    def show_board_winner(self):
+        winners = self.winners()
+        text = None
+        if winners:
+            text = 'Vencedor(es): '
+            text += ', '.join(str(winner) for winner in winners)
+
+        return text
 
     def format_show_board(self, output: Iterable[str]):
         output_text = '\n'.join((
