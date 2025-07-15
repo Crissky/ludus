@@ -192,9 +192,18 @@ class BaseBoard(ABC):
                 f'Report={report}, Player={player}, Action={action}.'
             )
 
-    def show_board(self, player: Player = None) -> str:
+    def show_board(
+        self,
+        player: Player = None,
+        general_info_list: List[Callable] = None
+    ) -> str:
+        if general_info_list is None:
+            general_info_list = []
+
         output = [self.game_header]
         output.append(f'Rodada: {self.turn}')
+        for general_info in general_info_list:
+            output.append(general_info())
 
         output.append("\n🎮 Jogadores na partida:")
         for i, player in enumerate(self.player_list, start=1):

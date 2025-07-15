@@ -1,7 +1,7 @@
 import logging
 
 from abc import abstractmethod
-from typing import List
+from typing import Callable, List
 
 from bot.games.boards.board import BaseBoard
 from bot.games.buttons.play_button import PlayButton
@@ -117,14 +117,25 @@ class BaseCardGameBoard(BaseBoard):
         pile.add(*cards)
 
     # SHOW BOARD FUNCTIONS ###################################################
-    def show_board(self, player: Player = None) -> str:
+    def show_board(
+        self,
+        player: Player = None,
+        general_info_list: List[Callable] = None
+    ) -> str:
+        if general_info_list is None:
+            general_info_list = []
+
         output = [self.game_header]
         if self.is_started is not True:
             output.append('Partida ainda não começou!\n')
+
+        # INFORMAÇÕES GERAIS
         output.append(self.show_board_turn())
         output.append(self.show_board_winner())
         output.append(self.show_board_draw_pile())
         output.append(self.show_board_discard_piles())
+        for general_info in general_info_list:
+            output.append(general_info())
 
         output.append("\n🎮 Jogadores na partida:")
         for i, p in enumerate(self.player_list, start=1):

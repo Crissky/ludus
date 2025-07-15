@@ -27,6 +27,20 @@ class ColorsGameBoard(BaseCardGameBoard):
         self.pending_draw = 0
         self.selecting_color = False
 
+    def show_board(self, player: Player = None) -> str:
+        general_info_list = [self.show_board_pending_draw]
+        return super().show_board(
+            player=player,
+            general_info_list=general_info_list
+        )
+
+    def show_board_pending_draw(self) -> str:
+        text = ''
+        if self.pending_draw > 0:
+            text = f'Cartas para Comprar: {self.pending_draw:+d}'
+
+        return text
+
     def player_keyboard(self, player: Player) -> PlayKeyBoard:
         if all((
             self.selecting_color is True,
