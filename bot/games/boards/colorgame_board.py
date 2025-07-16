@@ -102,6 +102,9 @@ class ColorsGameBoard(BaseCardGameBoard):
 
             self.is_passing = False
             card_list = player.play(hand_position)
+            if len(card_list) > 1:
+                raise ValueError(f'Mais de uma carta jogada. {card_list}.')
+
             card = card_list[0]
             self.discard(card)
             action = f'jogou {card}.'
