@@ -21,6 +21,19 @@ class PlayKeyBoard:
         for play_button in play_buttons:
             self.add_button(play_button)
 
+    def __str__(self) -> str:
+        return '\n'.join(
+            str(button) for button in self.play_button_list
+        )
+
+    def __repr__(self) -> str:
+        return (
+            f'{self.__class__.__name__}('
+            f'buttons_per_row={self.buttons_per_row},'
+            f'play_button_list={self.play_button_list}'
+            ')'
+        )
+
     def add_button(self, button: PlayButton):
         if button in self.play_button_list:
             raise ValueError('Esse botão já está no teclado.')
@@ -60,6 +73,9 @@ class PlayKeyBoard:
 class InviteKeyBoard(PlayKeyBoard):
     def __init__(self, keyboard: InlineKeyboardMarkup):
         self.keyboard = keyboard
+
+    def __str__(self) -> str:
+        return f'{self.keyboard}'
 
     def make_keyboard(self) -> InlineKeyboardMarkup:
         return self.keyboard

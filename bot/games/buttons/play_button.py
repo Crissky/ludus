@@ -44,6 +44,20 @@ class PlayButton:
 
         return False
 
+    def __str__(self) -> str:
+        return f'{self.text}'
+    
+    def __repr__(self) -> str:
+        text = ','.join(f'{k}={v}' for k, v in self.callback_data.items())
+        return (
+            f'{self.__class__.__name__}('
+            f'text={self.text},'
+            f'command={self.command},'
+            f'group={self.group}'
+            f'{text}'
+            ')'
+        )
+
     def check_callback_data(self):
         error_list = [
             key
