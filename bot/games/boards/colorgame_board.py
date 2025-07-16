@@ -82,7 +82,7 @@ class ColorsGameBoard(BaseCardGameBoard):
             action = f'O jogo de ID: "{game_id}" já terminou.'
             return self.add_log(action=action, player=False)
         if player != self.current_player:
-            action = f'Não é a vez de {player}.'
+            action = f'NÃO é a vez de {player}.'
             return self.add_log(action=action, player=False)
         if not self.player_in_game(player):
             action = f'{player} não está mais na partida.'
