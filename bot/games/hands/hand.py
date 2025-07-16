@@ -5,7 +5,7 @@ from bot.games.cards.card import Card
 
 
 class BaseHand:
-    def __init__(self, max_size: int = 0, *cards: Card):
+    def __init__(self, *cards: Card, max_size: int = 0):
         self.max_size = max_size
         self.card_list = []
 
