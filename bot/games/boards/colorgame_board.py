@@ -107,7 +107,10 @@ class ColorsGameBoard(BaseCardGameBoard):
             action = f'jogou {card}.'
             self.add_log(action=action, player=player)
 
-            if card.plus_value > 0:
+            if self.game_over:
+                action = 'Ganhou o jogo.'
+                return self.add_log(action=action, player=player)
+            elif card.plus_value > 0:
                 self.pending_draw += card.plus_value
             elif card.name == ColorNames.BLOCK:
                 self.next_turn(player=player, skip=True)
