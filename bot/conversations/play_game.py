@@ -6,7 +6,11 @@ from telegram.ext import (
 )
 
 from bot.decorators.logging import logging_basic_infos
-from bot.functions.chat import edit_message_text, update_all_player_messages
+from bot.functions.chat import (
+    edit_message_text,
+    send_alert,
+    update_all_player_messages
+)
 from bot.functions.game import get_game
 from bot.games.buttons.play_button import PlayButton
 from bot.games.enums.command import CallbackKeyEnum, CommandEnum
@@ -37,8 +41,14 @@ async def play_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
     logging.info(f'Game: {game.DISPLAY_NAME} - game_id: {game_id}')
     logging.info(player)
     logging.info(f'Play Dict: {play_dict}')
-    logging.info(f'{game}')
-    game.play(player=player, play_dict=play_dict)
+    # logging.info(f'{game}')
+    play_response = game.play(player=player, play_dict=play_dict)
+    if isinstance(play_response, str):
+        await send_alert(
+            function_caller='PLAY_GAME()',
+            query=query,
+            text=play_response
+        )
 
     await update_all_player_messages(
         function_caller='PLAY_GAME()',

@@ -171,7 +171,7 @@ class BaseBoard(ABC):
         report: Report = None,
         action: str = None,
         player: Union[Player, bool] = None,
-    ):
+    ) -> str:
         if (player is None or player is True) and action is not None:
             player = self.current_player
 
@@ -191,6 +191,9 @@ class BaseBoard(ABC):
                 'Report não foi adicionado. '
                 f'Report={report}, Player={player}, Action={action}.'
             )
+
+        if isinstance(action, str):
+            return action
 
     def show_board(
         self,
