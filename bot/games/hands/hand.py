@@ -35,16 +35,13 @@ class BaseHand:
         discard_index: int = -1
     ) -> List[Card]:
         discarded_card_list = []
-        if len(self) >= self.max_size and self.max_size > 0:
-            quantity = len(self) + len(cards) - self.max_size
-            discarded_card_list = self.discard(discard_index, quantity)
-
-        if isinstance(cards, Card):
-            cards = [cards]
-
         for card in cards:
             if not isinstance(card, Card):
                 raise TypeError(f"Espera um Card, obteve {type(card)}({card})")
+            if len(self) >= self.max_size and self.max_size > 0:
+                quantity = len(self) + 1 - self.max_size
+                discarded = self.discard(discard_index, quantity)
+                discarded_card_list.extend(discarded)
 
             self.card_list.append(card)
 
