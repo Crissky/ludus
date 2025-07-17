@@ -13,7 +13,7 @@ class ColorsGameBoard(BaseCardGameBoard):
     DISPLAY_NAME: str = 'Colors'
     DESCRIPTION: str = None
 
-    def __init__(self, *players: Player):
+    def __init__(self, *players: Player, debug: bool = False):
         draw_pile = ColorDeck(shuffle=False)
         super().__init__(
             draw_pile,
@@ -23,9 +23,15 @@ class ColorsGameBoard(BaseCardGameBoard):
             hand_kwargs={},
             min_total_players=2,
             max_total_players=4,
+            debug=debug,
         )
         self.pending_draw = 0
         self.selecting_color = False
+
+        self.debug_attr_list.extend([
+            'pending_draw',
+            'selecting_color',
+        ])
 
     def show_board(self, player: Player = None) -> str:
         general_info_list = [self.show_board_pending_draw]

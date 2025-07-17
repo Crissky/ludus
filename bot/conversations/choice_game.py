@@ -49,6 +49,7 @@ from bot.games.player import Player
 
 
 BOT_USERNAME = config("BOT_USERNAME")
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 
 # CONVERSATION FUNCTIONS
@@ -149,7 +150,7 @@ async def select_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
     game_name = data.replace(SELECT_GAME_CALLBACK_DATA, '')
     game_class = board_factory(game_name)
     player = Player(user=user, message_id=message_id)
-    game = game_class(player)
+    game = game_class(player, debug=DEBUG)
     game_id = game.id
     invite_keyboard = get_invite_keyboard(game_id)
     invite_text_formatter = partial(

@@ -21,6 +21,7 @@ class BaseBoard(ABC):
         *players: Player,
         min_total_players: int = 1,
         max_total_players: int = 4,
+        debug: bool = False,
     ):
         if min_total_players > max_total_players:
             raise ValueError(
@@ -33,6 +34,10 @@ class BaseBoard(ABC):
         elif min_total_players <= 0 or max_total_players <= 0:
             raise ValueError(
                 'O número mínimo e máximo de jogadores deve ser maior que 0.'
+            )
+        if not isinstance(debug, bool):
+            raise TypeError(
+                f'Debug deve ser um booleano. (debug: {debug}[{type(debug)}]).'
             )
 
         self.id = id(self)
@@ -56,8 +61,24 @@ class BaseBoard(ABC):
         # ARGS
         self.min_total_players = min_total_players
         self.max_total_players = max_total_players
+        self.debug = debug
         for player in players:
             self.add_player(player)
+
+        self.debug_attr_list = [
+            'turn_direction',
+            'current_player_index',
+            'is_started',
+            # 'player_list',
+            # 'invite_keyboard',
+            # 'invite_text_formatter',
+            # 'play_text_formatter',
+            'min_total_players',
+            'max_total_players',
+            'game_over',
+            'host',
+            'total_players',
+        ]
 
     def __str__(self) -> str:
         text = NORMAL_SECTION_HEAD_1.format(f'Game: {self.DISPLAY_NAME}')
@@ -204,7 +225,12 @@ class BaseBoard(ABC):
             general_info_list = []
 
         output = [self.game_header]
-        output.append(f'Rodada: {self.turn}')
+        if self.is_started is not True:
+            output.append('Partida ainda não começou!\n')
+
+        # INFORMAÇÕES GERAIS
+        output.append(self.show_board_debug())
+        output.append(self.show_board_turn())
         output.append(self.show_board_winner())
         for general_info in general_info_list:
             output.append(general_info())
@@ -224,7 +250,19 @@ class BaseBoard(ABC):
 
         return output_text
 
-    def show_board_winner(self):
+    def show_board_turn(self) -> str:
+        return f'Rodada: {self.turn}'
+
+    def show_board_debug(self) -> str:
+        text = ''
+        if self.debug is True:
+            text += 'Debug:\n'
+            for attr in self.debug_attr_list:
+                text += f'    {attr}: {getattr(self, attr)}\n'
+
+        return text
+
+    def show_board_winner(self) -> str:
         winners = self.winners()
         text = None
         if winners:

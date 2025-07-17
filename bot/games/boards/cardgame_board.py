@@ -26,11 +26,13 @@ class BaseCardGameBoard(BaseBoard):
         hand_kwargs: dict = None,
         min_total_players: int = 1,
         max_total_players: int = 4,
+        debug: bool = False,
     ):
         super().__init__(
             *players,
             min_total_players=min_total_players,
             max_total_players=max_total_players,
+            debug=debug,
         )
 
         self.draw_pile: BaseDeck = None
@@ -44,6 +46,15 @@ class BaseCardGameBoard(BaseBoard):
             self.hand_kwargs = {}
 
         self.create_draw_pile(draw_pile)
+
+        self.debug_attr_list.extend([
+            'draw_pile',
+            'discard_piles',
+            'total_discard_pile',
+            'initial_hand_size',
+            'hand_kwargs',
+            'is_passing',
+        ])
 
     # CREATE FUNCTIONS #######################################################
     def create_draw_pile(self, draw_pile: BaseDeck):
@@ -130,6 +141,7 @@ class BaseCardGameBoard(BaseBoard):
             output.append('Partida ainda não começou!\n')
 
         # INFORMAÇÕES GERAIS
+        output.append(self.show_board_debug())
         output.append(self.show_board_turn())
         output.append(self.show_board_winner())
         output.append(self.show_board_draw_pile())
@@ -153,13 +165,10 @@ class BaseCardGameBoard(BaseBoard):
 
         return output_text
 
-    def show_board_turn(self):
-        return f'Rodada: {self.turn}'
-
-    def show_board_draw_pile(self):
+    def show_board_draw_pile(self) -> str:
         return f'Pilha de Compra: {len(self.draw_pile)} carta(s)'
 
-    def show_board_discard_piles(self):
+    def show_board_discard_piles(self) -> str:
         peek_discard_piles = ', '.join((
             str(discard_pile.peek()[0]) if discard_pile else 'Vazia'
             for discard_pile in self.discard_piles
