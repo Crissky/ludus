@@ -46,7 +46,7 @@ class PlayButton:
 
     def __str__(self) -> str:
         return f'{self.text}'
-    
+
     def __repr__(self) -> str:
         text = ','.join(f'{k}={v}' for k, v in self.callback_data.items())
         return (
