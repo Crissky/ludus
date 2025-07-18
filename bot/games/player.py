@@ -9,7 +9,7 @@ from bot.games.hands.hand import BaseHand
 class Player:
     def __init__(
         self,
-        player_id: str = None,
+        player_id: Union[int, str] = None,
         name: str = None,
         user: User = None,
         hand: BaseHand = None,
@@ -19,14 +19,22 @@ class Player:
             raise ValueError('player_id e name ou user devem ser informados.')
 
         if player_id and name:
+            if not isinstance(player_id, (int, str)):
+                raise TypeError('player_id precisa ser do tipo int ou str.')
+            if not isinstance(name, str):
+                raise TypeError('name precisa ser do tipo str.')
             self.id = str(player_id)
             self.name = name
         else:
+            if not isinstance(user, User):
+                raise TypeError('user precisa ser do tipo User.')
             self.id = str(user.id)
             self.name = user.name
 
         if hand is None:
             hand = BaseHand()
+        elif not isinstance(hand, BaseHand):
+            raise TypeError('hand precisa ser do tipo BaseHand.')
         self.hand = hand
 
         if not isinstance(message_id, (int, type(None))):
