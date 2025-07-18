@@ -10,10 +10,10 @@ from bot.games.structure.stack import Stack
 class BaseDeck:
     def __init__(
         self,
-        names: Names = None,
-        suits: Suits = None,
+        names: Type[Names] = None,
+        suits: Type[Suits] = None,
         quantities: dict = None,
-        shuffle: bool = True,
+        is_shuffle: bool = True,
         total_decks: int = 1,
     ):
         """Se names ou suits for None, o deck será vazio.
@@ -43,6 +43,9 @@ class BaseDeck:
 
         self.names = names
         self.suits = suits
+        self.quantities = quantities
+        self.is_shuffle = is_shuffle
+        self.total_decks = total_decks
         self.card_stack = Stack()
         if (
             quantities is None and
@@ -58,7 +61,21 @@ class BaseDeck:
         else:
             raise TypeError(
                 f'Combinação inválida de '
-                f'names ({type(names)}) e suits ({type(suits)}).'
+                f'names ({type(names)}) e suits ({type(suits)}). '
+                'names precisa ser um subclasse de Names e '
+                'suits precisa ser um subclasse de Suits '
+                'ou ambos None.'
+            )
+
+        if not isinstance(is_shuffle, bool):
+            raise TypeError(
+                f'is_shuffle precisa ser um booleano, não {type(is_shuffle)}.'
+            )
+
+        if not isinstance(quantities, dict) and quantities is not None:
+            raise TypeError(
+                f'quantities precisa ser um dicionário ou None, '
+                f'não {type(quantities)}.'
             )
 
         if not isinstance(total_decks, int):
@@ -83,7 +100,7 @@ class BaseDeck:
             for _ in range(card_qty * total_decks):
                 self.card_stack.push(Card(name, suit))
 
-        if shuffle is True:
+        if is_shuffle is True:
             self.shuffle()
 
     def __bool__(self) -> bool:

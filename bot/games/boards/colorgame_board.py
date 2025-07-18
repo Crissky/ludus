@@ -14,7 +14,7 @@ class ColorsGameBoard(BaseCardGameBoard):
     DESCRIPTION: str = None
 
     def __init__(self, *players: Player, debug: bool = False):
-        draw_pile = ColorDeck(shuffle=False)
+        draw_pile = ColorDeck(is_shuffle=False)
         super().__init__(
             draw_pile,
             *players,

@@ -257,7 +257,7 @@ if __name__ == '__main__':
     p3 = Player(player_id='0003', name='Player 3')
     p4 = Player(player_id='0004', name='Player 4')
 
-    deck = RoyalDeck(shuffle=False)
+    deck = RoyalDeck(is_shuffle=False)
 
     board = BaseCardGameBoard(
         deck,

@@ -13,7 +13,11 @@ class TestDeck(unittest.TestCase):
         Este método é chamado antes de cada método de teste.
         """
 
-        self.deck = BaseDeck(names=RoyalNames, suits=RoyalSuits, shuffle=False)
+        self.deck = BaseDeck(
+            names=RoyalNames,
+            suits=RoyalSuits,
+            is_shuffle=False
+        )
         self.empty_deck = BaseDeck()
         self.card_last = Card(RoyalNames.ACE, RoyalSuits.CLUBS)
         self.card0 = Card(RoyalNames.KING, RoyalSuits.SPADES)
@@ -39,7 +43,7 @@ class TestDeck(unittest.TestCase):
             RoyalNames,
             RoyalSuits,
             quantities=quantities,
-            shuffle=False
+            is_shuffle=False
         )
 
         self.assertEqual(len(deck), len(RoyalNames))
@@ -66,7 +70,7 @@ class TestDeck(unittest.TestCase):
             RoyalNames,
             RoyalSuits,
             quantities=quantities,
-            shuffle=False
+            is_shuffle=False
         )
 
         self.assertEqual(len(deck), len(RoyalSuits))
@@ -93,7 +97,7 @@ class TestDeck(unittest.TestCase):
             RoyalNames,
             RoyalSuits,
             quantities=quantities,
-            shuffle=False
+            is_shuffle=False
         )
 
         self.assertEqual(len(deck), 1)
@@ -107,7 +111,7 @@ class TestDeck(unittest.TestCase):
         Deve criar uma card para cada combinação de Name x Suit
         """
 
-        deck = BaseDeck(names=RoyalNames, suits=RoyalSuits, shuffle=False)
+        deck = BaseDeck(names=RoyalNames, suits=RoyalSuits, is_shuffle=False)
         self.assertEqual(len(deck), len(RoyalNames) * len(RoyalSuits))
 
     def test_init_no_names_suits(self):
@@ -116,9 +120,9 @@ class TestDeck(unittest.TestCase):
         Deve criar um deck vazio.
         """
 
-        deck1 = BaseDeck(shuffle=False)
-        deck2 = BaseDeck(names=RoyalNames, shuffle=False)
-        deck3 = BaseDeck(suits=RoyalSuits, shuffle=False)
+        deck1 = BaseDeck(is_shuffle=False)
+        deck2 = BaseDeck(names=RoyalNames, is_shuffle=False)
+        deck3 = BaseDeck(suits=RoyalSuits, is_shuffle=False)
         self.assertEqual(len(deck1), 0)
         self.assertEqual(len(deck2), 0)
         self.assertEqual(len(deck3), 0)
@@ -148,6 +152,106 @@ class TestDeck(unittest.TestCase):
         items = list(self.empty_deck)
         msg = "Expected an empty iteration for an empty deck"
         self.assertEqual(len(items), 0, msg)
+
+    def test_init_name_invalid1(self):
+        """
+        Teste se o método __init__ do BaseDeck lança um TypeError quando
+        names não é uma subclasse de Names.
+        """
+
+        msg_error = 'issubclass() arg 1 must be a class'
+        with self.assertRaises(TypeError) as context:
+            BaseDeck(names=1, suits=RoyalSuits)
+
+        self.assertEqual(str(context.exception), msg_error)
+
+    def test_init_name_invalid2(self):
+        """
+        Teste se o método __init__ do BaseDeck lança um TypeError quando
+        names não é uma subclasse de Names.
+        """
+
+        msg_error = (
+            "Combinação inválida de names (<class 'type'>) e "
+            "suits (<class 'enum.EnumMeta'>). "
+            "names precisa ser um subclasse de Names e "
+            "suits precisa ser um subclasse de Suits ou ambos None."
+        )
+        with self.assertRaises(TypeError) as context:
+            BaseDeck(names=int, suits=RoyalSuits)
+
+        self.assertEqual(str(context.exception), msg_error)
+
+    def test_init_suit_invalid1(self):
+        """
+        Teste se o método __init__ do BaseDeck lança um TypeError quando
+        suits não é uma subclasse de Suits.
+        """
+
+        msg_error = 'issubclass() arg 1 must be a class'
+        with self.assertRaises(TypeError) as context:
+            BaseDeck(names=RoyalNames, suits=1)
+
+        self.assertEqual(str(context.exception), msg_error)
+
+    def test_init_suit_invalid2(self):
+        """
+        Teste se o método __init__ do BaseDeck lança um TypeError quando
+        suits não é uma subclasse de Suits.
+        """
+
+        msg_error = (
+            "Combinação inválida de names (<class 'enum.EnumMeta'>) e "
+            "suits (<class 'type'>). "
+            "names precisa ser um subclasse de Names e "
+            "suits precisa ser um subclasse de Suits ou ambos None."
+        )
+        with self.assertRaises(TypeError) as context:
+            BaseDeck(names=RoyalNames, suits=int)
+
+        self.assertEqual(str(context.exception), msg_error)
+
+    def test_init_quantities_invalid(self):
+        """
+        Teste se o método __init__ do BaseDeck lança um TypeError quando
+        quantities não é um dicionário.
+        """
+
+        msg_error = (
+            "quantities precisa ser um dicionário ou None, não <class 'int'>."
+        )
+        with self.assertRaises(TypeError) as context:
+            BaseDeck(quantities=1)
+
+        self.assertEqual(str(context.exception), msg_error)
+
+    def test_init_is_shuffle_invalid(self):
+        """
+        Teste se o método __init__ do BaseDeck lança um TypeError quando
+        is_shuffle não é um bool.
+        """
+
+        msg_error = "is_shuffle precisa ser um booleano, não <class 'int'>."
+        with self.assertRaises(TypeError) as context:
+            BaseDeck(is_shuffle=1)
+
+        self.assertEqual(str(context.exception), msg_error)
+
+    def test_init_total_decks_invalid(self):
+        """
+        Teste se o método __init__ do BaseDeck lança um TypeError quando
+        total_decks não é um int ou é um valor menor que 1.
+        """
+
+        msg_error1 = "total_decks precisa ser maior que 0, não 0."
+        msg_error2 = "total_decks precisa ser um inteiro, não <class 'str'>."
+        with self.assertRaises(ValueError) as context1:
+            BaseDeck(total_decks=0)
+        with self.assertRaises(TypeError) as context2:
+            BaseDeck(total_decks='1')
+
+        self.assertEqual(str(context1.exception), msg_error1)
+        self.assertEqual(str(context2.exception), msg_error2)
 
     def test_bool(self):
         """
