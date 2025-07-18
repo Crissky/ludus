@@ -9,6 +9,13 @@ class Report:
         turn: int,
         player: Player = None,
     ):
+        if not isinstance(action, str):
+            raise TypeError('action precisa ser uma string.')
+        if not isinstance(turn, int):
+            raise TypeError('turn precisa ser um inteiro.')
+        if not isinstance(player, Player) and player is not None:
+            raise TypeError('player precisa ser um Player ou None.')
+
         self.action = action
         self.turn = turn
         self.player = player
