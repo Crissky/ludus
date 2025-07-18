@@ -1,6 +1,6 @@
 from collections.abc import Generator
 from itertools import product
-from typing import List, Union
+from typing import List, Type, Union
 
 from bot.games.cards.card import Card
 from bot.games.enums.card import Names, Suits
@@ -15,6 +15,7 @@ class BaseDeck:
         quantities: dict = None,
         is_shuffle: bool = True,
         total_decks: int = 1,
+        card_class: Type[Card] = Card
     ):
         """Se names ou suits for None, o deck será vazio.
 
@@ -46,6 +47,7 @@ class BaseDeck:
         self.quantities = quantities
         self.is_shuffle = is_shuffle
         self.total_decks = total_decks
+        self.card_class = card_class
         self.card_stack = Stack()
         if (
             quantities is None and
@@ -87,6 +89,12 @@ class BaseDeck:
                 f'total_decks precisa ser maior que 0, não {total_decks}.'
             )
 
+        if not issubclass(card_class, Card):
+            raise TypeError(
+                f'card_class precisa ser um subclasse de Card, '
+                f'não {type(card_class)}.'
+            )
+
         for name, suit in names_suits:
             name_suit_qty = quantities.get((name, suit))
             name_qty = quantities.get(name)
@@ -98,7 +106,7 @@ class BaseDeck:
             else:
                 card_qty = suit_qty
             for _ in range(card_qty * total_decks):
-                self.card_stack.push(Card(name, suit))
+                self.card_stack.push(card_class(name, suit))
 
         if is_shuffle is True:
             self.shuffle()

@@ -253,6 +253,32 @@ class TestDeck(unittest.TestCase):
         self.assertEqual(str(context1.exception), msg_error1)
         self.assertEqual(str(context2.exception), msg_error2)
 
+    def test_init_card_class_invalid1(self):
+        """
+        Teste se o método __init__ do BaseDeck lança um TypeError quando
+        card_class não é uma subclasse de Card.
+        """
+
+        msg_error = 'issubclass() arg 1 must be a class'
+        with self.assertRaises(TypeError) as context:
+            BaseDeck(card_class=1)
+
+        self.assertEqual(str(context.exception), msg_error)
+
+    def test_init_card_class_invalid2(self):
+        """
+        Teste se o método __init__ do BaseDeck lança um TypeError quando
+        card_class não é uma subclasse de Card.
+        """
+
+        msg_error = (
+            "card_class precisa ser um subclasse de Card, não <class 'type'>."
+        )
+        with self.assertRaises(TypeError) as context:
+            BaseDeck(card_class=int)
+
+        self.assertEqual(str(context.exception), msg_error)
+
     def test_bool(self):
         """
         Teste se o método __bool__ do BaseDeck retorna True se o deck
