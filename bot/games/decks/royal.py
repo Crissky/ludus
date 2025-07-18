@@ -16,5 +16,10 @@ class RoyalDeck(BaseDeck):
 
 if __name__ == '__main__':
     deck = RoyalDeck(is_shuffle=False, total_decks=1)
+    logging.basicConfig(
+        level=logging.DEBUG,
+        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    )
     logging.debug(len(deck))
+    logging.debug(f'Possui 52 cartas? {len(deck) == 52}')
     logging.debug(deck)

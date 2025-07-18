@@ -30,5 +30,10 @@ class ColorDeck(BaseDeck):
 
 if __name__ == '__main__':
     deck = ColorDeck(is_shuffle=False, total_decks=1)
+    logging.basicConfig(
+        level=logging.DEBUG,
+        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    )
     logging.debug(len(deck))
+    logging.debug(f'Possui 108 cartas? {len(deck) == 108}')
     logging.debug(deck)
