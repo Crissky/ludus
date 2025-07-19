@@ -1,4 +1,6 @@
 from bot.games.boards.cardgame_board import BaseCardGameBoard
+from bot.games.cards.scoundrel import ScoundrelCard
+from bot.games.decks.deck import BaseDeck
 from bot.games.decks.scoundrel import ScoundrelDeck
 from bot.games.player import Player
 
@@ -22,3 +24,31 @@ class ScoundrelBoard(BaseCardGameBoard):
             'field',
             'discard_pile',
         ])
+
+    def discard(self, *cards: ScoundrelCard):
+        if len(self.discard_piles) < 2:
+            raise ValueError('Pilha de descarte não existe.')
+
+        pile = self.discard_piles[1]
+        pile.add(*cards)
+
+    def put_field(self, *cards: ScoundrelCard):
+        if len(self.discard_piles) < 1:
+            raise ValueError('Campo não existe.')
+
+        pile = self.discard_piles[0]
+        pile.add(*cards)
+
+    @property
+    def field(self) -> BaseDeck:
+        if self.discard_piles:
+            return self.discard_piles[0]
+        else:
+            return None
+
+    @property
+    def discard_pile(self) -> BaseDeck:
+        if self.discard_piles:
+            return self.discard_piles[1]
+        else:
+            return None
