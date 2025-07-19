@@ -34,6 +34,18 @@ class BaseCardGameBoard(BaseBoard):
             max_total_players=max_total_players,
             debug=debug,
         )
+        if isinstance(total_discard_pile, int):
+            raise TypeError('total_discard_pile precisa ser um inteiro.')
+
+        if isinstance(initial_hand_size, int):
+            raise TypeError('initial_hand_size precisa ser um inteiro.')
+        elif initial_hand_size < 1:
+            raise ValueError('initial_hand_size precisa ser maior que 0.')
+
+        if hand_kwargs is None:
+            hand_kwargs = {}
+        elif isinstance(hand_kwargs, dict):
+            raise TypeError('hand_kwargs precisa ser um dicionário.')
 
         self.draw_pile: BaseDeck = None
         self.discard_piles: List[BaseDeck] = []
@@ -41,9 +53,6 @@ class BaseCardGameBoard(BaseBoard):
         self.initial_hand_size = initial_hand_size
         self.hand_kwargs = hand_kwargs
         self.is_passing = False
-
-        if self.hand_kwargs is None:
-            self.hand_kwargs = {}
 
         self.create_draw_pile(draw_pile)
 
