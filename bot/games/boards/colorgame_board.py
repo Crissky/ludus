@@ -19,6 +19,7 @@ class ColorsGameBoard(BaseCardGameBoard):
             draw_pile,
             *players,
             total_discard_pile=1,
+            discard_at_start=True,
             initial_hand_size=7,
             hand_kwargs={},
             min_total_players=2,

@@ -15,6 +15,7 @@ class ScoundrelBoard(BaseCardGameBoard):
             draw_pile,
             *players,
             total_discard_pile=2,
+            discard_at_start=False,
             initial_hand_size=4,
             hand_kwargs={'max_size': 4},
             min_total_players=1,

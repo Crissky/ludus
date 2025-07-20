@@ -22,6 +22,7 @@ class BaseCardGameBoard(BaseBoard):
         draw_pile: BaseDeck,
         *players: Player,
         total_discard_pile: int = 1,
+        discard_at_start: bool = True,
         initial_hand_size: int = 7,
         hand_kwargs: dict = None,
         min_total_players: int = 1,
@@ -37,6 +38,9 @@ class BaseCardGameBoard(BaseBoard):
         if not isinstance(total_discard_pile, int):
             raise TypeError('total_discard_pile precisa ser um inteiro.')
 
+        if not isinstance(discard_at_start, bool):
+            raise TypeError('discard_at_start precisa ser um booleano.')
+
         if not isinstance(initial_hand_size, int):
             raise TypeError('initial_hand_size precisa ser um inteiro.')
         elif initial_hand_size < 1:
@@ -50,6 +54,7 @@ class BaseCardGameBoard(BaseBoard):
         self.draw_pile: BaseDeck = None
         self.discard_piles: List[BaseDeck] = []
         self.total_discard_pile = total_discard_pile
+        self.discard_at_start = discard_at_start
         self.initial_hand_size = initial_hand_size
         self.hand_kwargs = hand_kwargs
         self.is_passing = False
@@ -60,6 +65,7 @@ class BaseCardGameBoard(BaseBoard):
             'draw_pile',
             'discard_piles',
             'total_discard_pile',
+            'discard_at_start',
             'initial_hand_size',
             'hand_kwargs',
             'is_passing',
@@ -81,9 +87,10 @@ class BaseCardGameBoard(BaseBoard):
             for _ in range(self.total_discard_pile)
         ]
 
-        for discard_pile in self.discard_piles:
-            cards = self.draw()
-            discard_pile.add(*cards)
+        if self.discard_at_start is True:
+            for discard_pile in self.discard_piles:
+                cards = self.draw()
+                discard_pile.add(*cards)
 
     def distribute_cards(self):
         for _ in range(self.initial_hand_size):
