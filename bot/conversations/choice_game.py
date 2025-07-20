@@ -43,7 +43,11 @@ from bot.functions.game import add_game, get_game
 from bot.functions.keyboard import reshape_row_buttons
 from bot.functions.keyboard import get_back_button
 from bot.functions.text import create_text_in_box
-from bot.games.boards import board_factory, get_party_board_list
+from bot.games.boards import (
+    board_factory,
+    get_party_board_list,
+    get_solo_board_list
+)
 from bot.games.boards.board import BaseBoard
 from bot.games.player import Player
 
@@ -102,19 +106,20 @@ async def list_games(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     data = query.data
 
-    text = f'👉 Qual jogo de Grupo você quer jogar, {user_name}?'
+    text = f'👉 Qual jogo você quer jogar, {user_name}?'
     board_list = None
     keyboard_markup = None
     if data == LIST_SINGLE_GAME_CALLBACK_DATA:
-        text = 'Desculpe, mas ainda não temos jogos da categoria "🎯 Solo".'
+        board_list = get_solo_board_list()
     elif data == LIST_DUEL_GAME_CALLBACK_DATA:
         text = 'Desculpe, mas ainda não temos jogos da categoria "⚔️ Duelo".'
     elif data == LIST_PARTY_GAME_CALLBACK_DATA:
         board_list = get_party_board_list()
-        keyboard_markup = get_board_list_keyboard(board_list)
     else:
         text = f'Lista de jogos "{data}" não foi encontrada!!!'
 
+    if board_list:
+        keyboard_markup = get_board_list_keyboard(board_list)
     if board_list is None or keyboard_markup is None:
         await send_alert(
             function_caller='LIST_GAMES()',

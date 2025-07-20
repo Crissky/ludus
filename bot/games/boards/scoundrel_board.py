@@ -6,6 +6,9 @@ from bot.games.player import Player
 
 
 class ScoundrelBoard(BaseCardGameBoard):
+    DISPLAY_NAME: str = 'Scoundrel'
+    DESCRIPTION: str = None
+
     def __init__(self, *players: Player, debug: bool = False):
         draw_pile = ScoundrelDeck(is_shuffle=False)
         super().__init__(
