@@ -1,6 +1,6 @@
 import logging
 
-from bot.games.cards.scoundrel import ScoundrelCard
+from bot.games.cards.scoundrel_card import ScoundrelCard
 from bot.games.decks.deck import BaseDeck
 from bot.games.enums.card import RoyalNames, RoyalSuits
 
