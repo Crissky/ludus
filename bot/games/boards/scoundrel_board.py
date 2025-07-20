@@ -3,6 +3,7 @@ from bot.games.boards.cardgame_board import BaseCardGameBoard
 from bot.games.cards.scoundrel_card import ScoundrelCard
 from bot.games.decks.deck import BaseDeck
 from bot.games.decks.scoundrel import ScoundrelDeck
+from bot.games.enums.command import CallbackKeyEnum, CommandEnum
 from bot.games.player import Player
 
 
@@ -59,7 +60,24 @@ class ScoundrelBoard(BaseCardGameBoard):
             return None
 
     def play(self, player: Player, play_dict: dict):
-        ...
+        result = super().play(player=player, play_dict=play_dict)
+        if isinstance(result, str):
+            return result
+
+        command_str = play_dict[CallbackKeyEnum.COMMAND]
+        command_enum = CommandEnum[command_str]
+        hand_position = play_dict.get(CallbackKeyEnum.HAND_POSITION)
+        player = self.get_player(player)
+
+        if command_enum == CommandEnum.PLAY:
+            card_list = player.peek(hand_position)
+            card = card_list[0] if card_list else None
+            if not isinstance(card, ScoundrelCard):
+                action = f'Carta na posição {hand_position} não encontrada.'
+                return self.add_log(action=action, player=player)
+            if not self.is_playable_card(card=card):
+                action = f'Carta {card} não pode ser jogada.'
+                return self.add_log(action=action, player=player)
 
     def is_playable_card(self, card: ScoundrelCard) -> bool:
         if not isinstance(card, ScoundrelCard):
