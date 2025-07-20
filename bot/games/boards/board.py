@@ -198,7 +198,10 @@ class BaseBoard(ABC):
         elif player is False:
             player = None
 
-        if player is not None and action is not None:
+        if (
+            isinstance(player, (type(None), Player))
+            and isinstance(action, str)
+        ):
             report = Report(
                 action=action,
                 turn=self.turn,
