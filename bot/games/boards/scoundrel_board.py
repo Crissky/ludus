@@ -1,3 +1,4 @@
+from typing import List
 from bot.games.boards.cardgame_board import BaseCardGameBoard
 from bot.games.cards.scoundrel_card import ScoundrelCard
 from bot.games.decks.deck import BaseDeck
@@ -56,3 +57,19 @@ class ScoundrelBoard(BaseCardGameBoard):
             return self.discard_piles[1]
         else:
             return None
+
+    def play(self, player: Player, play_dict: dict):
+        ...
+
+    def is_playable_card(self, card: ScoundrelCard) -> bool:
+        if not isinstance(card, ScoundrelCard):
+            return False
+        else:
+            return True
+
+    def winners(self) -> List[Player]:
+        winners = []
+        if self.hp > 0 and self.draw_pile.is_empty:
+            winners = self.player_list.copy()
+
+        return winners
