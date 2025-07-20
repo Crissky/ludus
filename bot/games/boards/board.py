@@ -193,8 +193,10 @@ class BaseBoard(ABC):
         action: str = None,
         player: Union[Player, bool] = None,
     ) -> str:
-        if (player is None or player is True) and action is not None:
+        if player is True and action is not None:
             player = self.current_player
+        elif player is False:
+            player = None
 
         if player is not None and action is not None:
             report = Report(
