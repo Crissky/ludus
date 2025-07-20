@@ -1,4 +1,4 @@
-from bot.games.cards.flip_card import FlipCard
+from bot.games.cards.flip import FlipCard
 from bot.games.enums.card import (
     ColorNames,
     ColorSuits,
