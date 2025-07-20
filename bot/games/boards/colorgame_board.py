@@ -88,7 +88,7 @@ class ColorsGameBoard(BaseCardGameBoard):
 
         if command_enum == CommandEnum.PLAY:
             card_list = player.peek(hand_position)
-            card = card_list[0]
+            card = card_list[0] if card_list else None
             if not isinstance(card, Card):
                 action = f'Carta na posição {hand_position} não encontrada.'
                 return self.add_log(action=action, player=player)
