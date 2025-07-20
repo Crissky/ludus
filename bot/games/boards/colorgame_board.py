@@ -76,25 +76,14 @@ class ColorsGameBoard(BaseCardGameBoard):
             return super().player_keyboard(player)
 
     def play(self, player: Player, play_dict: dict):
+        result = super().play(player=player, play_dict=play_dict)
+        if isinstance(result, str):
+            return result
+
         command_str = play_dict[CallbackKeyEnum.COMMAND]
         command_enum = CommandEnum[command_str]
-        game_id = play_dict[CallbackKeyEnum.GAME_ID]
         hand_position = play_dict.get(CallbackKeyEnum.HAND_POSITION)
         selected_color_str = play_dict.get(CallbackKeyEnum.SELECTED_COLOR)
-
-        if game_id != self.id:
-            action = f'Jogo inválido: {game_id}'
-            return self.add_log(action=action, player=False)
-        if self.game_over is True:
-            action = f'O jogo de ID: "{game_id}" já terminou.'
-            return self.add_log(action=action, player=False)
-        if player != self.current_player:
-            action = f'NÃO é a vez de {player}.'
-            return self.add_log(action=action, player=False)
-        if not self.player_in_game(player):
-            action = f'{player} não está mais na partida.'
-            return self.add_log(action=action, player=False)
-
         player = self.get_player(player)
 
         if command_enum == CommandEnum.PLAY:
