@@ -109,7 +109,7 @@ class BaseBoard(ABC):
         if self.total_players >= self.max_total_players:
             action = (
                 f'{player} não pode ser adicionado, '
-                f'pois o limite de {self.max_total_players} jogadore(s) '
+                f'pois o limite de {self.max_total_players} jogadores '
                 'já foi atingido.'
             )
 
