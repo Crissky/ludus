@@ -1,7 +1,6 @@
 from typing import List
 from bot.games.boards.cardgame_board import BaseCardGameBoard
 from bot.games.cards.scoundrel_card import ScoundrelCard
-from bot.games.decks.deck import BaseDeck
 from bot.games.decks.scoundrel import ScoundrelDeck
 from bot.games.enums.card import RoyalSuits
 from bot.games.enums.command import CallbackKeyEnum, CommandEnum
