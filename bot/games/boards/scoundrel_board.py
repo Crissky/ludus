@@ -119,7 +119,7 @@ class ScoundrelBoard(BaseCardGameBoard):
     @property
     def power(self) -> int:
         power = 0
-        for card in self.field:
+        for card in reversed(self.field):
             if card.suit == RoyalSuits.DIAMONDS:
                 power = card.value
             elif card.suit in (RoyalSuits.CLUBS, RoyalSuits.SPADES):
