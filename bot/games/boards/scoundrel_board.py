@@ -26,6 +26,7 @@ class ScoundrelBoard(BaseCardGameBoard):
         )
         self.hp = 20
         self.max_hp = 20
+        self.enemy = Player(name='Mestre da Masmorra')
         self.debug_attr_list.extend([
             'hp',
             'max_hp',
@@ -96,6 +97,8 @@ class ScoundrelBoard(BaseCardGameBoard):
         winners = []
         if self.hp > 0 and self.draw_pile.is_empty:
             winners = self.player_list.copy()
+        elif self.hp <= 0:
+            winners = [self.enemy]
 
         return winners
 
