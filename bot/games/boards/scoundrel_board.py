@@ -25,8 +25,10 @@ class ScoundrelBoard(BaseCardGameBoard):
             debug=debug,
         )
         self.hp = 20
+        self.max_hp = 20
         self.debug_attr_list.extend([
             'hp',
+            'max_hp',
             'field',
             'discard_pile',
         ])
