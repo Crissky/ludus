@@ -54,6 +54,18 @@ class ScoundrelBoard(BaseCardGameBoard):
 
         return self.add_log(action=action, player=False)
 
+    def clean_field(self) -> str:
+        quantity = len(self.field)
+        card_list = self.field.draw(quantity=quantity)
+        return self.discard(*card_list)
+
+    def skip_room(self, player: Player) -> str:
+        quantity = len(player.hand)
+        card_list = player.hand.discard(quantity=quantity)
+        self.draw_pile.add_bottom(*card_list)
+        action = f'Carta(s) adicionada ao fim da Pilha de Compra: {card_list}.'
+
+        return self.add_log(action=action, player=False)
 
     def play(self, player: Player, play_dict: dict):
         result = super().play(player=player, play_dict=play_dict)
