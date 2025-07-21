@@ -34,33 +34,26 @@ class ScoundrelBoard(BaseCardGameBoard):
             'discard_pile',
         ])
 
-    def discard(self, *cards: ScoundrelCard):
+    def discard(self, *cards: ScoundrelCard) -> str:
         if len(self.discard_piles) < 2:
             raise ValueError('Pilha de descarte não existe.')
 
         pile = self.discard_piles[1]
         pile.add(*cards)
+        action = f'Carta(s) descartada(s): {cards}.'
 
-    def put_field(self, *cards: ScoundrelCard):
+        return self.add_log(action=action, player=False)
+
+    def put_in_field(self, *cards: ScoundrelCard) -> str:
         if len(self.discard_piles) < 1:
             raise ValueError('Campo não existe.')
 
         pile = self.discard_piles[0]
         pile.add(*cards)
+        action = f'Carta(s) adicionada(s) ao campo: {cards}.'
 
-    @property
-    def field(self) -> BaseDeck:
-        if self.discard_piles:
-            return self.discard_piles[0]
-        else:
-            return None
+        return self.add_log(action=action, player=False)
 
-    @property
-    def discard_pile(self) -> BaseDeck:
-        if self.discard_piles:
-            return self.discard_piles[1]
-        else:
-            return None
 
     def play(self, player: Player, play_dict: dict):
         result = super().play(player=player, play_dict=play_dict)
