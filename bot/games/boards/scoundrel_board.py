@@ -3,6 +3,7 @@ from bot.games.boards.cardgame_board import BaseCardGameBoard
 from bot.games.cards.scoundrel_card import ScoundrelCard
 from bot.games.decks.deck import BaseDeck
 from bot.games.decks.scoundrel import ScoundrelDeck
+from bot.games.enums.card import RoyalSuits
 from bot.games.enums.command import CallbackKeyEnum, CommandEnum
 from bot.games.player import Player
 
@@ -93,3 +94,18 @@ class ScoundrelBoard(BaseCardGameBoard):
             winners = self.player_list.copy()
 
         return winners
+
+    @property
+    def field(self) -> ScoundrelDeck:
+        if self.discard_piles:
+            return self.discard_piles[0]
+        else:
+            return None
+
+    @property
+    def discard_pile(self) -> ScoundrelDeck:
+        if self.discard_piles:
+            return self.discard_piles[1]
+        else:
+            return None
+
