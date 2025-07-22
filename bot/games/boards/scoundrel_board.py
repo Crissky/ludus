@@ -78,14 +78,12 @@ class ScoundrelBoard(BaseCardGameBoard):
         player = self.get_player(player)
 
         if command_enum == CommandEnum.PLAY:
-            card_list = player.peek(hand_position)
-            card = card_list[0] if card_list else None
-            if not isinstance(card, ScoundrelCard):
-                action = f'Carta na posição {hand_position} não encontrada.'
-                return self.add_log(action=action, player=player)
-            if not self.is_playable_card(card=card):
-                action = f'Carta {card} não pode ser jogada.'
-                return self.add_log(action=action, player=player)
+            result = self.check_play_card(
+                player=player,
+                hand_position=hand_position
+            )
+            if isinstance(result, str):
+                return result
 
     def is_playable_card(self, card: ScoundrelCard) -> bool:
         if not isinstance(card, ScoundrelCard):

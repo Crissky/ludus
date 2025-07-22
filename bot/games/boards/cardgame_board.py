@@ -143,6 +143,16 @@ class BaseCardGameBoard(BaseBoard):
         pile = self.discard_piles[index_pile]
         pile.add(*cards)
 
+    def check_play_card(self, player: Player, hand_position: int) -> str:
+        card_list = player.peek(hand_position)
+        card = card_list[0] if card_list else None
+        if not isinstance(card, Card):
+            action = f'Carta na posição {hand_position} não encontrada.'
+            return self.add_log(action=action, player=player)
+        if not self.is_playable_card(card=card):
+            action = f'Carta {card} não pode ser jogada.'
+            return self.add_log(action=action, player=player)
+
     # SHOW BOARD FUNCTIONS ###################################################
     def show_board(
         self,
