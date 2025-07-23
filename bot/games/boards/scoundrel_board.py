@@ -129,8 +129,8 @@ class ScoundrelBoard(BaseCardGameBoard):
             if card.is_weapon:
                 ...
             elif card.is_potion:
-                value = card.value
                 if self.healed_this_turn is False:
+                    value = card.value
                     return self.heal_hp(value)
                 else:
                     action = 'HP já foi curado nesta sala.'
