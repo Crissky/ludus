@@ -46,10 +46,10 @@ class ScoundrelBoard(BaseCardGameBoard):
         return self.add_log(action=action, player=False)
 
     def put_in_field(self, *cards: ScoundrelCard) -> str:
-        if len(self.discard_piles) < 1:
+        if self.field_pile is None:
             raise ValueError('Campo não existe.')
 
-        pile = self.discard_piles[0]
+        pile = self.field_pile
         pile.add(*cards)
         action = f'Carta(s) adicionada(s) ao campo: {cards}.'
 
