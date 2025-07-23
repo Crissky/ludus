@@ -27,6 +27,7 @@ class ScoundrelBoard(BaseCardGameBoard):
         self.hp = 20
         self.max_hp = 20
         self.enemy = Player(name='Mestre da Masmorra')
+        self.healed_this_turn = False
         self.debug_attr_list.extend([
             'hp',
             'max_hp',
@@ -64,6 +65,21 @@ class ScoundrelBoard(BaseCardGameBoard):
         card_list = player.hand.discard(quantity=quantity)
         self.draw_pile.add_bottom(*card_list)
         action = f'Carta(s) adicionada ao fim da Pilha de Compra: {card_list}.'
+
+        return self.add_log(action=action, player=False)
+
+    def damage_hp(self, value: int) -> str:
+        self.hp -= value
+        self.hp = max(self.hp, 0)
+        action = f'Perdeu {value} pontos de dano.'
+
+        return self.add_log(action=action, player=False)
+
+    def heal_hp(self, value: int) -> str:
+        self.hp += value
+        self.hp = min(self.hp, self.max_hp)
+        self.healed_this_turn = True
+        action = f'Recuperou {value} pontos de vida.'
 
         return self.add_log(action=action, player=False)
 
