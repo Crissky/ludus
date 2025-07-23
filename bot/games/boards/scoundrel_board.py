@@ -118,9 +118,6 @@ class ScoundrelBoard(BaseCardGameBoard):
                 raise ValueError(f'Mais de uma carta jogada. {card_list}.')
 
             card: ScoundrelCard = card_list[0]
-            self.put_in_field(card)
-            action = f'jogou {card}.'
-            self.add_log(action=action, player=player)
 
             if self.game_over:
                 action = 'Ganhou o jogo.' if self.hp > 0 else 'Foi derrotado.'
