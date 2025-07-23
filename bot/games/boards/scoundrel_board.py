@@ -83,6 +83,18 @@ class ScoundrelBoard(BaseCardGameBoard):
 
         return self.add_log(action=action, player=False)
 
+    def next_turn(self, player: Player, skip: bool = False):
+        self.turn += 1
+        if skip is False:
+            action = f'Está indo para a sala {self.turn}.'
+        else:
+            action = 'Evitou a sala.'
+
+        self.add_log(action=action, player=player)
+
+    def show_board_turn(self) -> str:
+        return f'Sala: {self.turn}'
+
     def play(self, player: Player, play_dict: dict):
         result = super().play(player=player, play_dict=play_dict)
         if isinstance(result, str):
