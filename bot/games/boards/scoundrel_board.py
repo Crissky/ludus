@@ -127,6 +127,7 @@ class ScoundrelBoard(BaseCardGameBoard):
                 self.clean_field()
                 self.put_in_field(card)
             elif card.is_potion is True:
+                self.discard(card)
                 if self.healed_this_turn is False:
                     value = card.value
                     return self.heal_hp(value)
