@@ -101,6 +101,19 @@ class ScoundrelBoard(BaseCardGameBoard):
             if isinstance(result, str):
                 return result
 
+            card_list = player.play(hand_position)
+            if len(card_list) > 1:
+                raise ValueError(f'Mais de uma carta jogada. {card_list}.')
+
+            card: ScoundrelCard = card_list[0]
+            self.put_in_field(card)
+            action = f'jogou {card}.'
+            self.add_log(action=action, player=player)
+
+            if self.game_over:
+                action = 'Ganhou o jogo.' if self.hp > 0 else 'Foi derrotado.'
+                return self.add_log(action=action, player=player)
+
     def is_playable_card(self, card: ScoundrelCard) -> bool:
         if not isinstance(card, ScoundrelCard):
             return False
