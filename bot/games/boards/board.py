@@ -6,6 +6,7 @@ from typing import Callable, Iterable, List, Union
 from telegram import InlineKeyboardMarkup
 
 from bot.games.constants.text import NORMAL_SECTION_HEAD_1, TEXT_SEPARATOR_1  # noqa
+from bot.games.enums.command import CallbackKeyEnum
 from bot.games.log import Log
 from bot.games.play_keyboard import InviteKeyBoard, PlayKeyBoard
 from bot.games.player import Player
@@ -299,7 +300,20 @@ class BaseBoard(ABC):
 
     @abstractmethod
     def play(self, player: Player, play_dict: dict):
-        ...
+        game_id = play_dict[CallbackKeyEnum.GAME_ID]
+
+        if game_id != self.id:
+            action = f'Jogo inválido: {game_id}.'
+            return self.add_log(action=action, player=False)
+        if self.game_over is True:
+            action = f'O jogo de ID: "{game_id}" já terminou.'
+            return self.add_log(action=action, player=False)
+        if player != self.current_player:
+            action = f'NÃO é a vez de {player}.'
+            return self.add_log(action=action, player=False)
+        if not self.player_in_game(player):
+            action = f'{player} não está mais na partida.'
+            return self.add_log(action=action, player=False)
 
     @abstractmethod
     def winners(self) -> List[Player]:
