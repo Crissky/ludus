@@ -56,8 +56,8 @@ class ScoundrelBoard(BaseCardGameBoard):
         return self.add_log(action=action, player=False)
 
     def clean_field(self) -> str:
-        quantity = len(self.field)
-        card_list = self.field.draw(quantity=quantity)
+        quantity = len(self.field_pile)
+        card_list = self.field_pile.draw(quantity=quantity)
         return self.discard(*card_list)
 
     def skip_room(self, player: Player) -> str:
@@ -161,7 +161,7 @@ class ScoundrelBoard(BaseCardGameBoard):
         return winners
 
     @property
-    def field(self) -> ScoundrelDeck:
+    def field_pile(self) -> ScoundrelDeck:
         if self.discard_piles:
             return self.discard_piles[0]
         else:
@@ -177,7 +177,7 @@ class ScoundrelBoard(BaseCardGameBoard):
     @property
     def power(self) -> int:
         power = 0
-        for card in reversed(self.field):
+        for card in reversed(self.field_pile):
             if card.suit == RoyalSuits.DIAMONDS:
                 power = card.value
             elif card.suit in (RoyalSuits.CLUBS, RoyalSuits.SPADES):
