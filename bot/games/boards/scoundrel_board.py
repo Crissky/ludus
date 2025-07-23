@@ -124,7 +124,6 @@ class ScoundrelBoard(BaseCardGameBoard):
                 return self.add_log(action=action, player=player)
 
             if card.is_weapon is True:
-                card = self.field_pile.draw()
                 self.clean_field()
                 self.put_in_field(card)
             elif card.is_potion is True:
