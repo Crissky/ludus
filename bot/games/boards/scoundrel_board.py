@@ -36,10 +36,10 @@ class ScoundrelBoard(BaseCardGameBoard):
         ])
 
     def discard(self, *cards: ScoundrelCard) -> str:
-        if len(self.discard_piles) < 2:
+        if self.discard_pile is None:
             raise ValueError('Pilha de descarte não existe.')
 
-        pile = self.discard_piles[1]
+        pile = self.discard_pile
         pile.add(*cards)
         action = f'Carta(s) descartada(s): {cards}.'
 
