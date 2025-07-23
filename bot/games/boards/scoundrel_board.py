@@ -126,18 +126,18 @@ class ScoundrelBoard(BaseCardGameBoard):
                 action = 'Ganhou o jogo.' if self.hp > 0 else 'Foi derrotado.'
                 return self.add_log(action=action, player=player)
 
-            if card.is_weapon:
+            if card.is_weapon is True:
                 card = self.field_pile.draw()
                 self.clean_field()
                 self.put_in_field(card)
-            elif card.is_potion:
+            elif card.is_potion is True:
                 if self.healed_this_turn is False:
                     value = card.value
                     return self.heal_hp(value)
                 else:
                     action = 'HP já foi curado nesta sala.'
                     return self.add_log(action=action, player=False)
-            elif card.is_enemy:
+            elif card.is_enemy is True:
                 enemy_power = card.value
                 player_power = self.power
                 damage_value = enemy_power - player_power
