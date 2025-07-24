@@ -239,7 +239,20 @@ class ScoundrelBoard(BaseCardGameBoard):
             self.next_turn(player=player, skip=True)
 
         if self.game_over:
-            action = 'Ganhou o jogo.' if self.hp > 0 else 'Foi derrotado.'
+            winners_list = self.winners()
+            winner = winners_list[0] if winners_list else None
+            player = self.player
+            if winner is None:
+                action = 'Empate.'
+            elif winner == self.enemy:
+                action = 'Foi derrotado!'
+                if self.hp <= 0:
+                    action += ' HP zerado.'
+                elif self.can_play is False:
+                    action += ' Não há mais jogadas válidas.'
+            elif winner == player and player is not None:
+                action = 'Ganhou o jogo!!!'
+
             return self.add_log(action=action, player=player)
 
     def is_playable_card(self, card: ScoundrelCard) -> bool:
