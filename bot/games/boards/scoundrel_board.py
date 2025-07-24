@@ -12,7 +12,7 @@ class ScoundrelBoard(BaseCardGameBoard):
     DESCRIPTION: str = None
 
     def __init__(self, *players: Player, debug: bool = False):
-        draw_pile = ScoundrelDeck(is_shuffle=False)
+        draw_pile = ScoundrelDeck(is_shuffle=True)
         super().__init__(
             draw_pile,
             *players,
