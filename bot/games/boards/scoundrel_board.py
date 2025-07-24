@@ -183,6 +183,9 @@ class ScoundrelBoard(BaseCardGameBoard):
             if card.is_weapon is True:
                 self.clean_field()
                 self.put_in_field(card)
+                weapon_power = card.value
+                action = f'Equipou arma de {weapon_power} pontos de poder.'
+                self.add_log(action=action, player=player)
             elif card.is_potion is True:
                 self.discard(card)
                 if self.healed_this_turn is False:
