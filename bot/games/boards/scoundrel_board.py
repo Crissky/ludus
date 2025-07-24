@@ -312,9 +312,9 @@ class ScoundrelBoard(BaseCardGameBoard):
         for card in reversed(self.field_pile):
             if card.suit == RoyalSuits.DIAMONDS:
                 power = card.value
-            elif card.suit in (RoyalSuits.CLUBS, RoyalSuits.SPADES):
-                if card.value > power:
-                    power = 0
+            # elif card.suit in (RoyalSuits.CLUBS, RoyalSuits.SPADES):
+            #     if card.value > power:
+            #         power = 0
 
         return power
 
