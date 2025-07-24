@@ -328,3 +328,21 @@ class ScoundrelBoard(BaseCardGameBoard):
                     return True
 
         return False
+
+    @property
+    def can_play(self) -> bool:
+        player = self.player
+        if player is None:
+            return False
+
+        total_cards = len(player)
+        playable_card = any((self.is_playable_card(c) for c in player))
+
+        if total_cards == 1:
+            return True
+        elif total_cards == 4 and self.skipped_room is False:
+            return True
+        elif total_cards > 1 and playable_card is True:
+            return True
+        else:
+            return False
