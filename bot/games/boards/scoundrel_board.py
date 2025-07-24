@@ -106,8 +106,40 @@ class ScoundrelBoard(BaseCardGameBoard):
 
         self.add_log(action=action, player=player)
 
+    def show_board(self, player: Player = None) -> str:
+        general_info_list = [self.show_board_field_pile]
+        return super().show_board(
+            player=player,
+            general_info_list=general_info_list
+        )
+
     def show_board_turn(self) -> str:
-        return f'Sala: {self.turn}'
+        return f'HP: {self.hp}/{self.max_hp}\nSala: {self.turn}'
+
+    def show_board_winner(self) -> str:
+        winners = self.winners()
+        text = None
+        if winners:
+            text = 'Vencedor: '
+            winner = winners[0]
+            text += str(winner)
+
+        return text
+
+    def show_board_discard_piles(self) -> str:
+        discard_pile = self.discard_pile
+        text = discard_pile.peek()[0] if discard_pile else 'Vazia'
+
+        return f'Pilha de Descarte: {text}'
+
+    def show_board_field_pile(self) -> str:
+        text = 'Vazio'
+        field_pile = self.field_pile
+        if field_pile:
+            text = ', '.join(c.text for c in reversed(field_pile))
+
+        return f'Campo: {text}'
+
 
     def play(self, player: Player, play_dict: dict):
         result = super().play(player=player, play_dict=play_dict)
