@@ -9,7 +9,9 @@ class CallbackKeyEnum(Enum):
 
 
 class CommandEnum(Enum):
+    CLOSE = 'close'
     DRAW = 'draw'
+    HELP = 'help'
     PASS = 'pass'
     PLAY = 'play'
     SELECT_COLOR = 'select color'

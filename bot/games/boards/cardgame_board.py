@@ -263,6 +263,13 @@ class BaseCardGameBoard(BaseBoard):
             )
         keyboard.add_button(button)
 
+        close_button = self.close_button
+        help_button = self.help_button
+        if isinstance(close_button, PlayButton):
+            keyboard.add_button(close_button)
+        if isinstance(help_button, PlayButton):
+            keyboard.add_button(help_button)
+
         return keyboard
 
     @abstractmethod
@@ -276,6 +283,24 @@ class BaseCardGameBoard(BaseBoard):
     @abstractmethod
     def winners(self) -> List[Player]:
         ...
+
+    @property
+    def close_button(self) -> PlayButton:
+        return PlayButton(
+            text='🚪Sair',
+            game=self,
+            command=CommandEnum.CLOSE,
+            group=2
+        )
+
+    @property
+    def help_button(self) -> PlayButton:
+        return PlayButton(
+            text='Ajuda❓',
+            game=self,
+            command=CommandEnum.HELP,
+            group=2
+        )
 
 
 if __name__ == '__main__':
