@@ -168,17 +168,18 @@ class ScoundrelBoard(BaseCardGameBoard):
             )
             if isinstance(result, str):
                 return result
+            if len(player) == 1:
+                action = 'Não pode jogar com uma carta. Mude de Sala.'
+                return self.add_log(action=action, player=False)
 
-            card_list = player.play(hand_position)
-            if len(card_list) > 1:
-                raise ValueError(f'Mais de uma carta jogada. {card_list}.')
+            play_card_list = player.play(hand_position)
+            if len(play_card_list) > 1:
+                player.add_card(*play_card_list)
+                raise ValueError(
+                    f'Mais de uma carta jogada. {play_card_list}.'
+                )
 
-            card: ScoundrelCard = card_list[0]
-
-            if self.game_over:
-                action = 'Ganhou o jogo.' if self.hp > 0 else 'Foi derrotado.'
-                return self.add_log(action=action, player=player)
-
+            card: ScoundrelCard = play_card_list[0]
             if card.is_weapon is True:
                 self.clean_field()
                 self.put_in_field(card)
@@ -186,11 +187,12 @@ class ScoundrelBoard(BaseCardGameBoard):
                 self.discard(card)
                 if self.healed_this_turn is False:
                     value = card.value
-                    return self.heal_hp(value)
+                    self.heal_hp(value)
                 else:
-                    action = 'HP já foi curado nesta sala.'
-                    return self.add_log(action=action, player=False)
+                    action = 'HP já foi curado nesta Sala.'
+                    self.add_log(action=action, player=False)
             elif card.is_enemy is True:
+                self.put_in_field(card)
                 enemy_power = card.value
                 player_power = self.power
                 damage_value = enemy_power - player_power
@@ -198,7 +200,42 @@ class ScoundrelBoard(BaseCardGameBoard):
                     action = f'Ataque contra {card} foi bem sucedido.'
                     self.add_log(action=action, player=player)
                 if damage_value > 0:
-                    return self.damage_hp(damage_value)
+                    self.damage_hp(damage_value)
+
+            if len(player) < 4:
+                self.is_passing = False
+            else:
+                self.is_passing = True
+        elif command_enum == CommandEnum.DRAW:
+            if len(player) > 1:
+                action = 'Você só pode passar a Sala com uma carta.'
+                return self.add_log(action=action, player=False)
+
+            quantity = player.hand.max_size - len(player)
+            card_list = self.draw_pile.draw(quantity=quantity)
+            player.hand.add_card(*card_list)
+            self.next_turn(player=player, skip=False)
+        elif command_enum == CommandEnum.PASS:
+            if len(player) != 4:
+                action = f'Só pode passar a Sala com 4 cartas.'
+                return self.add_log(action=action, player=False)
+            if self.skipped_room is True:
+                action = 'Não pode passar a Sala duas vezes seguidas.'
+                return self.add_log(action=action, player=False)
+
+            quantity = len(player.hand)
+            max_size = player.hand.max_size
+
+            discard_list = player.discard(quantity=quantity)
+            self.discard_pile.add_bottom(*discard_list)
+
+            card_list = self.draw_pile.draw(quantity=max_size)
+            player.hand.add_card(*card_list)
+            self.next_turn(player=player, skip=True)
+
+        if self.game_over:
+            action = 'Ganhou o jogo.' if self.hp > 0 else 'Foi derrotado.'
+            return self.add_log(action=action, player=player)
 
     def is_playable_card(self, card: ScoundrelCard) -> bool:
         player = self.player
