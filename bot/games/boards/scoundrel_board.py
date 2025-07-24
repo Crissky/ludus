@@ -94,10 +94,15 @@ class ScoundrelBoard(BaseCardGameBoard):
 
     def next_turn(self, player: Player, skip: bool = False):
         self.turn += 1
+        self.skipped_room = False
+        self.is_passing = True
+        self.healed_this_turn = False
         if skip is False:
-            action = f'Está indo para a sala {self.turn}.'
+            action = f'Está indo para a Sala {self.turn}.'
         else:
-            action = 'Evitou a sala.'
+            self.skipped_room = True
+            self.is_passing = False
+            action = 'Evitou a Sala.'
 
         self.add_log(action=action, player=player)
 
