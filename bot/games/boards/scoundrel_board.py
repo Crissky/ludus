@@ -41,9 +41,10 @@ class ScoundrelBoard(BaseCardGameBoard):
 
         pile = self.discard_pile
         pile.add(*cards)
-        action = f'Carta(s) descartada(s): {cards}.'
-
-        return self.add_log(action=action, player=False)
+        if cards:
+            cards_str = ', '.join((card.text for card in cards))
+            action = f'Carta(s) descartada(s): {cards_str}.'
+            return self.add_log(action=action, player=False)
 
     def put_in_field(self, *cards: ScoundrelCard) -> str:
         if self.field_pile is None:
@@ -51,7 +52,8 @@ class ScoundrelBoard(BaseCardGameBoard):
 
         pile = self.field_pile
         pile.add(*cards)
-        action = f'Carta(s) adicionada(s) ao campo: {cards}.'
+        cards_str = ', '.join((card.text for card in cards))
+        action = f'Carta(s) adicionada(s) ao campo: {cards_str}.'
 
         return self.add_log(action=action, player=False)
 
