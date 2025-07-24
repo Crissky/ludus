@@ -8,7 +8,7 @@ class ScoundrelCard(Card):
         if self.name == RoyalNames.ACE:
             return 14
         else:
-            return super().value
+            return super().value + 1
 
     @property
     def suit_value(self):
