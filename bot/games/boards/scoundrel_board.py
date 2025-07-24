@@ -200,13 +200,16 @@ class ScoundrelBoard(BaseCardGameBoard):
                     return self.damage_hp(damage_value)
 
     def is_playable_card(self, card: ScoundrelCard) -> bool:
+        player = self.player
         field_pile = self.field_pile
         field_card_list = field_pile.peek() if field_pile else []
         field_card: ScoundrelCard = (
             field_card_list[0] if field_card_list else None
         )
 
-        if not isinstance(card, ScoundrelCard):
+        if isinstance(player, Player) and len(player) == 1:
+            return False
+        elif not isinstance(card, ScoundrelCard):
             return False
         elif card.is_weapon is True or card.is_potion is True:
             return True
