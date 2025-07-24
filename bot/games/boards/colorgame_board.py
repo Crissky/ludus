@@ -102,7 +102,7 @@ class ColorsGameBoard(BaseCardGameBoard):
                     f'Mais de uma carta jogada. {play_card_list}.'
                 )
 
-            card = card_list[0]
+            card = play_card_list[0]
             self.discard(card)
             action = f'jogou {card}.'
             self.add_log(action=action, player=player)
