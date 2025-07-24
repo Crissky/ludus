@@ -213,7 +213,7 @@ class ScoundrelBoard(BaseCardGameBoard):
                 self.is_passing = True
         elif command_enum == CommandEnum.DRAW:
             if len(player) > 1:
-                action = 'Você só pode passar a Sala com uma carta.'
+                action = 'Você só pode passar a Sala com uma carta na mão.'
                 return self.add_log(action=action, player=False)
 
             quantity = player.hand.max_size - len(player)
@@ -222,7 +222,7 @@ class ScoundrelBoard(BaseCardGameBoard):
             self.next_turn(player=player, skip=False)
         elif command_enum == CommandEnum.PASS:
             if len(player) != 4:
-                action = f'Só pode passar a Sala com 4 cartas.'
+                action = f'Só pode pular a Sala com 4 cartas na mão.'
                 return self.add_log(action=action, player=False)
             if self.skipped_room is True:
                 action = 'Não pode passar a Sala duas vezes seguidas.'
