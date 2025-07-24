@@ -92,6 +92,9 @@ class Player:
             discard_index=discard_index
         )
 
+    def discard(self, index: int = -1, quantity: int = 1) -> List[Card]:
+        return self.hand.discard(index=index, quantity=quantity)
+
     def play(self, *indexes: int) -> List[Card]:
         return self.hand.play(*indexes)
 
