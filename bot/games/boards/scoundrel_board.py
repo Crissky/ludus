@@ -140,6 +140,15 @@ class ScoundrelBoard(BaseCardGameBoard):
 
         return f'Campo: {text}'
 
+    def player_keyboard(self, player: Player) -> PlayKeyBoard:
+        keyboard = super().player_keyboard(player=player)
+        if isinstance(player, Player) and len(player) > 1:
+            for index, button in enumerate(keyboard.play_button_list):
+                if button.command == CommandEnum.DRAW:
+                    keyboard.play_button_list.pop(index)
+                    break
+
+        return keyboard
 
     def play(self, player: Player, play_dict: dict):
         result = super().play(player=player, play_dict=play_dict)
