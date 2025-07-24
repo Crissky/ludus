@@ -281,9 +281,21 @@ class ScoundrelBoard(BaseCardGameBoard):
 
     def winners(self) -> List[Player]:
         winners = []
-        if self.hp > 0 and self.draw_pile.is_empty:
+        player = self.player
+
+        if self.is_started is False:
+            winners = []
+        elif player is None:
+            winners = []
+        elif (
+            self.hp > 0 and
+            self.draw_pile.is_empty is True and
+            self.enemy_in_room is False
+        ):
             winners = self.player_list.copy()
         elif self.hp <= 0:
+            winners = [self.enemy]
+        elif self.can_play is False:
             winners = [self.enemy]
 
         return winners
