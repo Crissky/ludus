@@ -36,7 +36,10 @@ class ScoundrelBoard(BaseCardGameBoard):
             'enemy',
             'skipped_room',
             'healed_this_turn',
+            # 'field_pile',
             'discard_pile',
+            'player',
+            'power',
         ])
 
     def discard(self, *cards: ScoundrelCard) -> str:
@@ -193,6 +196,10 @@ class ScoundrelBoard(BaseCardGameBoard):
             return self.discard_piles[1]
         else:
             return None
+
+    @property
+    def player(self) -> Player:
+        return self.player_list[0] if self.player_list else None
 
     @property
     def power(self) -> int:
