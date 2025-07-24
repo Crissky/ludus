@@ -27,11 +27,15 @@ class ScoundrelBoard(BaseCardGameBoard):
         self.hp = 20
         self.max_hp = 20
         self.enemy = Player(player_id='0000000000', name='Mestre da Masmorra')
+        self.skipped_room = False
+        self.is_passing = True
         self.healed_this_turn = False
         self.debug_attr_list.extend([
             'hp',
             'max_hp',
-            'field',
+            'enemy',
+            'skipped_room',
+            'healed_this_turn',
             'discard_pile',
         ])
 
