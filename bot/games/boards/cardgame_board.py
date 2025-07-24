@@ -217,6 +217,9 @@ class BaseCardGameBoard(BaseBoard):
         self.is_started = True
         self.turn = 1
 
+        action = 'A partida começou.'
+        return self.add_log(action=action, player=False)
+
     def player_keyboard(self, player: Player) -> PlayKeyBoard:
         if self.is_started is not True:
             return self.invite_keyboard
