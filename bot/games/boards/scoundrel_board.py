@@ -4,6 +4,7 @@ from bot.games.cards.scoundrel_card import ScoundrelCard
 from bot.games.decks.scoundrel import ScoundrelDeck
 from bot.games.enums.card import RoyalSuits
 from bot.games.enums.command import CallbackKeyEnum, CommandEnum
+from bot.games.play_keyboard import PlayKeyBoard
 from bot.games.player import Player
 
 
