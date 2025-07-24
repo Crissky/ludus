@@ -262,3 +262,14 @@ class ScoundrelBoard(BaseCardGameBoard):
                     power = 0
 
         return power
+
+    @property
+    def enemy_in_room(self) -> bool:
+        player = self.player
+        if isinstance(player, Player):
+            card_list: List[ScoundrelCard] = list(player)
+            for card in card_list:
+                if card.is_enemy is True:
+                    return True
+
+        return False
