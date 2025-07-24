@@ -43,6 +43,7 @@ async def play_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
     logging.info(f'Play Dict: {play_dict}')
     # logging.info(f'{game}')
     play_response = game.play(player=player, play_dict=play_dict)
+
     if isinstance(play_response, str):
         await send_alert(
             function_caller='PLAY_GAME()',
