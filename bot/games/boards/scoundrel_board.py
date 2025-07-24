@@ -195,14 +195,16 @@ class ScoundrelBoard(BaseCardGameBoard):
                     action = 'HP já foi curado nesta Sala.'
                     self.add_log(action=action, player=False)
             elif card.is_enemy is True:
-                self.put_in_field(card)
                 enemy_power = card.value
                 player_power = self.power
                 damage_value = enemy_power - player_power
+                self.put_in_field(card)
                 if player_power >= enemy_power:
-                    action = f'Ataque contra {card} foi bem sucedido.'
+                    action = f'Derrotou {card} sem receber dano.'
                     self.add_log(action=action, player=player)
                 if damage_value > 0:
+                    action = f'Derrotou {card}, mas recebeu dano.'
+                    self.add_log(action=action, player=player)
                     self.damage_hp(damage_value)
 
             if len(player) < 4:
