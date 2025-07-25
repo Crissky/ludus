@@ -84,7 +84,7 @@ class ScoundrelBoard(BaseCardGameBoard):
     def damage_hp(self, value: int) -> str:
         self.hp -= value
         self.hp = max(self.hp, 0)
-        action = f'Perdeu {value} pontos de dano.'
+        action = f'Perdeu {value} pontos de vida.'
 
         return self.add_log(action=action, player=False)
 
