@@ -67,7 +67,7 @@ class ScoundrelBoard(BaseCardGameBoard):
 
         return self.add_log(action=action, player=False)
 
-    def clean_field(self) -> str:
+    def clear_field(self) -> str:
         quantity = len(self.field_pile)
         card_list = self.field_pile.draw(quantity=quantity)
         return self.discard(*card_list)
@@ -183,7 +183,7 @@ class ScoundrelBoard(BaseCardGameBoard):
 
             card: ScoundrelCard = play_card_list[0]
             if card.is_weapon is True:
-                self.clean_field()
+                self.clear_field()
                 self.put_in_field(card)
                 weapon_power = card.value
                 action = f'Equipou arma de {weapon_power} pontos de poder.'
