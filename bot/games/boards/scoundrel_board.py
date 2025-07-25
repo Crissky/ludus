@@ -1,6 +1,7 @@
 from typing import List
 from bot.games.boards.cardgame_board import BaseCardGameBoard
 from bot.games.cards.scoundrel import ScoundrelCard
+from bot.games.decks.deck import BaseDeck
 from bot.games.decks.scoundrel import ScoundrelDeck
 from bot.games.enums.card import RoyalSuits
 from bot.games.enums.command import CallbackKeyEnum, CommandEnum
@@ -303,14 +304,14 @@ class ScoundrelBoard(BaseCardGameBoard):
         return winners
 
     @property
-    def field_pile(self) -> ScoundrelDeck:
+    def field_pile(self) -> BaseDeck:
         if self.discard_piles:
             return self.discard_piles[0]
         else:
             return None
 
     @property
-    def discard_pile(self) -> ScoundrelDeck:
+    def discard_pile(self) -> BaseDeck:
         if self.discard_piles:
             return self.discard_piles[1]
         else:
