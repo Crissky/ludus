@@ -3,7 +3,7 @@ from bot.games.boards.cardgame_board import BaseCardGameBoard
 from bot.games.cards.scoundrel import ScoundrelCard
 from bot.games.decks.deck import BaseDeck
 from bot.games.decks.scoundrel import ScoundrelDeck
-from bot.games.enums.card import RoyalSuits
+from bot.games.enums.card import RoyalNames, RoyalSuits
 from bot.games.enums.command import CallbackKeyEnum, CommandEnum
 from bot.games.play_keyboard import PlayKeyBoard
 from bot.games.player import Player
@@ -12,7 +12,84 @@ from bot.games.player import Player
 class ScoundrelBoard(BaseCardGameBoard):
     DISPLAY_NAME: str = 'Scoundrel'
     DESCRIPTION: str = (
-        'DESCRIÇÃO E REGRAS DO SCOUNDREL PRECISAM SER DEFINIDAS.'
+        '    SCOUNDREL, um jogo solo de cartas criado por '
+        'ZACH GAGE e KURT BIEG.\n\n'
+
+        '✅ RESUMO RÁPIDO:\n'
+        f'  {RoyalSuits.CLUBS.value}/{RoyalSuits.SPADES.value} Inimigo: '
+        'Encontre ou fuja, vida igual ao valor/poder.\n'
+        f'  {RoyalSuits.DIAMONDS.value} Arma: '
+        'Equipar, dano recebido reduzido ao atacar.\n'
+        f'  {RoyalSuits.HEARTS.value} Poção: '
+        'Cura pelo valor/poder da carta, uma por sala.\n'
+        '  🫴Passar: Evita sala, cartas para o fundo do deck.\n'
+        '  🩸Vida inicial: 20.\n\n'
+
+        '    O baralho padrão não tem os Curingas e nem as seguintes cartas '
+        'dos naipes vermelhos '
+        f'({RoyalSuits.DIAMONDS.value} e {RoyalSuits.HEARTS.value}): '
+        'cartas de figuras '
+        f'({RoyalNames.JACK.value}, {RoyalNames.QUEEN.value} e '
+        f'{RoyalNames.KING.value}) e nem os Ases ({RoyalNames.ACE.value}) '
+        '— total de 44 cartas.\n\n'
+
+        '🎯OBJETIVO:\n'
+        '    O jogador começa com 20 pontos de vida (HP) e deve '
+        'derrotar todos os inimigos das Salas das Masmorra. No entanto, '
+        'se o HP do jogador chegar a zero, ele perderá a partida.\n\n'
+
+        '🃏TIPOS DE CARTAS:\n'
+        f'    As cartas pretas (26 cartas), Espadas {RoyalSuits.SPADES.value} '
+        f'e Paus {RoyalSuits.CLUBS.value}, são cartas de inimigos. Os seus '
+        'poderes variam entres 2 e 10 para as cartas de números, '
+        f'{RoyalNames.JACK.value}=11, '
+        f'{RoyalNames.QUEEN.value}=12, '
+        f'{RoyalNames.KING.value}=13 e '
+        f'{RoyalNames.ACE.value}=14.\n'
+        f'    As cartas de Ouros {RoyalSuits.DIAMONDS.value} (9 cartas) são '
+        'armas. Os seus poderes variam entres 2 e 10 (cartas de números).\n'
+        f'    As cartas de Copas {RoyalSuits.HEARTS.value} (9 cartas) são '
+        'poções. Os seus poderes variam entres 2 e 10 (cartas de números).\n\n'
+
+        '🎮ESTRUTURA DO JOGO E RODADAS:\n'
+        '    Cada turno começa revelando cartas até formar uma Sala com '
+        '4 cartas viradas para cima.\n'
+        '    Você pode optar por fugir da sala, devolvendo todas as 4 cartas '
+        'para o fundo do baralho. No entanto, não pode fugir duas vezes '
+        'seguidas, nem depois de já ter jogado alguma carta na sala atual.\n'
+        '    Se permanecer, deve escolher 3 das 4 cartas nessa sala, uma a '
+        'uma. A carta restante forma a primeira carta da próxima sala.\n\n'
+
+        '💥AÇÕES DE CADA TIPO DE CARTA:\n'
+        f'    Armas ({RoyalSuits.DIAMONDS.value}) — Ao escolher uma arma, '
+        'você a equipa (adiciona ao campo), descartando a anterior e '
+        'quaisquer inimigos que estavam sobre ela. A arma passa a valer '
+        'para combates futuros.\n'
+        f'    Poções ({RoyalSuits.HEARTS.value}) — Ao escolher uma poção, '
+        'você bebe e descarta, recuperando vida de acordo com o poder até '
+        '20 pontos de vida total. Só pode usar uma por sala; qualquer '
+        'outra poção é descartada sem efeito.\n'
+        f'    Inimigos ({RoyalSuits.SPADES.value} e {RoyalSuits.CLUBS.value}) '
+        '— ao escolher um inimigo você o adiciona ao campo. '
+        'No entanto, caso o inimigo tenha poder maior que o poder do inimigo '
+        'mais recente no campo, todas as cartas no campo são descartadas '
+        'antes do inimigo escolhido ser adicionando ao campo. Quando um '
+        'inimigo é adicionado ao campo, um combate é iniciado. Você pode '
+        'lutar com as mãos, sofrendo dano igual ao poder do inimigo, '
+        'ou usar a arma equipada, se disponível. Se usar arma: subtraia o '
+        'valor do poder da arma do valor do poder do inimigo; '
+        'se o resultado for zero ou menor, você não leva dano. '
+        'Se for positivo, leva apenas essa diferença.\n'
+        f'    Exemplo: arma = 5, inimigo = {RoyalNames.JACK.value}(11): '
+        'dano = 11 - 5 = 6.\n'
+        '    Após vencer um inimigo, a arma só poderá ser usada contra '
+        'inimigos com poder igual ou inferior ao poder do último inimigo '
+        'derrotado.\n\n'
+
+        '🧩 CONDIÇÕES DE VITÓRIA:\n'
+        '    O jogo termina se você perder toda a vida (0 HP) (DERROTA) ou se '
+        'derrotar todas as cartas de inimigos da Masmorra (VITÓRIA).'
+
     )
 
     def __init__(self, *players: Player, debug: bool = False):
