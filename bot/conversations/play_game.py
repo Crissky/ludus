@@ -12,7 +12,7 @@ from bot.functions.chat import (
     send_private_message,
     update_all_player_messages
 )
-from bot.functions.game import get_game
+from bot.functions.game import get_game, remove_game
 from bot.games.buttons.play_button import PlayButton
 from bot.games.enums.command import CallbackKeyEnum, CommandEnum
 from bot.games.player import Player
@@ -21,13 +21,14 @@ from bot.games.player import Player
 @logging_basic_infos
 async def close_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
     logging.info('CLOSE_GAME()')
-    # user = update.effective_user
+    user_name = update.effective_user.name
     message_id = update.effective_message.id
     query = update.callback_query
     data = query.data
     play_dict = PlayButton.callback_data_to_dict(data)
     game_id = play_dict[CallbackKeyEnum.GAME_ID]
     game = get_game(game_id=game_id, context=context)
+    function_caller = 'CLOSE_GAME()'
 
     if game is None:
         text = 'Partida não encontrada.'
@@ -38,11 +39,35 @@ async def close_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
             message_id=message_id,
         )
 
+    remove_game(game_id=game_id, context=context)
+
     await send_alert(
-        function_caller='CLOSE_GAME()',
+        function_caller=function_caller,
         query=query,
-        text='BOTÃO DE FECHAR AINDA NÃO FOI IMPLEMENTADO.'
+        text='Encerrando jogo...'
     )
+
+    text = 'Jogo {game_name} ({game_id}) foi encerrado por {user_name}.'
+    for player in game.player_list:
+        logging.info(f'  Atualizando mensagem de {player} em {game.id}.')
+
+        new_text = text.format(
+            game_name=game.DISPLAY_NAME,
+            game_id=game.id,
+            user_name=user_name,
+        )
+        if callable(game.play_text_formatter):
+            new_text = game.play_text_formatter(new_text)
+        user_id = player.user_id
+        message_id = player.message_id
+        await edit_message_text(
+            function_caller=function_caller,
+            new_text=new_text,
+            context=context,
+            message_id=message_id,
+            chat_id=user_id,
+            user_id=user_id,
+        )
 
 
 @logging_basic_infos
@@ -80,7 +105,6 @@ async def help_game(update: Update, context: ContextTypes.DEFAULT_TYPE):
         text=text,
         user_id=user_id,
         markdown=False,
-        # reply_markup=reply_markup,
     )
 
 
