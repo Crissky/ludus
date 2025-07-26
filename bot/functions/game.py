@@ -23,3 +23,11 @@ def get_game(
     game_dict = context.bot_data.get('games', {})
 
     return game_dict.get(game_id)
+
+
+def remove_game(game_id: Union[int, str], context: ContextTypes.DEFAULT_TYPE):
+    if isinstance(game_id, str):
+        game_id = int(game_id)
+
+    game_dict = context.bot_data.get('games', {})
+    game_dict.pop(game_id, None)
