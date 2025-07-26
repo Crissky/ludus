@@ -342,7 +342,7 @@ class ScoundrelBoard(BaseCardGameBoard):
                 elif self.can_play is False:
                     action += ' Não há mais jogadas válidas.'
             elif winner == player and player is not None:
-                action = 'Ganhou o jogo!!!'
+                action = f'Parabens, {player.name}! Você ganhou o jogo!!!'
 
             return self.add_log(action=action, player=player)
 
