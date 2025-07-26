@@ -169,9 +169,10 @@ class ScoundrelBoard(BaseCardGameBoard):
         self.hp += value
         self.hp = min(self.hp, self.max_hp)
         self.healed_this_turn = True
+        player = self.player
         action = f'Recuperou {value} pontos de vida.'
 
-        return self.add_log(action=action, player=False)
+        return self.add_log(action=action, player=player)
 
     def next_turn(self, player: Player, skip: bool = False):
         self.turn += 1
