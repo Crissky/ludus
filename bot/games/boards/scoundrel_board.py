@@ -323,7 +323,7 @@ class ScoundrelBoard(BaseCardGameBoard):
             max_size = player.hand.max_size
 
             discard_list = player.discard(quantity=quantity)
-            self.discard_pile.add_bottom(*discard_list)
+            self.draw_pile.add_bottom(*discard_list)
 
             card_list = self.draw_pile.draw(quantity=max_size)
             player.hand.add_card(*card_list)
