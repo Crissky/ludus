@@ -35,21 +35,21 @@ class ScoundrelBoard(BaseCardGameBoard):
 
         '🎯OBJETIVO:\n'
         '    O jogador começa com 20 pontos de vida (HP) e deve '
-        'derrotar todos os inimigos das Salas das Masmorra. No entanto, '
+        'derrotar todos os Inimigos das Salas das Masmorra. No entanto, '
         'se o HP do jogador chegar a zero, ele perderá a partida.\n\n'
 
         '🃏TIPOS DE CARTAS:\n'
         f'    As cartas pretas (26 cartas), Espadas {RoyalSuits.SPADES.value} '
-        f'e Paus {RoyalSuits.CLUBS.value}, são cartas de inimigos. Os seus '
+        f'e Paus {RoyalSuits.CLUBS.value}, são cartas de Inimigos. Os seus '
         'poderes variam entres 2 e 10 para as cartas de números, '
         f'{RoyalNames.JACK.value}=11, '
         f'{RoyalNames.QUEEN.value}=12, '
         f'{RoyalNames.KING.value}=13 e '
         f'{RoyalNames.ACE.value}=14.\n'
         f'    As cartas de Ouros {RoyalSuits.DIAMONDS.value} (9 cartas) são '
-        'armas. Os seus poderes variam entres 2 e 10 (cartas de números).\n'
+        'Armas. Os seus poderes variam entres 2 e 10 (cartas de números).\n'
         f'    As cartas de Copas {RoyalSuits.HEARTS.value} (9 cartas) são '
-        'poções. Os seus poderes variam entres 2 e 10 (cartas de números).\n\n'
+        'Poções. Os seus poderes variam entres 2 e 10 (cartas de números).\n\n'
 
         '🎮ESTRUTURA DO JOGO E RODADAS:\n'
         '    Cada turno começa revelando cartas até formar uma Sala com '
@@ -61,34 +61,34 @@ class ScoundrelBoard(BaseCardGameBoard):
         'uma. A carta restante forma a primeira carta da próxima sala.\n\n'
 
         '💥AÇÕES DE CADA TIPO DE CARTA:\n'
-        f'    Armas ({RoyalSuits.DIAMONDS.value}) — Ao escolher uma arma, '
+        f'    Armas ({RoyalSuits.DIAMONDS.value}) — Ao escolher uma Arma, '
         'você a equipa (adiciona ao campo), descartando a anterior e '
-        'quaisquer inimigos que estavam sobre ela. A arma passa a valer '
+        'quaisquer Inimigos que estavam sobre ela. A Arma passa a valer '
         'para combates futuros.\n'
-        f'    Poções ({RoyalSuits.HEARTS.value}) — Ao escolher uma poção, '
+        f'    Poções ({RoyalSuits.HEARTS.value}) — Ao escolher uma Poção, '
         'você bebe e descarta, recuperando vida de acordo com o poder até '
         '20 pontos de vida total. Só pode usar uma por sala; qualquer '
-        'outra poção é descartada sem efeito.\n'
+        'outra Poção é descartada sem efeito.\n'
         f'    Inimigos ({RoyalSuits.SPADES.value} e {RoyalSuits.CLUBS.value}) '
-        '— ao escolher um inimigo você o adiciona ao campo. '
-        'No entanto, caso o inimigo tenha poder maior que o poder do inimigo '
+        '— ao escolher um Inimigo você o adiciona ao campo. '
+        'No entanto, caso o Inimigo tenha poder maior que o poder do Inimigo '
         'mais recente no campo, todas as cartas no campo são descartadas '
-        'antes do inimigo escolhido ser adicionando ao campo. Quando um '
-        'inimigo é adicionado ao campo, um combate é iniciado. Você pode '
-        'lutar com as mãos, sofrendo dano igual ao poder do inimigo, '
-        'ou usar a arma equipada, se disponível. Se usar arma: subtraia o '
-        'valor do poder da arma do valor do poder do inimigo; '
+        'antes do Inimigo escolhido ser adicionando ao campo. Quando um '
+        'Inimigo é adicionado ao campo, um combate é iniciado. Você pode '
+        'lutar com as mãos, sofrendo dano igual ao poder do Inimigo, '
+        'ou usar a Arma equipada, se disponível. Se usar Arma: subtraia o '
+        'valor do poder da Arma do valor do poder do Inimigo; '
         'se o resultado for zero ou menor, você não leva dano. '
         'Se for positivo, leva apenas essa diferença.\n'
-        f'    Exemplo: arma = 5, inimigo = {RoyalNames.JACK.value}(11): '
+        f'    Exemplo: Arma = 5, Inimigo = {RoyalNames.JACK.value}(11): '
         'dano = 11 - 5 = 6.\n'
-        '    Após vencer um inimigo, a arma só poderá ser usada contra '
-        'inimigos com poder igual ou inferior ao poder do último inimigo '
+        '    Após vencer um Inimigo, a Arma só poderá ser usada contra '
+        'Inimigos com poder igual ou inferior ao poder do último Inimigo '
         'derrotado.\n\n'
 
         '🧩 CONDIÇÕES DE VITÓRIA:\n'
         '    O jogo termina se você perder toda a vida (0 HP) (DERROTA) ou se '
-        'derrotar todas as cartas de inimigos da Masmorra (VITÓRIA).'
+        'derrotar todas as cartas de Inimigos da Masmorra (VITÓRIA).'
 
     )
 
@@ -264,7 +264,7 @@ class ScoundrelBoard(BaseCardGameBoard):
                 self.clear_field()
                 self.put_in_field(card)
                 weapon_power = card.value
-                action = f'Equipou arma de {weapon_power} pontos de poder.'
+                action = f'Equipou Arma de {weapon_power} pontos de poder.'
                 self.add_log(action=action, player=player)
             elif card.is_potion is True:
                 self.discard(card)
