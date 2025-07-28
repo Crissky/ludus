@@ -248,19 +248,9 @@ class BaseCardGameBoard(BaseBoard):
         if self.is_passing is True:
             # Se is_passing é True, significa que o jogador já comprou nessa
             # rodada e não pode comprar novamente.
-            button = PlayButton(
-                text='🫴Passar',
-                game=self,
-                command=CommandEnum.PASS,
-                group=1
-            )
+            button = self.pass_button
         else:
-            button = PlayButton(
-                text='🫴Comprar',
-                game=self,
-                command=CommandEnum.DRAW,
-                group=1
-            )
+            button = self.draw_button
         keyboard.add_button(button)
 
         close_button = self.close_button
@@ -283,6 +273,24 @@ class BaseCardGameBoard(BaseBoard):
     @abstractmethod
     def winners(self) -> List[Player]:
         ...
+
+    @property
+    def pass_button(self) -> PlayButton:
+        return PlayButton(
+            text='🫴Passar',
+            game=self,
+            command=CommandEnum.PASS,
+            group=1
+        )
+
+    @property
+    def draw_button(self):
+        return PlayButton(
+            text='🫴Comprar',
+            game=self,
+            command=CommandEnum.DRAW,
+            group=1
+        )
 
     @property
     def close_button(self) -> PlayButton:
