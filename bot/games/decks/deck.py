@@ -106,7 +106,7 @@ class BaseDeck:
             else:
                 card_qty = suit_qty
             for _ in range(card_qty * total_decks):
-                self.card_stack.push(card_class(name, suit))
+                self.card_stack.push(card_class(name=name, suit=suit))
 
         if is_shuffle is True:
             self.shuffle()
