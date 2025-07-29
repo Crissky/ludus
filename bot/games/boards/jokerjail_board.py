@@ -1,5 +1,6 @@
 from bot.games.boards.cardgame_board import BaseCardGameBoard
 from bot.games.cards.card import Card
+from bot.games.decks.deck import BaseDeck
 from bot.games.decks.royal import RoyalDeck
 from bot.games.enums.card import FullRoyalNames, FullRoyalSuits
 from bot.games.player import Player
@@ -34,6 +35,23 @@ class JokerJailBoard(BaseCardGameBoard):
             'joker_indexes',
         ])
 
-    # TODO
     def create_discard_pile(self):
-        ...
+        self.discard_piles = [
+            BaseDeck()
+            for _ in range(self.total_discard_pile)
+        ]
+
+        for _ in range(6):
+            for index in self.wall_indexes:
+                wall_pile = self.discard_piles[index]
+                cards = self.draw()
+                wall_pile.add(*cards)
+
+        for _ in range(2):
+            for index in self.corner_indexes:
+                corner_pile = self.discard_piles[index]
+                cards = self.draw()
+                corner_pile.add(*cards)
+
+        joker_pile = self.discard_piles[self.joker_indexes[0]]
+        joker_pile.add(self.joker_card)
