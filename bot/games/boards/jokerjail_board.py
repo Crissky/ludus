@@ -1,11 +1,11 @@
-from bot.games.boards.board import BaseBoard
+from bot.games.boards.cardgame_board import BaseCardGameBoard
 from bot.games.cards.card import Card
 from bot.games.decks.royal import RoyalDeck
 from bot.games.enums.card import FullRoyalNames, FullRoyalSuits
 from bot.games.player import Player
 
 
-class JokerJailBoard(BaseBoard):
+class JokerJailBoard(BaseCardGameBoard):
     def __init__(self, *players: Player, debug: bool = False):
         draw_pile = RoyalDeck(is_shuffle=True)
         super().__init__(
