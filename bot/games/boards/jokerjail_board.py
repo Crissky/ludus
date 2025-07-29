@@ -25,13 +25,13 @@ class JokerJailBoard(BaseCardGameBoard):
         )
         self.wall_indexes = [1, 3, 5, 7]
         self.corner_indexes = [0, 2, 6, 8]
-        self.central_indexes = [4]
+        self.joker_indexes = [4]
 
         self.debug_attr_list.extend([
             'joker_card',
             'wall_indexes',
             'corner_indexes',
-            'central_indexes',
+            'joker_indexes',
         ])
 
     # TODO
