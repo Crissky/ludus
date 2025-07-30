@@ -1,8 +1,11 @@
 from bot.games.boards.cardgame_board import BaseCardGameBoard
+from bot.games.buttons.play_button import PlayButton
 from bot.games.cards.card import Card
 from bot.games.decks.deck import BaseDeck
 from bot.games.decks.royal import RoyalDeck
 from bot.games.enums.card import FullRoyalNames, FullRoyalSuits
+from bot.games.enums.command import CallbackKeyEnum, CommandEnum
+from bot.games.play_keyboard import PlayKeyBoard
 from bot.games.player import Player
 
 
@@ -55,3 +58,44 @@ class JokerJailBoard(BaseCardGameBoard):
 
         joker_pile = self.discard_piles[self.joker_indexes[0]]
         joker_pile.add(self.joker_card)
+
+    def player_keyboard(self, player: Player) -> PlayKeyBoard:
+        if self.is_started is not True:
+            return self.invite_keyboard
+
+        keyboard = PlayKeyBoard(buttons_per_row=3)
+        if player != self.current_player:
+            return keyboard
+        if self.game_over:
+            return keyboard
+
+        for index, pile in enumerate(self.discard_piles):
+            card = None
+            if pile:
+                card = pile.peek(quantity=1)[0]
+
+            text = card.text if card else '❌'
+            callback_data_args = {CallbackKeyEnum.HAND_POSITION.name: index}
+            button = PlayButton(
+                text=text,
+                game=self,
+                command=CommandEnum.PLAY,
+                **callback_data_args
+
+            )
+            keyboard.add_button(button)
+
+        if self.is_passing is True:
+            button = self.pass_button
+        else:
+            button = self.draw_button
+        keyboard.add_button(button)
+
+        close_button = self.close_button
+        help_button = self.help_button
+        if isinstance(close_button, PlayButton):
+            keyboard.add_button(close_button)
+        if isinstance(help_button, PlayButton):
+            keyboard.add_button(help_button)
+
+        return keyboard
