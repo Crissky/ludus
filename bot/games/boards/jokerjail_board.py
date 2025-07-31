@@ -109,6 +109,11 @@ class JokerJailBoard(BaseCardGameBoard):
         command_enum = CommandEnum[command_str]
         discard_position = play_dict.get(CallbackKeyEnum.DISCARD_POSITION)
 
+
+    @property
+    def player(self) -> Player:
+        return self.player_list[0] if self.player_list else None
+
     @property
     def joker_pile(self) -> BaseDeck:
         joker_index = self.joker_indexes[0]
