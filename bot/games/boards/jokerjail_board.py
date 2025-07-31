@@ -115,3 +115,12 @@ class JokerJailBoard(BaseCardGameBoard):
         joker_pile = self.discard_piles[joker_index]
 
         return joker_pile
+
+    @property
+    def joker_in_top(self) -> bool:
+        joker_pile = self.joker_pile
+        if joker_pile.is_empty:
+            return False
+
+        top_card = joker_pile.peek(quantity=1)[0]
+        return top_card == self.joker_card
