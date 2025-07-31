@@ -99,3 +99,12 @@ class JokerJailBoard(BaseCardGameBoard):
             keyboard.add_button(help_button)
 
         return keyboard
+
+    def play(self, player: Player, play_dict: dict):
+        result = super().play(player=player, play_dict=play_dict)
+        if isinstance(result, str):
+            return result
+
+        command_str = play_dict[CallbackKeyEnum.COMMAND]
+        command_enum = CommandEnum[command_str]
+    
