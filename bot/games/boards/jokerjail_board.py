@@ -75,7 +75,7 @@ class JokerJailBoard(BaseCardGameBoard):
                 card = pile.peek(quantity=1)[0]
 
             text = card.text if card else '❌'
-            callback_data_args = {CallbackKeyEnum.HAND_POSITION.name: index}
+            callback_data_args = {CallbackKeyEnum.DISCARD_POSITION.name: index}
             button = PlayButton(
                 text=text,
                 game=self,
@@ -107,4 +107,4 @@ class JokerJailBoard(BaseCardGameBoard):
 
         command_str = play_dict[CallbackKeyEnum.COMMAND]
         command_enum = CommandEnum[command_str]
-    
+        discard_position = play_dict.get(CallbackKeyEnum.DISCARD_POSITION)
