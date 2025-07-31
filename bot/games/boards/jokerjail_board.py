@@ -56,7 +56,7 @@ class JokerJailBoard(BaseCardGameBoard):
                 cards = self.draw()
                 corner_pile.add(*cards)
 
-        joker_pile = self.discard_piles[self.joker_indexes[0]]
+        joker_pile = self.joker_pile
         joker_pile.add(self.joker_card)
 
     def player_keyboard(self, player: Player) -> PlayKeyBoard:
@@ -108,3 +108,10 @@ class JokerJailBoard(BaseCardGameBoard):
         command_str = play_dict[CallbackKeyEnum.COMMAND]
         command_enum = CommandEnum[command_str]
         discard_position = play_dict.get(CallbackKeyEnum.DISCARD_POSITION)
+
+    @property
+    def joker_pile(self) -> BaseDeck:
+        joker_index = self.joker_indexes[0]
+        joker_pile = self.discard_piles[joker_index]
+
+        return joker_pile
