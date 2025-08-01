@@ -1,3 +1,4 @@
+from typing import List
 from bot.games.boards.cardgame_board import BaseCardGameBoard
 from bot.games.buttons.play_button import PlayButton
 from bot.games.cards.card import Card
@@ -109,6 +110,18 @@ class JokerJailBoard(BaseCardGameBoard):
         command_enum = CommandEnum[command_str]
         discard_position = play_dict.get(CallbackKeyEnum.DISCARD_POSITION)
 
+
+    def winners(self) -> List[Player]:
+        winners = []
+        if self.is_started is True:
+            for index in self.wall_indexes:
+                pile = self.discard_piles[index]
+                if pile.is_empty is True and self.joker_in_top is True:
+                    player = self.player
+                    winners.append(player)
+                    break
+
+        return winners
 
     @property
     def player(self) -> Player:
