@@ -209,3 +209,29 @@ class JokerJailBoard(BaseCardGameBoard):
 
         top_card = joker_pile.peek(quantity=1)[0]
         return top_card == self.joker_card
+
+    @property
+    def has_select_black(self) -> bool:
+        for index in self.selected_card_indexes:
+            pile: BaseDeck = self.discard_piles[index]
+            if pile.is_empty is True:
+                continue
+
+            card = pile.peek(quantity=1)[0]
+            if card.is_black is True:
+                return True
+
+        return False
+
+    @property
+    def has_select_red(self) -> bool:
+        for index in self.selected_card_indexes:
+            pile: BaseDeck = self.discard_piles[index]
+            if pile.is_empty is True:
+                continue
+
+            card = pile.peek(quantity=1)[0]
+            if card.is_red is True:
+                return True
+
+        return False
