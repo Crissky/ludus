@@ -3,6 +3,8 @@ import re
 from typing import List, Union
 from bot.functions.enumeration import get_enum_index
 from bot.games.enums.card import (
+    BLACK_SUITS,
+    RED_SUITS,
     WILD_SUITS,
     ColorNames,
     FlipColorNames,
@@ -129,6 +131,14 @@ class Card:
     @property
     def is_wild(self) -> bool:
         return bool(re.search(self.wild_terms, self.suit.name, re.I))
+
+    @property
+    def is_black(self) -> bool:
+        return self.suit in BLACK_SUITS
+
+    @property
+    def is_red(self) -> bool:
+        return self.suit in RED_SUITS
 
     @property
     def number_card_names(self) -> List[Enum]:
