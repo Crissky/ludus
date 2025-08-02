@@ -112,6 +112,46 @@ class JokerJailBoard(BaseCardGameBoard):
         command_enum = CommandEnum[command_str]
         discard_position = play_dict.get(CallbackKeyEnum.DISCARD_POSITION)
 
+        if command_enum == CommandEnum.PLAY:
+            if discard_position >= len(self.discard_piles):
+                action = f'Pilha número {discard_position} não existe.'
+                return self.add_log(action=action, player=False)
+
+            discard_pile: BaseDeck = self.discard_piles[discard_position]
+            card_list = discard_pile.peek(quantity=1)
+            card = card_list[0] if card_list else None
+
+            if discard_position in self.selected_card_indexes:
+                self.selected_card_indexes.remove(discard_position)
+                action = f'Carta {card} foi desselecionada.'
+                return self.add_log(action=action, player=False)
+            elif discard_pile.is_empty is True:
+                action = f'Pilha número {discard_position} está vazia.'
+                return self.add_log(action=action, player=False)
+            elif (
+                discard_position in self.wall_indexes
+                or discard_position in self.corner_indexes
+                or (
+                    discard_position in self.joker_indexes
+                    and self.joker_in_top is False
+                )
+            ):
+                self.selected_card_indexes.append(discard_position)
+                action = f'Carta {card} foi selecionada.'
+                self.add_log(action=action, player=False)
+                return None
+            elif (
+                discard_position in self.joker_indexes
+                and self.joker_in_top is True
+            ):
+                action = f'Carta JOKER {card} não pode ser selecionada.'
+                return self.add_log(action=action, player=False)
+            else:
+                action = (
+                    f'ERRO: Jogada não computada para a carta "{card}" '
+                    f'(discard_position={discard_position}).'
+                )
+                return self.add_log(action=action, player=False)
 
     def winners(self) -> List[Player]:
         winners = []
