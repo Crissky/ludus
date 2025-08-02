@@ -31,12 +31,14 @@ class JokerJailBoard(BaseCardGameBoard):
         self.wall_indexes = [1, 3, 5, 7]
         self.corner_indexes = [0, 2, 6, 8]
         self.joker_indexes = [4]
+        self.selected_card_indexes = []
 
         self.debug_attr_list.extend([
             'joker_card',
             'wall_indexes',
             'corner_indexes',
             'joker_indexes',
+            'selected_card_indexes',
         ])
 
     def create_discard_pile(self):
