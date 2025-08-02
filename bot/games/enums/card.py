@@ -162,3 +162,13 @@ WILD_SUITS = [
     ColorNames.PLUS_ZERO,
     FlipColorNames.PLUS_ZERO,
 ]
+BLACK_SUITS = [
+    RoyalSuits.CLUBS, RoyalSuits.SPADES,
+    FullRoyalSuits.CLUBS, FullRoyalSuits.SPADES, FullRoyalSuits.JOKER,
+    SpanishSuits.CLUBS, SpanishSuits.SWORDS,
+]
+RED_SUITS = [
+    RoyalSuits.DIAMONDS, RoyalSuits.HEARTS,
+    FullRoyalSuits.DIAMONDS, FullRoyalSuits.HEARTS, FullRoyalSuits.JOKER,
+    SpanishSuits.COINS, SpanishSuits.CUPS,
+]
