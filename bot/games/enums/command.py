@@ -10,6 +10,7 @@ class CallbackKeyEnum(Enum):
 
 
 class CommandEnum(Enum):
+    CALCULATE = 'calculate'
     CLOSE = 'close'
     DRAW = 'draw'
     HELP = 'help'

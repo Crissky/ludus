@@ -235,3 +235,12 @@ class JokerJailBoard(BaseCardGameBoard):
                 return True
 
         return False
+
+    @property
+    def calculate_button(self) -> PlayButton:
+        return PlayButton(
+            text='Calcular🔢',
+            game=self,
+            command=CommandEnum.CALCULATE,
+            group=2
+        )
