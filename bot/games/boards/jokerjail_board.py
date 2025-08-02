@@ -119,6 +119,10 @@ class JokerJailBoard(BaseCardGameBoard):
             button = self.draw_button
         keyboard.add_button(button)
 
+        if len(self.selected_card_indexes) >= 2:
+            button = self.calculate_button
+            keyboard.add_button(button)
+
         close_button = self.close_button
         help_button = self.help_button
         if isinstance(close_button, PlayButton):
