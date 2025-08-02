@@ -41,6 +41,31 @@ class JokerJailBoard(BaseCardGameBoard):
             'selected_card_indexes',
         ])
 
+    def sum_card_values(self) -> dict:
+        black_cards: List[Card] = []
+        red_cards: List[Card] = []
+        for index in set(self.selected_card_indexes):
+            pile: BaseDeck = self.discard_piles[index]
+            if pile.is_empty is True:
+                raise ValueError(f'Pilha {index} não possui carta.')
+            card = pile.peek(quantity=1)[0]
+            if card.is_black is True:
+                black_cards.append(card)
+            elif card.is_red is True:
+                red_cards.append(card)
+            else:
+                raise ValueError(f'Carta {card} não é preta ou vermelha.')
+
+        if not black_cards:
+            raise ValueError('Não há cartas pretas selecionadas.')
+        if not red_cards:
+            raise ValueError('Não há cartas vermelhas selecionadas.')
+
+        black_value = sum((card.value for card in black_cards))
+        red_value = sum((card.value for card in red_cards))
+
+        return {'black': black_value, 'red': red_value}
+
     def create_discard_pile(self):
         self.discard_piles = [
             BaseDeck()
