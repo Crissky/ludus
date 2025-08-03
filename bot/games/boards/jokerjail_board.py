@@ -194,6 +194,9 @@ class JokerJailBoard(BaseCardGameBoard):
                 joker_pile.add(card)
                 action = f'Carta {card} adicionada ao topo da Pilha Central.'
                 return self.add_log(action=action, player=False)
+        elif command_enum == CommandEnum.CALCULATE:
+            ...
+
     def winners(self) -> List[Player]:
         winners = []
         if self.is_started is True:
