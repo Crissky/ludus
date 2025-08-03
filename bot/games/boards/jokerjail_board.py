@@ -182,6 +182,18 @@ class JokerJailBoard(BaseCardGameBoard):
                 )
                 return self.add_log(action=action, player=False)
 
+        elif command_enum == CommandEnum.DRAW:
+            card_list = self.draw_pile.draw(quantity=1)
+            card = card_list[0] if card_list else None
+            if card is None:
+                action = 'Não há mais cartas para comprar.'
+                return self.add_log(action=action, player=False)
+            else:
+                joker_index = self.joker_indexes[0]
+                joker_pile = self.discard_piles[joker_index]
+                joker_pile.add(card)
+                action = f'Carta {card} adicionada ao topo da Pilha Central.'
+                return self.add_log(action=action, player=False)
     def winners(self) -> List[Player]:
         winners = []
         if self.is_started is True:
