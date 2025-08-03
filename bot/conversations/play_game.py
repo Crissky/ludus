@@ -166,6 +166,7 @@ PLAY_GAME_HANDLERS = [
             PlayButton.callback_data_to_pattern(CommandEnum.PASS),
             PlayButton.callback_data_to_pattern(CommandEnum.PLAY),
             PlayButton.callback_data_to_pattern(CommandEnum.SELECT_COLOR),
+            PlayButton.callback_data_to_pattern(CommandEnum.CALCULATE),
         ))
     ),
 ]
