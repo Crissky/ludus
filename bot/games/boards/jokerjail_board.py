@@ -100,15 +100,16 @@ class JokerJailBoard(BaseCardGameBoard):
         )
 
     def show_board_discard_piles(self) -> str:
+        text_list = []
         peek_discard_piles = ''
-        for index, discard_pile in enumerate(self.discard_piles):
-            if index % 3 == 0:
-                peek_discard_piles += '\n'
-            peek_discard_piles += (
-                str(discard_pile.peek()[0]) if discard_pile else '🚫'
-            )
+        for discard_pile in self.discard_piles:
+            text = str(discard_pile.peek()[0]) if discard_pile else '🚫'
+            text_list.append(text)
+        
+        for index in range(0, len(text_list), 3):
+            peek_discard_piles += '|'.join(text_list[index:index + 3]) + '\n'
 
-        return f'Pilha de Descarte: {peek_discard_piles}'
+        return f'Pilha de Descarte:\n{peek_discard_piles}'
 
     def show_selected_cards(self) -> str:
         selected_card_list = []
