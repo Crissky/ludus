@@ -43,8 +43,8 @@ class BaseCardGameBoard(BaseBoard):
 
         if not isinstance(initial_hand_size, int):
             raise TypeError('initial_hand_size precisa ser um inteiro.')
-        elif initial_hand_size < 1:
-            raise ValueError('initial_hand_size precisa ser maior que 0.')
+        elif initial_hand_size < 0:
+            raise ValueError('initial_hand_size precisa ser positivo.')
 
         if hand_kwargs is None:
             hand_kwargs = {}
