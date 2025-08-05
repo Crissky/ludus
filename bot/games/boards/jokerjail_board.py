@@ -103,6 +103,20 @@ class JokerJailBoard(BaseCardGameBoard):
 
         return f'Pilha de Descarte: {peek_discard_piles}'
 
+    def show_selected_cards(self) -> str:
+        selected_card_list = []
+        for index in self.selected_card_indexes:
+            discard_pile: BaseDeck = self.discard_piles[index]
+            if discard_pile:
+                card = discard_pile.peek(quantity=1)[0]
+                selected_card_list.append(card)
+
+        selected_cards = ', '.join((str(card) for card in selected_card_list))
+        if not selected_cards:
+            return None
+
+        return f'Cartas selecionadas: {selected_cards}'
+
     def player_keyboard(self, player: Player) -> PlayKeyBoard:
         if self.is_started is not True:
             return self.invite_keyboard
