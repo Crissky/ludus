@@ -202,6 +202,9 @@ class JokerJailBoard(BaseCardGameBoard):
         elif command_enum == CommandEnum.CALCULATE:
             ...
 
+    def is_playable_card(self, card: Card) -> bool:
+        return True
+
     def winners(self) -> List[Player]:
         winners = []
         if self.is_started is True:
