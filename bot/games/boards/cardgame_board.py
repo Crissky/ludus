@@ -298,7 +298,7 @@ class BaseCardGameBoard(BaseBoard):
             text='🚪Sair',
             game=self,
             command=CommandEnum.CLOSE,
-            group=2
+            group=99
         )
 
     @property
@@ -307,7 +307,7 @@ class BaseCardGameBoard(BaseBoard):
             text='Ajuda❓',
             game=self,
             command=CommandEnum.HELP,
-            group=2
+            group=99
         )
 
 
