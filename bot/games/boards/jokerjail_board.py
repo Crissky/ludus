@@ -11,6 +11,11 @@ from bot.games.player import Player
 
 
 class JokerJailBoard(BaseCardGameBoard):
+    DISPLAY_NAME: str = 'Joker Jail'
+    DESCRIPTION: str = (
+        'DESCRIÇÃO E REGRAS DO JOKER JAIL PRECISAM SER DEFINIDAS.'
+    )
+
     def __init__(self, *players: Player, debug: bool = False):
         draw_pile = RoyalDeck(is_shuffle=True)
         super().__init__(
