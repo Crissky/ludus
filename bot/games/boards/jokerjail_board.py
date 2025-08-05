@@ -92,6 +92,17 @@ class JokerJailBoard(BaseCardGameBoard):
         joker_pile = self.joker_pile
         joker_pile.add(self.joker_card)
 
+    def show_board_discard_piles(self) -> str:
+        peek_discard_piles = ''
+        for index, discard_pile in enumerate(self.discard_piles):
+            if index % 3 == 0:
+                peek_discard_piles += '\n'
+            peek_discard_piles += (
+                str(discard_pile.peek()[0]) if discard_pile else '🚫'
+            )
+
+        return f'Pilha de Descarte: {peek_discard_piles}'
+
     def player_keyboard(self, player: Player) -> PlayKeyBoard:
         if self.is_started is not True:
             return self.invite_keyboard
