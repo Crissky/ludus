@@ -92,6 +92,13 @@ class JokerJailBoard(BaseCardGameBoard):
         joker_pile = self.joker_pile
         joker_pile.add(self.joker_card)
 
+    def show_board(self, player: Player = None) -> str:
+        general_info_list = [self.show_selected_cards]
+        return super().show_board(
+            player=player,
+            general_info_list=general_info_list
+        )
+
     def show_board_discard_piles(self) -> str:
         peek_discard_piles = ''
         for index, discard_pile in enumerate(self.discard_piles):
