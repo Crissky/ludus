@@ -1,12 +1,14 @@
 from typing import List, Type
 from bot.games.boards.board import BaseBoard
 from bot.games.boards.colorgame_board import ColorsGameBoard
+from bot.games.boards.jokerjail_board import JokerJailBoard
 from bot.games.boards.scoundrel_board import ScoundrelBoard
 
 
 def get_solo_board_list() -> List[Type[BaseBoard]]:
     solo_board_list = [
-        ScoundrelBoard
+        ScoundrelBoard,
+        JokerJailBoard,
     ]
 
     return solo_board_list
