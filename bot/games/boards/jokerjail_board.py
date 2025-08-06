@@ -67,8 +67,8 @@ class JokerJailBoard(BaseCardGameBoard):
         if not red_cards:
             raise ValueError('Não há cartas vermelhas selecionadas.')
 
-        black_value = sum((card.value for card in black_cards))
-        red_value = sum((card.value for card in red_cards))
+        black_value = sum(((card.value+1) for card in black_cards))
+        red_value = sum(((card.value+1) for card in red_cards))
 
         return {'black': black_value, 'red': red_value}
 
