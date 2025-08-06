@@ -193,7 +193,7 @@ class JokerJailBoard(BaseCardGameBoard):
 
         if command_enum == CommandEnum.PLAY:
             if discard_position >= len(self.discard_piles):
-                action = f'Pilha número {discard_position} não existe.'
+                action = f'Pilha número {discard_position+1} não existe.'
                 return self.add_log(action=action, player=False)
 
             discard_pile: BaseDeck = self.discard_piles[discard_position]
@@ -205,7 +205,7 @@ class JokerJailBoard(BaseCardGameBoard):
                 action = f'Carta {card} foi desselecionada.'
                 return self.add_log(action=action, player=False)
             elif discard_pile.is_empty is True:
-                action = f'Pilha número {discard_position} está vazia.'
+                action = f'Pilha número {discard_position+1} está vazia.'
                 return self.add_log(action=action, player=False)
             elif (
                 discard_position in self.wall_indexes
