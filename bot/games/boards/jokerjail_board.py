@@ -253,12 +253,15 @@ class JokerJailBoard(BaseCardGameBoard):
     def winners(self) -> List[Player]:
         winners = []
         if self.is_started is True:
-            for index in self.wall_indexes:
-                pile = self.discard_piles[index]
-                if pile.is_empty is True and self.joker_in_top is True:
-                    player = self.player
-                    winners.append(player)
-                    break
+            if len(self.joker_pile) > 4:
+                winners.append(self.enemy)
+            else:
+                for index in self.wall_indexes:
+                    pile = self.discard_piles[index]
+                    if pile.is_empty is True and self.joker_in_top is True:
+                        player = self.player
+                        winners.append(player)
+                        break
 
         return winners
 
