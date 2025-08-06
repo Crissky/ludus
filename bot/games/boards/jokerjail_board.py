@@ -245,7 +245,34 @@ class JokerJailBoard(BaseCardGameBoard):
                 action = f'Carta {card} adicionada ao topo da Pilha Central.'
                 return self.add_log(action=action, player=False)
         elif command_enum == CommandEnum.CALCULATE:
-            ...
+            if not self.has_select_black:
+                action = 'Não há cartas PRETAS selecionadas.'
+                return self.add_log(action=action, player=False)
+            if not self.has_select_red:
+                action = 'Não há cartas VERMELHAS selecionadas.'
+                return self.add_log(action=action, player=False)
+
+            sum_dict = self.sum_card_values()
+            black_value = sum_dict['black']
+            red_value = sum_dict['red']
+            if black_value > red_value:
+                action = (
+                    f'Cartas PRETAS ({black_value}) são maiores '
+                    f'que as VERMELHAS ({red_value}).'
+                )
+            elif red_value > black_value:
+                action = (
+                    f'Cartas VERMELHAS ({red_value}) são maiores '
+                    f'que as PRETAS ({black_value}).'
+                )
+            else:
+                self.drop_selected_cards()
+                action = (
+                    f'Cartas VERMELHAS ({red_value}) e PRETAS ({black_value}) '
+                    f'são iguais.'
+                )
+            self.selected_card_indexes.clear()
+            return self.add_log(action=action, player=False)
 
     def is_playable_card(self, card: Card) -> bool:
         return True
