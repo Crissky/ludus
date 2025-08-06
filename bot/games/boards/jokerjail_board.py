@@ -37,6 +37,7 @@ class JokerJailBoard(BaseCardGameBoard):
         self.corner_indexes = [0, 2, 6, 8]
         self.joker_indexes = [4]
         self.selected_card_indexes = []
+        self.enemy = Player(player_id='0000000000', name='Carcereiro')
 
         self.debug_attr_list.extend([
             'joker_card',
