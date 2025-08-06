@@ -72,6 +72,16 @@ class JokerJailBoard(BaseCardGameBoard):
 
         return {'black': black_value, 'red': red_value}
 
+    def drop_selected_cards(self) -> List[Card]:
+        card_list = []
+        for index in self.selected_card_indexes:
+            discard_pile: BaseDeck = self.discard_piles[index]
+            card = discard_pile.draw(quantity=1)[0] if discard_pile else None
+            if card:
+                card_list.append(card)
+
+        return card_list
+
     def create_discard_pile(self):
         self.discard_piles = [
             BaseDeck()
