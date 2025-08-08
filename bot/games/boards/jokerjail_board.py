@@ -242,6 +242,7 @@ class JokerJailBoard(BaseCardGameBoard):
                 joker_index = self.joker_indexes[0]
                 joker_pile = self.discard_piles[joker_index]
                 joker_pile.add(card)
+                self.selected_card_indexes.clear()
                 action = f'Carta {card} adicionada ao topo da Pilha Central.'
                 return self.add_log(action=action, player=False)
         elif command_enum == CommandEnum.CALCULATE:
