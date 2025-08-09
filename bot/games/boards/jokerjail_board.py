@@ -115,8 +115,7 @@ class JokerJailBoard(BaseCardGameBoard):
         text_list = []
         peek_discard_piles = ''
         for discard_pile in self.discard_piles:
-            text = str(len(discard_pile)) if discard_pile else '🚫'
-            text = text.zfill(2)
+            text = str(len(discard_pile)).zfill(2) if discard_pile else '🚫'
             text_list.append(text)
 
         for index in range(0, len(text_list), 3):
