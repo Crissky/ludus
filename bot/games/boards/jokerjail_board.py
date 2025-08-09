@@ -21,8 +21,8 @@ class JokerJailBoard(BaseCardGameBoard):
         '    2. Um Joker é colocado no centro da mesa.\n'
         '    3. Em cada um dos quatro lados ao redor do Joker, '
         'são formadas pilhas de 6 cartas viradas para baixo (as "paredes").\n'
-        '    4. Nas quatro posições diagonais, são colocadas pilhas de 2 cartas '
-        'viradas para baixo (os "cantinhos" ou "quinas").\n'
+        '    4. Nas quatro posições diagonais, são colocadas pilhas de '
+        '2 cartas viradas para baixo (os "cantinhos" ou "quinas").\n'
         '    5. Sobre cada uma dessas pilhas (paredes e cantinhos), '
         'serão colocadas uma carta virada para cima, '
         'resultando em 8 cartas abertas ao redor do Joker.\n'
@@ -357,7 +357,10 @@ class JokerJailBoard(BaseCardGameBoard):
         if self.is_started is True:
             if len(self.joker_pile) > 4:
                 winners.append(self.enemy)
-            if self.draw_pile.is_empty is True and self.draw_from_empty_pile is True:
+            if (
+                self.draw_pile.is_empty is True
+                and self.draw_from_empty_pile is True
+            ):
                 winners.append(self.enemy)
             else:
                 for index in self.wall_indexes:
