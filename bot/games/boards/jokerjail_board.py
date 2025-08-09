@@ -89,13 +89,13 @@ class JokerJailBoard(BaseCardGameBoard):
             for _ in range(self.total_discard_pile)
         ]
 
-        for _ in range(6):
+        for _ in range(7):
             for index in self.wall_indexes:
                 wall_pile = self.discard_piles[index]
                 cards = self.draw()
                 wall_pile.add(*cards)
 
-        for _ in range(2):
+        for _ in range(3):
             for index in self.corner_indexes:
                 corner_pile = self.discard_piles[index]
                 cards = self.draw()
