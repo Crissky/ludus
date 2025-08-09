@@ -10,7 +10,7 @@ from bot.games.player import Player
 
 
 class ScoundrelBoard(BaseCardGameBoard):
-    DISPLAY_NAME: str = 'Scoundrel'
+    DISPLAY_NAME: str = '🦹Scoundrel'
     DESCRIPTION: str = (
         '    SCOUNDREL, um jogo solo de cartas criado por '
         'ZACH GAGE e KURT BIEG.\n\n'

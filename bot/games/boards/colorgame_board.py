@@ -10,7 +10,7 @@ from bot.games.player import Player
 
 
 class ColorsGameBoard(BaseCardGameBoard):
-    DISPLAY_NAME: str = 'Colors'
+    DISPLAY_NAME: str = '🎨Colors'
     DESCRIPTION: str = 'DESCRIÇÃO E REGRAS DO COLORS PRECISAM SER DEFINIDAS.'
 
     def __init__(self, *players: Player, debug: bool = False):
