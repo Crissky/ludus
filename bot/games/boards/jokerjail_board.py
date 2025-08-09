@@ -209,6 +209,12 @@ class JokerJailBoard(BaseCardGameBoard):
                 action = f'Pilha número {discard_position+1} está vazia.'
                 return self.add_log(action=action, player=False)
             elif (
+                discard_position in self.joker_indexes
+                and self.joker_in_top is True
+            ):
+                action = f'Carta JOKER {card} não pode ser selecionada.'
+                return self.add_log(action=action, player=False)
+            elif (
                 discard_position in self.wall_indexes
                 or discard_position in self.corner_indexes
                 or (
@@ -220,12 +226,6 @@ class JokerJailBoard(BaseCardGameBoard):
                 action = f'Carta {card} foi selecionada.'
                 self.add_log(action=action, player=False)
                 return None
-            elif (
-                discard_position in self.joker_indexes
-                and self.joker_in_top is True
-            ):
-                action = f'Carta JOKER {card} não pode ser selecionada.'
-                return self.add_log(action=action, player=False)
             else:
                 action = (
                     f'ERRO: Jogada não computada para a carta "{card}" '
