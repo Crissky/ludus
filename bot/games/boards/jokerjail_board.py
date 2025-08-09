@@ -4,7 +4,7 @@ from bot.games.buttons.play_button import PlayButton
 from bot.games.cards.card import Card
 from bot.games.decks.deck import BaseDeck
 from bot.games.decks.royal import RoyalDeck
-from bot.games.enums.card import FullRoyalNames, FullRoyalSuits
+from bot.games.enums.card import FullRoyalNames, FullRoyalSuits, RoyalNames
 from bot.games.enums.command import CallbackKeyEnum, CommandEnum
 from bot.games.play_keyboard import PlayKeyBoard
 from bot.games.player import Player
@@ -13,7 +13,56 @@ from bot.games.player import Player
 class JokerJailBoard(BaseCardGameBoard):
     DISPLAY_NAME: str = '🃏Joker Jail'
     DESCRIPTION: str = (
-        'DESCRIÇÃO E REGRAS DO JOKER JAIL PRECISAM SER DEFINIDAS.'
+        '    Joker Jailbreak, um jogo de cartas solo que você pode jogar '
+        'com um baralho de 52 cartas.\n\n'
+
+        '⚙️CONFIGURAÇÃO:\n'
+        '    1. Retire os jokers do baralho.\n'
+        '    2. Um Joker é colocado no centro da mesa.\n'
+        '    3. Em cada um dos quatro lados ao redor do Joker, '
+        'são formadas pilhas de 6 cartas viradas para baixo (as "paredes").\n'
+        '    4. Nas quatro posições diagonais, são colocadas pilhas de 2 cartas '
+        'viradas para baixo (os "cantinhos" ou "quinas").\n'
+        '    5. Sobre cada uma dessas pilhas (paredes e cantinhos), '
+        'serão colocadas uma carta virada para cima, '
+        'resultando em 8 cartas abertas ao redor do Joker.\n'
+        '    6. O restante das cartas fica separado e é chamado de '
+        '"Pilha de Compra".\n\n'
+
+        '🎯OBJETIVO:\n'
+        '    Liberar o Joker removendo completamente uma das quatro paredes '
+        '(norte, sul, leste ou oeste). '
+        'Atenção: limpar apenas os cantinhos não permite a fuga do Joker.\n\n'
+
+        '🃏COMO JOGAR:\n'
+        '    - Combine cartas pretas com cartas vermelhas de mesmo '
+        'valor total para descartá-las. '
+        'Exemplo: pode usar uma carta preta 6 com uma vermelha 6, ou '
+        'combinar várias vermelhas que somem o valor da preta '
+        '(por exemplo, vermelha 4 + 2 combinadas com uma preta 6).\n'
+        '    - Sempre que você remover cartas de uma pilha, '
+        'vire a próxima carta da pilha para cima.\n'
+        '    - O jogo continua até que você:\n'
+        '        - Limpe uma parede (vence), ou\n'
+        '        - Não consiga fazer mais jogadas possíveis (perde) ou .\n'
+        '        - Tenha mais de três cartas em cima do Joker (perde).\n\n'
+
+        '📜REGRAS ESPECIAIS:\n'
+        f'    - Valores das cartas: {RoyalNames.ACE.value} = 1, '
+        f'{RoyalNames.JACK.value} = 11, {RoyalNames.QUEEN.value} = 12, '
+        f'{RoyalNames.KING.value} = 13.\n'
+        '    Você pode usar cartas do monte reserva colocando-as sobre o '
+        'Joker, com limite de até 3 cartas empilhadas. '
+        'Isso pode ajudar quando estiver travado, mas atenção: '
+        'o Joker não pode escapar enquanto tiver cartas sobre ele, '
+        'e essas cartas devem ser removidas para vencer.\n\n'
+
+        '💡DICAS:\n'
+        '    - Dê prioridade para atacar e limpar as paredes.\n'
+        '    - Evite limpar os cantinhos, pois isso reduz suas opções '
+        'estratégicas.\n'
+        '    - Use cartas do monte reserva só quando realmente necessário, '
+        'pois elas adicionam obstáculos extras até serem removidas.'
     )
 
     def __init__(self, *players: Player, debug: bool = False):
