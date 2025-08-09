@@ -38,6 +38,7 @@ class JokerJailBoard(BaseCardGameBoard):
         self.joker_indexes = [4]
         self.selected_card_indexes = []
         self.enemy = Player(player_id='0000000000', name='Carcereiro')
+        self.draw_from_empty_pile = False
 
         self.debug_attr_list.extend([
             'joker_card',
@@ -236,6 +237,7 @@ class JokerJailBoard(BaseCardGameBoard):
             card_list = self.draw_pile.draw(quantity=1)
             card = card_list[0] if card_list else None
             if card is None:
+                self.draw_from_empty_pile = True
                 action = 'Não há mais cartas para comprar.'
                 return self.add_log(action=action, player=False)
             else:
