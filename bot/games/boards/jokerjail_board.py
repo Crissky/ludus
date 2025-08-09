@@ -239,14 +239,14 @@ class JokerJailBoard(BaseCardGameBoard):
             if card is None:
                 self.draw_from_empty_pile = True
                 action = 'Não há mais cartas para comprar.'
-                return self.add_log(action=action, player=False)
+                self.add_log(action=action, player=False)
             else:
                 joker_index = self.joker_indexes[0]
                 joker_pile = self.discard_piles[joker_index]
                 joker_pile.add(card)
                 self.selected_card_indexes.clear()
                 action = f'Carta {card} adicionada ao topo da Pilha Central.'
-                return self.add_log(action=action, player=False)
+                self.add_log(action=action, player=False)
         elif command_enum == CommandEnum.CALCULATE:
             if not self.has_select_black:
                 action = 'Não há cartas PRETAS selecionadas.'
@@ -308,6 +308,8 @@ class JokerJailBoard(BaseCardGameBoard):
         winners = []
         if self.is_started is True:
             if len(self.joker_pile) > 4:
+                winners.append(self.enemy)
+            if self.draw_pile.is_empty is True and self.draw_from_empty_pile is True:
                 winners.append(self.enemy)
             else:
                 for index in self.wall_indexes:
