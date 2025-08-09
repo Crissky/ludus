@@ -263,19 +263,43 @@ class JokerJailBoard(BaseCardGameBoard):
                     f'Cartas PRETAS ({black_value}) são maiores '
                     f'que as VERMELHAS ({red_value}).'
                 )
+                self.selected_card_indexes.clear()
+                return self.add_log(action=action, player=False)
             elif red_value > black_value:
                 action = (
                     f'Cartas VERMELHAS ({red_value}) são maiores '
                     f'que as PRETAS ({black_value}).'
                 )
+                self.selected_card_indexes.clear()
+                return self.add_log(action=action, player=False)
             else:
                 self.drop_selected_cards()
                 action = (
                     f'Cartas VERMELHAS ({red_value}) e PRETAS ({black_value}) '
                     f'são iguais.'
                 )
-            self.selected_card_indexes.clear()
-            return self.add_log(action=action, player=False)
+                self.selected_card_indexes.clear()
+                self.add_log(action=action, player=False)
+
+        if self.game_over:
+            winners_list = self.winners()
+            winner = winners_list[0] if winners_list else None
+            player = self.player
+            if winner is None:
+                action = 'Empate.'
+            elif winner == self.enemy:
+                action = 'Foi derrotado!'
+                if len(self.joker_pile) > 4:
+                    action += ' O Joker foi soterrado.'
+                elif (
+                    self.draw_pile.is_empty is True
+                    and self.draw_from_empty_pile is True
+                ):
+                    action += ' Pilha de Comprar ficou vazia.'
+            elif winner == player and player is not None:
+                action = f'Parabens, {player.name}! Você ganhou o jogo!!!'
+
+            return self.add_log(action=action, player=player)
 
     def is_playable_card(self, card: Card) -> bool:
         return True
