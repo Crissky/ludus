@@ -1,0 +1,103 @@
+import unittest
+from unittest.mock import MagicMock
+
+from telegram import User
+from bot.games.player import Player
+from bot.games.hands.hand import BaseHand
+from bot.games.cards.card import Card
+
+
+class TestPlayer(unittest.TestCase):
+    def setUp(self):
+        self.mock_user = MagicMock(spec=User)
+        self.mock_user.id = 123
+        self.mock_user.name = 'Test User'
+        self.mock_card = MagicMock(spec=Card)
+        self.mock_hand = MagicMock(spec=BaseHand)
+
+    def test_init_with_player_id_and_name(self):
+        player_id = '123'
+        player_name = 'Test Player'
+        player = Player(player_id=player_id, name=player_name)
+
+        self.assertEqual(player.id, player_id)
+        self.assertEqual(player.name, player_name)
+        self.assertIsInstance(player.hand, BaseHand)
+        self.assertIsNone(player.message_id)
+
+    def test_init_with_user(self):
+        player = Player(user=self.mock_user)
+
+        self.assertEqual(player.id, '123')
+        self.assertEqual(player.name, 'Test User')
+        self.assertIsInstance(player.hand, BaseHand)
+
+    def test_init_with_hand(self):
+        player_id = '123'
+        player_name = 'Test Player'
+        player = Player(
+            player_id=player_id, name=player_name,
+            hand=self.mock_hand
+        )
+
+        self.assertEqual(player.id, player_id)
+        self.assertEqual(player.name, player_name)
+        self.assertEqual(player.hand, self.mock_hand)
+
+    def test_init_with_message_id(self):
+        player_id = '123'
+        player_name = 'Test Player'
+        message_id = 456
+        player = Player(
+            player_id=player_id,
+            name=player_name,
+            message_id=message_id
+        )
+
+        self.assertEqual(player.id, player_id)
+        self.assertEqual(player.name, player_name)
+        self.assertEqual(player.message_id, message_id)
+
+    def test_init_invalid_no_params(self):
+        msg_error = 'player_id e name ou user devem ser informados.'
+        with self.assertRaises(ValueError) as context:
+            Player()
+
+        self.assertEqual(str(context.exception), msg_error)
+
+    def test_init_invalid_player_id_type(self):
+        msg_error = 'player_id precisa ser do tipo int ou str.'
+        with self.assertRaises(TypeError) as context:
+            Player(player_id=[], name="Test")
+
+        self.assertEqual(str(context.exception), msg_error)
+
+    def test_init_invalid_name_type(self):
+        msg_error = 'name precisa ser do tipo str.'
+        with self.assertRaises(TypeError) as context:
+            Player(player_id="123", name=123)
+
+        self.assertEqual(str(context.exception), msg_error)
+
+    def test_init_invalid_user_type(self):
+        msg_error = 'user precisa ser do tipo User.'
+        with self.assertRaises(TypeError) as context:
+            Player(user="not_user")
+
+        self.assertEqual(str(context.exception), msg_error)
+
+    def test_init_invalid_hand_type(self):
+        msg_error = 'hand precisa ser do tipo BaseHand.'
+        with self.assertRaises(TypeError) as context:
+            Player(player_id="123", name="Test", hand="not_hand")
+
+        self.assertEqual(str(context.exception), msg_error)
+
+    def test_init_invalid_message_id_type(self):
+        msg_error = 'message_id precisa ser do tipo int.'
+        with self.assertRaises(TypeError) as context:
+            Player(player_id="123", name="Test", message_id="not_int")
+
+        self.assertEqual(str(context.exception), msg_error)
+
+    
