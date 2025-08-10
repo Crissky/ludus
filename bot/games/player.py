@@ -18,7 +18,7 @@ class Player:
         if ((player_id is None or name is None) and user is None):
             raise ValueError('player_id e name ou user devem ser informados.')
 
-        if player_id and name:
+        if player_id is not None and name is not None:
             if not isinstance(player_id, (int, str)):
                 raise TypeError('player_id precisa ser do tipo int ou str.')
             if not isinstance(name, str):
