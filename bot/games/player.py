@@ -29,7 +29,7 @@ class Player:
             if not isinstance(user, User):
                 raise TypeError('user precisa ser do tipo User.')
             self.id = str(user.id)
-            self.name = user.name
+            self.name = str(user.name)
 
         if hand is None:
             hand = BaseHand()
