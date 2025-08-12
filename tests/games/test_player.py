@@ -100,4 +100,38 @@ class TestPlayer(unittest.TestCase):
 
         self.assertEqual(str(context.exception), msg_error)
 
-    
+    def test_eq_with_player(self):
+        player1 = Player(player_id="123", name="Test1")
+        player2 = Player(player_id="123", name="Test2")
+        player3 = Player(player_id="456", name="Test3")
+
+        self.assertEqual(player1, player2)
+        self.assertNotEqual(player1, player3)
+
+    def test_eq_with_user(self):
+        player = Player(player_id="123", name="Test")
+
+        self.assertEqual(player, self.mock_user)
+
+    def test_eq_with_int_str(self):
+        player = Player(player_id="123", name="Test")
+
+        self.assertEqual(player, 123)
+        self.assertEqual(player, "123")
+
+    def test_hash(self):
+        player = Player(player_id="123", name="Test")
+
+        self.assertEqual(hash(player), hash("123"))
+
+    def test_str(self):
+        player = Player(player_id="123", name="Test Player")
+
+        self.assertEqual(str(player), "Test Player")
+
+    def test_repr(self):
+        player = Player(player_id="123", name="Test Player", message_id=456)
+
+        expected = "Player(id=123, name=Test Player, message_id=456)"
+        self.assertEqual(repr(player), expected)
+
