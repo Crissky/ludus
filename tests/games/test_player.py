@@ -135,3 +135,56 @@ class TestPlayer(unittest.TestCase):
         expected = "Player(id=123, name=Test Player, message_id=456)"
         self.assertEqual(repr(player), expected)
 
+    def test_set_hand(self):
+        player = Player(player_id="123", name="Test")
+
+        player.set_hand(self.mock_hand)
+
+        self.assertEqual(player.hand, self.mock_hand)
+
+    def test_set_hand_invalid_type(self):
+        player = Player(player_id="123", name="Test")
+
+        msg_error = 'hand precisa ser do tipo BaseHand.'
+        with self.assertRaises(TypeError) as context:
+            player.set_hand("not_hand")
+
+        self.assertEqual(str(context.exception), msg_error)
+
+    def test_add_card(self):
+        player = Player(player_id="123", name="Test")
+        player.hand.add_card = MagicMock(return_value=[])
+
+        result = player.add_card(self.mock_card)
+
+        player.hand.add_card.assert_called_once_with(
+            self.mock_card, discard_index=-1)
+        self.assertEqual(result, [])
+
+    def test_discard(self):
+        player = Player(player_id="123", name="Test")
+        player.hand.discard = MagicMock(return_value=[self.mock_card])
+
+        result = player.discard(0, 1)
+
+        player.hand.discard.assert_called_once_with(index=0, quantity=1)
+        self.assertEqual(result, [self.mock_card])
+
+    def test_play(self):
+        player = Player(player_id="123", name="Test")
+        player.hand.play = MagicMock(return_value=[self.mock_card])
+
+        result = player.play(0, 1)
+
+        player.hand.play.assert_called_once_with(0, 1)
+        self.assertEqual(result, [self.mock_card])
+
+    def test_peek(self):
+        player = Player(player_id="123", name="Test")
+        player.hand.peek = MagicMock(return_value=[self.mock_card])
+
+        result = player.peek(0, 1)
+
+        player.hand.peek.assert_called_once_with(0, 1)
+        self.assertEqual(result, [self.mock_card])
+
