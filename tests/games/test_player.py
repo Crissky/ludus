@@ -188,3 +188,19 @@ class TestPlayer(unittest.TestCase):
         player.hand.peek.assert_called_once_with(0, 1)
         self.assertEqual(result, [self.mock_card])
 
+    def test_set_message_id(self):
+        player = Player(player_id="123", name="Test")
+
+        player.set_message_id(789)
+
+        self.assertEqual(player.message_id, 789)
+
+    def test_set_message_id_invalid_type(self):
+        player = Player(player_id="123", name="Test")
+
+        meg_error = 'message_id precisa ser do tipo int.'
+        with self.assertRaises(TypeError) as context:
+            player.set_message_id("not_int")
+
+        self.assertEqual(str(context.exception), meg_error)
+
