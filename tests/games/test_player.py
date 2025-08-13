@@ -204,3 +204,17 @@ class TestPlayer(unittest.TestCase):
 
         self.assertEqual(str(context.exception), meg_error)
 
+    def test_user_id_property(self):
+        player = Player(player_id="123", name="Test")
+
+        self.assertEqual(player.user_id, "123")
+
+    def test_player_id_property(self):
+        player = Player(player_id="123", name="Test")
+
+        self.assertEqual(player.player_id, "123")
+
+    def test_user_name_property(self):
+        player = Player(player_id="123", name="Test Player")
+
+        self.assertEqual(player.user_name, "Test Player")
