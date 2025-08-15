@@ -3,6 +3,11 @@ from bot.games.report import Report
 
 class Log:
     def __init__(self, size: int = 10):
+        if not isinstance(size, int):
+            raise TypeError(f'size precisa ser do tipo int ({type(size)}).')
+        if size < 1:
+            raise ValueError(f'size precisa ser maior que 0 ({size}).')
+
         self.logs = []
         self.size = size
 
