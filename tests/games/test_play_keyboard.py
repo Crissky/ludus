@@ -106,3 +106,28 @@ class TestPlayKeyBoard(unittest.TestCase):
 
         self.assertIn("PlayKeyBoard", result)
         self.assertIn("buttons_per_row=2", result)
+
+
+class TestInviteKeyBoard(unittest.TestCase):
+    def setUp(self):
+        self.mock_keyboard = MagicMock(spec=InlineKeyboardMarkup)
+
+    def test_init(self):
+        invite_keyboard = InviteKeyBoard(self.mock_keyboard)
+
+        self.assertEqual(invite_keyboard.keyboard, self.mock_keyboard)
+
+    def test_make_keyboard(self):
+        invite_keyboard = InviteKeyBoard(self.mock_keyboard)
+
+        result = invite_keyboard.make_keyboard()
+
+        self.assertEqual(result, self.mock_keyboard)
+
+    def test_str(self):
+        self.mock_keyboard.__str__ = MagicMock(return_value="MockKeyboard")
+        invite_keyboard = InviteKeyBoard(self.mock_keyboard)
+
+        result = str(invite_keyboard)
+
+        self.assertEqual(result, "MockKeyboard")
