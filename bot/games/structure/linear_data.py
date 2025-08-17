@@ -17,8 +17,7 @@ class LinearDataStructure(ABC):
         return not self.is_empty
 
     def __iter__(self) -> Generator[Card]:
-        for i in range(len(self.items)):
-            yield self.items[i]
+        yield from self.items
 
     def __getitem__(self, index: int) -> Union[Card, List[Card]]:
         return self.items[index]

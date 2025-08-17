@@ -1,3 +1,4 @@
+from collections.abc import Generator
 from bot.games.report import Report
 
 
@@ -11,8 +12,8 @@ class Log:
         self.logs = []
         self.size = size
 
-    def __iter__(self):
-        yield from (report for report in reversed(self.logs))
+    def __iter__(self) -> Generator[Report]:
+        yield from reversed(self.logs)
 
     def __str__(self):
         log_text = ''

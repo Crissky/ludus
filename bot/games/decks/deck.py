@@ -115,7 +115,7 @@ class BaseDeck:
         return bool(self.card_stack)
 
     def __iter__(self) -> Generator[Card]:
-        return iter(self.card_stack)
+        yield from self.card_stack
 
     def __len__(self) -> int:
         return len(self.card_stack)
