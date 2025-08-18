@@ -372,9 +372,11 @@ class TestDeck(unittest.TestCase):
         """
 
         initial_size = len(self.deck)
-        drawn_card = self.deck.draw(1)
-        drawn_card = drawn_card[0]
+        drawn_card_list = self.deck.draw(1)
+        drawn_card = drawn_card_list[0]
 
+        self.assertIsInstance(drawn_card_list, list)
+        self.assertEqual(len(drawn_card_list), 1)
         self.assertIsInstance(drawn_card, Card)
         self.assertEqual(len(self.deck), initial_size - 1)
         self.assertNotIn(drawn_card, self.deck)
@@ -400,11 +402,12 @@ class TestDeck(unittest.TestCase):
         """
 
         initial_size = len(self.deck)
-        drawed_cards = self.deck.draw(initial_size + 1)
-        self.assertIsInstance(drawed_cards, list)
+        drawed_card_list = self.deck.draw(initial_size + 1)
+        self.assertIsInstance(drawed_card_list, list)
+        self.assertEqual(len(drawed_card_list), initial_size)
         self.assertEqual(len(self.deck), 0)
         self.assertGreater(initial_size, len(self.deck))
-        for card in drawed_cards:
+        for card in drawed_card_list:
             self.assertIsInstance(card, Card)
             self.assertNotIn(card, self.deck)
 
@@ -413,10 +416,10 @@ class TestDeck(unittest.TestCase):
         """
 
         initial_size = len(self.deck)
-        drawed_cards1 = self.deck.draw(0)
-        drawed_cards2 = self.deck.draw(-1)
-        self.assertListEqual(drawed_cards1, [])
-        self.assertListEqual(drawed_cards2, [])
+        drawed_card_list1 = self.deck.draw(0)
+        drawed_card_list2 = self.deck.draw(-1)
+        self.assertListEqual(drawed_card_list1, [])
+        self.assertListEqual(drawed_card_list2, [])
         self.assertEqual(len(self.deck), initial_size)
 
     def test_peek_top_card(self):
@@ -424,8 +427,10 @@ class TestDeck(unittest.TestCase):
         """
 
         initial_size = len(self.deck)
-        peeked_card = self.deck.peek(1)
-        peeked_card = peeked_card[0]
+        peeked_card_list = self.deck.peek(1)
+        peeked_card = peeked_card_list[0]
+        self.assertIsInstance(peeked_card_list, list)
+        self.assertEqual(len(peeked_card_list), 1)
         self.assertIsInstance(peeked_card, Card)
         self.assertEqual(peeked_card, self.deck[0])
         self.assertEqual(len(self.deck), initial_size)
