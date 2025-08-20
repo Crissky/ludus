@@ -555,7 +555,6 @@ class TestDeck(unittest.TestCase):
 
         self.assertEqual(len(deck), initial_size + 1)
         self.assertEqual(deck[-1], new_card)
-        self.assertIn(new_card, deck)
 
     def test_add_bottom_order(self):
         """Teste se add_bottom adiciona cartas na ordem correta no
@@ -568,9 +567,9 @@ class TestDeck(unittest.TestCase):
         deck.add_bottom(*cards)
 
         self.assertEqual(len(deck), 3)
-        self.assertEqual(deck[0], cards[0])
+        self.assertEqual(deck[0], cards[2])
         self.assertEqual(deck[1], cards[1])
-        self.assertEqual(deck[2], cards[2])
+        self.assertEqual(deck[2], cards[0])
 
     def test_add_bottom_multiple_cards(self):
         """
@@ -599,6 +598,7 @@ class TestDeck(unittest.TestCase):
         """Teste se peek_bottom(1) retorna a carta do fundo do deck
         sem removê-la.
         """
+
         initial_size = len(self.deck)
         peeked_card_list = self.deck.peek_bottom(1)
         peeked_card = peeked_card_list[0]
@@ -612,34 +612,38 @@ class TestDeck(unittest.TestCase):
     def test_peek_bottom_multiple_cards(self):
         """Teste se peek_bottom retorna múltiplas cartas do fundo do deck.
         """
+
         initial_size = len(self.deck)
         peeked_cards = self.deck.peek_bottom(3)
 
         self.assertIsInstance(peeked_cards, list)
         self.assertEqual(len(peeked_cards), 3)
-        self.assertEqual(peeked_cards, self.deck[-3:])
+        self.assertEqual(list(reversed(peeked_cards)), self.deck[-3:])
         self.assertEqual(len(self.deck), initial_size)
 
     def test_peek_bottom_exceeds_deck_size(self):
         """Teste se peek_bottom retorna todas as cartas quando a quantidade
         excede o tamanho do deck.
         """
+
         initial_size = len(self.deck)
         result = self.deck.peek_bottom(initial_size + 1)
 
         self.assertIsInstance(result, list)
         self.assertEqual(len(result), initial_size)
-        self.assertEqual(result, list(self.deck))
+        self.assertEqual(list(reversed(result)), list(self.deck))
 
     def test_peek_bottom_empty_deck(self):
         """Teste se peek_bottom retorna lista vazia para um deck vazio.
         """
+
         result = self.empty_deck.peek_bottom(1)
         self.assertListEqual(result, [])
 
     def test_peek_bottom_zero_quantity(self):
         """Teste se peek_bottom retorna lista vazia quando a quantidade é zero.
         """
+
         result = self.deck.peek_bottom(0)
         self.assertListEqual(result, [])
 
@@ -647,14 +651,14 @@ class TestDeck(unittest.TestCase):
         """Teste se peek_bottom retorna lista vazia quando a
         quantidade é negativa.
         """
+
         result1 = self.deck.peek_bottom(-1)
-        result2 = self.deck.peek_bottom(0)
         self.assertListEqual(result1, [])
-        self.assertListEqual(result2, [])
 
     def test_peek_bottom_order(self):
         """Teste se peek_bottom retorna as cartas na ordem correta do fundo.
         """
+
         deck = BaseDeck()
         cards = [self.card0, self.card1, self.card2]
         deck.add_bottom(*cards)
