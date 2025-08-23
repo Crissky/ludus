@@ -32,3 +32,27 @@ class TestRoyalDeck(unittest.TestCase):
         cards2 = [str(card) for card in deck2]
         self.assertNotEqual(cards1, cards2)
         self.assertEqual(sorted(cards1), sorted(cards2))
+
+    def test_count_suits(self):
+        """Teste contagem de naipes."""
+
+        deck = RoyalDeck(is_shuffle=False)
+        suit_dict = {suit: 0 for suit in RoyalSuits}
+        for card in deck:
+            suit = card.suit
+            suit_dict[suit] += 1
+
+        for value in suit_dict.values():
+            self.assertEqual(value, 13)
+
+    def test_count_names(self):
+        """Teste contagem de nomes."""
+
+        deck = RoyalDeck(is_shuffle=False)
+        name_dict = {name: 0 for name in RoyalNames}
+        for card in deck:
+            name = card.name
+            name_dict[name] += 1
+
+        for value in name_dict.values():
+            self.assertEqual(value, 4)
