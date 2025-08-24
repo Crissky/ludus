@@ -40,3 +40,40 @@ class TestScoundrelDeck(unittest.TestCase):
         deck = ScoundrelDeck(is_shuffle=False, total_decks=2)
 
         self.assertEqual(len(deck), 88)
+
+    def test_count_suits(self):
+        """Teste contagem de naipes."""
+
+        deck = ScoundrelDeck(is_shuffle=False)
+        suit_dict = {suit: 0 for suit in RoyalSuits}
+        red_suit_list = [RoyalSuits.DIAMONDS, RoyalSuits.HEARTS]
+        for card in deck:
+            suit = card.suit
+            suit_dict[suit] += 1
+
+        for suit, value in suit_dict.items():
+            if suit in red_suit_list:
+                self.assertEqual(value, 9)
+            else:
+                self.assertEqual(value, 13)
+
+    def test_count_names(self):
+        """Teste contagem de nomes."""
+
+        deck = ScoundrelDeck(is_shuffle=False)
+        name_dict = {name: 0 for name in RoyalNames}
+        for card in deck:
+            name = card.name
+            name_dict[name] += 1
+
+        for name, value in name_dict.items():
+            only_black_names = [
+                RoyalNames.ACE,
+                RoyalNames.JACK,
+                RoyalNames.QUEEN,
+                RoyalNames.KING
+            ]
+            if name in only_black_names:
+                self.assertEqual(value, 2)
+            else:
+                self.assertEqual(value, 4)
