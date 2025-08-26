@@ -28,7 +28,7 @@ class PlayButton:
         if not isinstance(command, CommandEnum):
             raise TypeError(
                 'Command precisa ser uma instância de CommandEnum '
-                'ou uma striing válida de CommandEnum.'
+                'ou uma string válida de CommandEnum.'
             )
 
         self.text = text
