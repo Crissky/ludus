@@ -59,3 +59,29 @@ class TestPlayButton(unittest.TestCase):
             )
 
         self.assertEqual(str(context.exception), msg_error)
+
+    def test_callback_data_validation_valid(self):
+        button = PlayButton(
+            "Test",
+            self.mock_game,
+            CommandEnum.PLAY,
+            HAND_POSITION=1
+        )
+        self.assertEqual(button.callback_data["HAND_POSITION"], 1)
+
+    def test_callback_data_validation_invalid(self):
+        msg_error = (
+            "callback_data inválido(s): ['INVALID_KEY'].\n"
+            "Os valores válidos são: "
+            "['COMMAND', 'GAME_ID', 'HAND_POSITION', 'DISCARD_POSITION', "
+            "'SELECTED_COLOR']."
+        )
+        with self.assertRaises(ValueError) as context:
+            PlayButton(
+                "Test",
+                self.mock_game,
+                CommandEnum.PLAY,
+                INVALID_KEY=1
+            )
+
+        self.assertEqual(str(context.exception), msg_error)
