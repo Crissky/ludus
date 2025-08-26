@@ -36,17 +36,26 @@ class TestPlayButton(unittest.TestCase):
         self.assertEqual(button.group, 0)
 
     def test_init_invalid_command_type(self):
-        with self.assertRaises(TypeError):
+        msg_error = (
+            'Command precisa ser uma instância de CommandEnum ou uma '
+            'string válida de CommandEnum.'
+        )
+        with self.assertRaises(TypeError) as context:
             PlayButton(
                 text="Test",
                 game=self.mock_game,
                 command=123
             )
 
+        self.assertEqual(str(context.exception), msg_error)
+
     def test_init_invalid_string_command(self):
-        with self.assertRaises(KeyError):
+        msg_error = "'INVALID'"
+        with self.assertRaises(KeyError) as context:
             PlayButton(
                 text="Test",
                 game=self.mock_game,
                 command="INVALID"
             )
+
+        self.assertEqual(str(context.exception), msg_error)
