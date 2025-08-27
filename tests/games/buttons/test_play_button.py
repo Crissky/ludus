@@ -85,3 +85,15 @@ class TestPlayButton(unittest.TestCase):
             )
 
         self.assertEqual(str(context.exception), msg_error)
+
+    def test_equality(self):
+        button1 = PlayButton("Test", self.mock_game, CommandEnum.PLAY)
+        button2 = PlayButton("Test", self.mock_game, CommandEnum.PLAY)
+
+        self.assertEqual(button1, button2)
+
+    def test_inequality_different_command(self):
+        button1 = PlayButton("Test", self.mock_game, CommandEnum.PLAY)
+        button2 = PlayButton("Test", self.mock_game, CommandEnum.DRAW)
+
+        self.assertNotEqual(button1, button2)
