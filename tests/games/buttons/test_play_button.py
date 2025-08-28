@@ -97,3 +97,9 @@ class TestPlayButton(unittest.TestCase):
         button2 = PlayButton("Test", self.mock_game, CommandEnum.DRAW)
 
         self.assertNotEqual(button1, button2)
+
+    def test_str_representation(self):
+        button = PlayButton("Test Button", self.mock_game, CommandEnum.PLAY)
+
+        self.assertEqual(str(button), "Test Button")
+
