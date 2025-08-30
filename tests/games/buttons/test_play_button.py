@@ -123,3 +123,25 @@ class TestPlayButton(unittest.TestCase):
         self.assertEqual(result[CallbackKeyEnum.COMMAND], "PLAY")
         self.assertEqual(result[CallbackKeyEnum.GAME_ID], 123)
 
+    def test_callback_data_to_pattern(self):
+        pattern = PlayButton.callback_data_to_pattern(CommandEnum.PLAY)
+
+        self.assertIsInstance(pattern, str)
+        self.assertIn("0:", pattern)
+
+    def test_callback_data_to_pattern_with_string(self):
+        pattern = PlayButton.callback_data_to_pattern("PLAY")
+
+        self.assertIsInstance(pattern, str)
+        self.assertIn("0:", pattern)
+
+    def test_callback_data_to_pattern_invalid_type(self):
+        msg_error = (
+            'Command precisa ser uma instância de CommandEnum ou uma '
+            'striing válida de CommandEnum.'
+        )
+        with self.assertRaises(TypeError) as context:
+            PlayButton.callback_data_to_pattern(123)
+        
+        self.assertEqual(str(context.exception), msg_error)
+
