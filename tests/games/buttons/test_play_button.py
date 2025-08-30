@@ -112,3 +112,14 @@ class TestPlayButton(unittest.TestCase):
         self.assertIn("1:", result)  # GAME_ID index
         self.assertIn("123", result)  # GAME_ID index
 
+    def test_callback_data_to_dict(self):
+        original_data = {
+            CallbackKeyEnum.COMMAND: "PLAY",
+            CallbackKeyEnum.GAME_ID: 123
+        }
+        string_data = PlayButton.callback_data_to_string(original_data)
+        result = PlayButton.callback_data_to_dict(string_data)
+
+        self.assertEqual(result[CallbackKeyEnum.COMMAND], "PLAY")
+        self.assertEqual(result[CallbackKeyEnum.GAME_ID], 123)
+
