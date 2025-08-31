@@ -142,6 +142,6 @@ class TestPlayButton(unittest.TestCase):
         )
         with self.assertRaises(TypeError) as context:
             PlayButton.callback_data_to_pattern(123)
-        
+
         self.assertEqual(str(context.exception), msg_error)
 
