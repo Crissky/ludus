@@ -1,6 +1,8 @@
 import unittest
 from unittest.mock import Mock
 
+from telegram import InlineKeyboardButton
+
 from bot.games.buttons.play_button import PlayButton
 from bot.games.enums.command import CallbackKeyEnum, CommandEnum
 
@@ -155,3 +157,10 @@ class TestPlayButton(unittest.TestCase):
         self.assertIn("PLAY", result)
         self.assertIn("12345", result)
 
+    def test_make_button(self):
+        button = PlayButton("Test", self.mock_game, CommandEnum.PLAY)
+        telegram_button = button.make_button()
+
+        self.assertIsInstance(telegram_button, InlineKeyboardButton)
+        self.assertEqual(telegram_button.text, "Test")
+        self.assertEqual(telegram_button.callback_data, button.data_to_str)
