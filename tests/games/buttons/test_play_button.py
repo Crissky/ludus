@@ -145,3 +145,13 @@ class TestPlayButton(unittest.TestCase):
 
         self.assertEqual(str(context.exception), msg_error)
 
+    def test_data_to_str_property(self):
+        button = PlayButton("Test", self.mock_game, CommandEnum.PLAY)
+        result = button.data_to_str
+
+        self.assertIsInstance(result, str)
+        self.assertIn("{", result)
+        self.assertIn("}", result)
+        self.assertIn("PLAY", result)
+        self.assertIn("12345", result)
+
