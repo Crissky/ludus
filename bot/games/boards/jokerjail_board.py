@@ -172,6 +172,9 @@ class JokerJailBoard(BaseCardGameBoard):
 
         return f'Pilhas no Campo:\n{peek_discard_piles[:-1]}'
 
+    def show_players_in_game(self, output: list):
+        return None
+
     def show_selected_cards(self) -> str:
         selected_card_list = []
         for index in self.selected_card_indexes:
