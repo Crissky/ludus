@@ -175,11 +175,7 @@ class BaseCardGameBoard(BaseBoard):
         for general_info in general_info_list:
             output.append(general_info())
 
-        output.append("\n🎮 Jogadores na partida:")
-        for i, p in enumerate(self.player_list, start=1):
-            marker = "👉" if p == self.current_player else "  "
-            quantity_hand = len(p)
-            output.append(f'{i:02}: {marker}{p}, Mão: {quantity_hand}')
+        self.show_players_in_game(output)
 
         if player:
             output.append("\n🖐️ Suas cartas:")
@@ -201,6 +197,13 @@ class BaseCardGameBoard(BaseBoard):
         ))
 
         return f'Pilha de Descarte: {peek_discard_piles}'
+
+    def show_players_in_game(self, output: list):
+        output.append("\n🎮 Jogadores na partida:")
+        for i, p in enumerate(self.player_list, start=1):
+            marker = "👉" if p == self.current_player else "  "
+            quantity_hand = len(p)
+            output.append(f'{i:02}: {marker}{p}, Mão: {quantity_hand}')
 
     # ABSTRACT METHODS #######################################################
     def start(self):
