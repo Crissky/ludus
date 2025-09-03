@@ -1,6 +1,7 @@
 import random
-from typing import Generator
 import unittest
+
+from typing import Generator
 
 from bot.games.cards.card import Card
 from bot.games.enums.card import RoyalNames, RoyalSuits

@@ -1,9 +1,11 @@
+import unittest
+
+from collections.abc import Generator
+
 from bot.games.cards.card import Card
 from bot.games.decks.deck import BaseDeck
 from bot.games.enums.card import RoyalNames, RoyalSuits
 from bot.games.structure.stack import Stack
-from collections.abc import Generator
-import unittest
 
 
 class TestDeck(unittest.TestCase):

@@ -1,3 +1,7 @@
+import unittest
+
+import pytest
+
 from bot.functions.enumeration import get_enum_index
 from bot.games.cards.card import Card
 from bot.games.enums.card import (
@@ -13,8 +17,6 @@ from bot.games.enums.card import (
     SpanishSuits,
     StrippedSpanishNames
 )
-import pytest
-import unittest
 
 
 class TestCard(unittest.TestCase):

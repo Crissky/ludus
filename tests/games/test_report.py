@@ -1,6 +1,7 @@
 import unittest
-from unittest.mock import patch
+
 from datetime import datetime, timezone, timedelta
+from unittest.mock import patch
 
 from bot.games.report import Report
 from bot.games.player import Player

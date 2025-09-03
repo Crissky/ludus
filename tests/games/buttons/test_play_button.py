@@ -1,4 +1,5 @@
 import unittest
+
 from unittest.mock import Mock
 
 from telegram import InlineKeyboardButton

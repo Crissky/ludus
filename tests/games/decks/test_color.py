@@ -1,4 +1,5 @@
 import unittest
+
 from bot.games.decks.color import ColorDeck
 from bot.games.enums.card import ColorNames, ColorSuits
 

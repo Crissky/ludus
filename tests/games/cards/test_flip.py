@@ -1,3 +1,5 @@
+import unittest
+
 from bot.games.cards.flip import FlipCard
 from bot.games.enums.card import (
     ColorNames,
@@ -5,7 +7,6 @@ from bot.games.enums.card import (
     FlipColorNames,
     FlipColorSuits
 )
-import unittest
 
 
 class TestFlipCard(unittest.TestCase):

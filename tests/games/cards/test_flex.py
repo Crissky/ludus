@@ -1,8 +1,10 @@
+import pytest
+
+import unittest
+
 from bot.games.cards.card import Card
 from bot.games.cards.flex import FlexCard
 from bot.games.enums.card import ColorNames, ColorSuits
-import pytest
-import unittest
 
 
 class TestFlexCard(unittest.TestCase):

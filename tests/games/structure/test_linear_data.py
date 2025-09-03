@@ -1,4 +1,5 @@
 import unittest
+
 from unittest.mock import MagicMock
 
 from bot.games.structure.linear_data import LinearDataStructure

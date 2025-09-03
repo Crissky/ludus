@@ -1,4 +1,5 @@
 import unittest
+
 from unittest.mock import MagicMock
 
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton

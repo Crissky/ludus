@@ -1,7 +1,9 @@
 import unittest
+
 from unittest.mock import MagicMock
 
 from telegram import User
+
 from bot.games.player import Player
 from bot.games.hands.hand import BaseHand
 from bot.games.cards.card import Card
