@@ -339,18 +339,18 @@ class JokerJailBoard(BaseCardGameBoard):
             if winner is None:
                 action = 'Empate.'
             elif winner == self.enemy:
-                action = 'Foi derrotado!'
+                action = f'{player.name} foi derrotado!'
                 if len(self.joker_pile) > 4:
                     action += ' O Joker foi soterrado.'
                 elif (
                     self.draw_pile.is_empty is True
                     and self.draw_from_empty_pile is True
                 ):
-                    action += ' Pilha de Comprar ficou vazia.'
+                    action += ' A Pilha de Comprar ficou vazia.'
             elif winner == player and player is not None:
                 action = f'Parabens, {player.name}! Você ganhou o jogo!!!'
 
-            return self.add_log(action=action, player=player)
+            return self.add_log(action=action, player=False)
 
     def is_playable_card(self, card: Card) -> bool:
         return True
