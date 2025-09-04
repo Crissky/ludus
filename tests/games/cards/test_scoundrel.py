@@ -14,3 +14,7 @@ class TestScoundrelCard(unittest.TestCase):
             RoyalSuits.DIAMONDS
         )
         self.jack_spades = ScoundrelCard(RoyalNames.JACK, RoyalSuits.SPADES)
+
+    def test_value_ace(self):
+        """Teste se ACE retorna valor 14."""
+        self.assertEqual(self.ace_clubs.value, 14)
