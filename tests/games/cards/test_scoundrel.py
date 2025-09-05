@@ -58,3 +58,21 @@ class TestScoundrelCard(unittest.TestCase):
         self.assertEqual(self.king_diamonds.value, 13)
         self.assertEqual(self.king_hearts.value, 13)
         self.assertEqual(self.king_spades.value, 13)
+
+    def test_suit_value(self):
+        """Teste se suit_value sempre retorna 1."""
+
+        self.assertEqual(self.ace_clubs.suit_value, 1)
+        self.assertEqual(self.ace_diamonds.suit_value, 1)
+        self.assertEqual(self.ace_hearts.suit_value, 1)
+        self.assertEqual(self.ace_spades.suit_value, 1)
+
+        self.assertEqual(self.two_clubs.suit_value, 1)
+        self.assertEqual(self.two_diamonds.suit_value, 1)
+        self.assertEqual(self.two_hearts.suit_value, 1)
+        self.assertEqual(self.two_spades.suit_value, 1)
+
+        self.assertEqual(self.king_clubs.suit_value, 1)
+        self.assertEqual(self.king_diamonds.suit_value, 1)
+        self.assertEqual(self.king_hearts.suit_value, 1)
+        self.assertEqual(self.king_spades.suit_value, 1)
