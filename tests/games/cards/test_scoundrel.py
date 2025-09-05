@@ -40,3 +40,21 @@ class TestScoundrelCard(unittest.TestCase):
         self.assertEqual(self.ace_diamonds.value, 14)
         self.assertEqual(self.ace_hearts.value, 14)
         self.assertEqual(self.ace_spades.value, 14)
+
+    def test_value_non_ace(self):
+        """Teste se cartas não-ACE retornam valor base + 1."""
+
+        self.assertEqual(self.two_clubs.value, 2)
+        self.assertEqual(self.two_diamonds.value, 2)
+        self.assertEqual(self.two_hearts.value, 2)
+        self.assertEqual(self.two_spades.value, 2)
+
+        self.assertEqual(self.jack_clubs.value, 11)
+        self.assertEqual(self.jack_diamonds.value, 11)
+        self.assertEqual(self.jack_hearts.value, 11)
+        self.assertEqual(self.jack_spades.value, 11)
+
+        self.assertEqual(self.king_clubs.value, 13)
+        self.assertEqual(self.king_diamonds.value, 13)
+        self.assertEqual(self.king_hearts.value, 13)
+        self.assertEqual(self.king_spades.value, 13)
