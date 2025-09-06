@@ -76,3 +76,27 @@ class TestScoundrelCard(unittest.TestCase):
         self.assertEqual(self.king_diamonds.suit_value, 1)
         self.assertEqual(self.king_hearts.suit_value, 1)
         self.assertEqual(self.king_spades.suit_value, 1)
+
+    def test_is_weapon_diamonds(self):
+        """Teste se DIAMONDS é arma."""
+
+        self.assertTrue(self.ace_diamonds.is_weapon)
+        self.assertTrue(self.two_diamonds.is_weapon)
+        self.assertTrue(self.jack_diamonds.is_weapon)
+        self.assertTrue(self.king_diamonds.is_weapon)
+
+    def test_is_weapon_non_diamonds(self):
+        """Teste se outros naipes não são armas."""
+
+        self.assertFalse(self.ace_clubs.is_weapon)
+        self.assertFalse(self.ace_hearts.is_weapon)
+        self.assertFalse(self.ace_spades.is_weapon)
+        self.assertFalse(self.two_clubs.is_weapon)
+        self.assertFalse(self.two_hearts.is_weapon)
+        self.assertFalse(self.two_spades.is_weapon)
+        self.assertFalse(self.jack_clubs.is_weapon)
+        self.assertFalse(self.jack_hearts.is_weapon)
+        self.assertFalse(self.jack_spades.is_weapon)
+        self.assertFalse(self.king_clubs.is_weapon)
+        self.assertFalse(self.king_hearts.is_weapon)
+        self.assertFalse(self.king_spades.is_weapon)
