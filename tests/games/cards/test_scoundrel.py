@@ -100,3 +100,27 @@ class TestScoundrelCard(unittest.TestCase):
         self.assertFalse(self.king_clubs.is_weapon)
         self.assertFalse(self.king_hearts.is_weapon)
         self.assertFalse(self.king_spades.is_weapon)
+
+    def test_is_potion_hearts(self):
+        """Teste se HEARTS é poção."""
+
+        self.assertTrue(self.ace_hearts.is_potion)
+        self.assertTrue(self.two_hearts.is_potion)
+        self.assertTrue(self.jack_hearts.is_potion)
+        self.assertTrue(self.king_hearts.is_potion)
+
+    def test_is_potion_non_hearts(self):
+        """Teste se outros naipes não são poções."""
+
+        self.assertFalse(self.ace_clubs.is_potion)
+        self.assertFalse(self.ace_diamonds.is_potion)
+        self.assertFalse(self.ace_spades.is_potion)
+        self.assertFalse(self.two_clubs.is_potion)
+        self.assertFalse(self.two_diamonds.is_potion)
+        self.assertFalse(self.two_spades.is_potion)
+        self.assertFalse(self.jack_clubs.is_potion)
+        self.assertFalse(self.jack_diamonds.is_potion)
+        self.assertFalse(self.jack_spades.is_potion)
+        self.assertFalse(self.king_clubs.is_potion)
+        self.assertFalse(self.king_diamonds.is_potion)
+        self.assertFalse(self.king_spades.is_potion)
