@@ -234,6 +234,7 @@ class JokerJailBoard(BaseCardGameBoard):
 
         return keyboard
 
+    # ABSTRACT METHODS #######################################################
     def play(self, player: Player, play_dict: dict):
         result = super().play(player=player, play_dict=play_dict)
         if isinstance(result, str):

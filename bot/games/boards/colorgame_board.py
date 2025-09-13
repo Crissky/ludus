@@ -48,6 +48,7 @@ class ColorsGameBoard(BaseCardGameBoard):
 
         return text
 
+    # ABSTRACT METHODS #######################################################
     def player_keyboard(self, player: Player) -> PlayKeyBoard:
         if all((
             self.selecting_color is True,
