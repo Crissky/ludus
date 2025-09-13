@@ -22,3 +22,10 @@ class TestColorPlayButton(unittest.TestCase):
         self.assertEqual(button.text, "Color Test")
         self.assertEqual(button.game, self.mock_game)
         self.assertEqual(button.command, CommandEnum.PLAY)
+
+    def test_make_button(self):
+        button = ColorPlayButton("Color", self.mock_game, CommandEnum.PLAY)
+        telegram_button = button.make_button()
+
+        self.assertEqual(telegram_button.text, "Color")
+        self.assertEqual(telegram_button.callback_data, button.data_to_str)
