@@ -93,10 +93,11 @@ class ScoundrelBoard(BaseCardGameBoard):
     )
 
     def __init__(self, *players: Player, debug: bool = False):
-        draw_pile = ScoundrelDeck(is_shuffle=True)
+        draw_pile = ScoundrelDeck()
         super().__init__(
             draw_pile,
             *players,
+            is_shuffle_deck=True,
             total_discard_pile=2,
             discard_at_start=False,
             initial_hand_size=4,

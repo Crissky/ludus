@@ -14,10 +14,11 @@ class ColorsGameBoard(BaseCardGameBoard):
     DESCRIPTION: str = 'DESCRIÇÃO E REGRAS DO COLORS PRECISAM SER DEFINIDAS.'
 
     def __init__(self, *players: Player, debug: bool = False):
-        draw_pile = ColorDeck(is_shuffle=False)
+        draw_pile = ColorDeck()
         super().__init__(
             draw_pile,
             *players,
+            is_shuffle_deck=True,
             total_discard_pile=1,
             discard_at_start=True,
             initial_hand_size=7,

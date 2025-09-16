@@ -21,6 +21,7 @@ class BaseCardGameBoard(BaseBoard):
         self,
         draw_pile: BaseDeck,
         *players: Player,
+        is_shuffle_deck=True,
         total_discard_pile: int = 1,
         discard_at_start: bool = True,
         initial_hand_size: int = 7,
@@ -35,6 +36,8 @@ class BaseCardGameBoard(BaseBoard):
             max_total_players=max_total_players,
             debug=debug,
         )
+        if not isinstance(is_shuffle_deck, bool):
+            raise TypeError('is_shuffle_deck precisa ser um booleano.')
         if not isinstance(total_discard_pile, int):
             raise TypeError('total_discard_pile precisa ser um inteiro.')
 
@@ -53,6 +56,7 @@ class BaseCardGameBoard(BaseBoard):
 
         self.draw_pile: BaseDeck = None
         self.discard_piles: List[BaseDeck] = []
+        self.is_shuffle_deck = is_shuffle_deck
         self.total_discard_pile = total_discard_pile
         self.discard_at_start = discard_at_start
         self.initial_hand_size = initial_hand_size
@@ -74,7 +78,8 @@ class BaseCardGameBoard(BaseBoard):
     # CREATE FUNCTIONS #######################################################
     def create_draw_pile(self, draw_pile: BaseDeck):
         self.draw_pile = draw_pile
-        # self.draw_pile.shuffle()
+        if self.is_shuffle_deck is True:
+            self.draw_pile.shuffle()
 
     def create_hands(self):
         for player in self.player_list:

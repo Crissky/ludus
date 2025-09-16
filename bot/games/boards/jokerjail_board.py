@@ -66,10 +66,11 @@ class JokerJailBoard(BaseCardGameBoard):
     )
 
     def __init__(self, *players: Player, debug: bool = False):
-        draw_pile = RoyalDeck(is_shuffle=True)
+        draw_pile = RoyalDeck()
         super().__init__(
             draw_pile,
             *players,
+            is_shuffle_deck=True,
             total_discard_pile=9,
             discard_at_start=True,
             initial_hand_size=0,
