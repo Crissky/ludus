@@ -15,7 +15,7 @@ class GolfSolitaireBoard(BaseCardGameBoard):
         super().__init__(
             draw_pile,
             *players,
-            total_discard_pile=9,
+            total_discard_pile=1,
             discard_at_start=True,
             initial_hand_size=0,
             hand_kwargs={'max_size': 0},
