@@ -25,8 +25,11 @@ class GolfSolitaireBoard(BaseCardGameBoard):
             debug=debug,
         )
         self.enemy = Player(player_id='0000000000', name='Carcereiro')
+        self.board = []
 
-        self.debug_attr_list.extend([])
+        self.debug_attr_list.extend([
+            'board',
+        ])
 
     # ABSTRACT METHODS #######################################################
     def play(self, player: Player, play_dict: dict):
