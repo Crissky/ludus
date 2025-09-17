@@ -24,7 +24,7 @@ class GolfSolitaireBoard(BaseCardGameBoard):
             max_total_players=1,
             debug=debug,
         )
-        self.enemy = Player(player_id='0000000000', name='Carcereiro')
+        self.enemy = Player(player_id='0000000000', name='Solitaire')
         self.board = []
 
         self.debug_attr_list.extend([
