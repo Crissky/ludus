@@ -36,7 +36,7 @@ class GolfSolitaireBoard(BaseCardGameBoard):
         return super().play(player=player, play_dict=play_dict)
 
     def is_playable_card(self, card: Card) -> bool:
-        ...
+        return True
 
     def winners(self) -> List[Player]:
         ...
