@@ -1,6 +1,7 @@
 from typing import List, Type
 from bot.games.boards.board import BaseBoard
 from bot.games.boards.colorgame_board import ColorsGameBoard
+from bot.games.boards.golf_solitaire_board import GolfSolitaireBoard
 from bot.games.boards.jokerjail_board import JokerJailBoard
 from bot.games.boards.scoundrel_board import ScoundrelBoard
 
@@ -9,6 +10,7 @@ def get_solo_board_list() -> List[Type[BaseBoard]]:
     solo_board_list = [
         ScoundrelBoard,
         JokerJailBoard,
+        GolfSolitaireBoard,
     ]
 
     return solo_board_list
@@ -29,7 +31,8 @@ def get_party_board_list() -> List[Type[BaseBoard]]:
 
 
 def get_board_list() -> List[Type[BaseBoard]]:
-    board_list = get_solo_board_list()
+    board_list = []
+    board_list.extend(get_solo_board_list())
     board_list.extend(get_duel_board_list())
     board_list.extend(get_party_board_list())
 
