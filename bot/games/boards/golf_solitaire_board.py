@@ -2,6 +2,7 @@ from typing import List
 
 from bot.games.boards.cardgame_board import BaseCardGameBoard
 from bot.games.cards.card import Card
+from bot.games.decks.deck import BaseDeck
 from bot.games.decks.royal import RoyalDeck
 from bot.games.player import Player
 
@@ -51,3 +52,14 @@ class GolfSolitaireBoard(BaseCardGameBoard):
 
     def winners(self) -> List[Player]:
         ...
+
+    @property
+    def player(self) -> Player:
+        return self.player_list[0] if self.player_list else None
+
+    @property
+    def discard_pile(self) -> BaseDeck:
+        if self.discard_piles:
+            return self.discard_piles[0]
+        else:
+            return None
