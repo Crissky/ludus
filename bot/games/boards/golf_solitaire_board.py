@@ -26,10 +26,21 @@ class GolfSolitaireBoard(BaseCardGameBoard):
         )
         self.enemy = Player(player_id='0000000000', name='Solitaire')
         self.board = []
+        self.create_board()
 
         self.debug_attr_list.extend([
             'board',
         ])
+
+    def create_board(self):
+        num_rows = 5
+        num_card_per_row = 7
+        for _ in range(num_rows):
+            row = []
+            for _ in range(num_card_per_row):
+                card_list = self.draw()
+                row.extend(card_list)
+            self.board.extend(row)
 
     # ABSTRACT METHODS #######################################################
     def play(self, player: Player, play_dict: dict):
