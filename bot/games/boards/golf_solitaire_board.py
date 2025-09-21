@@ -51,7 +51,13 @@ class GolfSolitaireBoard(BaseCardGameBoard):
         return True
 
     def winners(self) -> List[Player]:
-        ...
+        winners = []
+        if self.board:
+            total_cards = sum((len(row) for row in self.board))
+            if total_cards == 0:
+                winners.append(self.player)
+
+        return winners
 
     @property
     def player(self) -> Player:
