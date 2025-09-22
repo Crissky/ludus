@@ -57,6 +57,9 @@ class GolfSolitaireBoard(BaseCardGameBoard):
             if total_cards == 0:
                 winners.append(self.player)
 
+        if not winners and self.draw_pile.is_empty:
+            winners.append(self.enemy)
+
         return winners
 
     @property
