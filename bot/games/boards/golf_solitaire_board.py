@@ -1,9 +1,11 @@
 from typing import List
 
 from bot.games.boards.cardgame_board import BaseCardGameBoard
+from bot.games.buttons.play_button import PlayButton
 from bot.games.cards.card import Card
 from bot.games.decks.deck import BaseDeck
 from bot.games.decks.royal import RoyalDeck
+from bot.games.enums.command import CallbackKeyEnum, CommandEnum
 from bot.games.player import Player
 
 
@@ -72,3 +74,12 @@ class GolfSolitaireBoard(BaseCardGameBoard):
             return self.discard_piles[0]
         else:
             return None
+
+    @property
+    def draw_button(self):
+        return PlayButton(
+            text='🫴Comprar',
+            game=self,
+            command=CommandEnum.DRAW,
+            group=1
+        )
