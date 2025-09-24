@@ -7,6 +7,8 @@ class CallbackKeyEnum(Enum):
     HAND_POSITION = 'hand_position'
     DISCARD_POSITION = 'discard_position'
     SELECTED_COLOR = 'selected_color'
+    ROW_INDEX = 'row_index'
+    CARD_INDEX = 'card_index'
 
 
 class CommandEnum(Enum):
