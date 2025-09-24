@@ -190,6 +190,7 @@ class JokerJailBoard(BaseCardGameBoard):
 
         return f'Cartas selecionadas: {selected_cards}'
 
+    # ABSTRACT METHODS #######################################################
     def player_keyboard(self, player: Player) -> PlayKeyBoard:
         if self.is_started is not True:
             return self.invite_keyboard
@@ -235,7 +236,6 @@ class JokerJailBoard(BaseCardGameBoard):
 
         return keyboard
 
-    # ABSTRACT METHODS #######################################################
     def play(self, player: Player, play_dict: dict):
         result = super().play(player=player, play_dict=play_dict)
         if isinstance(result, str):

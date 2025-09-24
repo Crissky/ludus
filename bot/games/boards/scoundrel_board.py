@@ -223,6 +223,7 @@ class ScoundrelBoard(BaseCardGameBoard):
 
         return f'Campo: {text}'
 
+    # ABSTRACT METHODS #######################################################
     def player_keyboard(self, player: Player) -> PlayKeyBoard:
         keyboard = super().player_keyboard(player=player)
         if isinstance(player, Player) and len(player) > 1:
@@ -233,7 +234,6 @@ class ScoundrelBoard(BaseCardGameBoard):
 
         return keyboard
 
-    # ABSTRACT METHODS #######################################################
     def play(self, player: Player, play_dict: dict):
         result = super().play(player=player, play_dict=play_dict)
         if isinstance(result, str):
