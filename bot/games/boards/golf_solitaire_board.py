@@ -71,7 +71,11 @@ class GolfSolitaireBoard(BaseCardGameBoard):
                 )
                 keyboard.add_button(button)
 
+        if self.draw_pile.is_empty is False:
+            keyboard.add_button(self.draw_button)
+
         return keyboard
+
     def play(self, player: Player, play_dict: dict):
         return super().play(player=player, play_dict=play_dict)
 
