@@ -6,6 +6,7 @@ from bot.games.cards.card import Card
 from bot.games.decks.deck import BaseDeck
 from bot.games.decks.royal import RoyalDeck
 from bot.games.enums.command import CallbackKeyEnum, CommandEnum
+from bot.games.play_keyboard import PlayKeyBoard
 from bot.games.player import Player
 
 
@@ -46,6 +47,31 @@ class GolfSolitaireBoard(BaseCardGameBoard):
             self.board.extend(row)
 
     # ABSTRACT METHODS #######################################################
+    def player_keyboard(self, player: Player) -> PlayKeyBoard:
+        if self.is_started is not True:
+            return self.invite_keyboard
+
+        keyboard = PlayKeyBoard(buttons_per_row=self.num_card_per_row)
+        if self.game_over:
+            return keyboard
+
+        for row_index, row in enumerate(self.board):
+            for card_index, card in enumerate(row):
+                text = text = card.text if card else '❌'
+                callback_data_args = {
+                    CallbackKeyEnum.ROW_INDEX: row_index,
+                    CallbackKeyEnum.CARD_INDEX: card_index,
+                }
+                button = PlayButton(
+                    text=text,
+                    game=self,
+                    command=CommandEnum.PLAY,
+                    group=row_index,
+                    **callback_data_args
+                )
+                keyboard.add_button(button)
+
+        return keyboard
     def play(self, player: Player, play_dict: dict):
         return super().play(player=player, play_dict=play_dict)
 
