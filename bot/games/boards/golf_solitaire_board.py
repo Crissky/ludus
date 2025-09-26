@@ -77,7 +77,14 @@ class GolfSolitaireBoard(BaseCardGameBoard):
         return keyboard
 
     def play(self, player: Player, play_dict: dict):
-        return super().play(player=player, play_dict=play_dict)
+        result = super().play(player=player, play_dict=play_dict)
+        if isinstance(result, str):
+            return result
+
+        command_str = play_dict[CallbackKeyEnum.COMMAND]
+        command_enum = CommandEnum[command_str]
+        row_index = play_dict.get(CallbackKeyEnum.ROW_INDEX)
+        card_index = play_dict.get(CallbackKeyEnum.CARD_INDEX)
 
     def is_playable_card(self, card: Card) -> bool:
         return True
