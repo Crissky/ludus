@@ -84,12 +84,11 @@ class GolfSolitaireBoard(BaseCardGameBoard):
 
     def winners(self) -> List[Player]:
         winners = []
-        if self.board:
+        if self.is_started is True and self.board:
             total_cards = sum((len(row) for row in self.board))
             if total_cards == 0:
                 winners.append(self.player)
-
-        if not winners and self.draw_pile.is_empty:
+        elif not winners and self.draw_pile.is_empty:
             winners.append(self.enemy)
 
         return winners
