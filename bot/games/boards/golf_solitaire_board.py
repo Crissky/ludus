@@ -133,6 +133,14 @@ class GolfSolitaireBoard(BaseCardGameBoard):
             return None
 
     @property
+    def top_discard_card(self) -> Card:
+        if self.discard_pile:
+            card_list = self.discard_pile.peek(quantity=1)
+            return card_list[0] if card_list else None
+        else:
+            return None
+
+    @property
     def draw_button(self):
         return PlayButton(
             text='🫴Comprar',
