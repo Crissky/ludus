@@ -44,6 +44,21 @@ class GolfSolitaireBoard(BaseCardGameBoard):
 
         return card
 
+    def is_match_card(self, card1: Card, card2: Card) -> bool:
+        result = False
+        value1 = card1.value
+        value2 = card2.value
+        max_value = len(card1.name.__class__) - 1
+
+        if value1 == 0 and value2 == max_value:
+            result = True
+        elif value2 == 0 and value1 == max_value:
+            result = True
+        elif abs(value1 - value2) == 1:
+            result = True
+
+        return result
+
     def create_board(self):
         for _ in range(self.num_rows):
             row = []
