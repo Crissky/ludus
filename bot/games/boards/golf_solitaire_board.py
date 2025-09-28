@@ -38,6 +38,12 @@ class GolfSolitaireBoard(BaseCardGameBoard):
             'board',
         ])
 
+    def get_card(self, row_index: int, card_index: int) -> Card:
+        row = self.board[row_index]
+        card = row[card_index]
+
+        return card
+
     def create_board(self):
         for _ in range(self.num_rows):
             row = []
