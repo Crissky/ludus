@@ -39,6 +39,11 @@ class GolfSolitaireBoard(BaseCardGameBoard):
         ])
 
     def get_card(self, row_index: int, card_index: int) -> Card:
+        if row_index < 0 or row_index >= self.num_rows:
+            return None
+        if card_index < 0 or card_index >= self.num_card_per_row:
+            return None
+
         row = self.board[row_index]
         card = row[card_index]
 
