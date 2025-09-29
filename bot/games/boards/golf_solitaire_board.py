@@ -148,3 +148,13 @@ class GolfSolitaireBoard(BaseCardGameBoard):
             command=CommandEnum.DRAW,
             group=1
         )
+
+    @property
+    def total_board_cards(self) -> int:
+        count = 0
+        for row in self.board:
+            for card in row:
+                if isinstance(card, Card):
+                    count += 1
+
+        return count
