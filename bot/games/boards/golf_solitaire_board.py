@@ -64,6 +64,16 @@ class GolfSolitaireBoard(BaseCardGameBoard):
 
         return result
 
+    def count_neighbors(self, row_index: int, card_index: int) -> int:
+        neighbors = [
+            self.get_card(row_index + 1, card_index),
+            self.get_card(row_index - 1, card_index),
+            self.get_card(row_index, card_index + 1),
+            self.get_card(row_index, card_index - 1),
+        ]
+
+        return sum((1 for neighbor in neighbors if isinstance(neighbor, Card)))
+
     def create_board(self):
         for _ in range(self.num_rows):
             row = []
