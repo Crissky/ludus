@@ -74,6 +74,29 @@ class GolfSolitaireBoard(BaseCardGameBoard):
 
         return sum((1 for neighbor in neighbors if isinstance(neighbor, Card)))
 
+    def is_valid_play(self, row_index: int, card_index: int) -> bool:
+        result = False
+        card = self.get_card(row_index, card_index)
+        top_card = self.top_discard_card
+        is_match = self.is_match_card(card, top_card)
+        total_board = self.total_board_cards
+
+        total_neighbors = []
+        for r_i, c_i in [(1, 0), (-1, 0), (0, -1), (0, 1)]:
+            neighbor_card = self.get_card(row_index=r_i, card_index=c_i)
+            if isinstance(neighbor_card, Card):
+                total = self.count_neighbors(row_index=r_i, card_index=c_i)
+                total_neighbors.append(total)
+
+        if card is None:
+            result = False
+        elif total_board <= 2:
+            result = True
+        elif is_match is True and 1 not in total_neighbors:
+            result = True
+
+        return result
+
     def create_board(self):
         for _ in range(self.num_rows):
             row = []
