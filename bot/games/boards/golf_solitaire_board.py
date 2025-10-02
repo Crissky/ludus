@@ -179,15 +179,6 @@ class GolfSolitaireBoard(BaseCardGameBoard):
             return None
 
     @property
-    def draw_button(self):
-        return PlayButton(
-            text='🫴Comprar',
-            game=self,
-            command=CommandEnum.DRAW,
-            group=1
-        )
-
-    @property
     def total_board_cards(self) -> int:
         count = 0
         for row in self.board:
