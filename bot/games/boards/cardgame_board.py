@@ -297,7 +297,7 @@ class BaseCardGameBoard(BaseBoard):
             text='🫴Comprar',
             game=self,
             command=CommandEnum.DRAW,
-            group=1
+            group=98
         )
 
     @property
