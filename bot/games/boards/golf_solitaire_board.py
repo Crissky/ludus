@@ -118,8 +118,8 @@ class GolfSolitaireBoard(BaseCardGameBoard):
             for card_index, card in enumerate(row):
                 text = text = card.text if card else '❌'
                 callback_data_args = {
-                    CallbackKeyEnum.ROW_INDEX: row_index,
-                    CallbackKeyEnum.CARD_INDEX: card_index,
+                    CallbackKeyEnum.ROW_INDEX.name: row_index,
+                    CallbackKeyEnum.CARD_INDEX.name: card_index,
                 }
                 button = PlayButton(
                     text=text,
