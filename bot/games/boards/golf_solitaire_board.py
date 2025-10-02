@@ -103,7 +103,7 @@ class GolfSolitaireBoard(BaseCardGameBoard):
             for _ in range(self.num_card_per_row):
                 card_list = self.draw()
                 row.extend(card_list)
-            self.board.extend(row)
+            self.board.append(row)
 
     # ABSTRACT METHODS #######################################################
     def player_keyboard(self, player: Player) -> PlayKeyBoard:
