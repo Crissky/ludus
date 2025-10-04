@@ -133,6 +133,13 @@ class GolfSolitaireBoard(BaseCardGameBoard):
         if self.draw_pile.is_empty is False:
             keyboard.add_button(self.draw_button)
 
+        close_button = self.close_button
+        help_button = self.help_button
+        if isinstance(close_button, PlayButton):
+            keyboard.add_button(close_button)
+        if isinstance(help_button, PlayButton):
+            keyboard.add_button(help_button)
+
         return keyboard
 
     def play(self, player: Player, play_dict: dict):
