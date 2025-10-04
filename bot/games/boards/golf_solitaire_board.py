@@ -151,8 +151,20 @@ class GolfSolitaireBoard(BaseCardGameBoard):
 
         command_str = play_dict[CallbackKeyEnum.COMMAND]
         command_enum = CommandEnum[command_str]
+
         row_index = play_dict.get(CallbackKeyEnum.ROW_INDEX)
         card_index = play_dict.get(CallbackKeyEnum.CARD_INDEX)
+        card = self.get_card(row_index, card_index)
+        if card is None:
+            return 'Não há uma carta nessa casa para ser jogada.'
+
+        total_neighbors = self.count_neighbors(row_index, card_index)
+        if total_neighbors >= 4:
+            return (
+                f'Carta "{card}" não pode ser jogada, pois ela está '
+                f'completamente cercada por {total_neighbors} cartas.'
+            )
+
 
     def is_playable_card(self, card: Card) -> bool:
         return True
