@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 from bot.games.boards.cardgame_board import BaseCardGameBoard
 from bot.games.buttons.play_button import PlayButton
@@ -38,7 +38,7 @@ class GolfSolitaireBoard(BaseCardGameBoard):
             'board',
         ])
 
-    def get_card(self, row_index: int, card_index: int) -> Card:
+    def get_card(self, row_index: int, card_index: int) -> Optional[Card]:
         if row_index < 0 or row_index >= self.num_rows:
             return None
         if card_index < 0 or card_index >= self.num_card_per_row:
