@@ -165,6 +165,21 @@ class GolfSolitaireBoard(BaseCardGameBoard):
                 f'completamente cercada por {total_neighbors} cartas.'
             )
 
+        top_card = self.top_discard_card
+        is_match = self.is_match_card(card, top_card)
+        if is_match is False:
+            value = top_card.value
+            list_name = list(top_card.name.__class__)
+            next_value = (value + 1) % len(list_name)
+            previous_value = value - 1
+            next_card_name = list_name[next_value].value
+            previous_card_name = list_name[previous_value].value
+
+            return (
+                f'Carta "{card}" não pode ser jogada. '
+                f'Jogue "{next_card_name}" ou "{previous_card_name}".'
+            )
+
 
     def is_playable_card(self, card: Card) -> bool:
         return True
