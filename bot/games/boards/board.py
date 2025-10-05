@@ -125,7 +125,7 @@ class BaseBoard(ABC):
         self.add_log(action=action, player=False)
 
     def get_player(self, player: Union[Player, int, str]) -> Player:
-        '''Retorna um jogador pelo nome, pelo índice ou pelo Player 
+        '''Retorna um jogador pelo nome, pelo índice ou pelo Player
         na lista de jogadores.
         '''
 
@@ -194,7 +194,7 @@ class BaseBoard(ABC):
         self.turn += 1
 
     def set_next_player(self, skip: bool = False):
-        '''Define quem é o próximo jogador da vez considerando o sentido 
+        '''Define quem é o próximo jogador da vez considerando o sentido
         da partida e se quem seria o próximo jogador foi
         bloqueado (skip is True).
         '''
