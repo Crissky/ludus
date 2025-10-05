@@ -77,7 +77,7 @@ class TestPlayButton(unittest.TestCase):
             "callback_data inválido(s): ['INVALID_KEY'].\n"
             "Os valores válidos são: "
             "['COMMAND', 'GAME_ID', 'HAND_POSITION', 'DISCARD_POSITION', "
-            "'SELECTED_COLOR']."
+            "'SELECTED_COLOR', 'ROW_INDEX', 'CARD_INDEX']."
         )
         with self.assertRaises(ValueError) as context:
             PlayButton(
