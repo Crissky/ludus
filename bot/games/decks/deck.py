@@ -135,6 +135,9 @@ class BaseDeck:
 
         return card_list
 
+    def draw_all(self) -> List[Card]:
+        return self.draw(quantity=len(self))
+
     def peek(self, quantity: int = 1) -> List[Card]:
         card_list = self.card_stack.peek(quantity=quantity)
         card_list = self.make_card_list(card_list=card_list)
