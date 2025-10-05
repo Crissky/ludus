@@ -39,6 +39,10 @@ class GolfSolitaireBoard(BaseCardGameBoard):
         ])
 
     def get_card(self, row_index: int, card_index: int) -> Optional[Card]:
+        '''Retorna uma carta da fileira. Mas retorna None de se
+        se o row_index ou card_index passado estiver fora do range.
+        '''
+
         if row_index < 0 or row_index >= self.num_rows:
             return None
         if card_index < 0 or card_index >= self.num_card_per_row:
@@ -50,6 +54,13 @@ class GolfSolitaireBoard(BaseCardGameBoard):
         return card
 
     def is_match_card(self, card1: Card, card2: Card) -> bool:
+        '''Verifica se duas cartas "combinam", se elas tem valores sucesssor ou
+        antecessor uma em relação a outra. Ex: 2 e 3, 10 e J, K e A, A e 2.
+
+        Retorna True se as cartas são sucesssor/antecessor e False caso
+        contrário.
+        '''
+
         result = False
         value1 = card1.value
         value2 = card2.value
@@ -65,6 +76,10 @@ class GolfSolitaireBoard(BaseCardGameBoard):
         return result
 
     def count_neighbors(self, row_index: int, card_index: int) -> int:
+        '''Retorna o total de cartas vizinhas perpendiculares (cima, baixo,
+        esquerda e direita).
+        '''
+
         neighbors = [
             self.get_card(row_index + 1, card_index),
             self.get_card(row_index - 1, card_index),
@@ -75,6 +90,10 @@ class GolfSolitaireBoard(BaseCardGameBoard):
         return sum((1 for neighbor in neighbors if isinstance(neighbor, Card)))
 
     def check_neighbors(self, row_index: int, card_index: int) -> dict:
+        '''Retorna um dicionário com total de cartas vizinhas perpendiculares
+        em relação aos vizinhos perpendiculares da carta passada.
+        '''
+
         result = {}
         neighbors = {
             'n': (-1, 0),
@@ -100,6 +119,9 @@ class GolfSolitaireBoard(BaseCardGameBoard):
         return result
 
     def create_board(self):
+        '''Distribui cartas no tabuleiro.
+        '''
+
         for _ in range(self.num_rows):
             row = []
             for _ in range(self.num_card_per_row):

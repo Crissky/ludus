@@ -1,7 +1,7 @@
 import logging
 
 from abc import ABC, abstractmethod
-from typing import Callable, Iterable, List, Union
+from typing import Callable, Iterable, List, Optional, Union
 
 from telegram import InlineKeyboardMarkup
 
@@ -98,6 +98,9 @@ class BaseBoard(ABC):
         )
 
     def add_player(self, player: Player):
+        '''Adiciona um jogador ao Tabuleiro.
+        '''
+
         if not isinstance(player, Player):
             raise TypeError(f'Player {player} não é um Player.')
 
@@ -122,12 +125,20 @@ class BaseBoard(ABC):
         self.add_log(action=action, player=False)
 
     def get_player(self, player: Union[Player, int, str]) -> Player:
+        '''Retorna um jogador pelo nome, pelo índice ou pelo Player 
+        na lista de jogadores.
+        '''
+
         return next((p for p in self.player_list if p == player), None)
 
     def set_invite_keyboard(
         self,
         keyboard: Union[InviteKeyBoard, InlineKeyboardMarkup]
     ):
+        '''Define o teclado de convite do jogo. Esse teclado é usado enquanto a
+        partida ainda não começou.
+        '''
+
         if not isinstance(keyboard, (InlineKeyboardMarkup, InviteKeyBoard)):
             raise TypeError(
                 'Keyboard deve ser do tipo '
@@ -170,6 +181,9 @@ class BaseBoard(ABC):
             self.player_list.remove(player)
 
     def next_turn(self, player: Player, skip: bool = False):
+        '''Passa a vez para o próximo jogador aumentando o turno em 1.
+        '''
+
         if skip is False:
             action = 'Passou a vez.'
         else:
@@ -180,12 +194,21 @@ class BaseBoard(ABC):
         self.turn += 1
 
     def set_next_player(self, skip: bool = False):
+        '''Define quem é o próximo jogador da vez considerando o sentido 
+        da partida e se quem seria o próximo jogador foi
+        bloqueado (skip is True).
+        '''
+
         increment = 2 if skip is True else 1
         self.current_player_index = (
             self.current_player_index + increment * self.turn_direction
         ) % len(self.player_list)
 
     def invert_direction(self):
+        '''Inverte o sentido da partida de horário para anti-horario e
+        vice-versa.
+        '''
+
         self.turn_direction *= -1
 
     def add_log(
@@ -193,7 +216,11 @@ class BaseBoard(ABC):
         report: Report = None,
         action: str = None,
         player: Union[Player, bool] = None,
-    ) -> str:
+    ) -> Optional[str]:
+        '''Adiciona um log ao Tabuleiro.
+        Retorna o action caso ele seja uma string.
+        '''
+
         if player is True and action is not None:
             player = self.current_player
         elif player is False:
@@ -227,6 +254,9 @@ class BaseBoard(ABC):
         player: Player = None,
         general_info_list: List[Callable] = None
     ) -> str:
+        '''Retorna uma string com informações do jogo.
+        '''
+
         if general_info_list is None:
             general_info_list = []
 
@@ -278,6 +308,10 @@ class BaseBoard(ABC):
         return text
 
     def format_show_board(self, output: Iterable[str]):
+        '''Junta em uma string os textos de output usando '\n' e formata o
+        texto de saída caso tenha uma função formatadora definida.
+        '''
+
         output_text = '\n'.join((
             text
             for text in output
@@ -292,14 +326,25 @@ class BaseBoard(ABC):
 
     @abstractmethod
     def start(self):
+        '''Perpara todas as variáveis para que o jogo possa iniciar.
+        '''
+
         ...
 
     @abstractmethod
     def player_keyboard(self, player: Player) -> PlayKeyBoard:
+        '''Retorna um PlayKeyBoard com os botões de comando que o jogador pode
+        usar.
+        '''
+
         ...
 
     @abstractmethod
-    def play(self, player: Player, play_dict: dict):
+    def play(self, player: Player, play_dict: dict) -> Optional[str]:
+        '''Computa a jogada do jogador podendo ou não adicionar a informação ao
+        log. Retorna uma string com a action do log.
+        '''
+
         game_id = play_dict[CallbackKeyEnum.GAME_ID]
 
         if game_id != self.id:
@@ -317,14 +362,24 @@ class BaseBoard(ABC):
 
     @abstractmethod
     def winners(self) -> List[Player]:
+        '''Retorna uma lista com os vencedores do jogo. A lista será vazia
+        caso ainda não haja vencedores.
+        '''
+
         ...
 
     @property
     def game_over(self) -> bool:
+        '''Retorna True caso haja ao menos um vencedor.
+        '''
+
         return bool(self.winners())
 
     @property
     def current_player(self) -> Player:
+        '''Retorna o jogador atual.
+        '''
+
         if self.player_list:
             return self.player_list[self.current_player_index]
         else:
@@ -336,15 +391,24 @@ class BaseBoard(ABC):
 
     @property
     def host(self) -> Player:
+        '''Retorna o jogador considerado Host da partida.
+        '''
+
         return self.player_list[0] if self.player_list else None
     host_player = host
 
     @property
     def total_players(self) -> int:
+        '''Retorna o número de jogadores na partida.
+        '''
+
         return len(self.player_list)
 
     @property
     def game_header(self) -> str:
+        '''Retorna a string de cabeçalho usada no self.show_board.
+        '''
+
         return NORMAL_SECTION_HEAD_1.format(
             f'Game - {self.DISPLAY_NAME}: {self.id}'
         ) + '\n'

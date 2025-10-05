@@ -77,16 +77,26 @@ class BaseCardGameBoard(BaseBoard):
 
     # CREATE FUNCTIONS #######################################################
     def create_draw_pile(self, draw_pile: BaseDeck):
+        '''Cria a Pilha de Compras.
+        Embaralha a Pilha de Compras se self.is_shuffle_deck for True.
+        '''
+
         self.draw_pile = draw_pile
         if self.is_shuffle_deck is True:
             self.draw_pile.shuffle()
 
     def create_hands(self):
+        '''Cria a mãos de todos os jogadores.
+        '''
+
         for player in self.player_list:
             player_hand = BaseHand(**self.hand_kwargs)
             player.set_hand(player_hand)
 
     def create_discard_pile(self):
+        '''Cria as Pilhas de Descarte.
+        '''
+
         self.discard_piles = [
             BaseDeck()
             for _ in range(self.total_discard_pile)
@@ -98,12 +108,18 @@ class BaseCardGameBoard(BaseBoard):
                 discard_pile.add(*cards)
 
     def distribute_cards(self):
+        '''Distribui as cartas da Pilha de Compras para os jogadores.
+        '''
+
         for _ in range(self.initial_hand_size):
             for player in self.player_list:
                 card_list = self.draw()
                 player.hand.add_card(*card_list)
 
     def draw(self, quantity: int = 1) -> List[Card]:
+        '''Compra carta(s) da Pilha de Compra igual à quantity passada.
+        '''
+
         cards = self.draw_pile.draw(quantity=quantity)
 
         if len(cards) < quantity:
@@ -114,6 +130,11 @@ class BaseCardGameBoard(BaseBoard):
         return cards
 
     def draw_when_empty(self, quantity: int = 1) -> List[Card]:
+        '''Adiciona todas as cartas das Pilhas de Descate à Pilha de Compra,
+        exceto a carta do topo. Após isso, compra carta(s) da Pilha de Compra
+        igual à quantity passada.
+        '''
+
         for pile in self.discard_piles:
             pile_length = len(pile)
             if pile_length > 1:
@@ -133,6 +154,10 @@ class BaseCardGameBoard(BaseBoard):
         index_pile: int = 0,
         quantity: int = 1
     ) -> List[Card]:
+        '''Compra carta(s) da Pilha de Descarte selecionada igual à quantity
+        passada. Retorna um erro caso a Pilha de Descarte mão exista.
+        '''
+
         if index_pile < 0 or index_pile >= len(self.discard_piles):
             raise ValueError(f'Pilha de descarte {index_pile} não existe.')
 
@@ -142,6 +167,10 @@ class BaseCardGameBoard(BaseBoard):
         return cards
 
     def discard(self, *cards: Card, index_pile: int = 0):
+        '''Adiciona carta(s) a uma Pilha de Descarte selecionada.
+        Retorna um erro caso a Pilha de Descarte mão exista.
+        '''
+
         if index_pile < 0 or index_pile >= len(self.discard_piles):
             raise ValueError(f'Pilha de descarte {index_pile} não existe.')
 
