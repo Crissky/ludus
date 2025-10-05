@@ -180,6 +180,20 @@ class GolfSolitaireBoard(BaseCardGameBoard):
                 f'Jogue "{next_card_name}" ou "{previous_card_name}".'
             )
 
+        total_board = self.total_board_cards
+        if total_board > 2:
+            neighbors = self.check_neighbors(row_index, card_index)
+            isolated_card_name_list = []
+            for key, value in neighbors.items():
+                if value == 1:
+                    isolated_card_name_list.append(key)
+
+            if isolated_card_name_list:
+                isolated_card_names = ', '.join(isolated_card_name_list)
+                return (
+                    f'A Carta "{card}" não pode ser jogada, '
+                    f'pois isolará {isolated_card_names}.'
+                )
 
     def is_playable_card(self, card: Card) -> bool:
         return True
