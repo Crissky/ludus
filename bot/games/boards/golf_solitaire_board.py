@@ -43,6 +43,8 @@ class GolfSolitaireBoard(BaseCardGameBoard):
         se o row_index ou card_index passado estiver fora do range.
         '''
 
+        if self.board is None:
+            return None
         if row_index < 0 or row_index >= self.num_rows:
             return None
         if card_index < 0 or card_index >= self.num_card_per_row:
