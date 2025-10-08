@@ -77,6 +77,17 @@ class GolfSolitaireBoard(BaseCardGameBoard):
 
         return result
 
+    def count_row(self, row_index: int) -> Optional[int]:
+        '''Retorna o total de cartas da fileira. Mas retorna None de se
+        se o row_index passado estiver fora do range.
+        '''
+
+        if row_index < 0 or row_index >= self.num_rows:
+            return None
+
+        row = self.board[row_index]
+        return sum((1 for card in row if isinstance(card, Card)))
+
     def count_neighbors(self, row_index: int, card_index: int) -> int:
         '''Retorna o total de cartas vizinhas perpendiculares (cima, baixo,
         esquerda e direita).
