@@ -187,48 +187,49 @@ class GolfSolitaireBoard(BaseCardGameBoard):
         command_str = play_dict[CallbackKeyEnum.COMMAND]
         command_enum = CommandEnum[command_str]
 
-        row_index = play_dict.get(CallbackKeyEnum.ROW_INDEX)
-        card_index = play_dict.get(CallbackKeyEnum.CARD_INDEX)
-        card = self.get_card(row_index, card_index)
-        if card is None:
-            return 'Não há uma carta nessa casa para ser jogada.'
+        if command_enum == CommandEnum.PLAY:
+            row_index = play_dict.get(CallbackKeyEnum.ROW_INDEX)
+            card_index = play_dict.get(CallbackKeyEnum.CARD_INDEX)
+            card = self.get_card(row_index, card_index)
+            if card is None:
+                return 'Não há uma carta nessa casa para ser jogada.'
 
-        total_neighbors = self.count_neighbors(row_index, card_index)
-        if total_neighbors >= 4:
-            return (
-                f'Carta "{card}" não pode ser jogada, pois ela está '
-                f'completamente cercada por {total_neighbors} cartas.'
-            )
-
-        top_card = self.top_discard_card
-        is_match = self.is_match_card(card, top_card)
-        if is_match is False:
-            value = top_card.value
-            list_name = list(top_card.name.__class__)
-            next_value = (value + 1) % len(list_name)
-            previous_value = value - 1
-            next_card_name = list_name[next_value].value
-            previous_card_name = list_name[previous_value].value
-
-            return (
-                f'Carta "{card}" não pode ser jogada. '
-                f'Jogue "{next_card_name}" ou "{previous_card_name}".'
-            )
-
-        total_board = self.total_board_cards
-        if total_board > 2:
-            neighbors = self.check_neighbors(row_index, card_index)
-            isolated_card_name_list = []
-            for key, value in neighbors.items():
-                if value == 1:
-                    isolated_card_name_list.append(key)
-
-            if isolated_card_name_list:
-                isolated_card_names = ', '.join(isolated_card_name_list)
+            total_neighbors = self.count_neighbors(row_index, card_index)
+            if total_neighbors >= 4:
                 return (
-                    f'A Carta "{card}" não pode ser jogada, '
-                    f'pois isolará {isolated_card_names}.'
+                    f'Carta "{card}" não pode ser jogada, pois ela está '
+                    f'completamente cercada por {total_neighbors} cartas.'
                 )
+
+            top_card = self.top_discard_card
+            is_match = self.is_match_card(card, top_card)
+            if is_match is False:
+                value = top_card.value
+                list_name = list(top_card.name.__class__)
+                next_value = (value + 1) % len(list_name)
+                previous_value = value - 1
+                next_card_name = list_name[next_value].value
+                previous_card_name = list_name[previous_value].value
+
+                return (
+                    f'Carta "{card}" não pode ser jogada. '
+                    f'Jogue "{next_card_name}" ou "{previous_card_name}".'
+                )
+
+            total_board = self.total_board_cards
+            if total_board > 2:
+                neighbors = self.check_neighbors(row_index, card_index)
+                isolated_card_name_list = []
+                for key, value in neighbors.items():
+                    if value == 1:
+                        isolated_card_name_list.append(key)
+
+                if isolated_card_name_list:
+                    isolated_card_names = ', '.join(isolated_card_name_list)
+                    return (
+                        f'A Carta "{card}" não pode ser jogada, '
+                        f'pois isolará {isolated_card_names}.'
+                    )
 
     def is_playable_card(self, card: Card) -> bool:
         return True
