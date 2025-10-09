@@ -191,7 +191,7 @@ class GolfSolitaireBoard(BaseCardGameBoard):
             row_index = play_dict.get(CallbackKeyEnum.ROW_INDEX)
             card_index = play_dict.get(CallbackKeyEnum.CARD_INDEX)
             card = self.get_card(row_index, card_index)
-            if card is None:
+            if card is None:  # CHECA SE A CARTA EXISTE
                 return 'Não há uma carta nessa casa para ser jogada.'
 
             total_neighbors = self.count_neighbors(row_index, card_index)
@@ -203,7 +203,7 @@ class GolfSolitaireBoard(BaseCardGameBoard):
 
             top_card = self.top_discard_card
             is_match = self.is_match_card(card, top_card)
-            if is_match is False:
+            if is_match is False:  # CHECA SE A CARTA COMBINA COM O DESCARTE
                 value = top_card.value
                 list_name = list(top_card.name.__class__)
                 next_value = (value + 1) % len(list_name)
@@ -217,18 +217,40 @@ class GolfSolitaireBoard(BaseCardGameBoard):
                 )
 
             total_board = self.total_board_cards
-            if total_board > 2:
-                neighbors = self.check_neighbors(row_index, card_index)
-                isolated_card_name_list = []
-                for key, value in neighbors.items():
-                    if value == 1:
-                        isolated_card_name_list.append(key)
+            if total_board > 2:  # CHECA SE VAI DEIXAR CARTA DESCONECTADA
+                mid_row = self.num_rows // 2
+                mid_col = self.num_card_per_row // 2
+                if row_index <= mid_row:
+                    vertical_card = self.get_card(
+                        row_index=row_index-1,
+                        card_index=card_index
+                    )
+                else:
+                    vertical_card = self.get_card(
+                        row_index=row_index+1,
+                        card_index=card_index
+                    )
 
-                if isolated_card_name_list:
-                    isolated_card_names = ', '.join(isolated_card_name_list)
+                if card_index <= mid_col:
+                    horizontal_card = self.get_card(
+                        row_index=row_index,
+                        card_index=card_index-1
+                    )
+                else:
+                    horizontal_card = self.get_card(
+                        row_index=row_index,
+                        card_index=card_index+1
+                    )
+
+                if isinstance(vertical_card, Card):
                     return (
-                        f'A Carta "{card}" não pode ser jogada, '
-                        f'pois isolará {isolated_card_names}.'
+                        f'Carta "{card}" não pode ser jogada, '
+                        f'pois "{vertical_card}" ficará desconectada.'
+                    )
+                if isinstance(horizontal_card, Card):
+                    return (
+                        f'Carta "{card}" não pode ser jogada, '
+                        f'pois "{horizontal_card}" ficará desconectada.'
                     )
 
     def is_playable_card(self, card: Card) -> bool:
