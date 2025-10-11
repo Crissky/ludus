@@ -276,6 +276,9 @@ class GolfSolitaireBoard(BaseCardGameBoard):
                         f'pois "{horizontal_card}" ficará desconectada.'
                     )
 
+        elif command_enum == CommandEnum.DRAW:
+            ...
+
     def is_playable_card(self, card: Card) -> bool:
         return True
 
