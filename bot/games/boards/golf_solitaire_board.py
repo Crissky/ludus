@@ -55,6 +55,29 @@ class GolfSolitaireBoard(BaseCardGameBoard):
 
         return card
 
+    def remove_card(self, row_index: int, card_index: int):
+        '''Remove uma carta da fileira e a coloca na pilha de descarte.
+        Levanta uma exceção se o row_index ou card_index estiver fora do range.
+        '''
+
+        card = self.get_card(row_index, card_index)
+        if row_index < 0 or row_index >= self.num_rows:
+            raise ValueError(f'Fileira {row_index} não existe.')
+        if card_index < 0 or card_index >= self.num_card_per_row:
+            raise ValueError(f'Coluna {card_index} não existe.')
+        if card is None:
+            raise ValueError(
+                f'Carta na posição {row_index}x{card_index} já foi removida.'
+            )
+        if isinstance(card, Card):
+            self.board[row_index][card_index] = None
+            self.discard_piles[0].add(card)
+        else:
+            raise RuntimeError(
+                'Não foi possível remover a carta na posição '
+                f'{row_index}x{card_index}.'
+            )
+
     def is_match_card(self, card1: Card, card2: Card) -> bool:
         '''Verifica se duas cartas "combinam", se elas tem valores sucesssor ou
         antecessor uma em relação a outra. Ex: 2 e 3, 10 e J, K e A, A e 2.
