@@ -277,7 +277,13 @@ class GolfSolitaireBoard(BaseCardGameBoard):
                     )
 
         elif command_enum == CommandEnum.DRAW:
-            ...
+            drawed_card = self.draw()
+            if drawed_card is None:
+                return 'Não há mais cartas para comprar.'
+            else:
+                self.discard_pile.add(drawed_card)
+                action = f'Comprou a carta {drawed_card}.'
+                return self.add_log(action=action, player=True)
 
     def is_playable_card(self, card: Card) -> bool:
         return True
