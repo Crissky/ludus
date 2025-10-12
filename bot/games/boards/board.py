@@ -213,9 +213,9 @@ class BaseBoard(ABC):
 
     def add_log(
         self,
-        report: Report = None,
-        action: str = None,
-        player: Union[Player, bool] = None,
+        report: Optional[Report] = None,
+        action: Optional[str] = None,
+        player: Optional[Union[Player, bool]] = None,
     ) -> Optional[str]:
         '''Adiciona um log ao Tabuleiro.
         Retorna o action caso ele seja uma string.
