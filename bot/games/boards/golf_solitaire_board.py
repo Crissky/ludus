@@ -55,8 +55,8 @@ class GolfSolitaireBoard(BaseCardGameBoard):
 
         return card
 
-    def remove_card(self, row_index: int, card_index: int):
-        '''Remove uma carta da fileira e a coloca na pilha de descarte.
+    def play_card(self, row_index: int, card_index: int):
+        '''Remove uma carta do tabuleiro e a coloca na pilha de descarte.
         Levanta uma exceção se o row_index ou card_index estiver fora do range.
         '''
 
@@ -275,6 +275,8 @@ class GolfSolitaireBoard(BaseCardGameBoard):
                         f'Carta "{card}" não pode ser jogada, '
                         f'pois "{horizontal_card}" ficará desconectada.'
                     )
+
+            
 
         elif command_enum == CommandEnum.DRAW:
             drawed_card = self.draw()
