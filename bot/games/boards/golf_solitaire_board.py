@@ -289,6 +289,21 @@ class GolfSolitaireBoard(BaseCardGameBoard):
                 action = f'Comprou a carta {drawed_card}.'
                 return self.add_log(action=action, player=True)
 
+        if self.game_over:
+            winners_list = self.winners()
+            winner = winners_list[0] if winners_list else None
+            player = self.player
+            if winner is None:
+                action = 'Empate.'
+            elif winner == self.enemy:
+                action = f'{player.name} foi derrotado!'
+                if self.draw_pile.is_empty is True:  # Talvez não seja preciso
+                    action += ' A Pilha de Comprar ficou vazia.'
+            elif winner == player and player is not None:
+                action = f'Parabens, {player.name}! Você ganhou o jogo!!!'
+
+            return self.add_log(action=action, player=False)
+
     def is_playable_card(self, card: Card) -> bool:
         return True
 
