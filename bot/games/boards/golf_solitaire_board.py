@@ -276,7 +276,9 @@ class GolfSolitaireBoard(BaseCardGameBoard):
                         f'pois "{horizontal_card}" ficará desconectada.'
                     )
 
-            
+            self.play_card(row_index=row_index, card_index=card_index)
+            action = f'Jogou a carta "{card}".'
+            self.add_log(action=action, player=True)
 
         elif command_enum == CommandEnum.DRAW:
             drawed_card = self.draw()
