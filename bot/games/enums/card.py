@@ -56,6 +56,14 @@ class ElementalSuits(Suits):
     VOID = "🌑"
 
 
+class NineNineSuits(Suits):
+    ORAGE = "🟠"
+    GREEN = "🟢"
+    RED = "🔴"
+    BLUE = "🔵"
+    BLACK = "⬛"
+
+
 # Names
 class RoyalNames(Names):
     ACE = "A"
@@ -152,6 +160,24 @@ class StrippedSpanishNames(Names):
     KNAVE = "10"
     KNIGHT = "11"
     KING = "12"
+
+
+class NineNineNames(Names):
+    ZERO = "0"
+    ONE = "1"
+    TWO = "2"
+    THREE = "3"
+    FOUR = "4"
+    FIVE = "5"
+    SIX = "6"
+    SEVEN = "7"
+    EIGHT = "8"
+    NINE = "9"
+    TEN = "10"
+    NINE_NINE = "99"
+    REVERSE = "🗘"
+    DOUBLE_PLAY = "🎴🎴"
+    MINUS_TEN = "-10"
 
 
 # Constants
