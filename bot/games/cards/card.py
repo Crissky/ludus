@@ -97,15 +97,15 @@ class Card:
         self.wild_suit = None
 
     @property
-    def text(self):
+    def text(self) -> str:
         return f'{self.suit.value}{self.name.value}'
 
     @property
-    def value(self):
+    def value(self) -> int:
         return get_enum_index(self.name)
 
     @property
-    def suit_value(self):
+    def suit_value(self) -> int:
         return get_enum_index(self.suit)
 
     @property
