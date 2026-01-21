@@ -32,16 +32,16 @@ class NienNineDeck(BaseDeck):
         )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     from collections import Counter
 
     deck = NienNineDeck(is_shuffle=False, total_decks=1)
     logging.basicConfig(
         level=logging.DEBUG,
-        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     )
     logging.debug(len(deck))
-    logging.debug(f'Possui 112 cartas? {len(deck) == 112}')
-    for card in (count:=Counter(deck)):
+    logging.debug(f"Possui 112 cartas? {len(deck) == 112}")
+    for card in (count := Counter(deck)):
         logging.debug((card, count[card]))
     logging.debug(deck)
