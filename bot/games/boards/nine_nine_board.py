@@ -1,0 +1,25 @@
+from bot.games.boards.cardgame_board import BaseCardGameBoard
+from bot.games.decks.nine_nine import NienNineDeck
+from bot.games.player import Player
+
+
+class NineNineBoard(BaseCardGameBoard):
+    DISPLAY_NAME: str = '💯99'
+    DESCRIPTION: str = ('')
+
+    def __init__(self, *players: Player, debug: bool = False):
+        draw_pile = NienNineDeck()
+        super().__init__(
+            draw_pile,
+            *players,
+            is_shuffle_deck=True,
+            total_discard_pile=1,
+            discard_at_start=True,
+            initial_hand_size=4,
+            hand_kwargs={'max_size': 4},
+            min_total_players=2,
+            max_total_players=10,
+            debug=debug,
+        )
+
+        self.debug_attr_list.extend([])
