@@ -1,6 +1,6 @@
 from bot.games.boards.cardgame_board import BaseCardGameBoard
 from bot.games.decks.deck import BaseDeck
-from bot.games.decks.nine_nine import NienNineDeck
+from bot.games.decks.nine_nine import NineNineDeck
 from bot.games.player import Player
 
 
@@ -9,7 +9,7 @@ class NineNineBoard(BaseCardGameBoard):
     DESCRIPTION: str = ""
 
     def __init__(self, *players: Player, debug: bool = False):
-        draw_pile = NienNineDeck()
+        draw_pile = NineNineDeck()
         super().__init__(
             draw_pile,
             *players,

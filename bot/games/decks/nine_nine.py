@@ -4,7 +4,7 @@ from bot.games.decks.deck import BaseDeck
 from bot.games.enums.card import NineNineNames, NineNineSuits
 
 
-class NienNineDeck(BaseDeck):
+class NineNineDeck(BaseDeck):
     def __init__(self, is_shuffle: bool = True, total_decks: int = 1):
         quantities = {
             (NineNineNames.ZERO, NineNineSuits.ORAGE): 8,
@@ -35,7 +35,7 @@ class NienNineDeck(BaseDeck):
 if __name__ == "__main__":
     from collections import Counter
 
-    deck = NienNineDeck(is_shuffle=False, total_decks=1)
+    deck = NineNineDeck(is_shuffle=False, total_decks=1)
     logging.basicConfig(
         level=logging.DEBUG,
         format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
