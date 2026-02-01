@@ -31,3 +31,12 @@ class NineNineBoard(BaseCardGameBoard):
             return self.discard_piles[0]
         else:
             return None
+
+    @property
+    def total_score(self) -> int:
+        result = 0
+        discard_pile = self.discard_pile
+        if discard_pile:
+            for card in discard_pile:
+                result += card.value
+        return result
