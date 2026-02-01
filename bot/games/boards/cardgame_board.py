@@ -312,6 +312,11 @@ class BaseCardGameBoard(BaseBoard):
         ...
 
     @property
+    def current_player_hand(self) -> BaseHand:
+        current_player = self.current_player
+        return current_player.hand if current_player else None
+
+    @property
     def pass_button(self) -> PlayButton:
         return PlayButton(
             text='🫴Passar',
