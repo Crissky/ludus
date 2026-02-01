@@ -3,6 +3,7 @@ from bot.games.boards.board import BaseBoard
 from bot.games.boards.colorgame_board import ColorsGameBoard
 from bot.games.boards.golf_solitaire_board import GolfSolitaireBoard
 from bot.games.boards.jokerjail_board import JokerJailBoard
+from bot.games.boards.nine_nine_board import NineNineBoard
 from bot.games.boards.scoundrel_board import ScoundrelBoard
 
 
@@ -25,6 +26,7 @@ def get_duel_board_list() -> List[Type[BaseBoard]]:
 def get_party_board_list() -> List[Type[BaseBoard]]:
     party_board_list = [
         ColorsGameBoard,
+        NineNineBoard,
     ]
 
     return party_board_list
