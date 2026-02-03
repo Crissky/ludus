@@ -40,3 +40,13 @@ class NineNineBoard(BaseCardGameBoard):
             for card in discard_pile:
                 result += card.value
         return result
+
+    @property
+    def current_player_has_4_nine_nine(self):
+        total_nine_nine = 0
+        player_hand = self.current_player_hand
+        for card in player_hand:
+            if card.name == NineNineNames.NINE_NINE:
+                total_nine_nine += 1
+
+        return total_nine_nine >= 4
