@@ -1,6 +1,8 @@
 from bot.games.boards.cardgame_board import BaseCardGameBoard
+from bot.games.cards.card import Card
 from bot.games.decks.deck import BaseDeck
 from bot.games.decks.nine_nine import NineNineDeck
+from bot.games.enums.card import NineNineNames
 from bot.games.player import Player
 
 
@@ -24,6 +26,17 @@ class NineNineBoard(BaseCardGameBoard):
         )
 
         self.debug_attr_list.extend([])
+
+    def is_playable_card(self, card: Card) -> bool:  # TODO
+        if (
+            card.name == NineNineNames.NINE_NINE
+            and not self.current_player_has_4_nine_nine
+        ):
+            return False
+        elif (card.value + self.total_score) >= 99:
+            return False
+
+        return True
 
     @property
     def discard_pile(self) -> BaseDeck:
