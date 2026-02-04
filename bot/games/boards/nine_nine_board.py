@@ -27,6 +27,18 @@ class NineNineBoard(BaseCardGameBoard):
 
         self.debug_attr_list.extend([])
 
+    def show_board(self, player: Player = None) -> str:
+        general_info_list = [self.show_board_total_score]
+        return super().show_board(
+            player=player,
+            general_info_list=general_info_list
+        )
+
+    def show_board_total_score(self) -> str:
+        text = f'Pontuação: {self.total_score}'
+
+        return text
+
     def is_playable_card(self, card: Card) -> bool:  # TODO
         if (
             card.name == NineNineNames.NINE_NINE
