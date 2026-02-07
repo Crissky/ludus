@@ -30,12 +30,11 @@ class NineNineBoard(BaseCardGameBoard):
     def show_board(self, player: Player = None) -> str:
         general_info_list = [self.show_board_total_score]
         return super().show_board(
-            player=player,
-            general_info_list=general_info_list
+            player=player, general_info_list=general_info_list
         )
 
     def show_board_total_score(self) -> str:
-        text = f'Pontuação: {self.total_score}'
+        text = f"Pontuação: {self.total_score}"
 
         return text
 
