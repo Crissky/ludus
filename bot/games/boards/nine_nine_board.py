@@ -3,6 +3,7 @@ from bot.games.cards.card import Card
 from bot.games.decks.deck import BaseDeck
 from bot.games.decks.nine_nine import NineNineDeck
 from bot.games.enums.card import NineNineNames
+from bot.games.enums.command import CallbackKeyEnum, CommandEnum
 from bot.games.player import Player
 
 
@@ -37,6 +38,38 @@ class NineNineBoard(BaseCardGameBoard):
         text = f"Pontuação: {self.total_score}"
 
         return text
+
+    def play(self, player: Player, play_dict: dict):
+        result = super().play(player=player, play_dict=play_dict)
+        if isinstance(result, str):
+            return result
+
+        command_str = play_dict[CallbackKeyEnum.COMMAND]
+        command_enum = CommandEnum[command_str]
+        hand_position = play_dict.get(CallbackKeyEnum.HAND_POSITION)
+        player = self.get_player(player)
+
+        if command_enum == CommandEnum.PLAY:
+            result = self.check_play_card(
+                player=player,
+                hand_position=hand_position
+            )
+            if isinstance(result, str):
+                return result
+
+            play_card_list = player.play(hand_position)
+            if len(play_card_list) > 1:
+                player.add_card(*play_card_list)
+                raise ValueError(
+                    f'Mais de uma carta jogada. {play_card_list}.'
+                )
+
+            card = play_card_list[0]
+            if card.name == NineNineNames.NINE_NINE:  # TODO
+                ...
+            self.discard(card)
+            action = f'jogou {card}.'
+            self.add_log(action=action, player=player)
 
     def is_playable_card(self, card: Card) -> bool:  # TODO
         if (
