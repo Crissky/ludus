@@ -241,40 +241,53 @@ class GolfSolitaireBoard(BaseCardGameBoard):
 
             total_board = self.total_board_cards
             if total_board > 2:  # CHECA SE VAI DEIXAR CARTA DESCONECTADA
+                # TODO CRIAR VERIFICAÇÃO PARA QUANDO A REMOÇÃO DE UMA CARTA 
+                # FAZ COM QUE DOIS BLOCOS DE CARTAS FIQUEM DESCONECTADOS 
+                # UM DO OUTRO.
                 mid_row = self.num_rows // 2
                 mid_col = self.num_card_per_row // 2
-                if row_index <= mid_row:
-                    vertical_card = self.get_card(
-                        row_index=row_index-1,
-                        card_index=card_index
-                    )
-                else:
-                    vertical_card = self.get_card(
-                        row_index=row_index+1,
-                        card_index=card_index
-                    )
+                neighbors = self.check_neighbors(
+                    row_index=row_index,
+                    card_index=card_index
+                )
+                # if row_index <= mid_row:
+                #     vertical_card = self.get_card(
+                #         row_index=row_index-1,
+                #         card_index=card_index
+                #     )
+                # else:
+                #     vertical_card = self.get_card(
+                #         row_index=row_index+1,
+                #         card_index=card_index
+                #     )
 
-                if card_index <= mid_col:
-                    horizontal_card = self.get_card(
-                        row_index=row_index,
-                        card_index=card_index-1
-                    )
-                else:
-                    horizontal_card = self.get_card(
-                        row_index=row_index,
-                        card_index=card_index+1
-                    )
+                # if card_index <= mid_col:
+                #     horizontal_card = self.get_card(
+                #         row_index=row_index,
+                #         card_index=card_index-1
+                #     )
+                # else:
+                #     horizontal_card = self.get_card(
+                #         row_index=row_index,
+                #         card_index=card_index+1
+                #     )
 
-                if isinstance(vertical_card, Card):
-                    return (
-                        f'Carta "{card}" não pode ser jogada, '
-                        f'pois "{vertical_card}" ficará desconectada.'
-                    )
-                if isinstance(horizontal_card, Card):
-                    return (
-                        f'Carta "{card}" não pode ser jogada, '
-                        f'pois "{horizontal_card}" ficará desconectada.'
-                    )
+                # if isinstance(vertical_card, Card):
+                #     return (
+                #         f'Carta "{card}" não pode ser jogada, '
+                #         f'pois "{vertical_card}" ficará desconectada.'
+                #     )
+                # if isinstance(horizontal_card, Card):
+                #     return (
+                #         f'Carta "{card}" não pode ser jogada, '
+                #         f'pois "{horizontal_card}" ficará desconectada.'
+                #     )
+                for n_name, total_n in neighbors.items():
+                    if total_n == 1:
+                        return (
+                            f'Carta "{card}" não pode ser jogada, '
+                            f'pois "{n_name}" ficará desconectada.'
+                        )
 
             self.play_card(row_index=row_index, card_index=card_index)
             action = f'Jogou a carta "{card}".'
