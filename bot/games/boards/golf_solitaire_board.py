@@ -298,8 +298,9 @@ class GolfSolitaireBoard(BaseCardGameBoard):
             if drawed_card is None:
                 return 'Não há mais cartas para comprar.'
             else:
-                self.discard_pile.add(drawed_card)
-                action = f'Comprou a carta {drawed_card}.'
+                self.discard_pile.add(*drawed_card)
+                drawed_card_text = ', '.join((d.text for d in drawed_card))
+                action = f'Comprou a carta {drawed_card_text}.'
                 return self.add_log(action=action, player=True)
 
         if self.game_over:
