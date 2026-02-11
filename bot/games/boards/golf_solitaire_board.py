@@ -102,6 +102,52 @@ class GolfSolitaireBoard(BaseCardGameBoard):
 
         return result
 
+    def is_board_connected(self, board: List[List[Card]]):
+        """Retorna True se o tabuleiro estiver todo conectado."""
+
+        card_positions = []
+        for row_index, row in enumerate(board):
+            for card_index, card in enumerate(row):
+                if card is not None:
+                    card_positions.append((row_index, card_index))
+
+        if len(card_positions) <= 1:
+            return True
+
+        start_node = card_positions[0]
+        visited = set()
+        queue = [start_node]
+        visited.add(start_node)
+        neighbors = {
+            "n": (-1, 0),
+            "s": (1, 0),
+            "e": (0, 1),
+            "w": (0, -1),
+        }
+
+        while queue:
+            node = queue.pop(0)
+            row_index, card_index = node
+            for ri, ci in neighbors.values():
+                neighbor_row_index = row_index + ri
+                neighbor_card_index = card_index + ci
+                neighbor_node = (neighbor_row_index, neighbor_card_index)
+                if any((
+                    not 0 <= neighbor_row_index < self.num_rows,
+                    not 0 <= neighbor_card_index < self.num_card_per_row,
+                )):
+                    continue
+                try:
+                    card = board[neighbor_row_index][neighbor_card_index]
+                except IndexError:
+                    card = None
+
+                if card is not None and neighbor_node not in visited:
+                    visited.add(neighbor_node)
+                    queue.append(neighbor_node)
+
+        return len(visited) == len(card_positions)
+
     def count_row(self, row_index: int) -> Optional[int]:
         """Retorna o total de cartas da fileira. Mas retorna None de se
         se o row_index passado estiver fora do range.
