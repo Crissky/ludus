@@ -11,8 +11,8 @@ from bot.games.player import Player
 
 
 class GolfSolitaireBoard(BaseCardGameBoard):
-    DISPLAY_NAME: str = '🏌️‍♂️Golf Solitaire'
-    DESCRIPTION: str = ('')
+    DISPLAY_NAME: str = "🏌️‍♂️Golf Solitaire"
+    DESCRIPTION: str = ""
 
     def __init__(self, *players: Player, debug: bool = False):
         draw_pile = RoyalDeck()
@@ -23,25 +23,27 @@ class GolfSolitaireBoard(BaseCardGameBoard):
             total_discard_pile=1,
             discard_at_start=True,
             initial_hand_size=0,
-            hand_kwargs={'max_size': 0},
+            hand_kwargs={"max_size": 0},
             min_total_players=1,
             max_total_players=1,
             debug=debug,
         )
-        self.enemy = Player(player_id='0000000000', name='Solitaire')
+        self.enemy = Player(player_id="0000000000", name="Solitaire")
         self.num_rows = 5
         self.num_card_per_row = 7
-        self.board: List[Card] = []
+        self.board: List[List[Card]] = []
         self.create_board()
 
-        self.debug_attr_list.extend([
-            'board',
-        ])
+        self.debug_attr_list.extend(
+            [
+                "board",
+            ]
+        )
 
     def get_card(self, row_index: int, card_index: int) -> Optional[Card]:
-        '''Retorna uma carta da fileira. Mas retorna None de se
+        """Retorna uma carta da fileira. Mas retorna None de se
         se o row_index ou card_index passado estiver fora do range.
-        '''
+        """
 
         if self.board is None:
             return None
@@ -56,35 +58,35 @@ class GolfSolitaireBoard(BaseCardGameBoard):
         return card
 
     def play_card(self, row_index: int, card_index: int):
-        '''Remove uma carta do tabuleiro e a coloca na pilha de descarte.
+        """Remove uma carta do tabuleiro e a coloca na pilha de descarte.
         Levanta uma exceção se o row_index ou card_index estiver fora do range.
-        '''
+        """
 
         card = self.get_card(row_index, card_index)
         if row_index < 0 or row_index >= self.num_rows:
-            raise ValueError(f'Fileira {row_index} não existe.')
+            raise ValueError(f"Fileira {row_index} não existe.")
         if card_index < 0 or card_index >= self.num_card_per_row:
-            raise ValueError(f'Coluna {card_index} não existe.')
+            raise ValueError(f"Coluna {card_index} não existe.")
         if card is None:
             raise ValueError(
-                f'Carta na posição {row_index}x{card_index} já foi removida.'
+                f"Carta na posição {row_index}x{card_index} já foi removida."
             )
         if isinstance(card, Card):
             self.board[row_index][card_index] = None
             self.discard_piles[0].add(card)
         else:
             raise RuntimeError(
-                'Não foi possível remover a carta na posição '
-                f'{row_index}x{card_index}.'
+                "Não foi possível remover a carta na posição "
+                f"{row_index}x{card_index}."
             )
 
     def is_match_card(self, card1: Card, card2: Card) -> bool:
-        '''Verifica se duas cartas "combinam", se elas tem valores sucesssor ou
+        """Verifica se duas cartas "combinam", se elas tem valores sucesssor ou
         antecessor uma em relação a outra. Ex: 2 e 3, 10 e J, K e A, A e 2.
 
         Retorna True se as cartas são sucesssor/antecessor e False caso
         contrário.
-        '''
+        """
 
         result = False
         value1 = card1.value
@@ -101,9 +103,9 @@ class GolfSolitaireBoard(BaseCardGameBoard):
         return result
 
     def count_row(self, row_index: int) -> Optional[int]:
-        '''Retorna o total de cartas da fileira. Mas retorna None de se
+        """Retorna o total de cartas da fileira. Mas retorna None de se
         se o row_index passado estiver fora do range.
-        '''
+        """
 
         if row_index < 0 or row_index >= self.num_rows:
             return None
@@ -112,9 +114,9 @@ class GolfSolitaireBoard(BaseCardGameBoard):
         return sum((1 for card in row if isinstance(card, Card)))
 
     def count_neighbors(self, row_index: int, card_index: int) -> int:
-        '''Retorna o total de cartas vizinhas perpendiculares (cima, baixo,
+        """Retorna o total de cartas vizinhas perpendiculares (cima, baixo,
         esquerda e direita).
-        '''
+        """
 
         neighbors = [
             self.get_card(row_index + 1, card_index),
@@ -126,37 +128,34 @@ class GolfSolitaireBoard(BaseCardGameBoard):
         return sum((1 for neighbor in neighbors if isinstance(neighbor, Card)))
 
     def check_neighbors(self, row_index: int, card_index: int) -> dict:
-        '''Retorna um dicionário com total de cartas vizinhas perpendiculares
+        """Retorna um dicionário com total de cartas vizinhas perpendiculares
         em relação aos vizinhos perpendiculares da carta passada.
-        '''
+        """
 
         result = {}
         neighbors = {
-            'n': (-1, 0),
-            's': (1, 0),
-            'e': (0, 1),
-            'w': (0, -1),
+            "n": (-1, 0),
+            "s": (1, 0),
+            "e": (0, 1),
+            "w": (0, -1),
         }
 
         for key, (ri, ci) in neighbors.items():
             neighbor_ri = row_index + ri
             neighbor_ci = card_index + ci
             neighbor_card = self.get_card(
-                row_index=neighbor_ri,
-                card_index=neighbor_ci
+                row_index=neighbor_ri, card_index=neighbor_ci
             )
             if isinstance(neighbor_card, Card):
                 total = self.count_neighbors(
-                    row_index=neighbor_ri,
-                    card_index=neighbor_ci
+                    row_index=neighbor_ri, card_index=neighbor_ci
                 )
                 result[neighbor_card.text] = total
 
         return result
 
     def create_board(self):
-        '''Distribui cartas no tabuleiro.
-        '''
+        """Distribui cartas no tabuleiro."""
 
         for _ in range(self.num_rows):
             row = []
@@ -176,7 +175,7 @@ class GolfSolitaireBoard(BaseCardGameBoard):
 
         for row_index, row in enumerate(self.board):
             for card_index, card in enumerate(row):
-                text = text = card.text if card else '❌'
+                text = text = card.text if card else "❌"
                 callback_data_args = {
                     CallbackKeyEnum.ROW_INDEX.name: row_index,
                     CallbackKeyEnum.CARD_INDEX.name: card_index,
@@ -186,7 +185,7 @@ class GolfSolitaireBoard(BaseCardGameBoard):
                     game=self,
                     command=CommandEnum.PLAY,
                     group=row_index,
-                    **callback_data_args
+                    **callback_data_args,
                 )
                 keyboard.add_button(button)
 
@@ -215,13 +214,13 @@ class GolfSolitaireBoard(BaseCardGameBoard):
             card_index = play_dict.get(CallbackKeyEnum.CARD_INDEX)
             card = self.get_card(row_index, card_index)
             if card is None:  # CHECA SE A CARTA EXISTE
-                return 'Não há uma carta nessa casa para ser jogada.'
+                return "Não há uma carta nessa casa para ser jogada."
 
             total_neighbors = self.count_neighbors(row_index, card_index)
             if total_neighbors >= 4:
                 return (
                     f'Carta "{card}" não pode ser jogada, pois ela está '
-                    f'completamente cercada por {total_neighbors} cartas.'
+                    f"completamente cercada por {total_neighbors} cartas."
                 )
 
             top_card = self.top_discard_card
@@ -235,7 +234,7 @@ class GolfSolitaireBoard(BaseCardGameBoard):
                 previous_card_name = list_name[previous_value].value
 
                 return (
-                    f'Carta "{card}" não pode ser jogada. '
+                    f'Carta "{card}" não pode ser jogada.\n'
                     f'Jogue "{next_card_name}" ou "{previous_card_name}".'
                 )
 
@@ -296,11 +295,11 @@ class GolfSolitaireBoard(BaseCardGameBoard):
         elif command_enum == CommandEnum.DRAW:
             drawed_card = self.draw()
             if drawed_card is None:
-                return 'Não há mais cartas para comprar.'
+                return "Não há mais cartas para comprar."
             else:
                 self.discard_pile.add(*drawed_card)
-                drawed_card_text = ', '.join((d.text for d in drawed_card))
-                action = f'Comprou a carta {drawed_card_text}.'
+                drawed_card_text = ", ".join((d.text for d in drawed_card))
+                action = f"Comprou a carta {drawed_card_text}."
                 return self.add_log(action=action, player=True)
 
         if self.game_over:
@@ -308,13 +307,13 @@ class GolfSolitaireBoard(BaseCardGameBoard):
             winner = winners_list[0] if winners_list else None
             player = self.player
             if winner is None:
-                action = 'Empate.'
+                action = "Empate."
             elif winner == self.enemy:
-                action = f'{player.name} foi derrotado!'
+                action = f"{player.name} foi derrotado!"
                 if self.draw_pile.is_empty is True:  # Talvez não seja preciso
-                    action += ' A Pilha de Comprar ficou vazia.'
+                    action += " A Pilha de Comprar ficou vazia."
             elif winner == player and player is not None:
-                action = f'Parabens, {player.name}! Você ganhou o jogo!!!'
+                action = f"Parabens, {player.name}! Você ganhou o jogo!!!"
 
             return self.add_log(action=action, player=False)
 
