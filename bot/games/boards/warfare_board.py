@@ -8,7 +8,7 @@ from bot.games.player import Player
 world_graph = Graph()
 
 @dataclass
-class territory:
+class Territory:
     name: str
     world_graph: Graph
     occupier: Player = None
@@ -16,7 +16,7 @@ class territory:
 
 
 @dataclass
-class continent:
+class Continent:
     name: str
     world_graph: Graph
     majority_bonus: int
@@ -50,7 +50,7 @@ class continent:
 
 
 @dataclass
-class world:
+class World:
     world_graph: Graph
     continents: list = field(default_factory=list)
 
