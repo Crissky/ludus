@@ -1,11 +1,16 @@
+
 from dataclasses import dataclass, field
+
+from networkx import Graph
 
 from bot.games.player import Player
 
+world_graph = Graph()
 
 @dataclass
 class territory:
     name: str
+    world_graph: Graph
     occupier: Player = None
     troops: int = 0
 
@@ -13,6 +18,7 @@ class territory:
 @dataclass
 class continent:
     name: str
+    world_graph: Graph
     majority_bonus: int
     totality_bonus: int
     territories: list = field(default_factory=list)
@@ -45,6 +51,7 @@ class continent:
 
 @dataclass
 class world:
+    world_graph: Graph
     continents: list = field(default_factory=list)
 
     def __post_init__(self):

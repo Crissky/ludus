@@ -12,6 +12,7 @@ python = "^3.10.1 <3.11.0"
 pymongo = "4.3.3"
 python-decouple = "3.8"
 python-telegram-bot = {version = "21.10", extras = ["job-queue"]}
+networkx = "3.4.2"
 
 
 [tool.poetry.group.dev.dependencies]
