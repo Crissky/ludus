@@ -1,24 +1,25 @@
 
 from dataclasses import dataclass, field
+from typing import Union
 
-from networkx import Graph
-
+from bot.games.enums.warfare import ContinentEnum, TerritoryEnum
 from bot.games.player import Player
 
-world_graph = Graph()
+
+logger = logging.getLogger(__name__)
+
 
 @dataclass
 class Territory:
-    name: str
-    world_graph: Graph
+    name: Union[str, TerritoryEnum]
     occupier: Player = None
+    frontiers: "Territory" = field(default_factory=list)
     troops: int = 0
 
 
 @dataclass
 class Continent:
-    name: str
-    world_graph: Graph
+    name: Union[str, ContinentEnum]
     majority_bonus: int
     totality_bonus: int
     territories: list = field(default_factory=list)
@@ -51,7 +52,6 @@ class Continent:
 
 @dataclass
 class World:
-    world_graph: Graph
     continents: list = field(default_factory=list)
 
     def __post_init__(self):
