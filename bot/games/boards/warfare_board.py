@@ -1,5 +1,6 @@
 
 from dataclasses import dataclass, field
+import logging
 from typing import Union
 
 from bot.games.enums.warfare import ContinentEnum, TerritoryEnum
