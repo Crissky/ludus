@@ -54,3 +54,12 @@ class TerritoryEnum:
     NEW_GUINEA = "Nova Guiné"
     BORNEO = "Borneo"
     SUMATRA = "Sumatra"
+
+
+class ContinentEnum(Enum):
+    SOUTH_AMERICA = "América do Sul"
+    NORTH_AMERICA = "América do Norte"
+    EUROPA = "Europa"
+    AFRICA = "África"
+    ASIA = "Ásia"
+    OCEANIA = "Oceania"
