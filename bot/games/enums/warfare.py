@@ -3,7 +3,7 @@ from enum import Enum
 
 class TerritoryEnum:
     # América do Sul
-    BRASIL = "Brasil"
+    BRAZIL = "Brasil"
     ARGENTINA = "Argentina"
     PERU = "Peru"
     VENEZUELA = "Venezuela"
@@ -11,35 +11,35 @@ class TerritoryEnum:
     # América do Norte
     MEXICO = "México"
     CALIFORNIA = "Califórnia"
-    NOVA_YORK = "Nova York"
+    NEW_YORK = "Nova York"
     ALASCA = "Alasca"
     OTTAWA = "Ottawa"
     LABRADOR = "Labrador"
-    GROENLANDIA = "Groenlândia"
+    GREENLAND = "Groenlândia"
     VANCOUVER = "Vancouver"
     MACKENZIE = "Mackenzie"
 
     # Europa
-    INGLATERRA = "Inglaterra"
-    FRANCA = "França"
-    ALEMANHA = "Alemanha"
-    ITALIA = "Itália"
-    POLONIA = "Polônia"
-    SUECIA = "Suécia"
+    ENGLAND = "Inglaterra"
+    FRANCE = "França"
+    GERMANY = "Alemanha"
+    ITALY = "Itália"
+    POLAND = "Polônia"
+    SWEDEN = "Suécia"
 
     # África
-    ARGELIA = "Argélia"
-    EGITO = "Egito"
+    ALGERIA = "Argélia"
+    EGYPT = "Egito"
     SUDAO = "Sudão"
     CONGO = "Congo"
-    AFRICA_DO_SUL = "África do Sul"
+    SOUTH_AFRICA = "África do Sul"
     MADAGASCAR = "Madagascar"
 
     # Ásia
-    ORIENTE_MEDIO = "Oriente Médio"
+    MIDDLE_EAST = "Oriente Médio"
     INDIA = "Índia"
     CHINA = "China"
-    JAPAO = "Japão"
+    JAPAN = "Japão"
     MONGOLIA = "Mongólia"
     VLADIVOSTOK = "Vladivostok"
 
@@ -50,7 +50,7 @@ class TerritoryEnum:
     ARAL = "Aral"
 
     # Oceania
-    AUSTRÁLIA = "Austrália"
-    NOVA_GUINE = "Nova Guiné"
+    AUSTRALIA = "Austrália"
+    NEW_GUINEA = "Nova Guiné"
     BORNEO = "Borneo"
     SUMATRA = "Sumatra"
