@@ -24,7 +24,7 @@ IS_PRODUCTION = config("IS_PRODUCTION", cast=bool, default=True)
 ) = range(3)
 
 # SET LOGGING
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 if IS_PRODUCTION:
     logger.setLevel(logging.INFO)
 else:
@@ -32,7 +32,10 @@ else:
 
 file_handler = logging.FileHandler("ludus.log", mode="w")
 console_handler = logging.StreamHandler()
-formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
+formatter = logging.Formatter(
+    "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    datefmt='%Y-%m-%d %H:%M:%S',
+)
 file_handler.setFormatter(formatter)
 console_handler.setFormatter(formatter)
 file_handler.stream.reconfigure(encoding='utf-8')
