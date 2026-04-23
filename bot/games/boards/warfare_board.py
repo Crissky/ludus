@@ -1,8 +1,8 @@
-
 from dataclasses import dataclass, field
 import logging
 from typing import Union
 
+from bot.games.boards.board import BaseBoard
 from bot.games.enums.warfare import ContinentEnum, TerritoryEnum
 from bot.games.player import Player
 
@@ -71,11 +71,47 @@ class Continent:
         yield from self.territories
 
 
-@dataclass
 class World:
-    continents: list = field(default_factory=list)
+    def __init__(self):
+        south_america = self.create_south_america()
+        oceania = self.create_oceania()
+        africa = self.create_africa()
+        europe = self.create_europe()
+        north_america = self.create_north_america()
+        asia = self.create_asia()
+        self.continents = [
+            south_america,
+            oceania,
+            africa,
+            europe,
+            north_america,
+            asia,
+        ]
+        self.territories = [
+            territory
+            for continent in self.continents
+            for territory in continent.territories
+        ]
 
-    def __post_init__(self):
-        self.territories = []
-        for cont in self.continents:
-            self.territories.extend(cont.territories)
+    def create_south_america(self) -> Continent: ...
+    def create_oceania(self) -> Continent: ...
+    def create_africa(self) -> Continent: ...
+    def create_europe(self) -> Continent: ...
+    def create_north_america(self) -> Continent: ...
+    def create_asia(self) -> Continent: ...
+
+
+class WarfareBoard(BaseBoard):
+    def __init__(
+        self,
+        *players: Player,
+        min_total_players: int = 3,
+        max_total_players: int = 6,
+        debug: bool = False,
+    ):
+        super().__init__(
+            *players,
+            min_total_players=min_total_players,
+            max_total_players=max_total_players,
+            debug=debug,
+        )
