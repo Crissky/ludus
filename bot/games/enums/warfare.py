@@ -2,64 +2,65 @@ from enum import Enum
 
 
 class TerritoryEnum:
-    # América do Sul
-    BRAZIL = "Brasil"
-    ARGENTINA = "Argentina"
-    PERU = "Peru"
-    VENEZUELA = "Venezuela"
+    # Africa
+    ALGERIA = "Argélia"
+    CONGO = "Congo"
+    EGYPT = "Egito"
+    MADAGASCAR = "Madagascar"
+    SOUTH_AFRICA = "África do Sul"
+    SUDAO = "Sudão"
 
-    # América do Norte
-    MEXICO = "México"
-    CALIFORNIA = "Califórnia"
-    NEW_YORK = "Nova York"
-    ALASCA = "Alasca"
-    OTTAWA = "Ottawa"
-    LABRADOR = "Labrador"
-    GREENLAND = "Groenlândia"
-    VANCOUVER = "Vancouver"
-    MACKENZIE = "Mackenzie"
+    # Asia
+    ARAL = "Aral"
+    CHINA = "China"
+    DUDINKA = "Dudinka"
+    INDIA = "Índia"
+    JAPAN = "Japão"
+    MIDDLE_EAST = "Oriente Médio"
+    MONGOLIA = "Mongólia"
+    OMSK = "Omsk"
+    SIBERIA = "Sibéria"
+    TCHITA = "Tchita"
+    VIETNAM = "Vietnã"
+    VLADIVOSTOK = "Vladivostok"
 
     # Europa
     ENGLAND = "Inglaterra"
     FRANCE = "França"
     GERMANY = "Alemanha"
-    ITALY = "Itália"
+    ICELAND = "Islândia"
+    MOSCOW = "Moscou"
     POLAND = "Polônia"
     SWEDEN = "Suécia"
 
-    # África
-    ALGERIA = "Argélia"
-    EGYPT = "Egito"
-    SUDAO = "Sudão"
-    CONGO = "Congo"
-    SOUTH_AFRICA = "África do Sul"
-    MADAGASCAR = "Madagascar"
-
-    # Ásia
-    MIDDLE_EAST = "Oriente Médio"
-    INDIA = "Índia"
-    CHINA = "China"
-    JAPAN = "Japão"
-    MONGOLIA = "Mongólia"
-    VLADIVOSTOK = "Vladivostok"
-
-    OMSK = "Omsk"
-    DUDINKA = "Dudinka"
-    SIBERIA = "Sibéria"
-    TCHITA = "Tchita"
-    ARAL = "Aral"
+    # North America
+    ALASCA = "Alasca"
+    CALIFORNIA = "Califórnia"
+    GREENLAND = "Groenlândia"
+    LABRADOR = "Labrador"
+    MACKENZIE = "Mackenzie"
+    MEXICO = "México"
+    NEW_YORK = "Nova York"
+    OTTAWA = "Ottawa"
+    VANCOUVER = "Vancouver"
 
     # Oceania
     AUSTRALIA = "Austrália"
+    BORNEO = "Bornéu"
     NEW_GUINEA = "Nova Guiné"
-    BORNEO = "Borneo"
     SUMATRA = "Sumatra"
+
+    # South America
+    ARGENTINA = "Argentina"
+    BRAZIL = "Brasil"
+    PERU = "Peru"
+    VENEZUELA = "Venezuela"
 
 
 class ContinentEnum(Enum):
-    SOUTH_AMERICA = "América do Sul"
-    NORTH_AMERICA = "América do Norte"
-    EUROPA = "Europa"
     AFRICA = "África"
     ASIA = "Ásia"
+    EUROPA = "Europa"
+    NORTH_AMERICA = "América do Norte"
     OCEANIA = "Oceania"
+    SOUTH_AMERICA = "América do Sul"
