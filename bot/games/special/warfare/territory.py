@@ -41,7 +41,10 @@ class Territory:
                 "fronteira dele mesmo."
             )
             error = True
-            logger.warning("Essa fronteira já foi adicionada.")
+            logger.warning(
+                f"O território '{territory.show_name}' já é fronteira do "
+                f"território '{self.show_name}'."
+            )
 
         if error is False:
             self.frontiers.append(territory)
