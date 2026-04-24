@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class TerritoryEnum:
+class TerritoryEnum(Enum):
     # Africa
     ALGERIA = "Argélia"
     CONGO = "Congo"
