@@ -17,6 +17,15 @@ class Territory:
     frontiers: "Territory" = field(default_factory=list)
     troops: int = 0
 
+    def __post_init__(self):
+        if isinstance(self.name, str):
+            self.name = TerritoryEnum[self.name]
+        if not isinstance(self.name, TerritoryEnum):
+            raise TypeError(
+                f"O nome do território deve ser do tipo "
+                f"str ou TerritoryEnum ({type(self.name)})."
+            )
+
     def add_frontier(self, territory: "Territory"):
         """Adiciona uma fronteira a esse território."""
 
