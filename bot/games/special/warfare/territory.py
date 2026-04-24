@@ -1,7 +1,7 @@
 import logging
 
 from dataclasses import dataclass, field
-from typing import Union
+from typing import Dict, List, Union
 
 from bot.games.enums.warfare import TerritoryEnum
 from bot.games.player import Player
@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 class Territory:
     name: Union[str, TerritoryEnum]
     occupier: Player = None
-    frontiers: "Territory" = field(default_factory=list)
+    frontiers: Dict[TerritoryEnum, "Territory"] = field(default_factory=dict)
     troops: int = 0
 
     def __post_init__(self):
@@ -26,20 +26,23 @@ class Territory:
                 f"str ou TerritoryEnum ({type(self.name)})."
             )
 
+    def __getitem__(self, key) -> "Territory":
+        return self.frontiers[key]
+
     def add_frontier(self, territory: "Territory"):
         """Adiciona uma fronteira a esse território."""
 
         error = False
         if not isinstance(territory, Territory):
             tt = type(territory)
-            error = True
-            logger.warning(f"A fronteira deve ser do tipo Territory ({tt}).")
+            raise TypeError(f"A fronteira deve ser do tipo Territory ({tt}).")
         if territory is self:
             error = True
             logger.warning(
                 f"O território '{territory.show_name}' não pode ser "
                 "fronteira dele mesmo."
             )
+        if territory in self.frontier_territories:
             error = True
             logger.warning(
                 f"O território '{territory.show_name}' já é fronteira do "
@@ -47,9 +50,13 @@ class Territory:
             )
 
         if error is False:
-            self.frontiers.append(territory)
-            if self not in territory.frontiers:
+            self.frontiers[territory.name] = territory
+            if self not in territory.frontier_territories:
                 territory.add_frontier(self)
+
+    @property
+    def frontier_territories(self) -> List["Territory"]:
+        return list(self.frontiers.values())
 
     @property
     def show_name(self) -> str:
