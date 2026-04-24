@@ -36,8 +36,10 @@ class Territory:
             logger.warning(f"A fronteira deve ser do tipo Territory ({tt}).")
         if territory is self:
             error = True
-            logger.warning("O território não pode ser fronteira dele mesmo.")
-        if territory in self.frontiers:
+            logger.warning(
+                f"O território '{territory.name}' não pode ser "
+                "fronteira dele mesmo."
+            )
             error = True
             logger.warning("Essa fronteira já foi adicionada.")
 
