@@ -12,28 +12,27 @@ logger = logging.getLogger(__name__)
 @dataclass
 class Continent:
     name: Union[str, ContinentEnum]
-    majority_bonus: int
     totality_bonus: int
-    territories: list = field(default_factory=list)
+    majority_bonus: int = 0
 
     def __post_init__(self):
-        if self.totality_bonus <= self.majority_bonus:
+        if self.totality_bonus < self.majority_bonus:
             raise ValueError(
-                "O bônus pela dominância total deve ser maior que o bônus "
-                "pela maioria dos territórios.\n"
+                "O bônus pela dominância total deve ser igual ou maior que "
+                "o bônus pela maioria dos territórios.\n"
                 f"BÔNUS DE MAIORIA: {self.majority_bonus}.\n"
                 f"BÔNUS TOTAL: {self.totality_bonus}."
             )
-        if self.majority_bonus == 0 or self.totality_bonus == 0:
+        if self.majority_bonus < 0 or self.totality_bonus < 0:
             majority_text = ""
             totality_text = ""
-            if self.majority_bonus == 0:
+            if self.majority_bonus < 0:
                 majority_text = f"BÔNUS DE MAIORIA: {self.majority_bonus}.\n"
-            if self.totality_bonus == 0:
+            if self.totality_bonus < 0:
                 totality_text = f"BÔNUS TOTAL: {self.totality_bonus}."
 
             raise ValueError(
-                "Os bônus devem ser maiores que zero.\n{}{}".format(
+                "Os bônus devem ser inteiros positivos.\n{}{}".format(
                     majority_text, totality_text
                 )
             )
