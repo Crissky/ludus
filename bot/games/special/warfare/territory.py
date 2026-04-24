@@ -37,7 +37,7 @@ class Territory:
         if territory is self:
             error = True
             logger.warning(
-                f"O território '{territory.name}' não pode ser "
+                f"O território '{territory.show_name}' não pode ser "
                 "fronteira dele mesmo."
             )
             error = True
@@ -47,3 +47,11 @@ class Territory:
             self.frontiers.append(territory)
             if self not in territory.frontiers:
                 territory.add_frontier(self)
+
+    @property
+    def show_name(self) -> str:
+        return self.name.name
+
+    @property
+    def show_value(self) -> str:
+        return self.name.value
