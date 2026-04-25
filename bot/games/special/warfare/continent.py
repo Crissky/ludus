@@ -49,3 +49,43 @@ class Continent:
 
     def __iter__(self):
         yield from self.territories.values()
+
+    def add_territory(self, territory: Territory):
+        """Adiciona um território a esse continente."""
+
+        if not isinstance(territory, Territory):
+            tt = type(territory)
+            logger.warning(f"O território deve ser do tipo Territory ({tt}).")
+            return
+
+        if territory.name in self.territories:
+            logger.warning(
+                f"O território '{territory.name.name}' já pertence "
+                f"ao continente '{self.name}'."
+            )
+            return
+
+        self.territories[territory.name] = territory
+
+    def remove_territory(self, territory_name: TerritoryEnum) -> Territory:
+        """Remove um território desse continente."""
+
+        if not isinstance(territory_name, TerritoryEnum):
+            tt = type(territory_name)
+            raise TypeError(
+                f"O território deve ser do tipo TerritoryEnum ({tt})."
+            )
+
+        return self.territories.pop(territory_name, None)
+
+    def get_territory(self, territory_name: TerritoryEnum) -> Territory:
+        """Retorna um território desse continente."""
+
+        if not isinstance(territory_name, TerritoryEnum):
+            tt = type(territory_name)
+            raise TypeError(
+                f"O território deve ser do tipo TerritoryEnum ({tt})."
+            )
+
+        return self.territories.get(territory_name)
+
