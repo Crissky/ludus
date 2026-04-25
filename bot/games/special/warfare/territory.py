@@ -39,18 +39,21 @@ class Territory:
         if territory is self:
             error = True
             logger.warning(
-                f"O território '{territory.show_name}' não pode ser "
-                "fronteira dele mesmo."
+                f"O {territory.format_name} não pode ser fronteira dele mesmo."
             )
         if territory in self.frontier_territories:
             error = True
             logger.warning(
-                f"O território '{territory.show_name}' já é fronteira do "
-                f"território '{self.show_name}'."
+                f"O {self.show_name} já é fronteira do "
+                f"{territory.format_name}."
             )
 
         if error is False:
             self.frontiers[territory.name] = territory
+            logger.info(
+                f"O {territory.format_name} foi adicionado a fronteira do "
+                f"{self.format_name}."
+            )
             if self not in territory.frontier_territories:
                 territory.add_frontier(self)
 
