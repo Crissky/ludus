@@ -89,3 +89,10 @@ class Continent:
 
         return self.territories.get(territory_name)
 
+    @property
+    def show_name(self) -> str:
+        return self.name.name
+
+    @property
+    def show_value(self) -> str:
+        return self.name.value
