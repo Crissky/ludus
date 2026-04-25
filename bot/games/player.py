@@ -111,3 +111,7 @@ class Player:
     @property
     def user_name(self):
         return self.name
+
+    @property
+    def format_name(self) -> str:
+        return f"jogador '{self.name}'"
