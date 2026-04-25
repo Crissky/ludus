@@ -6,77 +6,79 @@ Mapa referência WAR II: https://a-static.mlcdn.com.br/1500x1500/jogo-war-ii-tab
 """
 
 from bot.games.enums.warfare import ContinentEnum, TerritoryEnum
+from bot.games.special.warfare.continent import Continent
 from bot.games.special.warfare.territory import Territory
 
 ce = ContinentEnum
 te = TerritoryEnum
 
-AFRICA = {}
-ASIA = {}
-EUROPA = {}
-NORTH_AMERICA = {}
-OCEANIA = {}
-SOUTH_AMERICA = {}
-TERRITORIES = {
-    ContinentEnum.ASIA: ASIA,
-    ContinentEnum.AFRICA: AFRICA,
-    ContinentEnum.EUROPA: EUROPA,
-    ContinentEnum.NORTH_AMERICA: NORTH_AMERICA,
-    ContinentEnum.OCEANIA: OCEANIA,
-    ContinentEnum.SOUTH_AMERICA: SOUTH_AMERICA,
+africa = Continent(name=ce.AFRICA, totality_bonus=3)
+asia = Continent(name=ce.ASIA, totality_bonus=7)
+europa = Continent(name=ce.EUROPA, totality_bonus=5)
+north_america = Continent(name=ce.NORTH_AMERICA, totality_bonus=5)
+oceania = Continent(name=ce.OCEANIA, totality_bonus=2)
+south_america = Continent(name=ce.SOUTH_AMERICA, totality_bonus=2)
+CONTINENTS = {
+    ContinentEnum.ASIA: asia,
+    ContinentEnum.AFRICA: africa,
+    ContinentEnum.EUROPA: europa,
+    ContinentEnum.NORTH_AMERICA: north_america,
+    ContinentEnum.OCEANIA: oceania,
+    ContinentEnum.SOUTH_AMERICA: south_america,
 }
 
 
 # Africa
-AFRICA[te.ALGERIA] = Territory(name=te.ALGERIA)
-AFRICA[te.CONGO] = Territory(name=te.CONGO)
-AFRICA[te.EGYPT] = Territory(name=te.EGYPT)
-AFRICA[te.MADAGASCAR] = Territory(name=te.MADAGASCAR)
-AFRICA[te.SOUTH_AFRICA] = Territory(name=te.SOUTH_AFRICA)
-AFRICA[te.SUDAO] = Territory(name=te.SUDAO)
+africa.add_territory(territory=Territory(name=te.ALGERIA))
+africa.add_territory(territory=Territory(name=te.CONGO))
+africa.add_territory(territory=Territory(name=te.EGYPT))
+africa.add_territory(territory=Territory(name=te.MADAGASCAR))
+africa.add_territory(territory=Territory(name=te.SOUTH_AFRICA))
+africa.add_territory(territory=Territory(name=te.SUDAO))
 
 # Asia
-ASIA[te.ARAL] = Territory(name=te.ARAL)
-ASIA[te.CHINA] = Territory(name=te.CHINA)
-ASIA[te.DUDINKA] = Territory(name=te.DUDINKA)
-ASIA[te.INDIA] = Territory(name=te.INDIA)
-ASIA[te.JAPAN] = Territory(name=te.JAPAN)
-ASIA[te.MIDDLE_EAST] = Territory(name=te.MIDDLE_EAST)
-ASIA[te.MONGOLIA] = Territory(name=te.MONGOLIA)
-ASIA[te.OMSK] = Territory(name=te.OMSK)
-ASIA[te.SIBERIA] = Territory(name=te.SIBERIA)
-ASIA[te.TCHITA] = Territory(name=te.TCHITA)
-ASIA[te.VIETNAM] = Territory(name=te.VIETNAM)
-ASIA[te.VLADIVOSTOK] = Territory(name=te.VLADIVOSTOK)
+asia.add_territory(territory=Territory(name=te.ARAL))
+asia.add_territory(territory=Territory(name=te.CHINA))
+asia.add_territory(territory=Territory(name=te.DUDINKA))
+asia.add_territory(territory=Territory(name=te.INDIA))
+asia.add_territory(territory=Territory(name=te.JAPAN))
+asia.add_territory(territory=Territory(name=te.MIDDLE_EAST))
+asia.add_territory(territory=Territory(name=te.MONGOLIA))
+asia.add_territory(territory=Territory(name=te.OMSK))
+asia.add_territory(territory=Territory(name=te.SIBERIA))
+asia.add_territory(territory=Territory(name=te.TCHITA))
+asia.add_territory(territory=Territory(name=te.VIETNAM))
+asia.add_territory(territory=Territory(name=te.VLADIVOSTOK))
 
 # Europa
-EUROPA[te.ENGLAND] = Territory(name=te.ENGLAND)
-EUROPA[te.FRANCE] = Territory(name=te.FRANCE)
-EUROPA[te.GERMANY] = Territory(name=te.GERMANY)
-EUROPA[te.ICELAND] = Territory(name=te.ICELAND)
-EUROPA[te.MOSCOW] = Territory(name=te.MOSCOW)
-EUROPA[te.POLAND] = Territory(name=te.POLAND)
-EUROPA[te.SWEDEN] = Territory(name=te.SWEDEN)
+europa.add_territory(territory=Territory(name=te.ENGLAND))
+europa.add_territory(territory=Territory(name=te.FRANCE))
+europa.add_territory(territory=Territory(name=te.GERMANY))
+europa.add_territory(territory=Territory(name=te.ICELAND))
+europa.add_territory(territory=Territory(name=te.MOSCOW))
+europa.add_territory(territory=Territory(name=te.POLAND))
+europa.add_territory(territory=Territory(name=te.SWEDEN))
 
 # North America
-NORTH_AMERICA[te.ALASCA] = Territory(name=te.ALASCA)
-NORTH_AMERICA[te.CALIFORNIA] = Territory(name=te.CALIFORNIA)
-NORTH_AMERICA[te.GREENLAND] = Territory(name=te.GREENLAND)
-NORTH_AMERICA[te.LABRADOR] = Territory(name=te.LABRADOR)
-NORTH_AMERICA[te.MACKENZIE] = Territory(name=te.MACKENZIE)
-NORTH_AMERICA[te.MEXICO] = Territory(name=te.MEXICO)
-NORTH_AMERICA[te.NEW_YORK] = Territory(name=te.NEW_YORK)
-NORTH_AMERICA[te.OTTAWA] = Territory(name=te.OTTAWA)
-NORTH_AMERICA[te.VANCOUVER] = Territory(name=te.VANCOUVER)
+north_america.add_territory(territory=Territory(name=te.ALASCA))
+north_america.add_territory(territory=Territory(name=te.CALIFORNIA))
+north_america.add_territory(territory=Territory(name=te.GREENLAND))
+north_america.add_territory(territory=Territory(name=te.LABRADOR))
+north_america.add_territory(territory=Territory(name=te.MACKENZIE))
+north_america.add_territory(territory=Territory(name=te.MEXICO))
+north_america.add_territory(territory=Territory(name=te.NEW_YORK))
+north_america.add_territory(territory=Territory(name=te.OTTAWA))
+north_america.add_territory(territory=Territory(name=te.VANCOUVER))
 
 # Oceania
-OCEANIA[te.AUSTRALIA] = Territory(name=te.AUSTRALIA)
-OCEANIA[te.BORNEO] = Territory(name=te.BORNEO)
-OCEANIA[te.NEW_GUINEA] = Territory(name=te.NEW_GUINEA)
-OCEANIA[te.SUMATRA] = Territory(name=te.SUMATRA)
+oceania.add_territory(territory=Territory(name=te.AUSTRALIA))
+oceania.add_territory(territory=Territory(name=te.BORNEO))
+oceania.add_territory(territory=Territory(name=te.NEW_GUINEA))
+oceania.add_territory(territory=Territory(name=te.SUMATRA))
 
 # South America
-SOUTH_AMERICA[te.ARGENTINA] = Territory(name=te.ARGENTINA)
-SOUTH_AMERICA[te.BRAZIL] = Territory(name=te.BRAZIL)
-SOUTH_AMERICA[te.PERU] = Territory(name=te.PERU)
-SOUTH_AMERICA[te.VENEZUELA] = Territory(name=te.VENEZUELA)
+south_america.add_territory(territory=Territory(name=te.ARGENTINA))
+south_america.add_territory(territory=Territory(name=te.BRAZIL))
+south_america.add_territory(territory=Territory(name=te.PERU))
+south_america.add_territory(territory=Territory(name=te.VENEZUELA))
+
