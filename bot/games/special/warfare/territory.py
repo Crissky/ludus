@@ -55,6 +55,14 @@ class Territory:
                 territory.add_frontier(self)
 
     @property
+    def min_troops_on_conquest(self):
+        return 1
+
+    @property
+    def max_troops_on_conquest(self):
+        return 3
+
+    @property
     def frontier_territories(self) -> List["Territory"]:
         return list(self.frontiers.values())
 
@@ -65,3 +73,11 @@ class Territory:
     @property
     def show_value(self) -> str:
         return self.name.value
+
+    @property
+    def format_name(self) -> str:
+        return f"território '{self.show_name}'"
+
+    @property
+    def occupier_name(self) -> str:
+        return "SEM OCUPANTE" if self.occupier is None else self.occupier.name
