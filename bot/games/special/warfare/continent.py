@@ -16,6 +16,14 @@ class Continent:
     majority_bonus: int = 0
 
     def __post_init__(self):
+        if isinstance(self.name, str):
+            self.name = ContinentEnum[self.name]
+        if not isinstance(self.name, ContinentEnum):
+            raise TypeError(
+                f"O nome do continente deve ser do tipo "
+                f"str ou ContinentEnum ({type(self.name)})."
+            )
+
         if self.totality_bonus < self.majority_bonus:
             raise ValueError(
                 "O bônus pela dominância total deve ser igual ou maior que "
