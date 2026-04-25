@@ -1,9 +1,10 @@
 import logging
 
 from dataclasses import dataclass, field
-from typing import Union
+from typing import Dict, List, Union
 
-from bot.games.enums.warfare import ContinentEnum
+from bot.games.enums.warfare import ContinentEnum, TerritoryEnum
+from bot.games.special.warfare.territory import Territory
 
 
 logger = logging.getLogger(__name__)
@@ -14,6 +15,7 @@ class Continent:
     name: Union[str, ContinentEnum]
     totality_bonus: int
     majority_bonus: int = 0
+    territories: Dict[TerritoryEnum, Territory] = field(default_factory=dict)
 
     def __post_init__(self):
         if isinstance(self.name, str):
@@ -46,4 +48,4 @@ class Continent:
             )
 
     def __iter__(self):
-        yield from self.territories
+        yield from self.territories.values()
