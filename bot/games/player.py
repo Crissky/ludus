@@ -15,30 +15,30 @@ class Player:
         hand: BaseHand = None,
         message_id: int = None,
     ):
-        if ((player_id is None or name is None) and user is None):
-            raise ValueError('player_id e name ou user devem ser informados.')
+        if (player_id is None or name is None) and user is None:
+            raise ValueError("player_id e name ou user devem ser informados.")
 
         if player_id is not None and name is not None:
             if not isinstance(player_id, (int, str)):
-                raise TypeError('player_id precisa ser do tipo int ou str.')
+                raise TypeError("player_id precisa ser do tipo int ou str.")
             if not isinstance(name, str):
-                raise TypeError('name precisa ser do tipo str.')
+                raise TypeError("name precisa ser do tipo str.")
             self.id = str(player_id)
             self.name = name
         else:
             if not isinstance(user, User):
-                raise TypeError('user precisa ser do tipo User.')
+                raise TypeError("user precisa ser do tipo User.")
             self.id = str(user.id)
             self.name = str(user.name)
 
         if hand is None:
             hand = BaseHand()
         elif not isinstance(hand, BaseHand):
-            raise TypeError('hand precisa ser do tipo BaseHand.')
+            raise TypeError("hand precisa ser do tipo BaseHand.")
         self.hand = hand
 
         if not isinstance(message_id, (int, type(None))):
-            raise TypeError('message_id precisa ser do tipo int.')
+            raise TypeError("message_id precisa ser do tipo int.")
         self.message_id = message_id
 
     def __eq__(self, other):
@@ -70,27 +70,22 @@ class Player:
 
     def __repr__(self):
         return (
-            f'Player(id={self.id}, '
-            f'name={self.name}, '
-            f'message_id={self.message_id}'
-            ')'
+            f"Player(id={self.id}, "
+            f"name={self.name}, "
+            f"message_id={self.message_id}"
+            ")"
         )
 
     def set_hand(self, hand: BaseHand):
         if isinstance(hand, BaseHand):
             self.hand = hand
         else:
-            raise TypeError('hand precisa ser do tipo BaseHand.')
+            raise TypeError("hand precisa ser do tipo BaseHand.")
 
     def add_card(
-        self,
-        *cards: Union[List[Card], Card],
-        discard_index: int = -1
+        self, *cards: Union[List[Card], Card], discard_index: int = -1
     ) -> List[Card]:
-        return self.hand.add_card(
-            *cards,
-            discard_index=discard_index
-        )
+        return self.hand.add_card(*cards, discard_index=discard_index)
 
     def discard(self, index: int = -1, quantity: int = 1) -> List[Card]:
         return self.hand.discard(index=index, quantity=quantity)
@@ -103,13 +98,14 @@ class Player:
 
     def set_message_id(self, message_id: int):
         if not isinstance(message_id, int):
-            raise TypeError('message_id precisa ser do tipo int.')
+            raise TypeError("message_id precisa ser do tipo int.")
 
         self.message_id = message_id
 
     @property
     def user_id(self):
         return self.id
+
     player_id = user_id
 
     @property
