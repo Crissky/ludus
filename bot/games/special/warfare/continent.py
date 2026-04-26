@@ -13,6 +13,7 @@ logger = logging.getLogger(__name__)
 @dataclass
 class Continent:
     name: Union[str, ContinentEnum]
+    color_emoji: str
     totality_bonus: int
     majority_bonus: int = 0
     territories: Dict[TerritoryEnum, Territory] = field(default_factory=dict)
@@ -65,6 +66,7 @@ class Continent:
             )
             return
 
+        territory.color_emoji = self.color_emoji
         self.territories[territory.name] = territory
 
     def remove_territory(self, territory_name: TerritoryEnum) -> Territory:
@@ -76,7 +78,10 @@ class Continent:
                 f"O território deve ser do tipo TerritoryEnum ({tt})."
             )
 
-        return self.territories.pop(territory_name, None)
+        territory = self.territories.pop(territory_name, None)
+        territory.color_emoji = None
+
+        return territory
 
     def get_territory(self, territory_name: TerritoryEnum) -> Territory:
         """Retorna um território desse continente."""

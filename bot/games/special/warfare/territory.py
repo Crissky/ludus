@@ -13,6 +13,7 @@ logger = logging.getLogger(__name__)
 @dataclass
 class Territory:
     name: Union[str, TerritoryEnum]
+    color_emoji: str = None
     occupier: Player = None
     frontiers: Dict[TerritoryEnum, "Territory"] = field(default_factory=dict)
     troops: int = 0
@@ -120,11 +121,13 @@ class Territory:
 
     @property
     def show_name(self) -> str:
-        return self.name.name
+        color_emoji = "" if self.color_emoji is None else self.color_emoji
+        return color_emoji + self.name.name
 
     @property
     def show_value(self) -> str:
-        return self.name.value
+        color_emoji = "" if self.color_emoji is None else self.color_emoji
+        return color_emoji + self.name.value
 
     @property
     def format_name(self) -> str:
