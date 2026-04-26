@@ -12,13 +12,19 @@ from bot.games.special.warfare.territory import Territory
 ce = ContinentEnum
 te = TerritoryEnum
 
-africa = Continent(name=ce.AFRICA, totality_bonus=3)
-asia = Continent(name=ce.ASIA, totality_bonus=7)
-europa = Continent(name=ce.EUROPA, totality_bonus=5)
-north_america = Continent(name=ce.NORTH_AMERICA, totality_bonus=5)
-oceania = Continent(name=ce.OCEANIA, totality_bonus=2)
-south_america = Continent(name=ce.SOUTH_AMERICA, totality_bonus=2)
-CONTINENTS = {
+africa_kw_args = {"totality_bonus": 3, "color_emoji": "🟪"}
+asia_kw_args = {"totality_bonus": 7, "color_emoji": "🟨"}
+europa_kw_args = {"totality_bonus": 5, "color_emoji": "🟦"}
+north_america_kw_args = {"totality_bonus": 5, "color_emoji": "🟧"}
+oceania_kw_args = {"totality_bonus": 2, "color_emoji": "🟥"}
+south_america_kw_args = {"totality_bonus": 2, "color_emoji": "🟩"}
+
+africa = Continent(name=ce.AFRICA, **africa_kw_args)
+asia = Continent(name=ce.ASIA, **asia_kw_args)
+europa = Continent(name=ce.EUROPA, **europa_kw_args)
+north_america = Continent(name=ce.NORTH_AMERICA, **north_america_kw_args)
+oceania = Continent(name=ce.OCEANIA, **oceania_kw_args)
+south_america = Continent(name=ce.SOUTH_AMERICA, **south_america_kw_args)
     ContinentEnum.ASIA: asia,
     ContinentEnum.AFRICA: africa,
     ContinentEnum.EUROPA: europa,
