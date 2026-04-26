@@ -57,6 +57,55 @@ class Territory:
             if self not in territory.frontier_territories:
                 territory.add_frontier(self)
 
+    def add_occupier(self, player: Player, troops: int):
+        """Adiciona um jogador ao território"""
+        if self.occupier is not None:
+            raise ValueError(
+                f"O {self.format_name} já possui um ocupante "
+                f"({self.occupier_name})."
+            )
+        if troops != self.min_troops_on_conquest:
+            raise ValueError(
+                f"O número de tropas ({troops}) para adicionar no "
+                f"{self.format_name} é diferente do permitido "
+                f"({self.min_troops_on_conquest})."
+            )
+
+        self.occupier = player
+        self.troops = troops
+        logger.info(
+            f"O {player.format_name} foi adicionado ao {self.format_name}."
+        )
+
+    def change_occupier(self, player: Player, troops: int):
+        """Altera o ocupante do território"""
+
+        if player is self.occupier:
+            raise ValueError(
+                f"O {player.format_name} já é ocupante do {self.format_name}."
+            )
+        if troops < self.min_troops_on_conquest:
+            raise ValueError(
+                f"O número de tropas ({troops}) para para conquistar o "
+                f"{self.format_name} é menor que o permitido "
+                f"({self.min_troops_on_conquest})."
+            )
+        if troops > self.max_troops_on_conquest:
+            raise ValueError(
+                f"O número de tropas ({troops}) para para conquistar o "
+                f"{self.format_name} é maior que o permitido "
+                f"({self.max_troops_on_conquest})."
+            )
+
+        self.occupier = player
+        self.troops = troops
+        logger.info(
+            f"O {player.format_name} conquistou o {self.format_name} com "
+            f"{troops} tropas."
+        )
+
+    conquer_territory = change_occupier
+
     @property
     def min_troops_on_conquest(self):
         return 1
