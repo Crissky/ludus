@@ -15,7 +15,9 @@ class Territory:
     name: Union[str, TerritoryEnum]
     color_emoji: str = None
     occupier: Player = None
-    frontiers: Dict[TerritoryEnum, "Territory"] = field(default_factory=dict)
+    frontiers: Dict[TerritoryEnum, "Territory"] = field(
+        default_factory=dict, repr=False
+    )
     troops: int = 0
 
     def __post_init__(self):
