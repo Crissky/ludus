@@ -164,4 +164,7 @@ for territory_enum, frontier_enum_list in FRONTIER_DICT.items():
         territory.add_frontier(frontier_territory)
 
 for territory in sorted(territories.values(), key=attrgetter("name.name")):
-    print(territory.show_name, [t.name for t in territory.frontiers])
+    print(
+        territory.show_name,
+        [t.name for t in sorted(territory.frontiers, key=attrgetter("name"))],
+    )
