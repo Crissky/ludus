@@ -5,6 +5,8 @@ Mapa referência WAR: https://a-static.mlcdn.com.br/1500x1500/jogo-war-de-tabule
 Mapa referência WAR II: https://a-static.mlcdn.com.br/1500x1500/jogo-war-ii-tabuleiro-o-jogo-da-estrategia-com-batalhas-aereas-grow/magazineluiza/220544400/9ef9916b944c31e3fb02ed68919bc7c5.jpg
 """
 
+from operator import attrgetter
+
 from bot.games.enums.warfare import ContinentEnum, TerritoryEnum
 from bot.games.special.warfare.continent import Continent
 from bot.games.special.warfare.territory import Territory
@@ -161,5 +163,5 @@ for territory_enum, frontier_enum_list in FRONTIER_DICT.items():
         frontier_territory = territories[frontier_enum]
         territory.add_frontier(frontier_territory)
 
-for territory in sorted(territories.values(), key=lambda x: x.name.name):
+for territory in sorted(territories.values(), key=attrgetter("name.name")):
     print(territory.show_name, [t.name for t in territory.frontiers])
