@@ -25,6 +25,7 @@ europa = Continent(name=ce.EUROPA, **europa_kw_args)
 north_america = Continent(name=ce.NORTH_AMERICA, **north_america_kw_args)
 oceania = Continent(name=ce.OCEANIA, **oceania_kw_args)
 south_america = Continent(name=ce.SOUTH_AMERICA, **south_america_kw_args)
+CONTINENT_DICT = {
     ContinentEnum.ASIA: asia,
     ContinentEnum.AFRICA: africa,
     ContinentEnum.EUROPA: europa,
@@ -32,7 +33,6 @@ south_america = Continent(name=ce.SOUTH_AMERICA, **south_america_kw_args)
     ContinentEnum.OCEANIA: oceania,
     ContinentEnum.SOUTH_AMERICA: south_america,
 }
-
 
 # Africa
 africa.add_territory(territory=Territory(name=te.ALGERIA))
@@ -88,3 +88,78 @@ south_america.add_territory(territory=Territory(name=te.BRAZIL))
 south_america.add_territory(territory=Territory(name=te.PERU))
 south_america.add_territory(territory=Territory(name=te.VENEZUELA))
 
+# Frontiers
+FRONTIER_DICT = {
+    # Africa
+    te.ALGERIA: [te.BRAZIL, te.CONGO, te.EGYPT, te.FRANCE, te.SUDAO],
+    te.CONGO: [te.SOUTH_AFRICA, te.SUDAO],
+    te.EGYPT: [te.FRANCE, te.MIDDLE_EAST, te.POLAND, te.SUDAO],
+    te.MADAGASCAR: [te.SOUTH_AFRICA, te.SUDAO],
+    te.SOUTH_AFRICA: [te.SUDAO],
+    te.SUDAO: [],
+    # Asia
+    te.ARAL: [te.CHINA, te.INDIA, te.MIDDLE_EAST, te.MOSCOW, te.OMSK],
+    te.CHINA: [
+        te.INDIA,
+        te.JAPAN,
+        te.MONGOLIA,
+        te.OMSK,
+        te.TCHITA,
+        te.VIETNAM,
+        te.VLADIVOSTOK,
+    ],
+    te.DUDINKA: [te.MONGOLIA, te.OMSK, te.SIBERIA, te.TCHITA],
+    te.INDIA: [te.MIDDLE_EAST, te.SUMATRA, te.VIETNAM],
+    te.JAPAN: [te.VLADIVOSTOK],
+    te.MIDDLE_EAST: [te.MOSCOW, te.POLAND],
+    te.MONGOLIA: [te.OMSK, te.TCHITA],
+    te.OMSK: [te.MOSCOW],
+    te.SIBERIA: [te.TCHITA, te.VLADIVOSTOK],
+    te.TCHITA: [te.VLADIVOSTOK],
+    te.VIETNAM: [te.BORNEO],
+    te.VLADIVOSTOK: [te.ALASCA],
+    # Europa
+    te.ENGLAND: [],
+    te.FRANCE: [],
+    te.GERMANY: [],
+    te.ICELAND: [],
+    te.MOSCOW: [],
+    te.POLAND: [],
+    te.SWEDEN: [],
+    # North America
+    te.ALASCA: [],
+    te.CALIFORNIA: [],
+    te.GREENLAND: [],
+    te.LABRADOR: [],
+    te.MACKENZIE: [],
+    te.MEXICO: [],
+    te.NEW_YORK: [],
+    te.OTTAWA: [],
+    te.VANCOUVER: [],
+    # Oceania
+    te.AUSTRALIA: [],
+    te.BORNEO: [],
+    te.NEW_GUINEA: [],
+    te.SUMATRA: [],
+    # South America
+    te.ARGENTINA: [],
+    te.BRAZIL: [],
+    te.PERU: [],
+    te.VENEZUELA: [],
+}
+
+territories = {
+    territory.name: territory
+    for continent in CONTINENT_DICT.values()
+    for territory in continent
+}
+
+
+for territory_enum, frontier_enum_list in FRONTIER_DICT.items():
+    for frontier_enum in frontier_enum_list:
+        territory = territories[territory_enum]
+        frontier_territory = territories[frontier_enum]
+        territory.add_frontier(frontier_territory)
+
+for territory in sorted(territories.values(), key=lambda x: x.name.name):
+    print(territory.show_name, [t.name for t in territory.frontiers])
