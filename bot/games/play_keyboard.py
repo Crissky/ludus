@@ -1,4 +1,6 @@
+from operator import attrgetter
 from typing import List
+
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
 from bot.games.buttons.play_button import PlayButton
@@ -47,7 +49,7 @@ class PlayKeyBoard:
         button_lists = []
         sorted_play_button_list = sorted(
             self.play_button_list,
-            key=lambda x: x.group
+            key=attrgetter("group")
         )
 
         i = 0

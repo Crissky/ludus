@@ -1,4 +1,6 @@
+from operator import attrgetter
 from typing import List, Type
+
 from bot.games.boards.board import BaseBoard
 from bot.games.boards.colorgame_board import ColorsGameBoard
 from bot.games.boards.golf_solitaire_board import GolfSolitaireBoard
@@ -38,7 +40,7 @@ def get_board_list() -> List[Type[BaseBoard]]:
     board_list.extend(get_duel_board_list())
     board_list.extend(get_party_board_list())
 
-    return sorted(board_list, key=lambda board: board.__name__)
+    return sorted(board_list, key=attrgetter("__name__"))
 
 
 def board_factory(board_name: str) -> Type[BaseBoard]:
