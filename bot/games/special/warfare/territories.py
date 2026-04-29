@@ -98,7 +98,7 @@ FRONTIER_DICT = {
     te.EGYPT: [te.FRANCE, te.MIDDLE_EAST, te.POLAND, te.SUDAO],
     te.MADAGASCAR: [te.SOUTH_AFRICA, te.SUDAO],
     te.SOUTH_AFRICA: [te.SUDAO],
-    te.SUDAO: [],
+    te.SUDAO: [],  # EMPTY
     # Asia
     te.ARAL: [te.CHINA, te.INDIA, te.MIDDLE_EAST, te.MOSCOW, te.OMSK],
     te.CHINA: [
@@ -121,23 +121,23 @@ FRONTIER_DICT = {
     te.VIETNAM: [te.BORNEO],
     te.VLADIVOSTOK: [te.ALASCA],
     # Europa
-    te.ENGLAND: [],
-    te.FRANCE: [],
-    te.GERMANY: [],
-    te.ICELAND: [],
-    te.MOSCOW: [],
-    te.POLAND: [],
-    te.SWEDEN: [],
+    te.ENGLAND: [te.FRANCE, te.GERMANY, te.ICELAND, te.SWEDEN],
+    te.FRANCE: [te.GERMANY, te.POLAND],
+    te.GERMANY: [te.POLAND],
+    te.ICELAND: [te.GREENLAND],
+    te.MOSCOW: [te.POLAND, te.SWEDEN],
+    te.POLAND: [],  # EMPTY
+    te.SWEDEN: [],  # EMPTY
     # North America
-    te.ALASCA: [],
-    te.CALIFORNIA: [],
-    te.GREENLAND: [],
-    te.LABRADOR: [],
-    te.MACKENZIE: [],
-    te.MEXICO: [],
-    te.NEW_YORK: [],
-    te.OTTAWA: [],
-    te.VANCOUVER: [],
+    te.ALASCA: [te.MACKENZIE, te.VANCOUVER],
+    te.CALIFORNIA: [te.MEXICO, te.NEW_YORK, te.OTTAWA, te.VANCOUVER],
+    te.GREENLAND: [te.LABRADOR, te.MACKENZIE],
+    te.LABRADOR: [te.NEW_YORK, te.OTTAWA],
+    te.MACKENZIE: [te.OTTAWA, te.VANCOUVER],
+    te.MEXICO: [te.NEW_YORK, te.VENEZUELA],
+    te.NEW_YORK: [te.OTTAWA],
+    te.OTTAWA: [te.VANCOUVER],
+    te.VANCOUVER: [],  # EMPTY
     # Oceania
     te.AUSTRALIA: [],
     te.BORNEO: [],
