@@ -139,15 +139,15 @@ FRONTIER_DICT = {
     te.OTTAWA: [te.VANCOUVER],
     te.VANCOUVER: [],  # EMPTY
     # Oceania
-    te.AUSTRALIA: [],
-    te.BORNEO: [],
-    te.NEW_GUINEA: [],
-    te.SUMATRA: [],
+    te.AUSTRALIA: [te.BORNEO, te.NEW_GUINEA, te.SUMATRA],
+    te.BORNEO: [te.NEW_GUINEA],
+    te.NEW_GUINEA: [],  # EMPTY
+    te.SUMATRA: [],  # EMPTY
     # South America
-    te.ARGENTINA: [],
-    te.BRAZIL: [],
-    te.PERU: [],
-    te.VENEZUELA: [],
+    te.ARGENTINA: [te.BRAZIL, te.PERU],
+    te.BRAZIL: [te.PERU, te.VENEZUELA],
+    te.PERU: [te.VENEZUELA],
+    te.VENEZUELA: [],  # EMPTY
 }
 
 territories = {
