@@ -24,7 +24,7 @@ class TerritoryEnum(Enum):
     VIETNAM = "Vietnã"
     VLADIVOSTOK = "Vladivostok"
 
-    # Europa
+    # Europe
     ENGLAND = "Inglaterra"
     FRANCE = "França"
     GERMANY = "Alemanha"
@@ -60,7 +60,7 @@ class TerritoryEnum(Enum):
 class ContinentEnum(Enum):
     AFRICA = "África"
     ASIA = "Ásia"
-    EUROPA = "Europa"
+    EUROPE = "Europa"
     NORTH_AMERICA = "América do Norte"
     OCEANIA = "Oceania"
     SOUTH_AMERICA = "América do Sul"

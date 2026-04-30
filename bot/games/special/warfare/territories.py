@@ -16,21 +16,21 @@ te = TerritoryEnum
 
 africa_kw_args = {"totality_bonus": 3, "color_emoji": "🟪"}
 asia_kw_args = {"totality_bonus": 7, "color_emoji": "🟨"}
-europa_kw_args = {"totality_bonus": 5, "color_emoji": "🟦"}
+europe_kw_args = {"totality_bonus": 5, "color_emoji": "🟦"}
 north_america_kw_args = {"totality_bonus": 5, "color_emoji": "🟧"}
 oceania_kw_args = {"totality_bonus": 2, "color_emoji": "🟥"}
 south_america_kw_args = {"totality_bonus": 2, "color_emoji": "🟩"}
 
 africa = Continent(name=ce.AFRICA, **africa_kw_args)
 asia = Continent(name=ce.ASIA, **asia_kw_args)
-europa = Continent(name=ce.EUROPA, **europa_kw_args)
+europe = Continent(name=ce.EUROPE, **europe_kw_args)
 north_america = Continent(name=ce.NORTH_AMERICA, **north_america_kw_args)
 oceania = Continent(name=ce.OCEANIA, **oceania_kw_args)
 south_america = Continent(name=ce.SOUTH_AMERICA, **south_america_kw_args)
 CONTINENT_DICT = {
     ContinentEnum.ASIA: asia,
     ContinentEnum.AFRICA: africa,
-    ContinentEnum.EUROPA: europa,
+    ContinentEnum.EUROPE: europe,
     ContinentEnum.NORTH_AMERICA: north_america,
     ContinentEnum.OCEANIA: oceania,
     ContinentEnum.SOUTH_AMERICA: south_america,
@@ -58,14 +58,14 @@ asia.add_territory(territory=Territory(name=te.TCHITA))
 asia.add_territory(territory=Territory(name=te.VIETNAM))
 asia.add_territory(territory=Territory(name=te.VLADIVOSTOK))
 
-# Europa
-europa.add_territory(territory=Territory(name=te.ENGLAND))
-europa.add_territory(territory=Territory(name=te.FRANCE))
-europa.add_territory(territory=Territory(name=te.GERMANY))
-europa.add_territory(territory=Territory(name=te.ICELAND))
-europa.add_territory(territory=Territory(name=te.MOSCOW))
-europa.add_territory(territory=Territory(name=te.POLAND))
-europa.add_territory(territory=Territory(name=te.SWEDEN))
+# Europe
+europe.add_territory(territory=Territory(name=te.ENGLAND))
+europe.add_territory(territory=Territory(name=te.FRANCE))
+europe.add_territory(territory=Territory(name=te.GERMANY))
+europe.add_territory(territory=Territory(name=te.ICELAND))
+europe.add_territory(territory=Territory(name=te.MOSCOW))
+europe.add_territory(territory=Territory(name=te.POLAND))
+europe.add_territory(territory=Territory(name=te.SWEDEN))
 
 # North America
 north_america.add_territory(territory=Territory(name=te.ALASCA))
@@ -120,7 +120,7 @@ FRONTIER_DICT = {
     te.TCHITA: [te.VLADIVOSTOK],
     te.VIETNAM: [te.BORNEO],
     te.VLADIVOSTOK: [te.ALASCA],
-    # Europa
+    # Europe
     te.ENGLAND: [te.FRANCE, te.GERMANY, te.ICELAND, te.SWEDEN],
     te.FRANCE: [te.GERMANY, te.POLAND],
     te.GERMANY: [te.POLAND],
