@@ -4,6 +4,7 @@ from dataclasses import dataclass, field
 from typing import Dict, List, Union
 
 from bot.games.enums.warfare import ContinentEnum, TerritoryEnum
+from bot.games.player import Player
 from bot.games.special.warfare.territory import Territory
 
 
@@ -94,6 +95,15 @@ class Continent:
 
         return self.territories.get(territory_name)
 
+    def have_totality(self, player: Player) -> bool:
+        """Verifica se um jogador tem a dominância total do continente."""
+
+        if not isinstance(player, Player):
+            pt = type(player)
+            raise TypeError(f"O ocupante deve ser do tipo Player ({pt}).")
+
+        return all(territory.occupier is player for territory in self)
+
     @property
     def show_name(self) -> str:
         return self.name.name
@@ -101,3 +111,19 @@ class Continent:
     @property
     def show_value(self) -> str:
         return self.name.value
+
+    @property
+    def format_name(self) -> str:
+        return f"continente '{self.show_name}'"
+    
+    @property
+    def total_territories(self) -> int:
+        return len(self.territories)
+
+    @property
+    def totality_occupier(self) -> Player:
+        players = {territory.occupier for territory in self}
+        if len(players) != 1:
+            return None
+
+        return players[0]
