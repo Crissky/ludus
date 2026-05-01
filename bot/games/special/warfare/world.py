@@ -3,13 +3,19 @@ from typing import Dict, List
 
 from bot.games.enums.warfare import ContinentEnum, TerritoryEnum
 from bot.games.special.warfare.continent import Continent
+from bot.games.special.warfare.territory import Territory
 
 logger = logging.getLogger(__name__)
+ce = ContinentEnum
+te = TerritoryEnum
 
 
 class World:
     def __init__(self):
         self.continents = self.create_continents()
+        self.territories: Dict[TerritoryEnum, Territory] = {
+            territory.name: territory for territory in self.flat_territories()
+        }
 
     def __iter__(self):
         yield from self.continents.values()
@@ -31,11 +37,11 @@ class World:
             ce.SOUTH_AMERICA: south_america,
         }
 
-    def flat_territories(self, continents: List[Continent]):
+    def flat_territories(self) -> List[Territory]:
         return [
             territory
-            for continent in continents
-            for territory in continent.territories
+            for continent in self.continents.values()
+            for territory in continent.territories.values()
         ]
 
     def create_africa(self) -> Continent: ...
