@@ -3,7 +3,7 @@ import logging
 from dataclasses import dataclass, field
 from typing import Dict, List, Union
 
-from bot.games.enums.warfare import ContinentEnum, TerritoryEnum
+from bot.games.enums.warfare import ContinentNames, TerritoryNames
 from bot.games.player import Player
 from bot.games.special.warfare.territory import Territory
 
@@ -13,16 +13,16 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class Continent:
-    name: Union[str, ContinentEnum]
+    name: Union[str, ContinentNames]
     color_emoji: str
     totality_bonus: int
     majority_bonus: int = 0
-    territories: Dict[TerritoryEnum, Territory] = field(default_factory=dict)
+    territories: Dict[TerritoryNames, Territory] = field(default_factory=dict)
 
     def __post_init__(self):
         if isinstance(self.name, str):
-            self.name = ContinentEnum[self.name]
-        if not isinstance(self.name, ContinentEnum):
+            self.name = ContinentNames[self.name]
+        if not isinstance(self.name, ContinentNames):
             raise TypeError(
                 f"O nome do continente deve ser do tipo "
                 f"str ou ContinentEnum ({type(self.name)})."
@@ -70,10 +70,10 @@ class Continent:
         territory.color_emoji = self.color_emoji
         self.territories[territory.name] = territory
 
-    def remove_territory(self, territory_name: TerritoryEnum) -> Territory:
+    def remove_territory(self, territory_name: TerritoryNames) -> Territory:
         """Remove um território desse continente."""
 
-        if not isinstance(territory_name, TerritoryEnum):
+        if not isinstance(territory_name, TerritoryNames):
             tt = type(territory_name)
             raise TypeError(
                 f"O território deve ser do tipo TerritoryEnum ({tt})."
@@ -84,10 +84,10 @@ class Continent:
 
         return territory
 
-    def get_territory(self, territory_name: TerritoryEnum) -> Territory:
+    def get_territory(self, territory_name: TerritoryNames) -> Territory:
         """Retorna um território desse continente."""
 
-        if not isinstance(territory_name, TerritoryEnum):
+        if not isinstance(territory_name, TerritoryNames):
             tt = type(territory_name)
             raise TypeError(
                 f"O território deve ser do tipo TerritoryEnum ({tt})."

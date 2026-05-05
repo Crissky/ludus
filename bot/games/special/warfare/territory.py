@@ -3,7 +3,7 @@ import logging
 from dataclasses import dataclass, field
 from typing import Dict, List, Union
 
-from bot.games.enums.warfare import TerritoryEnum
+from bot.games.enums.warfare import TerritoryNames
 from bot.games.player import Player
 
 
@@ -12,18 +12,18 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class Territory:
-    name: Union[str, TerritoryEnum]
+    name: Union[str, TerritoryNames]
     color_emoji: str = None
     occupier: Player = None
-    frontiers: Dict[TerritoryEnum, "Territory"] = field(
+    frontiers: Dict[TerritoryNames, "Territory"] = field(
         default_factory=dict, repr=False
     )
     troops: int = 0
 
     def __post_init__(self):
         if isinstance(self.name, str):
-            self.name = TerritoryEnum[self.name]
-        if not isinstance(self.name, TerritoryEnum):
+            self.name = TerritoryNames[self.name]
+        if not isinstance(self.name, TerritoryNames):
             raise TypeError(
                 f"O nome do território deve ser do tipo "
                 f"str ou TerritoryEnum ({type(self.name)})."

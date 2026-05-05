@@ -1,7 +1,9 @@
 from enum import Enum
 
+from bot.games.enums.card import Names, Suits
 
-class TerritoryEnum(Enum):
+
+class TerritoryNames(Names):
     # Africa
     ALGERIA = "Argélia"
     CONGO = "Congo"
@@ -57,10 +59,16 @@ class TerritoryEnum(Enum):
     VENEZUELA = "Venezuela"
 
 
-class ContinentEnum(Enum):
+class ContinentNames(Names):
     AFRICA = "África"
     ASIA = "Ásia"
     EUROPE = "Europa"
     NORTH_AMERICA = "América do Norte"
     OCEANIA = "Oceania"
     SOUTH_AMERICA = "América do Sul"
+
+
+class SymbolsSuits(Suits):
+    CIRCLE = "🟣"
+    SQUARE = "🟦"
+    TRIANGLE = "🔺"

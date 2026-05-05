@@ -1,19 +1,19 @@
 import logging
 from typing import Dict, List
 
-from bot.games.enums.warfare import ContinentEnum, TerritoryEnum
+from bot.games.enums.warfare import ContinentNames, TerritoryNames
 from bot.games.special.warfare.continent import Continent
 from bot.games.special.warfare.territory import Territory
 
 logger = logging.getLogger(__name__)
-ce = ContinentEnum
-te = TerritoryEnum
+ce = ContinentNames
+te = TerritoryNames
 
 
 class World:
     def __init__(self):
         self.continents = self.create_continents()
-        self.territories: Dict[TerritoryEnum, Territory] = {
+        self.territories: Dict[TerritoryNames, Territory] = {
             territory.name: territory for territory in self.flat_territories()
         }
         self.create_frontiers()
@@ -21,7 +21,7 @@ class World:
     def __iter__(self):
         yield from self.continents.values()
 
-    def create_continents(self) -> Dict[ContinentEnum, Continent]:
+    def create_continents(self) -> Dict[ContinentNames, Continent]:
         africa = self.create_africa()
         asia = self.create_asia()
         europe = self.create_europe()

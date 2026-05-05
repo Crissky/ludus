@@ -7,12 +7,12 @@ Mapa referência WAR II: https://a-static.mlcdn.com.br/1500x1500/jogo-war-ii-tab
 
 from operator import attrgetter
 
-from bot.games.enums.warfare import ContinentEnum, TerritoryEnum
+from bot.games.enums.warfare import ContinentNames, TerritoryNames
 from bot.games.special.warfare.continent import Continent
 from bot.games.special.warfare.territory import Territory
 
-ce = ContinentEnum
-te = TerritoryEnum
+cn = ContinentNames
+tn = TerritoryNames
 
 africa_kw_args = {"totality_bonus": 3, "color_emoji": "🟪"}
 asia_kw_args = {"totality_bonus": 7, "color_emoji": "🟨"}
@@ -21,133 +21,133 @@ north_america_kw_args = {"totality_bonus": 5, "color_emoji": "🟧"}
 oceania_kw_args = {"totality_bonus": 2, "color_emoji": "🟥"}
 south_america_kw_args = {"totality_bonus": 2, "color_emoji": "🟩"}
 
-africa = Continent(name=ce.AFRICA, **africa_kw_args)
-asia = Continent(name=ce.ASIA, **asia_kw_args)
-europe = Continent(name=ce.EUROPE, **europe_kw_args)
-north_america = Continent(name=ce.NORTH_AMERICA, **north_america_kw_args)
-oceania = Continent(name=ce.OCEANIA, **oceania_kw_args)
-south_america = Continent(name=ce.SOUTH_AMERICA, **south_america_kw_args)
+africa = Continent(name=cn.AFRICA, **africa_kw_args)
+asia = Continent(name=cn.ASIA, **asia_kw_args)
+europe = Continent(name=cn.EUROPE, **europe_kw_args)
+north_america = Continent(name=cn.NORTH_AMERICA, **north_america_kw_args)
+oceania = Continent(name=cn.OCEANIA, **oceania_kw_args)
+south_america = Continent(name=cn.SOUTH_AMERICA, **south_america_kw_args)
 CONTINENT_DICT = {
-    ContinentEnum.ASIA: asia,
-    ContinentEnum.AFRICA: africa,
-    ContinentEnum.EUROPE: europe,
-    ContinentEnum.NORTH_AMERICA: north_america,
-    ContinentEnum.OCEANIA: oceania,
-    ContinentEnum.SOUTH_AMERICA: south_america,
+    ContinentNames.ASIA: asia,
+    ContinentNames.AFRICA: africa,
+    ContinentNames.EUROPE: europe,
+    ContinentNames.NORTH_AMERICA: north_america,
+    ContinentNames.OCEANIA: oceania,
+    ContinentNames.SOUTH_AMERICA: south_america,
 }
 
 # Africa
-africa.add_territory(territory=Territory(name=te.ALGERIA))
-africa.add_territory(territory=Territory(name=te.CONGO))
-africa.add_territory(territory=Territory(name=te.EGYPT))
-africa.add_territory(territory=Territory(name=te.MADAGASCAR))
-africa.add_territory(territory=Territory(name=te.SOUTH_AFRICA))
-africa.add_territory(territory=Territory(name=te.SUDAO))
+africa.add_territory(territory=Territory(name=tn.ALGERIA))
+africa.add_territory(territory=Territory(name=tn.CONGO))
+africa.add_territory(territory=Territory(name=tn.EGYPT))
+africa.add_territory(territory=Territory(name=tn.MADAGASCAR))
+africa.add_territory(territory=Territory(name=tn.SOUTH_AFRICA))
+africa.add_territory(territory=Territory(name=tn.SUDAO))
 
 # Asia
-asia.add_territory(territory=Territory(name=te.ARAL))
-asia.add_territory(territory=Territory(name=te.CHINA))
-asia.add_territory(territory=Territory(name=te.DUDINKA))
-asia.add_territory(territory=Territory(name=te.INDIA))
-asia.add_territory(territory=Territory(name=te.JAPAN))
-asia.add_territory(territory=Territory(name=te.MIDDLE_EAST))
-asia.add_territory(territory=Territory(name=te.MONGOLIA))
-asia.add_territory(territory=Territory(name=te.OMSK))
-asia.add_territory(territory=Territory(name=te.SIBERIA))
-asia.add_territory(territory=Territory(name=te.TCHITA))
-asia.add_territory(territory=Territory(name=te.VIETNAM))
-asia.add_territory(territory=Territory(name=te.VLADIVOSTOK))
+asia.add_territory(territory=Territory(name=tn.ARAL))
+asia.add_territory(territory=Territory(name=tn.CHINA))
+asia.add_territory(territory=Territory(name=tn.DUDINKA))
+asia.add_territory(territory=Territory(name=tn.INDIA))
+asia.add_territory(territory=Territory(name=tn.JAPAN))
+asia.add_territory(territory=Territory(name=tn.MIDDLE_EAST))
+asia.add_territory(territory=Territory(name=tn.MONGOLIA))
+asia.add_territory(territory=Territory(name=tn.OMSK))
+asia.add_territory(territory=Territory(name=tn.SIBERIA))
+asia.add_territory(territory=Territory(name=tn.TCHITA))
+asia.add_territory(territory=Territory(name=tn.VIETNAM))
+asia.add_territory(territory=Territory(name=tn.VLADIVOSTOK))
 
 # Europe
-europe.add_territory(territory=Territory(name=te.ENGLAND))
-europe.add_territory(territory=Territory(name=te.FRANCE))
-europe.add_territory(territory=Territory(name=te.GERMANY))
-europe.add_territory(territory=Territory(name=te.ICELAND))
-europe.add_territory(territory=Territory(name=te.MOSCOW))
-europe.add_territory(territory=Territory(name=te.POLAND))
-europe.add_territory(territory=Territory(name=te.SWEDEN))
+europe.add_territory(territory=Territory(name=tn.ENGLAND))
+europe.add_territory(territory=Territory(name=tn.FRANCE))
+europe.add_territory(territory=Territory(name=tn.GERMANY))
+europe.add_territory(territory=Territory(name=tn.ICELAND))
+europe.add_territory(territory=Territory(name=tn.MOSCOW))
+europe.add_territory(territory=Territory(name=tn.POLAND))
+europe.add_territory(territory=Territory(name=tn.SWEDEN))
 
 # North America
-north_america.add_territory(territory=Territory(name=te.ALASCA))
-north_america.add_territory(territory=Territory(name=te.CALIFORNIA))
-north_america.add_territory(territory=Territory(name=te.GREENLAND))
-north_america.add_territory(territory=Territory(name=te.LABRADOR))
-north_america.add_territory(territory=Territory(name=te.MACKENZIE))
-north_america.add_territory(territory=Territory(name=te.MEXICO))
-north_america.add_territory(territory=Territory(name=te.NEW_YORK))
-north_america.add_territory(territory=Territory(name=te.OTTAWA))
-north_america.add_territory(territory=Territory(name=te.VANCOUVER))
+north_america.add_territory(territory=Territory(name=tn.ALASCA))
+north_america.add_territory(territory=Territory(name=tn.CALIFORNIA))
+north_america.add_territory(territory=Territory(name=tn.GREENLAND))
+north_america.add_territory(territory=Territory(name=tn.LABRADOR))
+north_america.add_territory(territory=Territory(name=tn.MACKENZIE))
+north_america.add_territory(territory=Territory(name=tn.MEXICO))
+north_america.add_territory(territory=Territory(name=tn.NEW_YORK))
+north_america.add_territory(territory=Territory(name=tn.OTTAWA))
+north_america.add_territory(territory=Territory(name=tn.VANCOUVER))
 
 # Oceania
-oceania.add_territory(territory=Territory(name=te.AUSTRALIA))
-oceania.add_territory(territory=Territory(name=te.BORNEO))
-oceania.add_territory(territory=Territory(name=te.NEW_GUINEA))
-oceania.add_territory(territory=Territory(name=te.SUMATRA))
+oceania.add_territory(territory=Territory(name=tn.AUSTRALIA))
+oceania.add_territory(territory=Territory(name=tn.BORNEO))
+oceania.add_territory(territory=Territory(name=tn.NEW_GUINEA))
+oceania.add_territory(territory=Territory(name=tn.SUMATRA))
 
 # South America
-south_america.add_territory(territory=Territory(name=te.ARGENTINA))
-south_america.add_territory(territory=Territory(name=te.BRAZIL))
-south_america.add_territory(territory=Territory(name=te.PERU))
-south_america.add_territory(territory=Territory(name=te.VENEZUELA))
+south_america.add_territory(territory=Territory(name=tn.ARGENTINA))
+south_america.add_territory(territory=Territory(name=tn.BRAZIL))
+south_america.add_territory(territory=Territory(name=tn.PERU))
+south_america.add_territory(territory=Territory(name=tn.VENEZUELA))
 
 # Frontiers
 FRONTIER_DICT = {
     # Africa
-    te.ALGERIA: [te.BRAZIL, te.CONGO, te.EGYPT, te.FRANCE, te.SUDAO],
-    te.CONGO: [te.SOUTH_AFRICA, te.SUDAO],
-    te.EGYPT: [te.FRANCE, te.MIDDLE_EAST, te.POLAND, te.SUDAO],
-    te.MADAGASCAR: [te.SOUTH_AFRICA, te.SUDAO],
-    te.SOUTH_AFRICA: [te.SUDAO],
-    te.SUDAO: [],  # EMPTY
+    tn.ALGERIA: [tn.BRAZIL, tn.CONGO, tn.EGYPT, tn.FRANCE, tn.SUDAO],
+    tn.CONGO: [tn.SOUTH_AFRICA, tn.SUDAO],
+    tn.EGYPT: [tn.FRANCE, tn.MIDDLE_EAST, tn.POLAND, tn.SUDAO],
+    tn.MADAGASCAR: [tn.SOUTH_AFRICA, tn.SUDAO],
+    tn.SOUTH_AFRICA: [tn.SUDAO],
+    tn.SUDAO: [],  # EMPTY
     # Asia
-    te.ARAL: [te.CHINA, te.INDIA, te.MIDDLE_EAST, te.MOSCOW, te.OMSK],
-    te.CHINA: [
-        te.INDIA,
-        te.JAPAN,
-        te.MONGOLIA,
-        te.OMSK,
-        te.TCHITA,
-        te.VIETNAM,
-        te.VLADIVOSTOK,
+    tn.ARAL: [tn.CHINA, tn.INDIA, tn.MIDDLE_EAST, tn.MOSCOW, tn.OMSK],
+    tn.CHINA: [
+        tn.INDIA,
+        tn.JAPAN,
+        tn.MONGOLIA,
+        tn.OMSK,
+        tn.TCHITA,
+        tn.VIETNAM,
+        tn.VLADIVOSTOK,
     ],
-    te.DUDINKA: [te.MONGOLIA, te.OMSK, te.SIBERIA, te.TCHITA],
-    te.INDIA: [te.MIDDLE_EAST, te.SUMATRA, te.VIETNAM],
-    te.JAPAN: [te.VLADIVOSTOK],
-    te.MIDDLE_EAST: [te.MOSCOW, te.POLAND],
-    te.MONGOLIA: [te.OMSK, te.TCHITA],
-    te.OMSK: [te.MOSCOW],
-    te.SIBERIA: [te.TCHITA, te.VLADIVOSTOK],
-    te.TCHITA: [te.VLADIVOSTOK],
-    te.VIETNAM: [te.BORNEO],
-    te.VLADIVOSTOK: [te.ALASCA],
+    tn.DUDINKA: [tn.MONGOLIA, tn.OMSK, tn.SIBERIA, tn.TCHITA],
+    tn.INDIA: [tn.MIDDLE_EAST, tn.SUMATRA, tn.VIETNAM],
+    tn.JAPAN: [tn.VLADIVOSTOK],
+    tn.MIDDLE_EAST: [tn.MOSCOW, tn.POLAND],
+    tn.MONGOLIA: [tn.OMSK, tn.TCHITA],
+    tn.OMSK: [tn.MOSCOW],
+    tn.SIBERIA: [tn.TCHITA, tn.VLADIVOSTOK],
+    tn.TCHITA: [tn.VLADIVOSTOK],
+    tn.VIETNAM: [tn.BORNEO],
+    tn.VLADIVOSTOK: [tn.ALASCA],
     # Europe
-    te.ENGLAND: [te.FRANCE, te.GERMANY, te.ICELAND, te.SWEDEN],
-    te.FRANCE: [te.GERMANY, te.POLAND],
-    te.GERMANY: [te.POLAND],
-    te.ICELAND: [te.GREENLAND],
-    te.MOSCOW: [te.POLAND, te.SWEDEN],
-    te.POLAND: [],  # EMPTY
-    te.SWEDEN: [],  # EMPTY
+    tn.ENGLAND: [tn.FRANCE, tn.GERMANY, tn.ICELAND, tn.SWEDEN],
+    tn.FRANCE: [tn.GERMANY, tn.POLAND],
+    tn.GERMANY: [tn.POLAND],
+    tn.ICELAND: [tn.GREENLAND],
+    tn.MOSCOW: [tn.POLAND, tn.SWEDEN],
+    tn.POLAND: [],  # EMPTY
+    tn.SWEDEN: [],  # EMPTY
     # North America
-    te.ALASCA: [te.MACKENZIE, te.VANCOUVER],
-    te.CALIFORNIA: [te.MEXICO, te.NEW_YORK, te.OTTAWA, te.VANCOUVER],
-    te.GREENLAND: [te.LABRADOR, te.MACKENZIE],
-    te.LABRADOR: [te.NEW_YORK, te.OTTAWA],
-    te.MACKENZIE: [te.OTTAWA, te.VANCOUVER],
-    te.MEXICO: [te.NEW_YORK, te.VENEZUELA],
-    te.NEW_YORK: [te.OTTAWA],
-    te.OTTAWA: [te.VANCOUVER],
-    te.VANCOUVER: [],  # EMPTY
+    tn.ALASCA: [tn.MACKENZIE, tn.VANCOUVER],
+    tn.CALIFORNIA: [tn.MEXICO, tn.NEW_YORK, tn.OTTAWA, tn.VANCOUVER],
+    tn.GREENLAND: [tn.LABRADOR, tn.MACKENZIE],
+    tn.LABRADOR: [tn.NEW_YORK, tn.OTTAWA],
+    tn.MACKENZIE: [tn.OTTAWA, tn.VANCOUVER],
+    tn.MEXICO: [tn.NEW_YORK, tn.VENEZUELA],
+    tn.NEW_YORK: [tn.OTTAWA],
+    tn.OTTAWA: [tn.VANCOUVER],
+    tn.VANCOUVER: [],  # EMPTY
     # Oceania
-    te.AUSTRALIA: [te.BORNEO, te.NEW_GUINEA, te.SUMATRA],
-    te.BORNEO: [te.NEW_GUINEA],
-    te.NEW_GUINEA: [],  # EMPTY
-    te.SUMATRA: [],  # EMPTY
+    tn.AUSTRALIA: [tn.BORNEO, tn.NEW_GUINEA, tn.SUMATRA],
+    tn.BORNEO: [tn.NEW_GUINEA],
+    tn.NEW_GUINEA: [],  # EMPTY
+    tn.SUMATRA: [],  # EMPTY
     # South America
-    te.ARGENTINA: [te.BRAZIL, te.PERU],
-    te.BRAZIL: [te.PERU, te.VENEZUELA],
-    te.PERU: [te.VENEZUELA],
-    te.VENEZUELA: [],  # EMPTY
+    tn.ARGENTINA: [tn.BRAZIL, tn.PERU],
+    tn.BRAZIL: [tn.PERU, tn.VENEZUELA],
+    tn.PERU: [tn.VENEZUELA],
+    tn.VENEZUELA: [],  # EMPTY
 }
 
 territories = {
