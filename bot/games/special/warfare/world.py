@@ -16,6 +16,7 @@ class World:
         self.territories: Dict[TerritoryEnum, Territory] = {
             territory.name: territory for territory in self.flat_territories()
         }
+        self.create_frontiers()
 
     def __iter__(self):
         yield from self.continents.values()
@@ -122,3 +123,68 @@ class World:
 
         return south_america
 
+    def create_frontiers(self):
+        FRONTIER_DICT = {
+            # Africa
+            te.ALGERIA: [te.BRAZIL, te.CONGO, te.EGYPT, te.FRANCE, te.SUDAO],
+            te.CONGO: [te.SOUTH_AFRICA, te.SUDAO],
+            te.EGYPT: [te.FRANCE, te.MIDDLE_EAST, te.POLAND, te.SUDAO],
+            te.MADAGASCAR: [te.SOUTH_AFRICA, te.SUDAO],
+            te.SOUTH_AFRICA: [te.SUDAO],
+            te.SUDAO: [],  # EMPTY
+            # Asia
+            te.ARAL: [te.CHINA, te.INDIA, te.MIDDLE_EAST, te.MOSCOW, te.OMSK],
+            te.CHINA: [
+                te.INDIA,
+                te.JAPAN,
+                te.MONGOLIA,
+                te.OMSK,
+                te.TCHITA,
+                te.VIETNAM,
+                te.VLADIVOSTOK,
+            ],
+            te.DUDINKA: [te.MONGOLIA, te.OMSK, te.SIBERIA, te.TCHITA],
+            te.INDIA: [te.MIDDLE_EAST, te.SUMATRA, te.VIETNAM],
+            te.JAPAN: [te.VLADIVOSTOK],
+            te.MIDDLE_EAST: [te.MOSCOW, te.POLAND],
+            te.MONGOLIA: [te.OMSK, te.TCHITA],
+            te.OMSK: [te.MOSCOW],
+            te.SIBERIA: [te.TCHITA, te.VLADIVOSTOK],
+            te.TCHITA: [te.VLADIVOSTOK],
+            te.VIETNAM: [te.BORNEO],
+            te.VLADIVOSTOK: [te.ALASCA],
+            # Europe
+            te.ENGLAND: [te.FRANCE, te.GERMANY, te.ICELAND, te.SWEDEN],
+            te.FRANCE: [te.GERMANY, te.POLAND],
+            te.GERMANY: [te.POLAND],
+            te.ICELAND: [te.GREENLAND],
+            te.MOSCOW: [te.POLAND, te.SWEDEN],
+            te.POLAND: [],  # EMPTY
+            te.SWEDEN: [],  # EMPTY
+            # North America
+            te.ALASCA: [te.MACKENZIE, te.VANCOUVER],
+            te.CALIFORNIA: [te.MEXICO, te.NEW_YORK, te.OTTAWA, te.VANCOUVER],
+            te.GREENLAND: [te.LABRADOR, te.MACKENZIE],
+            te.LABRADOR: [te.NEW_YORK, te.OTTAWA],
+            te.MACKENZIE: [te.OTTAWA, te.VANCOUVER],
+            te.MEXICO: [te.NEW_YORK, te.VENEZUELA],
+            te.NEW_YORK: [te.OTTAWA],
+            te.OTTAWA: [te.VANCOUVER],
+            te.VANCOUVER: [],  # EMPTY
+            # Oceania
+            te.AUSTRALIA: [te.BORNEO, te.NEW_GUINEA, te.SUMATRA],
+            te.BORNEO: [te.NEW_GUINEA],
+            te.NEW_GUINEA: [],  # EMPTY
+            te.SUMATRA: [],  # EMPTY
+            # South America
+            te.ARGENTINA: [te.BRAZIL, te.PERU],
+            te.BRAZIL: [te.PERU, te.VENEZUELA],
+            te.PERU: [te.VENEZUELA],
+            te.VENEZUELA: [],  # EMPTY
+        }
+
+        for territory_enum, frontier_enum_list in FRONTIER_DICT.items():
+            for frontier_enum in frontier_enum_list:
+                territory = self.territories[territory_enum]
+                frontier_territory = self.territories[frontier_enum]
+                territory.add_frontier(frontier_territory)
