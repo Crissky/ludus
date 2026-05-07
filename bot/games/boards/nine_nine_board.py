@@ -51,8 +51,7 @@ class NineNineBoard(BaseCardGameBoard):
 
         if command_enum == CommandEnum.PLAY:
             result = self.check_play_card(
-                player=player,
-                hand_position=hand_position
+                player=player, hand_position=hand_position
             )
             if isinstance(result, str):
                 return result
@@ -61,14 +60,25 @@ class NineNineBoard(BaseCardGameBoard):
             if len(play_card_list) > 1:
                 player.add_card(*play_card_list)
                 raise ValueError(
-                    f'Mais de uma carta jogada. {play_card_list}.'
+                    f"Mais de uma carta jogada. {play_card_list}."
                 )
 
             card = play_card_list[0]
-            if card.name == NineNineNames.NINE_NINE:  # TODO
+            if card.name == NineNineNames.NINE_NINE:
+                # TODO
                 ...
+            elif card.name == NineNineNames.DOUBLE_PLAY:
+                # TODO
+                ...
+            elif card.name == NineNineNames.REVERSE:
+                # TODO
+                ...
+            elif card.name in self.number_card:
+                # TODO
+                ...
+
             self.discard(card)
-            action = f'jogou {card}.'
+            action = f"jogou {card}."
             self.add_log(action=action, player=player)
 
     def is_playable_card(self, card: Card) -> bool:  # TODO
@@ -107,3 +117,20 @@ class NineNineBoard(BaseCardGameBoard):
                 total_nine_nine += 1
 
         return total_nine_nine >= 4
+
+    @property
+    def number_card(self) -> tuple:
+        return (
+            NineNineNames.ZERO,
+            NineNineNames.ONE,
+            NineNineNames.TWO,
+            NineNineNames.THREE,
+            NineNineNames.FOUR,
+            NineNineNames.FIVE,
+            NineNineNames.SIX,
+            NineNineNames.SEVEN,
+            NineNineNames.EIGHT,
+            NineNineNames.NINE,
+            NineNineNames.TEN,
+            NineNineNames.MINUS_TEN,
+        )
