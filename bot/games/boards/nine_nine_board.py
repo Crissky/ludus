@@ -21,7 +21,7 @@ class NineNineBoard(BaseCardGameBoard):
             discard_at_start=True,
             initial_hand_size=4,
             hand_kwargs={"max_size": 4},
-            min_total_players=2,
+            min_total_players=1,  # TODO VALOR 2 QUANDO CLASSE FICAR PRONTA
             max_total_players=10,
             debug=debug,
         )
