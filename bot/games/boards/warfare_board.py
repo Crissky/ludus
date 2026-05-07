@@ -25,3 +25,5 @@ class WarfareBoard(BaseCardGameBoard):
             max_total_players=6,
             debug=debug,
         )
+
+        self.debug_attr_list.extend([])
