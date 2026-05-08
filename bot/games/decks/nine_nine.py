@@ -1,5 +1,6 @@
 import logging
 
+from bot.games.cards.nine_nine import NineNineCard
 from bot.games.decks.deck import BaseDeck
 from bot.games.enums.card import NineNineNames, NineNineSuits
 
@@ -29,6 +30,7 @@ class NineNineDeck(BaseDeck):
             quantities=quantities,
             is_shuffle=is_shuffle,
             total_decks=total_decks,
+            card_class=NineNineCard,
         )
 
 
