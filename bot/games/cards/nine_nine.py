@@ -9,7 +9,6 @@ class NineNineCard(Card):
     def zero_names(self) -> Tuple[NineNineNames]:
         return (
             NineNineNames.ZERO,
-            NineNineNames.NINE_NINE,
             NineNineNames.REVERSE,
             NineNineNames.DOUBLE_PLAY,
         )
@@ -39,6 +38,8 @@ class NineNineCard(Card):
             result = 9
         elif self.name == NineNineNames.TEN:
             result = 10
+        elif self.name == NineNineNames.NINE_NINE:
+            result = 99
         elif self.name == NineNineNames.MINUS_TEN:
             result = -10
 
