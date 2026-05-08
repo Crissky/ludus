@@ -28,6 +28,7 @@ class NineNineBoard(BaseCardGameBoard):
 
         self.debug_attr_list.extend([])
 
+    # SHOW BOARD METHODS #####################################################
     def show_board(self, player: Player = None) -> str:
         general_info_list = [self.show_board_total_score]
         return super().show_board(
@@ -39,6 +40,7 @@ class NineNineBoard(BaseCardGameBoard):
 
         return text
 
+    # ABSTRACT METHODS #######################################################
     def play(self, player: Player, play_dict: dict):
         result = super().play(player=player, play_dict=play_dict)
         if isinstance(result, str):
@@ -92,6 +94,7 @@ class NineNineBoard(BaseCardGameBoard):
 
         return True
 
+    # PROPERTIES METHODS #####################################################
     @property
     def discard_pile(self) -> BaseDeck:
         if self.discard_piles:

@@ -124,17 +124,7 @@ class ScoundrelBoard(BaseCardGameBoard):
             'power',
         ])
 
-    def discard(self, *cards: ScoundrelCard) -> str:
-        if self.discard_pile is None:
-            raise ValueError('Pilha de descarte não existe.')
-
-        pile = self.discard_pile
-        pile.add(*cards)
-        if cards:
-            cards_str = ', '.join((card.text for card in cards))
-            action = f'Carta(s) descartada(s): {cards_str}.'
-            return self.add_log(action=action, player=False)
-
+    # SELF METHODS ###########################################################
     def put_in_field(self, *cards: ScoundrelCard) -> str:
         if self.field_pile is None:
             raise ValueError('Campo não existe.')
@@ -189,6 +179,19 @@ class ScoundrelBoard(BaseCardGameBoard):
 
         self.add_log(action=action, player=player)
 
+    # DRAW METHODS ###########################################################
+    def discard(self, *cards: ScoundrelCard) -> str:
+        if self.discard_pile is None:
+            raise ValueError('Pilha de descarte não existe.')
+
+        pile = self.discard_pile
+        pile.add(*cards)
+        if cards:
+            cards_str = ', '.join((card.text for card in cards))
+            action = f'Carta(s) descartada(s): {cards_str}.'
+            return self.add_log(action=action, player=False)
+
+    # SHOW BOARD METHODS #####################################################
     def show_board(self, player: Player = None) -> str:
         general_info_list = [self.show_board_field_pile]
         return super().show_board(
@@ -382,6 +385,7 @@ class ScoundrelBoard(BaseCardGameBoard):
 
         return winners
 
+    # PROPERTIES METHODS #####################################################
     @property
     def field_pile(self) -> BaseDeck:
         if self.discard_piles:

@@ -35,6 +35,7 @@ class ColorsGameBoard(BaseCardGameBoard):
             'selecting_color',
         ])
 
+    # SHOW BOARD METHODS #####################################################
     def show_board(self, player: Player = None) -> str:
         general_info_list = [self.show_board_pending_draw]
         return super().show_board(

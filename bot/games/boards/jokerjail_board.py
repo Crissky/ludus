@@ -98,6 +98,7 @@ class JokerJailBoard(BaseCardGameBoard):
             'selected_card_indexes',
         ])
 
+    # SELF METHODS ###########################################################
     def sum_card_values(self) -> dict:
         black_cards: List[Card] = []
         red_cards: List[Card] = []
@@ -154,6 +155,7 @@ class JokerJailBoard(BaseCardGameBoard):
         joker_pile = self.joker_pile
         joker_pile.add(self.joker_card)
 
+    # SHOW BOARD METHODS #####################################################
     def show_board(self, player: Player = None) -> str:
         general_info_list = [self.show_selected_cards]
         return super().show_board(

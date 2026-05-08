@@ -41,6 +41,7 @@ class GolfSolitaireBoard(BaseCardGameBoard):
             ]
         )
 
+    # SELF METHODS ###########################################################
     def get_card(self, row_index: int, card_index: int) -> Optional[Card]:
         """Retorna uma carta da fileira. Mas retorna None de se
         se o row_index ou card_index passado estiver fora do range.

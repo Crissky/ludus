@@ -75,7 +75,7 @@ class BaseCardGameBoard(BaseBoard):
             'is_passing',
         ])
 
-    # CREATE FUNCTIONS #######################################################
+    # CREATE METHODS #########################################################
     def create_draw_pile(self, draw_pile: BaseDeck):
         '''Cria a Pilha de Compras.
         Embaralha a Pilha de Compras se self.is_shuffle_deck for True.
@@ -116,6 +116,7 @@ class BaseCardGameBoard(BaseBoard):
                 card_list = self.draw()
                 player.hand.add_card(*card_list)
 
+    # DRAW METHODS ###########################################################
     def draw(self, quantity: int = 1) -> List[Card]:
         '''Compra carta(s) da Pilha de Compra igual à quantity passada.
         '''
@@ -187,7 +188,7 @@ class BaseCardGameBoard(BaseBoard):
             action = f'Carta {card} não pode ser jogada.'
             return self.add_log(action=action, player=player)
 
-    # SHOW BOARD FUNCTIONS ###################################################
+    # SHOW BOARD METHODS #####################################################
     def show_board(
         self,
         player: Player = None,
@@ -311,6 +312,7 @@ class BaseCardGameBoard(BaseBoard):
     def winners(self) -> List[Player]:
         ...
 
+    # PROPERTIES METHODS #####################################################
     @property
     def current_player_hand(self) -> BaseHand:
         current_player = self.current_player
