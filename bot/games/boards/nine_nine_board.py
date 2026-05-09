@@ -1,3 +1,5 @@
+from typing import List
+
 from bot.games.boards.cardgame_board import BaseCardGameBoard
 from bot.games.cards.card import Card
 from bot.games.decks.deck import BaseDeck
@@ -27,6 +29,18 @@ class NineNineBoard(BaseCardGameBoard):
         )
 
         self.debug_attr_list.extend([])
+
+    # SELF METHODS ###########################################################
+    def play_nine_nine(player: Player, play_times: int = 3) -> List[Card]:
+        card_list = []
+        for _ in range(play_times):
+            for i, card in enumerate(player):
+                if card.equals_name(NineNineNames.NINE_NINE):
+                    cards = player.play(i)
+                    card_list.extend(cards)
+                    break
+
+        return card_list
 
     # SHOW BOARD METHODS #####################################################
     def show_board(self, player: Player = None) -> str:
