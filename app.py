@@ -1,5 +1,4 @@
-"""Arquivo principal que executa o telegram-bot.
-"""
+"""Arquivo principal que executa o telegram-bot."""
 
 import logging
 from decouple import config
@@ -23,31 +22,40 @@ IS_PRODUCTION = config("IS_PRODUCTION", cast=bool, default=True)
     WORDGAME_GROUP,
 ) = range(3)
 
-# SET LOGGING
-logger = logging.getLogger(__name__)
+# SET LOGGING ================================================================
 if IS_PRODUCTION:
-    logger.setLevel(logging.INFO)
+    level = logging.INFO
 else:
-    logger.setLevel(logging.DEBUG)
+    level = logging.DEBUG
 
-file_handler = logging.FileHandler("ludus.log", mode="w")
-console_handler = logging.StreamHandler()
 formatter = logging.Formatter(
     "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-    datefmt='%Y-%m-%d %H:%M:%S',
+    datefmt="%Y-%m-%d %H:%M:%S",
 )
+
+file_handler = logging.FileHandler("ludus.log", mode="w", encoding="utf-8")
+console_handler = logging.StreamHandler()
 file_handler.setFormatter(formatter)
 console_handler.setFormatter(formatter)
-file_handler.stream.reconfigure(encoding='utf-8')
-logger.addHandler(file_handler)
-logger.addHandler(console_handler)
+
+root_logger = logging.getLogger()
+root_logger.setLevel(level)
+
+root_logger.addHandler(file_handler)
+root_logger.addHandler(console_handler)
+# SET LOGGING ================================================================
+
+logger = logging.getLogger(__name__)
 
 
 def main() -> None:
     """Run the bot."""
+
+    logger.info("INICIANDO LUDUS...")
     # Create the Application and pass it your bot's token.
     application = Application.builder().token(TELEGRAM_TOKEN).build()
 
+    logger.info("Handlers adicionados.")
     # Add Single Handler
     application.add_handler(CLOSE_MSG_HANDLER)
 
@@ -58,6 +66,7 @@ def main() -> None:
     # Add Jobs
     # application.job_queue.run_repeating()
 
+    logger.info("LUDUS iniciado com sucesso!")
     # Run the bot until the user presses Ctrl-C
     application.run_polling()
 
